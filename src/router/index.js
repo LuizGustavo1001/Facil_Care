@@ -1,5 +1,3 @@
-// using lazy loading
-
 import { createRouter, createWebHistory } from 'vue-router'
 
 // mapping routes
@@ -18,6 +16,14 @@ const routes = [
         component: () => import('/src/views/VitalSignsView.vue'),
         meta: {
             title: 'Sinais Vitais | FacilCare'
+        }
+    },
+    {
+        path: "/refresh-theme",
+        name: 'refresh-theme',
+        component: () => import('/src/views/RefreshThemeView.vue'),
+        meta: {
+            title: 'Refresh Theme | FacilCare'
         }
     },
     // generic route (path not found)
