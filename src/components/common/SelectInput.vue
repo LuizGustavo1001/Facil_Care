@@ -8,13 +8,24 @@
       {{ label }}
     </label>
 
-    <input
-        :id="computedId"
-        v-model="model"
-        :type="inputType"
-        :name="name"
-        v-bind="$attrs"
+    <select
+      :id="computedId"
+      v-model="model"
+      :name="name"
+      v-bind="$attrs"
+      class="cursor-pointer"
     >
+      <option value="" disabled selected hidden>Selecione uma opção...</option>
+
+      <template v-if="isObject(options)">
+        <option
+            v-for="(label, value) in options"
+            :key="value"
+            :value="value" >
+          {{ label }}
+        </option>
+      </template>
+    </select>
   </div>
 </template>
 
@@ -23,9 +34,10 @@
     gap: 0.3em;
   }
 
-  .input-wrapper input{
+  .input-wrapper select{
     border-radius: var(--radius-md);
     border: 1px solid var(--color-border-default);
+    background: transparent;
 
     padding: var(--padding-lg);
     font-size: var(--text-body-md);
@@ -33,8 +45,7 @@
 
     transition: all 0.2s ease;
   }
-
-  .input-wrapper input:focus {
+  .input-wrapper select:focus {
     color: var(--color-text-focus);
     border-color: var(--color-border-focus);
     outline: none;
@@ -54,15 +65,18 @@
   const props = defineProps({
     label: String,
     id: String,
-    inputType: {
-      type: String,
-      default: "text"
-    },
-    name: String
+    name: String,
+    options: {
+      type: [Array, Object],
+      default: () => ({})
+    }
   })
 
   // make sure that input ID match each other
   const computedId = computed(() => {
     return props.id || (props.name ? `input-${props.name}` : undefined)
   })
+
+  // verify if the option is object
+  const isObject = (val) => val && typeof val === 'object' && !Array.isArray(val)
 </script>

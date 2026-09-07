@@ -55,6 +55,10 @@
     cursor: pointer;
     transition: 0.2s ease-out;
   }
+  .action-btn-alt:active, .action-btn-alt:focus{
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+    outline: none;
+  }
 
   .action-btn-alt .left-icon-wrapper{
     padding: 1.5rem 0.75rem;
@@ -63,8 +67,12 @@
   }
 
   .btn-content .btn-content-title{
-    font-size: var(--text-heading-sm);
+    font-size: var(--text-body-lg);
     color: var(--color-text-primary);
+  }
+
+  .btn-content .btn-content-description{
+    font-size: var(--text-body-sm);
   }
 
   /* COLOR VARIANTS */

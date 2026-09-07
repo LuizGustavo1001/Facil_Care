@@ -28,7 +28,7 @@
 
     --font-size-100: 0.75rem; /* 12px */
     --font-size-200: 0.8rem; /* 13px */
-    --font-size-300: 0.875rem; /* */
+    --font-size-300: 0.875rem; /* 14px */
     --font-size-400: 1rem; /* 16px */
     --font-size-500: 1.125rem;/* 18px */
     --font-size-600: 1.2rem; /* 20px */
@@ -45,6 +45,7 @@
     --color-text-muted: var(--slate-600);
     --color-text-subtle: var(--gray-300);
     --color-text-highlight: var(--white);
+    --color-text-focus: var(--blue-500);
 
     --color-bg-primary: var(--white);
     --color-bg-subtle: var(--gray-100);
@@ -60,6 +61,13 @@
     --radius-xl: 16px;
     --radius-2xl: 32px;
     --radius-circle: 50%;
+
+    --padding-sm: 4px;
+    --padding-md: 8px;
+    --padding-lg: 12px;
+    --padding-xl: 16px;
+    --padding-xl2: 20px;
+    --padding-xl3: 24px;
 
     --text-caption: var(--font-size-100);
     --text-body-sm: var(--font-size-200);
@@ -167,6 +175,9 @@ body{
     font-weight: 500;
 }
 
+.width-full{
+    width: 100%;
+}
 
 
 /* ANIMATIONS */
@@ -175,11 +186,10 @@ body{
     to { opacity: 1; }
 }
 
-
 /* PADDING */
-.component--padding-sm{ padding: 4px }
-.component--padding-md{ padding: 8px}
-.component--padding-lg{ padding: 12px }
-.component--padding-xl{ padding: 16px }
-.component--padding-xl2{ padding: 20px }
-.component--padding-xl3{ padding: 24px }
+.component--padding-sm{ padding: var(--padding-sm); }
+.component--padding-md{ padding: var(--padding-md); }
+.component--padding-lg{ padding: var(--padding-lg); }
+.component--padding-xl{ padding: var(--padding-xl); }
+.component--padding-xl2{ padding: var(--padding-xl2); }
+.component--padding-xl3{ padding: var(--padding-xl3); }

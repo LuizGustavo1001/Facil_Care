@@ -53,9 +53,13 @@
   .action-btn:active{
     transform: scale(0.98);
   }
+  .action-btn:active, .action-btn:focus{
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+    outline: none;
+  }
 
   .btn-content .btn-content-title{
-    font-size: var(--text-heading-sm);
+    font-size: var(--text-body-lg);
   }
 
   .btn-content .btn-content-description{

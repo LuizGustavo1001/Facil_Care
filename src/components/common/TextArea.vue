@@ -1,5 +1,5 @@
 <template>
-  <div class="input-wrapper flex flex-column">
+  <div class="input-wrapper flex flex-column width-full">
     <label
         v-if="label"
         :for="computedId"
@@ -8,13 +8,14 @@
       {{ label }}
     </label>
 
-    <input
+    <textarea
         :id="computedId"
         v-model="model"
-        :type="inputType"
         :name="name"
+        :rows="rows"
+        class="custom-textarea width-full"
         v-bind="$attrs"
-    >
+    ></textarea>
   </div>
 </template>
 
@@ -23,20 +24,24 @@
     gap: 0.3em;
   }
 
-  .input-wrapper input{
+  .custom-textarea{
+    font-family: inherit;
+    font-size: var(--text-body-md);
+    font-weight: 500;
+
+    padding: var(--padding-lg);
     border-radius: var(--radius-md);
     border: 1px solid var(--color-border-default);
 
-    padding: var(--padding-lg);
-    font-size: var(--text-body-md);
-    font-weight: 500;
+    resize: vertical;
+    min-height: 80px;
 
     transition: all 0.2s ease;
   }
 
-  .input-wrapper input:focus {
-    color: var(--color-text-focus);
-    border-color: var(--color-border-focus);
+  .custom-textarea:focus {
+    color: var(--color-text-focus, inherit);
+    border-color: var(--color-border-focus, #3b82f6);
     outline: none;
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
   }
@@ -54,11 +59,11 @@
   const props = defineProps({
     label: String,
     id: String,
-    inputType: {
+    name: String,
+    rows: { // initial visible lines amount
       type: String,
-      default: "text"
-    },
-    name: String
+      default: "2"
+    }
   })
 
   // make sure that input ID match each other

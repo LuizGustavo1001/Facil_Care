@@ -9,10 +9,65 @@
   </span>
 
   <span class="flex gap-1">
-    <IconBtn :icon="icons['first-aid-fill']" variant="highlight" padding="lg"/>
+    <IconBtn :icon="icons['logo-fill']" variant="highlight" padding="lg"/>
     <IconBtn :icon="icons['first-aid-fill']" variant="transparent"/>
-    <IconBtn :icon="icons.restaurant" variant="border" padding="sm"/>
+    <IconBtn :icon="icons['logo-fill-colorful']" variant="border" padding="sm"/>
     <IconBtn :icon="icons.zzz" variant="bg-clr"/>
+  </span>
+
+  <span class="flex gap-1">
+    <Input
+      label="Nome de Usuário"
+      id="inputName"
+      inputType="text"
+      name="name"
+      v-model="inputTest"
+    />
+
+    <SelectInput
+      label="Opções"
+      id="optionsSelect"
+      name="options"
+      :options="{ SP: 'São Paulo', RJ: 'Rio de Janeiro', MG: 'Minas Gerais' }"
+      v-model="selectTest"
+    />
+
+    <TextArea
+      label="Observações"
+      id="textArea"
+      name="textArea123"
+      v-model="textAreaTest"
+      placeholder="Exemplo: Paciente comendo normalmente"
+    />
+  </span>
+
+  <p> {{ inputTest }}</p>
+  <p> {{ selectTest }}</p>
+
+  <span class="flex gap-1 flex-column">
+    <SnackBar>
+      <template #message>
+        Lorem ipsum dolor sit amet, consec
+      </template>
+    </SnackBar>
+
+    <SnackBar variant="error">
+      <template #message>
+        Lorem ipsum dolor sit amet, consec
+      </template>
+    </SnackBar>
+
+    <SnackBar variant="warning">
+      <template #message>
+        Lorem ipsum dolor sit amet, consec
+      </template>
+    </SnackBar>
+
+    <SnackBar variant="info">
+      <template #message>
+        Lorem ipsum dolor sit amet, consec
+      </template>
+    </SnackBar>
   </span>
 
   <span class="flex gap-1 flex-column">
@@ -118,4 +173,13 @@
   import ActionButton from "../components/common/ActionButton.vue";
   import IconBtn from "../components/common/IconBtn.vue";
   import ActionButtonAlt from "../components/common/ActionButtonAlt.vue";
+  import SnackBar from "../components/common/SnackBar.vue";
+  import Input from "../components/common/Input.vue";
+  import {ref} from "vue";
+  import SelectInput from "../components/common/SelectInput.vue";
+  import TextArea from "../components/common/TextArea.vue";
+
+  const inputTest = ref('')
+  const selectTest = ref('')
+  const textAreaTest = ref('')
 </script>
