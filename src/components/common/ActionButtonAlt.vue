@@ -6,7 +6,7 @@
       :target="!isButton ? target : undefined"
       :rel="!isButton && target === '_blank' ? 'noopener noreferrer' : undefined"
       class="action-btn-alt flex justify-between gap-1"
-      :class="colorValue"
+      :class="colorVariant"
   >
     <span class="flex gap-05 align-center">
         <span class="left-icon-wrapper">
@@ -20,11 +20,14 @@
 
         <span class="btn-content flex flex-column justify-between gap-05 flex-grow-1">
           <span class="btn-content-title truncate-single">
-            <slot name="title" />
+            <slot name="title">{{ title }}</slot>
           </span>
 
-          <span class="btn-content-description flex flex-column text-muted truncate-multi">
-            <slot name="description" />
+          <span
+              v-if="description || $slots.description"
+              class="btn-content-description flex flex-column text-muted truncate-multi"
+          >
+            <slot name="description">{{ description }}</slot>
           </span>
       </span>
     </span>
@@ -77,7 +80,7 @@
 
   /* 2. Orange */
   .action-btn-alt.orange .left-icon-wrapper{
-    background-color: var(--orange-100);
+    background-color: var(--orange-200);
     color: var(--orange-500);
   }
   .action-btn-alt.orange:hover{
@@ -106,6 +109,9 @@
 <script setup>
   import { computed } from "vue"
   import Icon from "./Icon.vue"
+
+  const COLORS_LIST = ["blue", "orange", "red", "green"]
+  const DEFAULT_COLOR = "blue"
 
   const props = defineProps({
     tag: {
@@ -138,16 +144,17 @@
     },
     color: {
       type: String,
-      default: 'blue'
-    }
+      default: 'blue',
+      validator: (value) => ["blue", "orange", "red", "green"].includes(value)
+    },
+    title: String,
+    description: String
   })
 
   const isButton = computed(() => props.tag === 'button')
 
-  const colorsList = ['blue', 'orange', 'red', 'green']
-  let colorValue = props.color
-
-  if(! colorsList.includes(colorValue)){
-    colorValue = 'blue'
-  }
+  // avoid invalid color variant
+  const colorVariant = computed(() => {
+    return COLORS_LIST.includes(props.color) ? props.color : DEFAULT_COLOR
+  })
 </script>

@@ -6,7 +6,7 @@
       :target="!isButton ? target : undefined"
       :rel="!isButton && target === '_blank' ? 'noopener noreferrer' : undefined"
       class="icon-btn"
-      :class="variantValue"
+      :class="[variantClass, paddingClass]"
   >
     <Icon :icon="icon" :size="size"/>
   </component>
@@ -18,7 +18,6 @@
 
     height: fit-content;
 
-    padding: v-bind(paddingValue);
     border-radius: var(--radius-md);
     border: none;
 
@@ -74,6 +73,9 @@
   import { computed } from "vue"
   import Icon from "./Icon.vue";
 
+  const VARIANTS = ["highlight", "border", "bg-clr", "transparent"]
+  const DEFAULT_VARIANT = "highlight"
+
   const props = defineProps({
     tag: {
       type: String,
@@ -97,41 +99,21 @@
     },
     padding: {
       type: String,
-      default: '' // sm, md, lg, xl and xl2
+      default: 'md',
+      validator: (value) => ["sm", "md", "lg", "xl", "xl2"].includes(value)
     },
     variant: {
       type: String,
-      default: 'highlight'
+      default: 'highlight',
+      validator: (value) => ["highlight", "border", "bg-clr", "transparent"].includes(value)
     }
   })
 
   const isButton = computed(() => props.tag === 'button')
 
-  let paddingValue = ''
-  switch(props.padding){
-    case 'sm':
-      paddingValue = '4px'
-      break
-    case 'md':
-      paddingValue = '8px'
-      break
-    case 'lg':
-      paddingValue = '12px'
-      break
-    case 'xl':
-      paddingValue = '16px'
-      break
-    case 'xl2':
-      paddingValue = '24px'
-      break
-    default:
-      paddingValue = '8px'
-  }
+  const paddingClass = computed(() => `component--padding-${props.padding}`) // format padding class
+  const variantClass = computed(() => {
+    return VARIANTS.includes(props.variant) ? props.variant : DEFAULT_VARIANT
+  })
 
-  const variantList = ["highlight", "border", "bg-clr", "transparent"]
-  let variantValue = props.variant
-
-  if(! variantList.includes(props.variant)){
-    variantValue = "highlight"
-  }
 </script>

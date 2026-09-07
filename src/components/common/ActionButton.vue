@@ -3,10 +3,10 @@
     :is="tag"
     :type="isButton ? 'button' : undefined"
     :href="!isButton ? (link || undefined) : undefined"
-    :target="!isButton ? target : undefined"
-    :rel="!isButton && target === '_blank' ? 'noopener noreferrer' : undefined"
+    :target="!isButton ? parsedTarget : undefined"
+    :rel="!isButton && parsedTarget === '_blank' ? 'noopener noreferrer' : undefined"
     class="action-btn flex justify-between align-center gap-1"
-    :class="variantValue"
+    :class="[variantClass, paddingClass]"
   >
     <span class="flex align-center gap-05">
       <Icon
@@ -18,11 +18,14 @@
 
       <span class="btn-content flex flex-column flex-grow-1">
         <span class="btn-content-title truncate-multi">
-          <slot name="title" />
+          <slot name="title">{{ title }}</slot>
         </span>
 
-        <span class="btn-content-description flex flex-column text-muted">
-          <slot name="description" />
+        <span
+            v-if="description || $slots.description"
+            class="btn-content-description flex flex-column text-muted"
+        >
+          <slot name="description">{{ description }}</slot>
         </span>
       </span>
     </span>
@@ -38,8 +41,6 @@
 
 <style scoped>
   .action-btn{
-    padding: v-bind(paddingValue);
-
     text-align: start;
 
     border-radius: var(--radius-md);
@@ -112,6 +113,9 @@
   import { computed } from "vue"
   import Icon from "./Icon.vue"
 
+  const VARIANTS = ["highlight", "subtle", "destructive", "transparent"]
+  const DEFAULT_VARIANT = "highlight"
+
   const props = defineProps({
     tag: {
       type: String,
@@ -139,45 +143,30 @@
     },
     target: {
       type: String,
-      default: 'external'
+      default: '_self'
     },
     padding: {
       type: String,
-      default: '' // sm, md, lg, xl and xl2
+      default: 'md',
+      validator: (value) => ["sm", "md", "lg", "xl", "xl2"].includes(value),
     },
     variant: {
       type: String,
-      default: 'highlight'
-    }
+      default: "md",
+      validator: (value) => ["highlight", "subtle", "destructive", "transparent"].includes(value)
+    },
+    title: String,
+    description: String
   })
 
-  const isButton = computed(() => props.tag === 'button')
+  // avoid invalid variant classes
+  const variantClass = computed(() => {
+    return VARIANTS.includes(props.variant) ? props.variant : DEFAULT_VARIANT
+  })
 
-  let paddingValue = ''
-  switch(props.padding){
-      case 'sm':
-        paddingValue = '4px'
-        break
-      case 'md':
-        paddingValue = '8px'
-        break
-      case 'lg':
-        paddingValue = '12px'
-        break
-      case 'xl':
-        paddingValue = '16px'
-        break
-      case 'xl2':
-        paddingValue = '24px'
-          break
-      default:
-        paddingValue = '8px'
-    }
+  const isButton = computed(() => props.tag === "button")
 
-    const variantList = ["highlight", "subtle", "destructive", "transparent"]
-    let variantValue = props.variant
+  const parsedTarget = computed(() => props.target === "external" ? "_blank" : props.target)
 
-    if(! variantList.includes(props.variant)){
-      variantValue = "highlight"
-    }
+  const paddingClass = computed(() => `component--padding-${props.padding}`) // format padding class
 </script>

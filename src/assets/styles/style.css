@@ -16,7 +16,8 @@
     --green-100: #D9F4EB;
     --green-500: #209768;
 
-    --orange-100: #F3E5D4;
+    --orange-100: #FDF0E9;
+    --orange-200: #F3E5D4;
     --orange-500: #EA7624;
 
     --blue-100: #D3E1F4;
@@ -27,10 +28,11 @@
 
     --font-size-100: 0.75rem; /* 12px */
     --font-size-200: 0.8rem; /* 13px */
-    --font-size-300: 1rem; /* 16px */
-    --font-size-400: 1.125rem; /* 18px */
-    --font-size-500: 1.25rem; /* 20px */
-    --font-size-600: 1.5rem; /* 24px */
+    --font-size-300: 0.875rem; /* */
+    --font-size-400: 1rem; /* 16px */
+    --font-size-500: 1.125rem;/* 18px */
+    --font-size-600: 1.2rem; /* 20px */
+    --font-size-700: 1.5em; /* 24px */
 
     --transparent-005: rgba(0, 0, 0, 0.05);
     --transparent-010: rgba(0, 0, 0, 0.1);
@@ -62,9 +64,10 @@
     --text-caption: var(--font-size-100);
     --text-body-sm: var(--font-size-200);
     --text-body-md: var(--font-size-300);
-    --text-heading-sm: var(--font-size-400);
-    --text-heading-md: var(--font-size-500);
-    --text-heading-lg: var(--font-size-600);
+    --text-body-lg: var(--font-size-400);
+    --text-heading-sm: var(--font-size-500);
+    --text-heading-md: var(--font-size-600);
+    --text-heading-lg: var(--font-size-700);
 
     --shadow-lighter: var(--transparent-005);
     --shadow-light: var(--transparent-010);
@@ -83,6 +86,7 @@
 body{
     min-height: 100vh;
     color: var(--color-text-primary);
+    font-family: system-ui;
 }
 
 .absolute{
@@ -154,3 +158,28 @@ body{
 .text-muted{
     color: var(--color-text-muted);
 }
+
+.cursor-pointer{
+    cursor: pointer;
+}
+
+.weight-medium{
+    font-weight: 500;
+}
+
+
+
+/* ANIMATIONS */
+@keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+
+/* PADDING */
+.component--padding-sm{ padding: 4px }
+.component--padding-md{ padding: 8px}
+.component--padding-lg{ padding: 12px }
+.component--padding-xl{ padding: 16px }
+.component--padding-xl2{ padding: 20px }
+.component--padding-xl3{ padding: 24px }
