@@ -1,5 +1,5 @@
 <template>
-  <div class="input-wrapper flex flex-column">
+  <div class="input-wrapper flex flex-column" style="gap: var(--spacing-3xs)">
     <label
         v-if="label"
         :for="computedId"
@@ -13,7 +13,7 @@
       v-model="model"
       :name="name"
       v-bind="$attrs"
-      class="cursor-pointer"
+      class="cursor-pointer default-input-attr"
     >
       <option value="" disabled selected hidden>Selecione uma opção...</option>
 
@@ -30,27 +30,6 @@
 </template>
 
 <style scoped>
-  .input-wrapper{
-    gap: 0.3em;
-  }
-
-  .input-wrapper select{
-    border-radius: var(--radius-md);
-    border: 1px solid var(--color-border-default);
-    background: transparent;
-
-    padding: var(--padding-lg);
-    font-size: var(--text-body-md);
-    font-weight: 500;
-
-    transition: all 0.2s ease;
-  }
-  .input-wrapper select:focus {
-    color: var(--color-text-focus);
-    border-color: var(--color-border-focus);
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
-  }
 </style>
 
 <script setup>

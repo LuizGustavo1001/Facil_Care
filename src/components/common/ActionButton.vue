@@ -6,7 +6,8 @@
     :target="!isButton ? parsedTarget : undefined"
     :rel="!isButton && parsedTarget === '_blank' ? 'noopener noreferrer' : undefined"
     class="action-btn flex justify-between align-center gap-1"
-    :class="[variantClass, paddingClass]"
+    :class="variantClass"
+    :style="paddingStyle"
   >
     <span class="flex align-center gap-05">
       <Icon
@@ -53,7 +54,7 @@
   .action-btn:active{
     transform: scale(0.98);
   }
-  .action-btn:active, .action-btn:focus{
+  .action-btn:active, .action-btn:active, .action-btn:focus-visible{
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
     outline: none;
   }
@@ -84,7 +85,7 @@
     background: var(--color-bg-subtle);
   }
   .action-btn.subtle:hover{
-    border-color: var(--color-border-focus);
+    border-color: var(--color-border-brand);
   }
 
   /* 3. Destructive */
@@ -101,15 +102,15 @@
 
   /* 4. Highlight */
   .action-btn.highlight{
-    background: var(--color-bg-highlight);
-    color: var(--color-text-highlight);
+    background: var(--color-bg-brand);
+    color: var(--color-text-inverse);
   }
   .action-btn.highlight:hover{
-    background: var(--color-border-focus);
+    background: var(--color-bg-brand-hover);
   }
 
   .action-btn.highlight .btn-content-description{
-    color: var(--color-text-subtle);
+    color: var(--color-text-inverse-muted);
   }
 </style>
 
@@ -151,8 +152,8 @@
     },
     padding: {
       type: String,
-      default: 'md',
-      validator: (value) => ["sm", "md", "lg", "xl", "xl2"].includes(value),
+      default: 'xs',
+      validator: (value) => ["2xs", "xs", "sm", "md"].includes(value)
     },
     variant: {
       type: String,
@@ -172,5 +173,5 @@
 
   const parsedTarget = computed(() => props.target === "external" ? "_blank" : props.target)
 
-  const paddingClass = computed(() => `component--padding-${props.padding}`) // format padding class
+  const paddingStyle = computed(() => `padding: var(--spacing-${props.padding})`)
 </script>

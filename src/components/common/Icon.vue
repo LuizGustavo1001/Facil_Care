@@ -1,5 +1,9 @@
 <template>
-  <i class="icon-wrapper" v-html="props.icon" />
+  <i
+      class="icon-wrapper"
+      :style="paddingStyle"
+      v-html="props.icon"
+  />
 </template>
 
 <style scoped>
@@ -10,7 +14,6 @@
     flex-shrink: 0;
     width: fit-content;
 
-    padding: v-bind(resolvedPadding);
     transition: all 0.2s ease;
   }
 
@@ -29,13 +32,10 @@
       type: String,
       required: true
     },
-    havePadding: {
-      type: Boolean,
-      default: false
-    },
     padding: {
       type: String,
-      default: '0.5em'
+      default: 'none',
+      validator: (value) => ["none", "2xs", "xs", "sm", "md"].includes(value)
     },
     size: {
       type: String,
@@ -43,5 +43,5 @@
     }
   })
 
-  const resolvedPadding = computed(() => props.havePadding ? props.padding : 0)
+  const paddingStyle = computed(() => props.padding !== "none" ? `padding: var(--spacing-${props.padding})` : undefined)
 </script>
