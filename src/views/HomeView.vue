@@ -5,13 +5,13 @@
         tag="button"
     />
 
-    <Icon :icon="icons.add" :have-padding="true" size="35px" />
+    <Icon :icon="icons.add" size="35px" />
   </span>
 
   <span class="flex gap-1">
-    <IconBtn :icon="icons['logo-fill']" variant="highlight" padding="lg"/>
+    <IconBtn :icon="icons['logo-fill']" variant="brand"/>
     <IconBtn :icon="icons['first-aid-fill']" variant="transparent"/>
-    <IconBtn :icon="icons['logo-fill-colorful']" variant="border" padding="sm"/>
+    <IconBtn :icon="icons['logo-fill-colorful']" variant="border"/>
     <IconBtn :icon="icons.zzz" variant="bg-clr"/>
   </span>
 
@@ -112,7 +112,7 @@
     </ActionButtonAlt>
   </span>
 
-  <ActionButton tag="button" :leftIcon="icons['capsule-line']" :rightIcon="icons['chevron-right']" right-icon-size="20px" padding="lg"  variant="highlight">
+  <ActionButton tag="button" :leftIcon="icons['capsule-line']" :rightIcon="icons['chevron-right']" right-icon-size="20px" padding="md"  variant="highlight">
     <template #title>
       Marina Souza
     </template>
@@ -123,9 +123,9 @@
     </template>
   </ActionButton>
 
-  <ActionButton tag="button" :leftIcon="icons['capsule-line']" :rightIcon="icons['chevron-right']" right-icon-size="20px" padding="lg" variant="transparent">
+  <ActionButton tag="button" :leftIcon="icons['capsule-line']" :rightIcon="icons['chevron-right']" right-icon-size="20px" padding="sm" variant="transparent">
     <template #title>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, ipsam, libero! A, assumenda doloremque minus modi nam nisi nobis quaerat quasi qui reprehenderit! Aut dicta ducimus ea harum. Minima, vero?
+      adsadLorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, ipsam, libero! A, assumenda doloremque minus modi nam nisi nobis quaerat quasi qui reprehenderit! Aut dicta ducimus ea harum. Minima, vero?
     </template>
 
     <template #description>
@@ -134,7 +134,7 @@
     </template>
   </ActionButton>
 
-  <ActionButton tag="button" :leftIcon="icons['capsule-line']" :rightIcon="icons['chevron-right']" right-icon-size="20px" padding="lg" variant="subtle">
+  <ActionButton tag="button" :leftIcon="icons['capsule-line']" :rightIcon="icons['chevron-right']" right-icon-size="20px" padding="sm" variant="subtle">
     <template #title>
       Marina Souza
     </template>
@@ -145,7 +145,7 @@
     </template>
   </ActionButton>
 
-  <ActionButton tag="button" :leftIcon="icons['capsule-line']" :rightIcon="icons['chevron-right']" right-icon-size="20px" padding="lg" variant="destructive">
+  <ActionButton tag="button" :leftIcon="icons['capsule-line']" :rightIcon="icons['chevron-right']" right-icon-size="20px" padding="sm" variant="destructive">
     <template #title>
       Marina Souza
     </template>
