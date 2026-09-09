@@ -55,7 +55,7 @@
     cursor: pointer;
     transition: 0.2s ease-out;
   }
-  .action-btn-alt:active, .action-btn-alt:focus{
+  .action-btn-alt:active, .action-btn-alt:active, .action-btn-alt:focus-visible{
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
     outline: none;
   }

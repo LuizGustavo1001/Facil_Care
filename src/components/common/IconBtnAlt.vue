@@ -7,12 +7,16 @@
       :rel="!isButton && target === '_blank' ? 'noopener noreferrer' : undefined"
       class="icon-btn-alt outline-layer relative flex-shrink overflow-hidden"
     >
-    <Icon class="inline-layer" :icon="props.icon" :have-padding="true" padding="0.5em" :size="size" />
+    <Icon
+        class="inline-layer"
+        :icon="props.icon"
+        padding="xs"
+        :size="size"
+    />
   </component>
 </template>
 
 <style scoped>
-
 .outline-layer, .inline-layer{
   background: var(--color-bg-primary);
   border: 1px solid var(--color-border-default);
@@ -22,13 +26,12 @@
 .outline-layer{
   padding: 3px;
 
-  box-shadow: inset -2px -4px 10px var(--shadow);
+  box-shadow: inset -2px -4px 10px var(--color-shadow-default);
 }
 
 .outline-layer:active .inline-layer{
   transform: scale(0.9);
 }
-
 </style>
 
 <script setup>
