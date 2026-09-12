@@ -1,185 +1,124 @@
 <template>
-  <span class="flex gap-1">
-    <IconBtnAlt
-        :icon="icons['menu-left']"
-        tag="button"
-    />
+  <AppHeader>
+    {{ $t('greetings.hello') }}, <strong>{{ username }}</strong>!
+  </AppHeader>
 
-    <Icon :icon="icons.add" size="35px" />
-  </span>
+  <main class="flex flex-column gap-15 relative flex-grow-1">
+    <section class="flex flex-column gap-1">
+      <p class="text-muted">{{ $t("views.home.subtitle") }}:</p>
 
-  <span class="flex gap-1">
-    <IconBtn :icon="icons['logo-fill']" variant="brand"/>
-    <IconBtn :icon="icons['first-aid-fill']" variant="transparent"/>
-    <IconBtn :icon="icons['logo-fill-colorful']" variant="border"/>
-    <IconBtn :icon="icons.zzz" variant="bg-clr"/>
-  </span>
+      <nav class="home-nav flex flex-column gap-1">
+        <a
+            v-for="btn in homeView.buttons"
+            :key="btn.id"
+            href=""
+            class="home-card flex justify-between align-center gap-05 active-border"
+            :class="btn.color"
+        >
+          <div class="flex flex-column flex-grow-1" style="gap: var(--spacing-3xs)">
+            <h1 class="truncate-multi">{{ $t(`views.home.buttons.${btn.id}.title`) }}</h1>
+            <p class="truncate-multi muted">{{ $t(`views.home.buttons.${btn.id}.description`) }}</p>
+          </div>
 
-  <span class="flex gap-1">
-    <Input
-      label="Nome de Usuário"
-      id="inputName"
-      inputType="text"
-      name="name"
-      v-model="inputTest"
-    />
+          <Icon :icon="btn.icon" class="muted" size="35px"/>
+        </a>
+      </nav>
+    </section>
+  </main>
 
-    <SelectInput
-      label="Opções"
-      id="optionsSelect"
-      name="options"
-      :options="{ SP: 'São Paulo', RJ: 'Rio de Janeiro', MG: 'Minas Gerais' }"
-      v-model="selectTest"
-    />
-
-    <TextArea
-      label="Observações"
-      id="textArea"
-      name="textArea123"
-      v-model="textAreaTest"
-      placeholder="Exemplo: Paciente comendo normalmente"
-    />
-  </span>
-
-  <p> {{ inputTest }}</p>
-  <p> {{ selectTest }}</p>
-
-  <span class="flex gap-1 flex-column">
-    <SnackBar>
-      <template #message>
-        Lorem ipsum dolor sit amet, consec
+  <footer class="flex flex-column gap-05">
+    <div>
+      <template v-for="btn in homeView.footer.buttons" :key="btn.id">
+        <ActionButton
+            :leftIcon="btn.leftIcon"
+            padding="md"
+            :rightIcon="btn.rightIcon || icons['chevron-right']"
+            :title="$t(`views.home.footer.buttons.${btn.id}.title`)"
+        />
       </template>
-    </SnackBar>
+    </div>
 
-    <SnackBar variant="error">
-      <template #message>
-        Lorem ipsum dolor sit amet, consec
-      </template>
-    </SnackBar>
-
-    <SnackBar variant="warning">
-      <template #message>
-        Lorem ipsum dolor sit amet, consec
-      </template>
-    </SnackBar>
-
-    <SnackBar variant="info">
-      <template #message>
-        Lorem ipsum dolor sit amet, consec
-      </template>
-    </SnackBar>
-  </span>
-
-  <span class="flex gap-1 flex-column">
-    <ActionButtonAlt tag="button" :leftIcon="icons['cake-line']" :rightIcon="icons['chevron-right']">
-        <template #title>
-          Data de Nascimento
-        </template>
-
-      <template #description>
-        19/03/1953 (73 anos)
-      </template>
-    </ActionButtonAlt>
-
-    <ActionButtonAlt tag="button" :leftIcon="icons['cake-line']" :rightIcon="icons['chevron-right']" color="orange">
-        <template #title>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aspernatur beatae corporis delectus dignissimos, ea eligendi incidunt itaque reiciendis veniam. Aspernatur autem fuga laudantium, mollitia odit recusandae voluptate voluptatibus voluptatum?
-        </template>
-
-      <template #description>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam aperiam dolorum eaque, eius eos et eveniet fugit labore neque nihil, obcaecati praesentium repellendus suscipit, tempore totam? Beatae illum iste magni?
-      </template>
-    </ActionButtonAlt>
-
-    <ActionButtonAlt tag="button" :leftIcon="icons['cake-line']" :rightIcon="icons['chevron-right']" color="red">
-        <template #title>
-          Data de Nascimento
-        </template>
-
-      <template #description>
-        19/03/1953 (73 anos)
-      </template>
-    </ActionButtonAlt>
-
-    <ActionButtonAlt tag="button" :leftIcon="icons['cake-line']" :rightIcon="icons['chevron-right']" color="green">
-        <template #title>
-          Data de Nascimento
-        </template>
-
-      <template #description>
-        19/03/1953 (73 anos)
-      </template>
-    </ActionButtonAlt>
-  </span>
-
-  <ActionButton tag="button" :leftIcon="icons['capsule-line']" :rightIcon="icons['chevron-right']" right-icon-size="20px" padding="md"  variant="highlight">
-    <template #title>
-      Marina Souza
-    </template>
-
-    <template #description>
-      <span class="info-item">Telefone: (DD) 9XXXX-XXXX</span>
-      <span class="info-item">Desde: 15/01/2026</span>
-    </template>
-  </ActionButton>
-
-  <ActionButton tag="button" :leftIcon="icons['capsule-line']" :rightIcon="icons['chevron-right']" right-icon-size="20px" padding="sm" variant="transparent">
-    <template #title>
-      adsadLorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, ipsam, libero! A, assumenda doloremque minus modi nam nisi nobis quaerat quasi qui reprehenderit! Aut dicta ducimus ea harum. Minima, vero?
-    </template>
-
-    <template #description>
-      <span class="info-item">Telefone: (DD) 9XXXX-XXXX</span>
-      <span class="info-item">Desde: 15/01/2026</span>
-    </template>
-  </ActionButton>
-
-  <ActionButton tag="button" :leftIcon="icons['capsule-line']" :rightIcon="icons['chevron-right']" right-icon-size="20px" padding="sm" variant="subtle">
-    <template #title>
-      Marina Souza
-    </template>
-
-    <template #description>
-      <span class="info-item">Telefone: (DD) 9XXXX-XXXX</span>
-      <span class="info-item">Desde: 15/01/2026</span>
-    </template>
-  </ActionButton>
-
-  <ActionButton tag="button" :leftIcon="icons['capsule-line']" :rightIcon="icons['chevron-right']" right-icon-size="20px" padding="sm" variant="destructive">
-    <template #title>
-      Marina Souza
-    </template>
-
-    <template #description>
-      <span class="info-item">Telefone: (DD) 9XXXX-XXXX</span>
-      <span class="info-item">Desde: 15/01/2026</span>
-    </template>
-  </ActionButton>
-
-  <h1>{{ test.test_value }}</h1>
-  <p>{{ $t("ptbr_test.a") }}</p>
+    <p class="brand text-muted-lighter">Facil Care - 2026</p>
+  </footer>
 </template>
 
 <style scoped>
+  .home-nav{
+    border-radius: var(--radius-md);
+  }
 
+  .home-card{
+    color: inherit;
+    padding: var(--spacing-lg);
+
+    border-radius: var(--radius-md);
+
+    transition: 0.2s ease-out;
+  }
+  .home-card:active, .home-card:focus-visible{
+    transform: scale(0.98);
+  }
+
+  .home-card h1{
+    font-size: var(--text-heading-sm);
+    text-transform: uppercase;
+    overflow-wrap: anywhere;
+  }
+  .home-card p{
+    font-size: var(--text-body-md);
+    font-weight: 500;
+  }
+
+  .home-card .muted{
+    opacity: 0.7;
+  }
+
+  /* VARIANT */
+  /* 1. Red */
+  .home-card.red{
+    background: var(--red-100);
+    color: var(--red-500);
+  }
+
+  /* 2. Orange */
+  .home-card.orange{
+    background: var(--orange-100);
+    color: var(--orange-500);
+  }
+
+  /* 3. Blue */
+  .home-card.blue{
+    background: var(--blue-100);
+    color: var(--blue-500);
+  }
+
+  /* 4. Green */
+  .home-card.green{
+    background: var(--green-100);
+    color: var(--green-500);
+  }
+
+  /* 5. Yellow */
+  .home-card.yellow{
+    background: var(--yellow-100);
+    color: var(--yellow-600);
+  }
+
+  /* 6. Purple */
+  .home-card.purple{
+    background: var(--purple-200);
+    color: var(--purple-500);
+  }
 </style>
 
 <script setup>
+  import { ref } from "vue"
   import { icons } from "../assets/icons/icons.js"
-  import IconBtnAlt from "../components/common/IconBtnAlt.vue"
+  import { homeView } from "../locales/projectConfig.js"
+
+  import AppHeader from "../components/common/AppHeader.vue"
   import Icon from "../components/common/Icon.vue"
+  import ActionButton from "../components/common/ActionButton.vue"
 
-  import { test } from "../locales/projectConfig.js"
-  import ActionButton from "../components/common/ActionButton.vue";
-  import IconBtn from "../components/common/IconBtn.vue";
-  import ActionButtonAlt from "../components/common/ActionButtonAlt.vue";
-  import SnackBar from "../components/common/SnackBar.vue";
-  import Input from "../components/common/Input.vue";
-  import {ref} from "vue";
-  import SelectInput from "../components/common/SelectInput.vue";
-  import TextArea from "../components/common/TextArea.vue";
-
-  const inputTest = ref('')
-  const selectTest = ref('')
-  const textAreaTest = ref('')
+  const username = ref('Antônio Dias')
 </script>

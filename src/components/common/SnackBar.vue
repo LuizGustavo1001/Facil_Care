@@ -1,6 +1,6 @@
 <template>
   <div
-      class="snackbar flex gap1 justify-between cursor-pointer"
+      class="snackbar flex gap1 justify-between cursor-pointer active-border"
       :class="variantClass"
       @click="$emit('close')"
   >

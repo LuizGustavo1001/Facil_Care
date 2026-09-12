@@ -5,7 +5,7 @@
     :href="!isButton ? (link || undefined) : undefined"
     :target="!isButton ? parsedTarget : undefined"
     :rel="!isButton && parsedTarget === '_blank' ? 'noopener noreferrer' : undefined"
-    class="action-btn flex justify-between align-center gap-1"
+    class="action-btn flex justify-between align-center gap-1 active-border"
     :class="variantClass"
     :style="paddingStyle"
   >
@@ -54,13 +54,10 @@
   .action-btn:active{
     transform: scale(0.98);
   }
-  .action-btn:active, .action-btn:active, .action-btn:focus-visible{
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
-    outline: none;
-  }
 
   .btn-content .btn-content-title{
     font-size: var(--text-body-lg);
+    font-weight: 600;
   }
 
   .btn-content .btn-content-description{

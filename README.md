@@ -6,6 +6,7 @@ O *Progressive Web App* (PWA) será **100% offline**, ou seja, será possível:
 - Acessá-lo mesmo **sem conexão** com internet ou Wi-Fi
 - Manter os **dados** de um paciente com **privacidade total** (são armazenados apenas localmente)
 - **Sem custos** para armazenamento na **nuvem**
+> 🎨 Projeto Figma: [Clique Aqui](https://www.figma.com/design/Hz5x5uWg9bis53saHyB4vJ/Cuidados-Di%C3%A1rios?node-id=0-1&p=f&t=72omA2iRuWiTJfML-0)
 
 Funcionalidades
 ---

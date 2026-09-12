@@ -5,7 +5,7 @@
       :href="!isButton ? (link || undefined) : undefined"
       :target="!isButton ? target : undefined"
       :rel="!isButton && target === '_blank' ? 'noopener noreferrer' : undefined"
-      class="action-btn-alt flex justify-between gap-1"
+      class="action-btn-alt flex justify-between gap-1 active-border"
       :class="colorVariant"
   >
     <span class="flex gap-05 align-center">
@@ -54,10 +54,6 @@
 
     cursor: pointer;
     transition: 0.2s ease-out;
-  }
-  .action-btn-alt:active, .action-btn-alt:active, .action-btn-alt:focus-visible{
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
-    outline: none;
   }
 
   .action-btn-alt .left-icon-wrapper{

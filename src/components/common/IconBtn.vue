@@ -68,13 +68,24 @@
     background: var(--color-bg-hover);
   }
 
+  /* 5. Subtle */
+  .icon-btn.subtle{
+    background: var(--color-bg-subtle);
+    color: var(--color-text-primary-muted);
+
+    border: 1px solid transparent;
+  }
+  .icon-btn.subtle:hover{
+    border-color: var(--color-border-default);
+  }
+
 </style>
 
 <script setup>
   import { computed } from "vue"
   import Icon from "./Icon.vue";
 
-  const VARIANTS = ["brand", "border", "bg-clr", "transparent"]
+  const VARIANTS = ["brand", "border", "bg-clr", "transparent", "subtle"]
   const DEFAULT_VARIANT = "brand"
 
   const props = defineProps({
@@ -106,7 +117,7 @@
     variant: {
       type: String,
       default: 'brand',
-      validator: (value) => ["brand", "border", "bg-clr", "transparent"].includes(value)
+      validator: (value) => ["brand", "border", "bg-clr", "transparent", "subtle"].includes(value)
     }
   })
 

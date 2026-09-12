@@ -13,7 +13,7 @@
       v-model="model"
       :name="name"
       v-bind="$attrs"
-      class="cursor-pointer default-input-attr"
+      class="cursor-pointer default-input-attr active-border"
     >
       <option value="" disabled selected hidden>Selecione uma opção...</option>
 

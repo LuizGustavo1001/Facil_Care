@@ -14,7 +14,7 @@
         :type="inputType"
         :name="name"
         v-bind="$attrs"
-        class="default-input-attr"
+        class="default-input-attr active-border"
     >
   </div>
 </template>

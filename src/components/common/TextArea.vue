@@ -13,7 +13,7 @@
         v-model="model"
         :name="name"
         :rows="rows"
-        class="custom-textarea width-full default-input-attr"
+        class="custom-textarea width-full default-input-attr active-border"
         v-bind="$attrs"
     />
   </div>

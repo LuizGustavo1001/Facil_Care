@@ -5,7 +5,7 @@
       :href="!isButton ? (link || undefined) : undefined"
       :target="!isButton ? target : undefined"
       :rel="!isButton && target === '_blank' ? 'noopener noreferrer' : undefined"
-      class="icon-btn-alt outline-layer relative flex-shrink overflow-hidden"
+      class="icon-btn-alt outline-layer relative flex-shrink overflow-hidden cursor-pointer"
     >
     <Icon
         class="inline-layer"
