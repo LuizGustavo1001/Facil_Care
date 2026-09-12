@@ -48,3 +48,53 @@ export const homeView = {
         ]
     }
 }
+
+export const sidebar = {
+    section: [
+        {
+            id: "general",
+            items: [
+                {
+                    id: "emergency",
+                    icon: icons["first-aid-fill"],
+                    route: "/emergency-data"
+                },
+                {
+                    id: "preferences",
+                    icon: icons["settings-fill"],
+                    route: "/preferencies"
+                }
+            ]
+        },
+        {
+            id: "import",
+            items: [
+                {
+                    id: "export",
+                    icon: icons["qr-code-fill"],
+                    route: "/export-data"
+                },
+                {
+                    id: "import",
+                    icon: icons["qr-scan-fill"],
+                    route: "/import-data"
+                }
+            ]
+        },
+        {
+            id: "others",
+            items: [
+                {
+                    id: "manual",
+                    icon: icons["book-read-fill"],
+                    route: "/manual"
+                },
+                {
+                    id: "terms",
+                    icon: icons["shield-user-fill"],
+                    route: "/terms"
+                }
+            ]
+        }
+    ]
+}

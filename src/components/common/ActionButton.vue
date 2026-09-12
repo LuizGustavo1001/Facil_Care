@@ -150,7 +150,7 @@
     padding: {
       type: String,
       default: 'xs',
-      validator: (value) => ["2xs", "xs", "sm", "md"].includes(value)
+      validator: (value) => ["2xs", "xs", "sm", "md", "lg"].includes(value)
     },
     variant: {
       type: String,

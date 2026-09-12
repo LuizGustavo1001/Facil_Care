@@ -43,5 +43,42 @@ export default {
         vitalSigns: {
             headerTitle: "Sinais Vitais"
         }
+    },
+    sidebar: {
+        sections: {
+            general: {
+                title: "Geral",
+                items: {
+                    emergency: {
+                        title: "Dados de Emergência"
+                    },
+                    preferences: {
+                        title: "Preferências"
+                    }
+                }
+            },
+            import: {
+                title: "Importar/Exportar",
+                items: {
+                    export: {
+                        title: "Exportar Dados"
+                    },
+                    import: {
+                        title: "Importar Dados"
+                    }
+                }
+            },
+            others: {
+                title: "Outros",
+                items: {
+                    manual: {
+                        title: "Manual do Usuário"
+                    },
+                    terms: {
+                        title: "Termos de Responsabilidade"
+                    }
+                }
+            }
+        }
     }
 }

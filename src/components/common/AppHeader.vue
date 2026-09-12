@@ -1,7 +1,14 @@
 <template>
   <header class="flex justify-center items-center gap-05">
     <div class="flex align-center gap-05 flex-grow-1">
-      <IconBtnAlt :icon="icons['menu-left']" size="25px" />
+
+      <template v-if="leftBtnIcon === icons['menu-left']">
+        <IconBtnAlt id="sidebar-toggle-btn" :icon="leftBtnIcon" size="25px" @click.stop="$emit('click')"/>
+      </template>
+
+      <template v-else>
+        <IconBtnAlt :icon="leftBtnIcon" size="25px" @click="$emit('return')"/>
+      </template>
 
       <p class="title flex-grow-1 truncate-single">
         <slot><strong>{{ props.title }}</strong></slot>
@@ -20,7 +27,7 @@
     background: var(--color-bg-primary);
 
     border-radius: 0 0 var(--radius-xl) var(--radius-xl);
-    box-shadow: 0 0 4px 5px var(--alpha-black-05);
+    box-shadow: 0 0 4px 5px var(--color-shadow-subtle);
 
     z-index: 1;
   }
@@ -37,6 +44,10 @@
 
   const props = defineProps({
     title: String,
+    leftBtnIcon: {
+      type: String,
+      default: icons["menu-left"]
+    }
   })
 
   /*

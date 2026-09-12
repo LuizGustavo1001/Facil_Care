@@ -1,6 +1,6 @@
 <template>
   <i
-      class="icon-wrapper"
+      class="icon-wrapper icon"
       :style="paddingStyle"
       v-html="props.icon"
   />

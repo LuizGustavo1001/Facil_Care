@@ -1,5 +1,9 @@
 <template>
-  <AppHeader>
+  <AppOverlay :class="{ active: overlayIsActive }"/>
+
+  <AppSidebar :class="{ active: sidebarIsActive }"/>
+
+  <AppHeader @click="handleSidebarToggle">
     {{ $t('greetings.hello') }}, <strong>{{ username }}</strong>!
   </AppHeader>
 
@@ -11,7 +15,7 @@
         <a
             v-for="btn in homeView.buttons"
             :key="btn.id"
-            href=""
+            :href="btn.route"
             class="home-card flex justify-between align-center gap-05 active-border"
             :class="btn.color"
         >
@@ -112,13 +116,44 @@
 </style>
 
 <script setup>
-  import { ref } from "vue"
+  import { onMounted, onUnmounted, ref } from "vue"
+
   import { icons } from "../assets/icons/icons.js"
   import { homeView } from "../locales/projectConfig.js"
 
   import AppHeader from "../components/common/AppHeader.vue"
   import Icon from "../components/common/Icon.vue"
   import ActionButton from "../components/common/ActionButton.vue"
+  import AppSidebar from "../components/AppSidebar.vue"
+  import AppOverlay from "../components/common/AppOverlay.vue"
 
   const username = ref('Antônio Dias')
+
+  /*
+    Sidebar Toggle Logic
+  */
+  const overlayIsActive = ref(false)
+  const sidebarIsActive = ref(false)
+
+  const handleSidebarToggle = () => {
+    sidebarIsActive.value = !sidebarIsActive.value
+    overlayIsActive.value = sidebarIsActive.value
+  }
+
+  const handleClickOutside = (event) => {
+    const clickedInsideSidebar = event.target.closest('#sidebar')
+
+    if (sidebarIsActive.value && !clickedInsideSidebar) { // avoid function when clicking within the sidebar
+      handleSidebarToggle()
+    }
+  }
+
+
+  onMounted(() => {
+    window.addEventListener("click", handleClickOutside)
+  })
+
+  onUnmounted(() => {
+    window.removeEventListener("click", handleClickOutside)
+  })
 </script>
