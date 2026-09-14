@@ -10,7 +10,7 @@
           size="25px"
       />
 
-      <span class="snackbar-text flex-grow-1 weight-medium">
+      <span class="snackbar-text flex-grow-1">
         <slot name="message">{{ message }}</slot>
       </span>
     </span>

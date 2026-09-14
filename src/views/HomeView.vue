@@ -71,7 +71,6 @@
   .home-card h1{
     font-size: var(--text-heading-sm);
     text-transform: uppercase;
-    overflow-wrap: anywhere;
   }
   .home-card p{
     font-size: var(--text-body-md);
@@ -79,7 +78,7 @@
   }
 
   .home-card .muted{
-    opacity: 0.7;
+    opacity: 0.75;
   }
 
   /* VARIANT */
@@ -129,7 +128,7 @@
   import AppHeader from "../components/common/AppHeader.vue"
   import Icon from "../components/common/Icon.vue"
   import ActionButton from "../components/common/ActionButton.vue"
-  import AppSidebar from "../components/AppSidebar.vue"
+  import AppSidebar from "../components/common/AppSidebar.vue"
   import AppOverlay from "../components/common/AppOverlay.vue"
 
   import { useSidebar } from "../composables/useSidebar.js"

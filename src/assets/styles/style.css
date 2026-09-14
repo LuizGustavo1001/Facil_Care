@@ -1,3 +1,11 @@
+@font-face {
+    font-family: "Plus Jakarta Sans";
+    src: url('../fonts/PlusJakartaSans-VariableFont_wght.ttf') format('truetype');
+    font-weight: 400 800;
+    font-style: normal;
+    font-display: swap;
+}
+
 :root{
     /* -=-=-=- PRIMAL TOKENS -=-=-=- */
     /* Colors */
@@ -67,6 +75,13 @@
     --spacing-lg: 20px;
     --spacing-xl: 24px;
 
+    /* Font Weight & Family */
+    --font-default: 'Plus Jakarta Sans', system-ui;
+    --normal-weight: 400;
+    --medium-weight: 550;
+    --bold-weight: 700;
+    --bolder-weight: 800;
+
     /* -=-=-=- SEMANTIC TOKENS -=-=-=- */
     /* Text Color */
     --color-text-primary: var(--blue-900);
@@ -130,7 +145,8 @@ body{
     min-height: 100vh;
     color: var(--color-text-primary);
     background: var(--color-bg-primary);
-    font-family: system-ui;
+    font-family: var(--font-default), system-ui;
+    font-weight: var(--medium-weight);
 }
 
 a{
@@ -158,7 +174,7 @@ footer{
 footer .brand{
     text-align: center;
     font-size: var(--text-body-md);
-    font-weight: bolder;
+    font-weight: var(--bold-weight);
 }
 
 #app{
@@ -226,6 +242,7 @@ footer .brand{
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    word-break: break-all;
 }
 
 .truncate-multi{
@@ -233,6 +250,7 @@ footer .brand{
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    word-break: break-all;
 }
 
 .text-muted{
@@ -246,8 +264,17 @@ footer .brand{
     cursor: pointer;
 }
 
-.weight-medium{
-    font-weight: 500;
+.normal-weight{
+    font-weight: var(--normal-weight);
+}
+.medium-weight{
+    font-weight: var(--medium-weight);
+}
+.bold-weight{
+    font-weight: var(--bold-weight);
+}
+.bolder-weight{
+    font-weight: var(--bolder-weight);
 }
 
 .width-full{
@@ -260,7 +287,7 @@ footer .brand{
 
     padding: var(--spacing-md);
     font-size: var(--text-body-md);
-    font-weight: 500;
+    font-weight: var(--medium-weight);
     color: var(--color-text-primary-muted);
 
     background: transparent;

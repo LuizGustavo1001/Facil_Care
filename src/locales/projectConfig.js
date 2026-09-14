@@ -6,37 +6,37 @@ export const homeView = {
             id: "vitalSigns",
             color: "red",
             icon: icons["heart-fill"],
-            route: "/vital-signs"
+            route: "/monitoring/vitalSigns"
         },
         {
-            id: "monitoring",
+            id: "followUp",
             color: "yellow",
             icon: icons["mental-health-fill"],
-            route: "/monitoring"
+            route: "/monitoring/followUp"
         },
         {
             id: "medicine",
             color: "green",
             icon: icons["capsule-fill"],
-            route: "/medicine"
+            route: "/manage/medicines"
         },
         {
             id: "caregiver",
             color: "orange",
             icon: icons["user-fill"],
-            route: "/caregiver"
+            route: "/manage/caregivers"
         },
         {
             id: "doctors",
             color: "blue",
             icon: icons["stethoscope-line"],
-            route: "/doctors"
+            route: "/manage/doctors"
         },
         {
             id: "allergies",
             color: "purple",
             icon: icons["virus-fill"],
-            route: "/allergies"
+            route: "/manage/allergies"
         }
     ],
     footer: {
@@ -175,94 +175,93 @@ export const emergencyDataView = {
     ]
 }
 
-
 export const vitalSignsView = {
     items: [
         {
             id: "bodyTemperature",
             icon: icons["thermometer-line"],
             color: "red",
-            link: "/vital-signs/bodyTemperature"
+            link: "/monitoring/overview/bodyTemperature"
         },
         {
             id: "bloodPressure",
             icon: icons["blood-pressure-line"],
             color: "orange",
-            link: "/vital-signs/bloodPressure"
+            link: "/monitoring/overview/bloodPressure"
         },
         {
             id: "oxygenSaturation",
             icon: icons["oxygen-line"],
             color: "blue",
-            link: "/vital-signs/oxygenSaturation"
+            link: "/monitoring/overview/oxygenSaturation"
         },
         {
             id: "glucose",
             icon: icons["glucose-line"],
             color: "red",
-            link: "/vital-signs/glucose"
+            link: "/monitoring/overview/glucose"
         },
         {
             id: "heartBeat",
             icon: icons["heart-pulse-line"],
             color: "orange",
-            link: "/vital-signs/heartBeat"
+            link: "/monitoring/overview/heartBeat"
         }
     ],
     footer: {
         buttons: [
             {
                 id: "primary",
-                leftIcon: icons["heart-pulse-fill"],
+                leftIcon: icons["heart-fill"],
                 link: "/apply/vitalSigns"
             }
         ]
     }
 }
 
-export const monitoringView = {
+export const followUpView = {
     items: [
         {
             id: "mood",
             icon: icons["user-smile-line"],
             color: "blue",
-            link: "/monitoring/mood"
+            link: "/monitoring/overview/mood"
         },
         {
             id: "painLevel",
             icon: icons["emotion-unhappy-line"],
             color: "red",
-            link: "/monitoring/painLevel"
+            link: "/monitoring/overview/painLevel"
         },
         {
             id: "sleepQuality",
             icon: icons["zzz"],
             color: "blue",
-            link: "/monitoring/sleep"
+            link: "/monitoring/overview/sleep"
         },
         {
             id: "waterIntake",
             icon: icons["drop-fill"],
             color: "blue",
-            link: "/monitoring/waterIntake"
+            link: "/monitoring/overview/waterIntake"
         },
         {
             id: "mealAcceptance",
             icon: icons["restaurant"],
             color: "orange",
-            link: "/monitoring/mealAcceptance"
+            link: "/monitoring/overview/mealAcceptance"
         },
         {
             id: "weight",
             icon: icons["weight-line"],
             color: "green",
-            link: "/monitoring/weight"
+            link: "/monitoring/overview/weight"
         },
         {
             id: "necessities",
             icon: icons["drop-line"],
             color: "orange",
-            link: "/monitoring/necessities"
+            link: "/monitoring/overview/necessities"
         }
     ],
     footer: {
@@ -270,7 +269,67 @@ export const monitoringView = {
             {
                 id: "primary",
                 leftIcon: icons["mental-health-fill"],
-                link: "/apply/monitoring"
+                link: "development"
+            }
+        ]
+    }
+}
+
+export const medicinesView = {
+    items: [
+
+    ],
+    footer: {
+        buttons: [
+            {
+                id: "primary",
+                leftIcon: icons["capsule-fill"],
+                link: "/manage/medicines/apply"
+            }
+        ]
+    }
+}
+
+export const caregiversView = {
+    items: [
+
+    ],
+    footer: {
+        buttons: [
+            {
+                id: "primary",
+                leftIcon: icons["user-fill"],
+                link: "/manage/caregivers/apply"
+            }
+        ]
+    }
+}
+
+export const doctorsView = {
+    items: [
+
+    ],
+    footer: {
+        buttons: [
+            {
+                id: "primary",
+                leftIcon: icons["stethoscope-line"],
+                link: "/manage/doctors/apply"
+            }
+        ]
+    }
+}
+
+export const allergiesView = {
+    items: [
+
+    ],
+    footer: {
+        buttons: [
+            {
+                id: "primary",
+                leftIcon: icons["virus-fill"],
+                link: "/manage/allergies/apply"
             }
         ]
     }

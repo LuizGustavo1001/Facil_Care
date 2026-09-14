@@ -2,6 +2,48 @@ export default {
     greetings: {
         hello: "Olá",
     },
+    utils: {
+        pageFallback: {
+            title: "Página não encontrada",
+            button: "Clique aqui para voltar para a página inicial"
+        },
+        bodyTemperature: {
+            title: "Temperatura Corporal"
+        },
+        bloodPressure: {
+            title: "Pressão Arterial"
+        },
+        oxygenSaturation: {
+            title: "Saturação de Oxigênio"
+        },
+        glucose: {
+            title: "Glicemia"
+        },
+        heartBeat: {
+            title: "Batimentos Cardíacos"
+        },
+        mood: {
+            title: "Humor"
+        },
+        painLevel: {
+            title: "Nível de dor"
+        },
+        sleepQuality: {
+            title: "Qualidade do Sono"
+        },
+        waterIntake: {
+            title: "Ingestão de Água"
+        },
+        mealAcceptance: {
+            title: "Aceitação de Refeições"
+        },
+        weight: {
+            title: "Peso"
+        },
+        necessities: {
+            title: "Controle de Evacuação e Diurese"
+        }
+    },
     views: {
         home: {
             subtitle: "Selecione uma das opções abaixo para visualizar as informações desejadas",
@@ -10,7 +52,7 @@ export default {
                     title: "Registros de Sinais Vitais",
                     description: "Gerenciar medições diárias"
                 },
-                monitoring: {
+                followUp: {
                     title: "Acompanhamento Fisiológico e Comportamental",
                     description: "Gerenciar dados comportamentais e fisiológicos"
                 },
@@ -68,7 +110,7 @@ export default {
                 }
             }
         },
-        monitoring: {
+        followUp: {
             headerTitle: "Acompanhamento Fisiológico e Comportamental",
             subtitle: "Selecione uma das opções abaixo para visualizar cada tópico individualmente",
             items: {
@@ -144,6 +186,66 @@ export default {
                         medicines: {
                             title: "Medicamentos Cadastrados"
                         }
+                    }
+                }
+            }
+        },
+        medicines: {
+            headerTitle: "Medicamentos",
+            sections: {
+                registers: {
+                    title: "Medicamentos Cadastrados"
+                }
+            },
+            footer:{
+                buttons: {
+                    primary: {
+                        title: "Registrar Novo Medicamento"
+                    }
+                }
+            }
+        },
+        allergies: {
+            headerTitle: "Alergias",
+            sections: {
+                registers: {
+                    title: "Alergias Cadastradas"
+                }
+            },
+            footer:{
+                buttons: {
+                    primary: {
+                        title: "Registrar Nova Alergia"
+                    }
+                }
+            }
+        },
+        doctors: {
+            headerTitle: "Médicos",
+            sections: {
+                registers: {
+                    title: "Médicos Cadastrados"
+                }
+            },
+            footer:{
+                buttons: {
+                    primary: {
+                        title: "Registrar Novo Médico"
+                    }
+                }
+            }
+        },
+        caregivers: {
+            headerTitle: "Cuidadores",
+            sections: {
+                registers: {
+                    title: "Cuidadores Cadastrados"
+                }
+            },
+            footer:{
+                buttons: {
+                    primary: {
+                        title: "Registrar Novo Cuidador"
                     }
                 }
             }

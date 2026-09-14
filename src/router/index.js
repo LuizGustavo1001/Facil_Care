@@ -11,23 +11,7 @@ const routes = [
       }
     },
     {
-        path: '/vital-signs',
-        name: 'vital-signs',
-        component: () => import('/src/views/VitalSignsView.vue'),
-        meta: {
-            title: 'Sinais Vitais | Facil Care'
-        }
-    },
-    {
-        path: '/vital-signs/:vitalSignId',
-        name: 'vital-signs-overview',
-        component: () => import('/src/views/vitalSigns/Overview.vue'),
-        meta: {
-            title: 'Sinais Vitais | Facil Care'
-        }
-    },
-    {
-        path: '/monitoring',
+        path: '/monitoring/:itemId',
         name: 'monitoring',
         component: () => import('/src/views/MonitoringView.vue'),
         meta: {
@@ -35,11 +19,19 @@ const routes = [
         }
     },
     {
-        path: '/monitoring/:monitoringId',
+        path: '/monitoring/overview/:itemId',
         name: 'monitoring-overview',
-        component: () => import('/src/views/monitoring/Overview.vue'),
+        component: () => import('/src/views/MonitoringOverView.vue'),
         meta: {
-            title: 'Monitoramento | Facil Care',
+            title: 'Monitoramento | Facil Care'
+        }
+    },
+    {
+        path: '/manage/:itemId',
+        name: 'manage-overview',
+        component: () => import('/src/views/ManageView.vue'),
+        meta: {
+            title: 'Gerenciamento | Facil Care'
         }
     },
     {
@@ -58,10 +50,18 @@ const routes = [
             title: 'Refresh Theme | Facil Care'
         }
     },
+    {
+        path: "/not-found",
+        name: 'not-found',
+        component: () => import('/src/views/AppFallback.vue'),
+        meta: {
+            title: "Página não encontrada | Facil Care"
+        }
+    },
     // generic route (path not found)
     {
         path: '/:pathMatch(.*)*',
-        redirect: '/',
+        redirect: '/not-found'
     }
 ]
 

@@ -57,12 +57,12 @@
   }
 
   .btn-content .btn-content-title{
-    font-size: var(--text-body-lg);
-    font-weight: 600;
+    font-size: var(--text-body-md);
+    font-weight: var(--bold-weight);
   }
 
   .btn-content .btn-content-description{
-    font-weight: 600;
+    font-weight: var(--medium-weight);
     font-size: var(--text-body-sm);
   }
 
@@ -81,6 +81,7 @@
   .action-btn.subtle{
     border: 1px solid transparent;
     background: var(--color-bg-subtle);
+    color: inherit;
   }
   .action-btn.subtle:hover{
     border-color: var(--color-border-brand);

@@ -8,21 +8,17 @@
 
     <main>
       <section class="flex flex-column gap-1">
-        <p class="text-muted">{{ t(`views.${itemId}.subtitle`) }}:</p>
+        <h2 class="section-title text-muted">{{ $t(`views.${itemId}.sections.registers.title`) }}</h2>
 
         <ul class="flex flex-column gap-1">
-          <li
-              v-for="item in currentItem.items"
-              :key="item.id"
-          >
-            <ActionButtonAlt
-                tag="router"
-                :to="item.link"
-                :color="item.color"
-                :title="getItemTitle(item.id)"
-                :leftIcon="item.icon"
-                leftIconSize="30px"
-                :rightIcon="icons['chevron-right']"
+          <li>
+            <ActionButton
+                tag="button"
+                :rightIcon="icons['pencil-line']"
+                title="Metformina 850mg"
+                variant="subtle"
+                padding="lg"
+                class="width-full"
             />
           </li>
         </ul>
@@ -53,40 +49,34 @@
 </template>
 
 <style scoped>
-
+  .section-title{
+    font-size: var(--text-heading-sm);
+  }
 </style>
 
 <script setup>
-import AppHeader from "../components/common/AppHeader.vue"
-import ActionButtonAlt from "../components/common/ActionButtonAlt.vue"
-
-import { useNavigation } from "../composables/useNavigation.js"
-import { useI18n } from "vue-i18n"
-import { computed } from "vue"
 import { useRoute } from "vue-router"
+import { computed } from "vue"
+
 import { icons } from "../assets/icons/icons.js"
-import ActionButton from "../components/common/ActionButton.vue"
+import { useNavigation } from "../composables/useNavigation.js"
 
 import * as projectConfig from "../locales/projectConfig.js"
-import AppFallback from "./AppFallback.vue";
 
-const { t } = useI18n()
+import AppHeader from "../components/common/AppHeader.vue"
+import ActionButton from "../components/common/ActionButton.vue"
+import AppFallback from "./AppFallback.vue"
+
 const route = useRoute()
 
-// Composables
-const { handleReturn } = useNavigation()
-
-// Functions
 // retrieve page data
 const itemId = computed(() => route.params.itemId)
-
 const currentItem = computed(() => {
   const id = itemId.value + 'View'
+
   return projectConfig[id] || null
 })
 
-// return button label
-const getItemTitle = (id) => {
-  return t(`views.${itemId.value}.items.${id}.title`)
-}
+// Composables
+const { handleReturn } = useNavigation()
 </script>

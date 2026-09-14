@@ -19,10 +19,10 @@
 </style>
 
 <script setup>
-  import AppHeader from "../components/common/AppHeader.vue"
-
   import { icons } from "../assets/icons/icons.js"
   import { useNavigation } from "../composables/useNavigation.js"
+
+  import AppHeader from "../components/common/AppHeader.vue"
 
   // Composables
   const { handleReturn } = useNavigation()

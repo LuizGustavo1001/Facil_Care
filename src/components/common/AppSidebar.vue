@@ -110,9 +110,9 @@
 </style>
 
 <script setup>
-  import Icon from "./common/Icon.vue"
-  import {icons} from "../assets/icons/icons.js"
-  import ActionButton from "./common/ActionButton.vue"
+  import Icon from "./Icon.vue"
+  import {icons} from "../../assets/icons/icons.js"
+  import ActionButton from "./ActionButton.vue"
 
-  import { sidebar } from "../locales/projectConfig.js"
+  import { sidebar } from "../../locales/projectConfig.js"
 </script>

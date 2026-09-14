@@ -71,7 +71,7 @@
 
   .btn-content .btn-content-title{
     font-size: var(--text-heading-sm);
-    font-weight: bold;
+    font-weight: var(--bold-weight);
     color: var(--color-text-primary);
   }
 
