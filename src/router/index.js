@@ -7,7 +7,7 @@ const routes = [
       name: 'home',
       component: () => import('/src/views/HomeView.vue'),
       meta: {
-          title: 'Início | FacilCare'
+          title: 'Início | Facil Care'
       }
     },
     {
@@ -15,7 +15,23 @@ const routes = [
         name: 'vital-signs',
         component: () => import('/src/views/VitalSignsView.vue'),
         meta: {
-            title: 'Sinais Vitais | FacilCare'
+            title: 'Sinais Vitais | Facil Care'
+        }
+    },
+    {
+        path: '/monitoring',
+        name: 'monitoring',
+        component: () => import('/src/views/MonitoringView.vue'),
+        meta: {
+            title: 'Monitoramento | Facil Care'
+        }
+    },
+    {
+        path: "/emergency-data",
+        name: "emergency-data",
+        component: () => import('/src/views/EmergencyDataView.vue'),
+        meta: {
+            title: 'Dados de Emergência | Facil Care'
         }
     },
     {
@@ -23,7 +39,7 @@ const routes = [
         name: 'refresh-theme',
         component: () => import('/src/views/RefreshThemeView.vue'),
         meta: {
-            title: 'Refresh Theme | FacilCare'
+            title: 'Refresh Theme | Facil Care'
         }
     },
     // generic route (path not found)

@@ -7,6 +7,7 @@
     --blue-100: #e4edff;
 
     --slate-600: #57667B;
+    --slate-500: #73869d;
 
     --gray-300: #D4D4D4;
     --gray-100: #F6F7F8;
@@ -69,7 +70,7 @@
     /* -=-=-=- SEMANTIC TOKENS -=-=-=- */
     /* Text Color */
     --color-text-primary: var(--blue-900);
-    --color-text-primary-muted: var(--slate-600);
+    --color-text-primary-muted: var(--slate-500);
     --color-text-primary-subtle: var(--gray-300);
 
     --color-text-inverse: var(--white);

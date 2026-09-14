@@ -17,6 +17,10 @@
 </template>
 
 <style scoped>
+.icon-btn-alt{
+  color: var(--color-text-primary-muted);
+}
+
 .outline-layer, .inline-layer{
   background: var(--color-bg-primary);
   border: 1px solid var(--color-border-default);
@@ -25,7 +29,6 @@
 
 .outline-layer{
   padding: 3px;
-
   box-shadow: inset -2px -4px 10px var(--color-shadow-default);
 }
 

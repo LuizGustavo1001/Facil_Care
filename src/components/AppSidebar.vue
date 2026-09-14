@@ -26,12 +26,13 @@
                 class="item"
             >
               <ActionButton
+                  tag="router"
                   :leftIcon="item.icon"
                   variant="transparent"
                   :title="$t(`sidebar.sections.${sec.id}.items.${item.id}.title`)"
                   padding="sm"
                   class="truncate-single"
-                  :link="item.route"
+                  :to="item.route"
               />
             </li>
           </ul>
@@ -39,6 +40,7 @@
       </div>
 
       <ActionButton
+          tag="button"
           :leftIcon="icons['delete-bin-line']"
           variant="destructive"
           title="Apagar Dados"

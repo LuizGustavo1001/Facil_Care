@@ -41,7 +41,98 @@ export default {
             }
         },
         vitalSigns: {
-            headerTitle: "Sinais Vitais"
+            headerTitle: "Sinais Vitais",
+            subtitle: "Selecione uma das opções abaixo para visualizar cada tópico individualmente",
+            items: {
+                bodyTemperature: {
+                    title: "Temperatura Corporal"
+                },
+                bloodPressure: {
+                    title: "Pressão Arterial"
+                },
+                oxygenSaturation: {
+                    title: "Saturação de Oxigênio"
+                },
+                glucose: {
+                    title: "Glicemia"
+                },
+                heartBeat: {
+                    title: "Batimentos Cardíacos"
+                }
+            },
+        },
+        monitoring: {
+            headerTitle: "Acompanhamento Fisiológico e Comportamental",
+            subtitle: "Selecione uma das opções abaixo para visualizar cada tópico individualmente",
+            items: {
+                mood: {
+                    title: "Humor"
+                },
+                painLevel: {
+                    title: "Nível de dor"
+                },
+                sleepQuality: {
+                    title: "Qualidade do Sono"
+                },
+                waterIntake: {
+                    title: "Ingestão de Água"
+                },
+                mealAcceptance: {
+                    title: "Aceitação de Refeições"
+                },
+                weight: {
+                    title: "Peso"
+                },
+                necessities: {
+                    title: "Controle de Evacuação e Diurese"
+                }
+            },
+        },
+        emergencyData: {
+            headerTitle: "Dados de Emergência",
+            sections: {
+                patientData: {
+                    title: "Informações do Paciente",
+                    items: {
+                        patientName: {
+                            title: "Nome Completo"
+                        },
+                        birthDate: {
+                            title: "Data de Nascimento",
+                        },
+                        bloodType: {
+                            title: "Tipo Sanguíneo",
+                        },
+                        weight: {
+                            title: "Peso (Kg)"
+                        },
+                        address: {
+                            title: "Endereço"
+                        }
+                    }
+                },
+                emergencyContact: {
+                    title: "Contatos de Emergência",
+                    subtitle: "Clique em um contato para ser redirecionado para o aplicativo de telefonia"
+                },
+                allergies: {
+                    title: "Alergias Conhecidas"
+                },
+                healthPlans: {
+                    title: "Planos de Saúde"
+                },
+                others: {
+                    title: "Outros",
+                    items: {
+                        doctors: {
+                            title: "Médicos Cadastrados"
+                        },
+                        medicines: {
+                            title: "Medicamentos Cadastrados"
+                        }
+                    }
+                }
+            }
         }
     },
     sidebar: {

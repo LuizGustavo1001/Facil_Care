@@ -1,6 +1,6 @@
-import { Asd } from 'dexie'
+import { Dexie } from 'dexie'
 
-var db = new Asd('facilCareDB')
+var db = new Dexie('facilCareDB')
 
 db.version(1).stores({
     patient: 'id++',

@@ -3,7 +3,7 @@
 
   <AppSidebar :class="{ active: sidebarIsActive }"/>
 
-  <AppHeader @click="handleSidebarToggle">
+  <AppHeader @sidebar-toggle="handleSidebarToggle">
     {{ $t('greetings.hello') }}, <strong>{{ username }}</strong>!
   </AppHeader>
 
@@ -12,10 +12,10 @@
       <p class="text-muted">{{ $t("views.home.subtitle") }}:</p>
 
       <nav class="home-nav flex flex-column gap-1">
-        <a
+        <router-link
             v-for="btn in homeView.buttons"
             :key="btn.id"
-            :href="btn.route"
+            :to="btn.route"
             class="home-card flex justify-between align-center gap-05 active-border"
             :class="btn.color"
         >
@@ -25,7 +25,7 @@
           </div>
 
           <Icon :icon="btn.icon" class="muted" size="35px"/>
-        </a>
+        </router-link>
       </nav>
     </section>
   </main>
@@ -34,6 +34,8 @@
     <div>
       <template v-for="btn in homeView.footer.buttons" :key="btn.id">
         <ActionButton
+            tag="router"
+            to="/apply"
             :leftIcon="btn.leftIcon"
             padding="md"
             :rightIcon="btn.rightIcon || icons['chevron-right']"
@@ -116,7 +118,7 @@
 </style>
 
 <script setup>
-  import { onMounted, onUnmounted, ref } from "vue"
+  import { ref } from "vue"
 
   import { icons } from "../assets/icons/icons.js"
   import { homeView } from "../locales/projectConfig.js"
@@ -127,33 +129,15 @@
   import AppSidebar from "../components/AppSidebar.vue"
   import AppOverlay from "../components/common/AppOverlay.vue"
 
+  import { useSidebar } from "../composables/useSidebar.js"
+
+  // Composables
+  const {
+    overlayIsActive,
+    sidebarIsActive,
+    handleSidebarToggle
+  } = useSidebar()
+
+  // Functions
   const username = ref('Antônio Dias')
-
-  /*
-    Sidebar Toggle Logic
-  */
-  const overlayIsActive = ref(false)
-  const sidebarIsActive = ref(false)
-
-  const handleSidebarToggle = () => {
-    sidebarIsActive.value = !sidebarIsActive.value
-    overlayIsActive.value = sidebarIsActive.value
-  }
-
-  const handleClickOutside = (event) => {
-    const clickedInsideSidebar = event.target.closest('#sidebar')
-
-    if (sidebarIsActive.value && !clickedInsideSidebar) { // avoid function when clicking within the sidebar
-      handleSidebarToggle()
-    }
-  }
-
-
-  onMounted(() => {
-    window.addEventListener("click", handleClickOutside)
-  })
-
-  onUnmounted(() => {
-    window.removeEventListener("click", handleClickOutside)
-  })
 </script>

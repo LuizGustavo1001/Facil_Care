@@ -3,11 +3,11 @@
     <div class="flex align-center gap-05 flex-grow-1">
 
       <template v-if="leftBtnIcon === icons['menu-left']">
-        <IconBtnAlt id="sidebar-toggle-btn" :icon="leftBtnIcon" size="25px" @click.stop="$emit('click')"/>
+        <IconBtnAlt id="sidebar-toggle-btn" :icon="leftBtnIcon" size="25px" @click.stop="$emit('sidebar-toggle')"/>
       </template>
 
       <template v-else>
-        <IconBtnAlt :icon="leftBtnIcon" size="25px" @click="$emit('return')"/>
+        <IconBtnAlt :icon="leftBtnIcon" size="25px" @click="$emit('return-page')"/>
       </template>
 
       <p class="title flex-grow-1 truncate-single">

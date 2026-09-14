@@ -1,8 +1,9 @@
 <template>
   <component
-    :is="tag"
+    :is="componentTag"
     :type="isButton ? 'button' : undefined"
-    :href="!isButton ? (link || undefined) : undefined"
+    :to="isRouterLink ? to : undefined"
+    :href="!isButton ? (to || undefined) : undefined"
     :target="!isButton ? parsedTarget : undefined"
     :rel="!isButton && parsedTarget === '_blank' ? 'noopener noreferrer' : undefined"
     class="action-btn flex justify-between align-center gap-1 active-border"
@@ -113,6 +114,7 @@
 
 <script setup>
   import { computed } from "vue"
+  import { RouterLink } from "vue-router"
   import Icon from "./Icon.vue"
 
   const VARIANTS = ["highlight", "subtle", "destructive", "transparent"]
@@ -139,7 +141,7 @@
       type: String,
       default: "25px"
     },
-    link: {
+    to: {
       type: String,
       default: "#"
     },
@@ -154,7 +156,7 @@
     },
     variant: {
       type: String,
-      default: "md",
+      default: "highlight",
       validator: (value) => ["highlight", "subtle", "destructive", "transparent"].includes(value)
     },
     title: String,
@@ -167,6 +169,18 @@
   })
 
   const isButton = computed(() => props.tag === "button")
+
+  const isRouterLink = computed(() => props.tag === "router")
+
+  const componentTag = computed(() => {
+    // 1. Tag == RouterLink (Internal Link)
+    if(isRouterLink.value){
+      return RouterLink
+    }
+
+    // 2. Other Tag
+    return props.tag
+  })
 
   const parsedTarget = computed(() => props.target === "external" ? "_blank" : props.target)
 

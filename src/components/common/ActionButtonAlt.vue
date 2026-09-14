@@ -1,8 +1,8 @@
 <template>
   <component
-      :is="tag"
+      :is="componentTag"
       :type="isButton ? 'button' : undefined"
-      :href="!isButton ? (link || undefined) : undefined"
+      :href="!isButton ? (to || undefined) : undefined"
       :target="!isButton ? target : undefined"
       :rel="!isButton && target === '_blank' ? 'noopener noreferrer' : undefined"
       class="action-btn-alt flex justify-between gap-1 active-border"
@@ -55,15 +55,22 @@
     cursor: pointer;
     transition: 0.2s ease-out;
   }
+  .action-btn-alt .right-icon{
+    color: var(--color-text-primary-muted);
+  }
 
   .action-btn-alt .left-icon-wrapper{
-    padding: 1.5rem 0.75rem;
-
+    padding: 1.25rem 0.75rem;
     border-radius: var(--radius-lg);
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .btn-content .btn-content-title{
-    font-size: var(--text-body-lg);
+    font-size: var(--text-heading-sm);
+    font-weight: bold;
     color: var(--color-text-primary);
   }
 
@@ -72,7 +79,6 @@
   }
 
   /* COLOR VARIANTS */
-
   /* 1. Blue */
   .action-btn-alt.blue .left-icon-wrapper{
     background-color: var(--blue-100);
@@ -113,6 +119,7 @@
 <script setup>
   import { computed } from "vue"
   import Icon from "./Icon.vue"
+  import {RouterLink} from "vue-router";
 
   const COLORS_LIST = ["blue", "orange", "red", "green"]
   const DEFAULT_COLOR = "blue"
@@ -138,7 +145,7 @@
       type: String,
       default: "25px"
     },
-    link: {
+    to: {
       type: String,
       default: "#"
     },
@@ -156,6 +163,18 @@
   })
 
   const isButton = computed(() => props.tag === 'button')
+
+  const isRouterLink = computed(() => props.tag === "router")
+
+  const componentTag = computed(() => {
+    // 1. Tag == RouterLink (Internal Link)
+    if(isRouterLink.value){
+      return RouterLink
+    }
+
+    // 2. Other Tag
+    return props.tag
+  })
 
   // avoid invalid color variant
   const colorVariant = computed(() => {
