@@ -29,6 +29,19 @@
   </main>
 
   <footer class="flex flex-column gap-05">
+    <div>
+      <template v-for="btn in vitalSignsView.footer.buttons" :key="btn.id">
+        <ActionButton
+            tag="router"
+            :to="btn.link"
+            :leftIcon="btn.leftIcon"
+            padding="md"
+            :rightIcon="btn.rightIcon || icons['chevron-right']"
+            :title="$t(`views.vitalSigns.footer.buttons.${btn.id}.title`)"
+        />
+      </template>
+    </div>
+
     <p class="brand text-muted-lighter">Facil Care - 2026</p>
   </footer>
 </template>
@@ -45,6 +58,7 @@
   import { useNavigation } from "../composables/useNavigation.js"
   import { useI18n } from "vue-i18n"
   import { vitalSignsView } from "../locales/projectConfig.js"
+  import ActionButton from "../components/common/ActionButton.vue";
 
   const { t } = useI18n()
 

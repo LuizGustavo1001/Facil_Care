@@ -2,6 +2,7 @@
   <component
       :is="componentTag"
       :type="isButton ? 'button' : undefined"
+      :to="isRouterLink ? to : undefined"
       :href="!isButton ? (to || undefined) : undefined"
       :target="!isButton ? target : undefined"
       :rel="!isButton && target === '_blank' ? 'noopener noreferrer' : undefined"
@@ -90,7 +91,7 @@
 
   /* 2. Orange */
   .action-btn-alt.orange .left-icon-wrapper{
-    background-color: var(--orange-200);
+    background-color: var(--orange-100);
     color: var(--orange-500);
   }
   .action-btn-alt.orange:hover{
@@ -99,7 +100,7 @@
 
   /* 3. Red */
   .action-btn-alt.red .left-icon-wrapper{
-    background-color: var(--red-200);
+    background-color: var(--red-100);
     color: var(--red-500);
   }
   .action-btn-alt.red:hover{

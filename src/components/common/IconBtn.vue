@@ -46,7 +46,7 @@
     color: var(--color-text-primary-muted);
   }
   .icon-btn.transparent:hover{
-    background: var(--color-bg-hover);
+    background: var(--color-bg-subtle);
   }
 
   /* 3. Transparent Border */

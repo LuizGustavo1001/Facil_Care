@@ -1,5 +1,5 @@
 <template>
-  <header class="flex justify-center items-center gap-05">
+  <header class="flex justify-center align-center gap-05">
     <div class="flex align-center gap-05 flex-grow-1">
 
       <template v-if="leftBtnIcon === icons['menu-left']">
@@ -15,7 +15,7 @@
       </p>
     </div>
 
-    <IconBtn :icon="icons['notification-fill']" size="25px" variant="subtle" />
+    <IconBtn :icon="icons['notification-line']" size="25px" variant="transparent" />
   </header>
 </template>
 

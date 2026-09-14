@@ -51,6 +51,9 @@
 <style scoped>
   .home-nav{
     border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+
+    background: var(--color-bg-subtle);
   }
 
   .home-card{

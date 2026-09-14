@@ -19,11 +19,27 @@ const routes = [
         }
     },
     {
+        path: '/vital-signs/:vitalSignId',
+        name: 'vital-signs-overview',
+        component: () => import('/src/views/vitalSigns/Overview.vue'),
+        meta: {
+            title: 'Sinais Vitais | Facil Care'
+        }
+    },
+    {
         path: '/monitoring',
         name: 'monitoring',
         component: () => import('/src/views/MonitoringView.vue'),
         meta: {
             title: 'Monitoramento | Facil Care'
+        }
+    },
+    {
+        path: '/monitoring/:monitoringId',
+        name: 'monitoring-overview',
+        component: () => import('/src/views/monitoring/Overview.vue'),
+        meta: {
+            title: 'Monitoramento | Facil Care',
         }
     },
     {

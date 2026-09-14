@@ -4,7 +4,7 @@
     --blue-900: #1A2947;
     --blue-700: #2F4E8D;
     --blue-500: #206197;
-    --blue-100: #e4edff;
+    --blue-100: #edf2ff;
 
     --slate-600: #57667B;
     --slate-500: #73869d;
@@ -22,7 +22,7 @@
     --red-100: #FFF3F3;
 
     --green-500: #209768;
-    --green-100: #e6fff7;
+    --green-100: #ebfff8;
 
     --orange-500: #EA7624;
     --orange-200: #F3E5D4;
@@ -70,7 +70,7 @@
     /* -=-=-=- SEMANTIC TOKENS -=-=-=- */
     /* Text Color */
     --color-text-primary: var(--blue-900);
-    --color-text-primary-muted: var(--slate-500);
+    --color-text-primary-muted: var(--slate-600);
     --color-text-primary-subtle: var(--gray-300);
 
     --color-text-inverse: var(--white);
@@ -81,9 +81,9 @@
     --color-text-brand-subtle: var(--blue-500);
 
     /* Background Color */
-    --color-bg-primary: var(--white);
-    --color-bg-subtle: var(--gray-100);
-    --color-bg-hover: var(--gray-100);
+    --color-bg-primary: var(--gray-100);
+    --color-bg-subtle: var(--white);
+    --color-bg-hover: var(--gray-300);
 
     --color-bg-brand: var(--blue-900);
     --color-bg-brand-hover: var(--blue-700);
@@ -129,6 +129,7 @@ body{
 
     min-height: 100vh;
     color: var(--color-text-primary);
+    background: var(--color-bg-primary);
     font-family: system-ui;
 }
 

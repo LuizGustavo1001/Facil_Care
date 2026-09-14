@@ -182,19 +182,19 @@ export const vitalSignsView = {
             id: "bodyTemperature",
             icon: icons["thermometer-line"],
             color: "red",
-            link: "/vital-signs/body-temperature"
+            link: "/vital-signs/bodyTemperature"
         },
         {
             id: "bloodPressure",
             icon: icons["blood-pressure-line"],
             color: "orange",
-            link: "/vital-signs/blood-pressure"
+            link: "/vital-signs/bloodPressure"
         },
         {
             id: "oxygenSaturation",
             icon: icons["oxygen-line"],
             color: "blue",
-            link: "/vital-signs/oxygen-saturation"
+            link: "/vital-signs/oxygenSaturation"
         },
         {
             id: "glucose",
@@ -206,9 +206,18 @@ export const vitalSignsView = {
             id: "heartBeat",
             icon: icons["heart-pulse-line"],
             color: "orange",
-            link: "/vital-signs/heart-beat"
+            link: "/vital-signs/heartBeat"
         }
-    ]
+    ],
+    footer: {
+        buttons: [
+            {
+                id: "primary",
+                leftIcon: icons["heart-pulse-fill"],
+                link: "/apply/vitalSigns"
+            }
+        ]
+    }
 }
 
 export const monitoringView = {
@@ -223,7 +232,7 @@ export const monitoringView = {
             id: "painLevel",
             icon: icons["emotion-unhappy-line"],
             color: "red",
-            link: "/monitoring/pain-level"
+            link: "/monitoring/painLevel"
         },
         {
             id: "sleepQuality",
@@ -235,13 +244,13 @@ export const monitoringView = {
             id: "waterIntake",
             icon: icons["drop-fill"],
             color: "blue",
-            link: "/monitoring/water"
+            link: "/monitoring/waterIntake"
         },
         {
             id: "mealAcceptance",
             icon: icons["restaurant"],
             color: "orange",
-            link: "/monitoring/meal"
+            link: "/monitoring/mealAcceptance"
         },
         {
             id: "weight",
@@ -255,5 +264,14 @@ export const monitoringView = {
             color: "orange",
             link: "/monitoring/necessities"
         }
-    ]
+    ],
+    footer: {
+        buttons: [
+            {
+                id: "primary",
+                leftIcon: icons["mental-health-fill"],
+                link: "/apply/monitoring"
+            }
+        ]
+    }
 }

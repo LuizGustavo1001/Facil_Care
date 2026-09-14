@@ -63,7 +63,7 @@
 <style scoped>
   aside{
     z-index: 10;
-    background: var(--color-bg-primary);
+    background: var(--color-bg-subtle);
 
     position: fixed;
 

@@ -60,6 +60,13 @@ export default {
                     title: "Batimentos Cardíacos"
                 }
             },
+            footer:{
+                buttons: {
+                    primary: {
+                        title: "Registrar Sinais Vitais"
+                    }
+                }
+            }
         },
         monitoring: {
             headerTitle: "Acompanhamento Fisiológico e Comportamental",
@@ -87,6 +94,13 @@ export default {
                     title: "Controle de Evacuação e Diurese"
                 }
             },
+            footer:{
+                buttons: {
+                    primary: {
+                        title: "Registrar Estado Físico / Comportamental"
+                    }
+                }
+            }
         },
         emergencyData: {
             headerTitle: "Dados de Emergência",
