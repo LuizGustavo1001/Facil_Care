@@ -26,22 +26,7 @@
         </section>
       </main>
 
-      <footer class="flex flex-column gap-05">
-        <div>
-          <template v-for="btn in currentItem.footer.buttons" :key="btn.id">
-            <ActionButton
-                tag="router"
-                :to="btn.link"
-                :leftIcon="btn.leftIcon"
-                padding="md"
-                :rightIcon="btn.rightIcon || icons['chevron-right']"
-                :title="$t(`views.${itemId}.footer.buttons.${btn.id}.title`)"
-            />
-          </template>
-        </div>
-
-        <p class="brand text-muted-lighter">Facil Care - 2026</p>
-      </footer>
+      <AppFooter :page="String(itemId)" />
     </template>
 
     <template v-else>
@@ -66,6 +51,7 @@ import * as projectConfig from "../locales/projectConfig.js"
 import AppHeader from "../components/common/AppHeader.vue"
 import ActionButton from "../components/common/ActionButton.vue"
 import AppFallback from "./AppFallback.vue"
+import AppFooter from "../components/common/AppFooter.vue";
 
 const route = useRoute()
 

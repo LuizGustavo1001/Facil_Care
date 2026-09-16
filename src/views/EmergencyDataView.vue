@@ -10,9 +10,7 @@
       <section></section>
     </main>
 
-    <footer class="flex flex-column gap-05">
-      <p class="brand text-muted-lighter">Facil Care - 2026</p>
-    </footer>
+    <AppFooter page="emergencyData" />
   </div>
 </template>
 
@@ -25,6 +23,7 @@
   import { useNavigation } from "../composables/useNavigation.js"
 
   import AppHeader from "../components/common/AppHeader.vue"
+  import AppFooter from "../components/common/AppFooter.vue"
 
   // Composables
   const { handleReturn } = useNavigation()

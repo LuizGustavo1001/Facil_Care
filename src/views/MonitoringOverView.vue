@@ -8,6 +8,12 @@
           :leftBtnIcon="icons['chevron-left']"
           @return-page="handleReturn"
       />
+
+      <main>
+        <section></section>
+      </main>
+
+      <AppFooter :page="currentItem" />
     </template>
 
     <template v-else>
@@ -23,10 +29,13 @@
 <script setup>
   import { computed } from "vue"
   import { useRoute } from "vue-router"
-  import {icons} from "../assets/icons/icons.js";
-  import AppHeader from "../components/common/AppHeader.vue";
-  import { useNavigation } from "../composables/useNavigation.js";
-  import AppFallback from "./AppFallback.vue";
+
+  import { icons } from "../assets/icons/icons.js"
+  import { useNavigation } from "../composables/useNavigation.js"
+
+  import AppHeader from "../components/common/AppHeader.vue"
+  import AppFallback from "./AppFallback.vue"
+  import AppFooter from "../components/common/AppFooter.vue"
 
   const route = useRoute()
 

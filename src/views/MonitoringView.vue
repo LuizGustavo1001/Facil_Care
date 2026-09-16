@@ -30,6 +30,8 @@
         </section>
       </main>
 
+
+      <AppFooter :page="itemId" />
       <footer class="flex flex-column gap-05">
         <div>
           <template v-for="btn in currentItem.footer.buttons" :key="btn.id">
@@ -49,7 +51,7 @@
     </template>
 
     <template v-else>
-      <AppFallback/>
+      <AppFallback />
     </template>
   </div>
 </template>
@@ -59,36 +61,38 @@
 </style>
 
 <script setup>
-import AppHeader from "../components/common/AppHeader.vue"
-import ActionButtonAlt from "../components/common/ActionButtonAlt.vue"
+  import { useI18n } from "vue-i18n"
+  import { computed } from "vue"
+  import { useRoute } from "vue-router"
 
-import { useNavigation } from "../composables/useNavigation.js"
-import { useI18n } from "vue-i18n"
-import { computed } from "vue"
-import { useRoute } from "vue-router"
-import { icons } from "../assets/icons/icons.js"
-import ActionButton from "../components/common/ActionButton.vue"
+  import { useNavigation } from "../composables/useNavigation.js"
+  import { icons } from "../assets/icons/icons.js"
 
-import * as projectConfig from "../locales/projectConfig.js"
-import AppFallback from "./AppFallback.vue";
+  import ActionButton from "../components/common/ActionButton.vue"
+  import AppHeader from "../components/common/AppHeader.vue"
+  import ActionButtonAlt from "../components/common/ActionButtonAlt.vue"
+  import AppFallback from "./AppFallback.vue"
+  import AppFooter from "../components/common/AppFooter.vue"
 
-const { t } = useI18n()
-const route = useRoute()
+  import * as projectConfig from "../locales/projectConfig.js"
 
-// Composables
-const { handleReturn } = useNavigation()
+  const { t } = useI18n()
+  const route = useRoute()
 
-// Functions
-// retrieve page data
-const itemId = computed(() => route.params.itemId)
+  // Composables
+  const { handleReturn } = useNavigation()
 
-const currentItem = computed(() => {
-  const id = itemId.value + 'View'
-  return projectConfig[id] || null
-})
+  // Functions
+  // retrieve page data
+  const itemId = computed(() => route.params.itemId)
 
-// return button label
-const getItemTitle = (id) => {
-  return t(`views.${itemId.value}.items.${id}.title`)
-}
+  const currentItem = computed(() => {
+    const id = itemId.value + 'View'
+    return projectConfig[id] || null
+  })
+
+  // return button label
+  const getItemTitle = (id) => {
+    return t(`views.${itemId.value}.items.${id}.title`)
+  }
 </script>

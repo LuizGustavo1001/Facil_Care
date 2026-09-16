@@ -37,9 +37,7 @@
       </section>
     </main>
 
-    <footer class="flex flex-column gap-05">
-      <p class="brand text-muted-lighter">Facil Care - 2026</p>
-    </footer>
+    <AppFooter page="preferences" />
   </div>
 
 </template>
@@ -49,13 +47,14 @@
 </style>
 
 <script setup>
-import { icons } from "../assets/icons/icons.js";
-import AppHeader from "../components/common/AppHeader.vue"
-import { useNavigation } from "../composables/useNavigation.js"
-import SelectInput from "../components/common/SelectInput.vue"
-import { preferencesView, themes, languages } from "../locales/projectConfig.js"
-import {ref} from "vue";
+  import { icons } from "../assets/icons/icons.js";
+  import { useNavigation } from "../composables/useNavigation.js"
+  import { preferencesView } from "../locales/projectConfig.js"
 
-// Composables
-const { handleReturn } = useNavigation()
+  import AppHeader from "../components/common/AppHeader.vue"
+  import AppFooter from "../components/common/AppFooter.vue"
+  import SelectInput from "../components/common/SelectInput.vue"
+
+  // Composables
+  const { handleReturn } = useNavigation()
 </script>

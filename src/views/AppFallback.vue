@@ -10,9 +10,12 @@
           padding="lg"
       />
     </div>
+
+    <AppFooter page="fallback" />
   </div>
 </template>
 
 <script setup>
   import ActionButton from "../components/common/ActionButton.vue"
+  import AppFooter from "../components/common/AppFooter.vue"
 </script>

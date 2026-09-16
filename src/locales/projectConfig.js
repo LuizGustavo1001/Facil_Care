@@ -93,7 +93,10 @@ export const preferencesView = {
                 }
             ]
         }
-    ]
+    ],
+    footer: {
+
+    }
 }
 
 export const sidebar = {
