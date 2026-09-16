@@ -43,6 +43,43 @@ const routes = [
         }
     },
     {
+        path: '/preferences',
+        name: 'preferences',
+        component: () => import('/src/views/PreferencesView.vue'),
+        meta: {
+            title: 'Preferências | Facil Care'
+        }
+    },
+    {
+      path: '/register/:itemId',
+      name: 'register',
+      component: () => import('/src/views/RegisterView.vue'),
+      meta: {
+          title: 'Registro | Facil Care'
+      }
+    },
+    {
+        path: '/backup/:backupId',
+        name: 'backup',
+        component: () => import('/src/views/BackupView.vue'),
+        meta: {
+            title: "Backup | Facil Care"
+        }
+    },
+    {
+        path: '/manual',
+        name: 'manual',
+        component: () => import('/src/views/ManualView.vue'),
+        meta: {
+            title: "Manual do Usuário | Facil Care"
+        }
+    },
+    {
+        path: '/terms',
+        name: 'terms',
+        component: () => import('/src/views/TermsView.vue'),
+    },
+    {
         path: "/refresh-theme",
         name: 'refresh-theme',
         component: () => import('/src/views/RefreshThemeView.vue'),

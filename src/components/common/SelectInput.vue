@@ -9,53 +9,71 @@
     </label>
 
     <select
-      :id="computedId"
-      v-model="model"
-      :name="name"
-      v-bind="$attrs"
-      class="cursor-pointer default-input-attr active-border"
+        :id="computedId"
+        v-model="model"
+        :name="name"
+        v-bind="$attrs"
+        class="cursor-pointer default-input-attr active-border"
     >
-      <option value="" disabled selected hidden>Selecione uma opção...</option>
+      <option value="" disabled hidden>Selecione uma opção...</option>
 
-      <template v-if="isObject(options)">
-        <option
-            v-for="(label, value) in options"
-            :key="value"
-            :value="value" >
-          {{ label }}
-        </option>
-      </template>
+      <slot>
+        <!-- Fallback: render via Prop if slot not specified -->
+        <template v-if="normalizedOptions.length">
+          <option
+              v-for="opt in normalizedOptions"
+              :key="opt.value"
+              :value="opt.value"
+          >
+            {{ opt.label }}
+          </option>
+        </template>
+      </slot>
     </select>
   </div>
 </template>
 
-<style scoped>
-</style>
-
 <script setup>
-  import {computed} from "vue"
+import { computed } from "vue"
 
-  defineOptions({
-    inheritAttrs: false
-  })
+defineOptions({
+  inheritAttrs: false
+})
 
-  const model = defineModel({ type: [String, Number], default: "" })
+const model = defineModel({ type: [String, Number], default: "" })
 
-  const props = defineProps({
-    label: String,
-    id: String,
-    name: String,
-    options: {
-      type: [Array, Object],
-      default: () => ({})
-    }
-  })
+const props = defineProps({
+  label: String,
+  for: String,
+  name: String,
+  options: {
+    type: [Array, Object],
+    default: () => ([])
+  }
+})
 
-  // make sure that input ID match each other
-  const computedId = computed(() => {
-    return props.id || (props.name ? `input-${props.name}` : undefined)
-  })
+const computedId = computed(() => {
+  return props.id || (props.name ? `input-${props.name}` : undefined)
+})
 
-  // verify if the option is object
-  const isObject = (val) => val && typeof val === 'object' && !Array.isArray(val)
+// Normaliza tanto Objetos quanto Arrays em um formato padrão: [{ label, value }]
+const normalizedOptions = computed(() => {
+  if (Array.isArray(props.options)) {
+    return props.options.map(opt => {
+      if (typeof opt === 'object' && opt !== null) {
+        return { label: opt.label ?? opt.text ?? opt.value, value: opt.value }
+      }
+      return { label: opt, value: opt }
+    })
+  }
+
+  if (props.options && typeof props.options === 'object') {
+    return Object.entries(props.options).map(([value, label]) => ({
+      label,
+      value
+    }))
+  }
+
+  return []
+})
 </script>

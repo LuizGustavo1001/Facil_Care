@@ -3,6 +3,28 @@ export default {
         hello: "Olá",
     },
     utils: {
+        themes: {
+            light: {
+                label: "Tema Claro"
+            },
+            dark: {
+                label: "Tema Escuro"
+            },
+            system: {
+                label: "Seguir Sistema"
+            },
+            highContrast: {
+                label: "Alto Contraste"
+            }
+        },
+        languages: {
+            ["pt-BR"]: {
+                label: "Português Brasil"
+            },
+            ["en-US"]: {
+                label: "Inglês"
+            }
+        },
         pageFallback: {
             title: "Página não encontrada",
             button: "Clique aqui para voltar para a página inicial"
@@ -16,10 +38,10 @@ export default {
         oxygenSaturation: {
             title: "Saturação de Oxigênio"
         },
-        glucose: {
+        bloodGlucose: {
             title: "Glicemia"
         },
-        heartBeat: {
+        heartRate: {
             title: "Batimentos Cardíacos"
         },
         mood: {
@@ -95,10 +117,10 @@ export default {
                 oxygenSaturation: {
                     title: "Saturação de Oxigênio"
                 },
-                glucose: {
+                bloodGlucose: {
                     title: "Glicemia"
                 },
-                heartBeat: {
+                heartRate: {
                     title: "Batimentos Cardíacos"
                 }
             },
@@ -249,6 +271,36 @@ export default {
                     }
                 }
             }
+        },
+        preferences:{
+            headerTitle: "Preferências do Usuário",
+            sections: {
+                general: {
+                    title: "Geral",
+                    items: {
+                        themes: {
+                            title: "Tema do Sistema"
+                        },
+                        languages: {
+                            title: "Idioma do Sistema"
+                        }
+                    }
+                }
+            }
+        },
+        import: {
+            headerTitle: "Importar Dados",
+            subtitle: ""
+        },
+        export: {
+            headerTitle: "Exportar Dados",
+            subtitle: "Leia com a câmera de outro dispositivo o código qr abaixo para importar dados de {name}"
+        },
+        userManual: {
+            headerTitle: "Manual do Usuário"
+        },
+        terms: {
+            headerTitle: "Termos de Responsabilidade"
         }
     },
     sidebar: {

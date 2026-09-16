@@ -33,7 +33,7 @@
 
   const props = defineProps({
     label: String,
-    id: String,
+    for: String,
     inputType: {
       type: String,
       default: "text"
@@ -43,6 +43,6 @@
 
   // make sure that input ID match each other
   const computedId = computed(() => {
-    return props.id || (props.name ? `input-${props.name}` : undefined)
+    return props.for || (props.name ? `input-${props.name}` : undefined)
   })
 </script>

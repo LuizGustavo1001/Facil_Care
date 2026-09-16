@@ -1,17 +1,19 @@
 <template>
-  <template
-    v-if="$te(`utils.${currentItem}.title`)"
-  >
-    <AppHeader
-        :title="$t(`utils.${currentItem}.title`)"
-        :leftBtnIcon="icons['chevron-left']"
-        @return-page="handleReturn"
-    />
-  </template>
+  <div class="view">
+    <template
+        v-if="$te(`utils.${currentItem}.title`)"
+    >
+      <AppHeader
+          :title="$t(`utils.${currentItem}.title`)"
+          :leftBtnIcon="icons['chevron-left']"
+          @return-page="handleReturn"
+      />
+    </template>
 
-  <template v-else>
-    <AppFallback />
-  </template>
+    <template v-else>
+      <AppFallback/>
+    </template>
+  </div>
 </template>
 
 <style scoped>

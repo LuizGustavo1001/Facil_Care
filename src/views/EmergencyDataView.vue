@@ -1,17 +1,19 @@
 <template>
-  <AppHeader
-      :title="$t('views.emergencyData.headerTitle')"
-      :leftBtnIcon="icons['chevron-left']"
-      @return-page="handleReturn"
-  />
+  <div class="view">
+    <AppHeader
+        :title="$t('views.emergencyData.headerTitle')"
+        :leftBtnIcon="icons['chevron-left']"
+        @return-page="handleReturn"
+    />
 
-  <main class="flex flex-column gap-15 relative flex-grow-1">
-    <section></section>
-  </main>
+    <main class="flex flex-column gap-15 relative flex-grow-1">
+      <section></section>
+    </main>
 
-  <footer class="flex flex-column gap-05">
-    <p class="brand text-muted-lighter">Facil Care - 2026</p>
-  </footer>
+    <footer class="flex flex-column gap-05">
+      <p class="brand text-muted-lighter">Facil Care - 2026</p>
+    </footer>
+  </div>
 </template>
 
 <style scoped>

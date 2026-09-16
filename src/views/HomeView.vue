@@ -1,51 +1,54 @@
 <template>
-  <AppOverlay :class="{ active: overlayIsActive }"/>
+  <div class="view">
+    <AppOverlay :class="{ active: overlayIsActive }"/>
 
-  <AppSidebar :class="{ active: sidebarIsActive }"/>
+    <AppSidebar :class="{ active: sidebarIsActive }"/>
 
-  <AppHeader @sidebar-toggle="handleSidebarToggle">
-    {{ $t('greetings.hello') }}, <strong>{{ username }}</strong>!
-  </AppHeader>
+    <AppHeader @sidebar-toggle="handleSidebarToggle">
+      {{ $t('greetings.hello') }}, <strong>{{ username }}</strong>!
+    </AppHeader>
 
-  <main class="flex flex-column gap-15 relative flex-grow-1">
-    <section class="flex flex-column gap-1">
-      <p class="text-muted">{{ $t("views.home.subtitle") }}:</p>
+    <main class="flex flex-column gap-15 relative flex-grow-1">
+      <section class="flex flex-column gap-1">
+        <p class="text-muted">{{ $t("views.home.subtitle") }}:</p>
 
-      <nav class="home-nav flex flex-column gap-1">
-        <router-link
-            v-for="btn in homeView.buttons"
-            :key="btn.id"
-            :to="btn.route"
-            class="home-card flex justify-between align-center gap-05 active-border"
-            :class="btn.color"
-        >
-          <div class="flex flex-column flex-grow-1" style="gap: var(--spacing-3xs)">
-            <h1 class="truncate-multi">{{ $t(`views.home.buttons.${btn.id}.title`) }}</h1>
-            <p class="truncate-multi muted">{{ $t(`views.home.buttons.${btn.id}.description`) }}</p>
-          </div>
+        <nav class="home-nav flex flex-column gap-1">
+          <router-link
+              v-for="btn in homeView.buttons"
+              :key="btn.id"
+              :to="btn.route"
+              class="home-card flex justify-between align-center gap-05 active-border"
+              :class="btn.color"
+          >
+            <div class="flex flex-column flex-grow-1" style="gap: var(--spacing-3xs)">
+              <h1 class="truncate-multi">{{ $t(`views.home.buttons.${btn.id}.title`) }}</h1>
+              <p class="truncate-multi muted">{{ $t(`views.home.buttons.${btn.id}.description`) }}</p>
+            </div>
 
-          <Icon :icon="btn.icon" class="muted" size="35px"/>
-        </router-link>
-      </nav>
-    </section>
-  </main>
+            <Icon :icon="btn.icon" class="muted" size="35px"/>
+          </router-link>
+        </nav>
+      </section>
+    </main>
 
-  <footer class="flex flex-column gap-05">
-    <div>
-      <template v-for="btn in homeView.footer.buttons" :key="btn.id">
-        <ActionButton
-            tag="router"
-            to="/apply"
-            :leftIcon="btn.leftIcon"
-            padding="md"
-            :rightIcon="btn.rightIcon || icons['chevron-right']"
-            :title="$t(`views.home.footer.buttons.${btn.id}.title`)"
-        />
-      </template>
-    </div>
+    <footer class="flex flex-column gap-05">
+      <div>
+        <template v-for="btn in homeView.footer.buttons" :key="btn.id">
+          <ActionButton
+              tag="router"
+              :to="btn.link"
+              :leftIcon="btn.leftIcon"
+              padding="md"
+              :rightIcon="btn.rightIcon || icons['chevron-right']"
+              :title="$t(`views.home.footer.buttons.${btn.id}.title`)"
+          />
+        </template>
+      </div>
 
-    <p class="brand text-muted-lighter">Facil Care - 2026</p>
-  </footer>
+      <p class="brand text-muted-lighter">Facil Care - 2026</p>
+    </footer>
+  </div>
+
 </template>
 
 <style scoped>
@@ -120,7 +123,7 @@
 </style>
 
 <script setup>
-  import { ref } from "vue"
+  import { ref, onMounted } from "vue"
 
   import { icons } from "../assets/icons/icons.js"
   import { homeView } from "../locales/projectConfig.js"
@@ -141,5 +144,11 @@
   } = useSidebar()
 
   // Functions
-  const username = ref('Antônio Dias')
+  const username = ref('')
+
+  import Patients from "../models/Patients.js"
+
+  onMounted(async () => {
+    username.value = await Patients.getName("pat_1001")
+  })
 </script>

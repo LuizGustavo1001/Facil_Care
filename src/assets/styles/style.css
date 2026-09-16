@@ -281,6 +281,10 @@ footer .brand{
     width: 100%;
 }
 
+.section-title{
+    font-size: var(--text-heading-sm);
+}
+
 .default-input-attr{
     border-radius: var(--radius-md);
     border: 2px solid var(--color-border-default);
@@ -313,8 +317,29 @@ footer .brand{
     outline: none;
 }
 
+.view{
+    height: 100%;
+    flex-grow: 1;
+}
+
+/* TRANSITIONS */
+.slide-fade-enter-active {
+    transition: all 0.15s ease-out;
+}
+
+.slide-fade-leave-active {
+    transition: all 0.15s ease-out;
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+    transform: translateX(20px);
+    opacity: 0;
+}
+
 /* ANIMATIONS */
 @keyframes fade-in {
     from { opacity: 0; }
     to { opacity: 1; }
 }
+

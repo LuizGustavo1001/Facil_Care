@@ -1,5 +1,29 @@
 import { icons } from "../assets/icons/icons.js"
 
+export const themes = [
+    {
+        id: "light"
+    },
+    {
+        id: "dark"
+    },
+    {
+        id: "system"
+    },
+    {
+        id: "highContrast"
+    }
+]
+
+export const languages = [
+    {
+        id: "pt-BR"
+    },
+    {
+        id: "en-US"
+    }
+]
+
 export const homeView = {
     buttons: [
         {
@@ -43,10 +67,33 @@ export const homeView = {
         buttons: [
             {
                 id: "primary",
-                leftIcon: icons["medicine-bottle-fill"]
+                leftIcon: icons["medicine-bottle-fill"],
+                link: "/register/administeredMedication"
             }
         ]
     }
+}
+
+export const preferencesView = {
+    sections: [
+        {
+            id: "general",
+            items: [
+                {
+                    id: "themes",
+                    name: "app-theme",
+                    for: "app-theme",
+                    options: themes
+                },
+                {
+                    id: "languages",
+                    name: "app-lang",
+                    for: "app-lang",
+                    options: languages
+                }
+            ]
+        }
+    ]
 }
 
 export const sidebar = {
@@ -62,7 +109,7 @@ export const sidebar = {
                 {
                     id: "preferences",
                     icon: icons["settings-fill"],
-                    route: "/preferencies"
+                    route: "/preferences"
                 }
             ]
         },
@@ -72,12 +119,12 @@ export const sidebar = {
                 {
                     id: "export",
                     icon: icons["qr-code-fill"],
-                    route: "/export-data"
+                    route: "/backup/export"
                 },
                 {
                     id: "import",
                     icon: icons["qr-scan-fill"],
-                    route: "/import-data"
+                    route: "/backup/import"
                 }
             ]
         },
@@ -196,16 +243,16 @@ export const vitalSignsView = {
             link: "/monitoring/overview/oxygenSaturation"
         },
         {
-            id: "glucose",
+            id: "bloodGlucose",
             icon: icons["glucose-line"],
             color: "red",
-            link: "/monitoring/overview/glucose"
+            link: "/monitoring/overview/bloodGlucose"
         },
         {
-            id: "heartBeat",
+            id: "heartRate",
             icon: icons["heart-pulse-line"],
             color: "orange",
-            link: "/monitoring/overview/heartBeat"
+            link: "/monitoring/overview/heartRate"
         }
     ],
     footer: {
@@ -213,7 +260,7 @@ export const vitalSignsView = {
             {
                 id: "primary",
                 leftIcon: icons["heart-fill"],
-                link: "/apply/vitalSigns"
+                link: "/register/vitalSigns"
             }
         ]
     }
@@ -284,7 +331,7 @@ export const medicinesView = {
             {
                 id: "primary",
                 leftIcon: icons["capsule-fill"],
-                link: "/manage/medicines/apply"
+                link: "register/medicines/"
             }
         ]
     }
@@ -299,7 +346,7 @@ export const caregiversView = {
             {
                 id: "primary",
                 leftIcon: icons["user-fill"],
-                link: "/manage/caregivers/apply"
+                link: "register/caregivers"
             }
         ]
     }
@@ -314,7 +361,7 @@ export const doctorsView = {
             {
                 id: "primary",
                 leftIcon: icons["stethoscope-line"],
-                link: "/manage/doctors/apply"
+                link: "register/doctors"
             }
         ]
     }
@@ -329,8 +376,69 @@ export const allergiesView = {
             {
                 id: "primary",
                 leftIcon: icons["virus-fill"],
-                link: "/manage/allergies/apply"
+                link: "register/allergies"
             }
         ]
     }
+}
+
+export const registerView = {
+    pages: [
+        {
+            id: "administeredMedication",
+            form: [
+                {
+                    id: "medicine",
+                    inputType: "select"
+                },
+                {
+                    id: "dosage",
+                    inputType: "text"
+                },
+                {
+                    id: "caregiver",
+                    inputType: "select"
+                },
+                {
+                    id: "observation",
+                    inputType: "textarea"
+                }
+            ]
+        },
+        {
+            id: "vitalSign",
+            form: [
+                {
+                    id: "vitalSign",
+                    inputType: "select"
+                },
+                {
+                    id: "measure",
+                    inputType: "text"
+                },
+                {
+                    id: "caregiver",
+                    inputType: "select"
+                },
+                {
+                    id: "observation",
+                    inputType: "textarea"
+                }
+            ]
+
+        },
+        {
+            id: "followUp",
+            form: [
+                {
+                    id: "topic",
+                    inputType: "select"
+                },
+                {
+                    id: "measure",
+                    inputType: "text"
+                }
+            ]
+        }
+    ]
 }
