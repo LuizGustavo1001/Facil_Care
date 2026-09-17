@@ -1,6 +1,6 @@
 import db from '../database/db.js'
 
-export default class VitalSigns {
+export default class VitalSign {
     static #availableAttributes= ['_id', 'patientId', 'dateTime', 'vitalSign', 'caregiverId']
 
     /**

@@ -3,6 +3,7 @@ export default {
         hello: "Olá",
     },
     utils: {
+        years: "anos",
         themes: {
             light: {
                 label: "Tema Claro"

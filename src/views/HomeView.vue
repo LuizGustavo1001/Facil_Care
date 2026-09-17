@@ -1,18 +1,20 @@
 <template>
   <div class="view">
-
     <SnackBar
-        v-if="error"
-        :message="error"
-        :variant="errorType"
+        v-if="patientController.state.message"
+        :message="patientController.state.message"
+        :variant="patientController.state.messageType"
     />
 
     <AppOverlay :class="{ active: overlayIsActive }"/>
 
-    <AppSidebar :class="{ active: sidebarIsActive }"/>
+    <AppSidebar
+        :patientData="patient"
+        :class="{ active: sidebarIsActive }"
+    />
 
-    <AppHeader v-if="!loading" @sidebar-toggle="handleSidebarToggle">
-      {{ $t('greetings.hello') }}, <strong>{{ patientName }}</strong>!
+    <AppHeader v-if="!patientController.state.loading" @sidebar-toggle="handleSidebarToggle">
+      {{ $t('greetings.hello') }}, <strong>{{ patient.name }}</strong>!
     </AppHeader>
 
     <main class="flex flex-column gap-15 relative flex-grow-1">
@@ -40,7 +42,6 @@
 
     <AppFooter />
   </div>
-
 </template>
 
 <style scoped>
@@ -115,8 +116,7 @@
 </style>
 
 <script setup>
-  import { ref, onMounted } from "vue"
-  import { usePatient } from "../composables/usePatient.js"
+  import { onMounted, ref} from "vue"
 
   import { homeView } from "../locales/projectConfig.js"
   import { useSidebar } from "../composables/useSidebar.js"
@@ -126,7 +126,10 @@
   import AppSidebar from "../components/common/AppSidebar.vue"
   import AppOverlay from "../components/common/AppOverlay.vue"
   import AppFooter from "../components/common/AppFooter.vue"
-  import SnackBar from "../components/common/SnackBar.vue";
+  import SnackBar from "../components/common/SnackBar.vue"
+
+  import PatientController from "../controllers/PatientController.js"
+  import db from "../database/db.js"
 
   // Composables
   const {
@@ -136,11 +139,28 @@
   } = useSidebar()
 
   // Functions
-  const patientId = ref('pat_1001')
+  const patientController = new PatientController(db)
+  const patient = ref({})
 
-  const { patientName, loading, fetchPatientName, error, errorType } = usePatient()
+  /*
+  const handleUpdate = async () => {
+    // update database patient
+    const updatePatient = await patientController.updatePatient(patient)
 
-  onMounted(async () => {
-    await fetchPatientName(patientId.value)
+    // update frontend patient
+    if(updatePatient) {
+      Object.assign(patient, updatePatient)
+    }
+  }
+  */
+
+  onMounted(async() => {
+    const data = await patientController.getPatient()
+
+    // update frontend patient
+    if(data){
+      Object.assign(patient.value, data)
+    }
   })
+
 </script>

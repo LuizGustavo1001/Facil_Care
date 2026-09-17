@@ -40,6 +40,7 @@
       </div>
 
       <ActionButton
+          v-if="patientData"
           tag="button"
           :leftIcon="icons['delete-bin-line']"
           variant="destructive"
@@ -49,12 +50,15 @@
       />
     </div>
 
-    <div class="patient-info flex gap-05 align-center">
+    <div
+        v-if="patientData"
+        class="patient-info flex gap-05 align-center"
+    >
       <Icon :icon="icons['user-smile-fill']" size="30px"></Icon>
 
       <div class="flex flex-column">
-        <h1>Antônio  Dias</h1>
-        <p>73 anos •  O-</p>
+        <h1>{{ patientData.name }}</h1>
+        <p>{{ age }} {{ $t("utils.years")}} • {{ patientData.bloodType }}</p>
       </div>
     </div>
   </aside>
@@ -110,9 +114,20 @@
 </style>
 
 <script setup>
+  import { computed } from "vue"
   import { sidebar } from "../../locales/projectConfig.js"
   import { icons } from "../../assets/icons/icons.js"
+  import { useAge } from "../../composables/useAge.js"
 
   import ActionButton from "./ActionButton.vue"
   import Icon from "./Icon.vue"
+
+  const props = defineProps({
+    patientData: Object
+  })
+
+  const age = computed(() => {
+    const { getAge } = useAge()
+    return getAge(new Date(props.patientData.birthDate))
+  })
 </script>

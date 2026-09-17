@@ -48,6 +48,8 @@
     border-radius: var(--radius-md);
     border: none;
 
+    font-family: inherit;
+
     cursor: pointer;
     transition: 0.2s ease-out;
   }
@@ -84,8 +86,7 @@
     color: inherit;
   }
   .action-btn.subtle:hover{
-    border-color: var(--color-border-brand);
-    background: var(--color-bg-primary);
+    background: var(--color-bg-hover);
   }
 
   /* 3. Destructive */
@@ -126,7 +127,7 @@
   const props = defineProps({
     tag: {
       type: String,
-      default: 'a',
+      default: 'a'
     },
     leftIcon: {
       type: String,

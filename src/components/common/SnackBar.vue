@@ -33,6 +33,8 @@
     border-radius: var(--radius-md);
     font-size: var(--text-body-md);
 
+    animation: fade-in 0.5s ease-out forwards;
+
     z-index: 10;
   }
   .snackbar:active{
