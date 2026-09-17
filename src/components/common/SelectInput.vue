@@ -34,46 +34,46 @@
 </template>
 
 <script setup>
-import { computed } from "vue"
+  import { computed } from "vue"
 
-defineOptions({
-  inheritAttrs: false
-})
+  defineOptions({
+    inheritAttrs: false
+  })
 
-const model = defineModel({ type: [String, Number], default: "" })
+  const model = defineModel({ type: [String, Number], default: "" })
 
-const props = defineProps({
-  label: String,
-  for: String,
-  name: String,
-  options: {
-    type: [Array, Object],
-    default: () => ([])
-  }
-})
+  const props = defineProps({
+    label: String,
+    for: String,
+    name: String,
+    options: {
+      type: [Array, Object],
+      default: () => ([])
+    }
+  })
 
-const computedId = computed(() => {
-  return props.id || (props.name ? `input-${props.name}` : undefined)
-})
+  const computedId = computed(() => {
+    return props.id || (props.name ? `input-${props.name}` : undefined)
+  })
 
-// Normaliza tanto Objetos quanto Arrays em um formato padrão: [{ label, value }]
-const normalizedOptions = computed(() => {
-  if (Array.isArray(props.options)) {
-    return props.options.map(opt => {
-      if (typeof opt === 'object' && opt !== null) {
-        return { label: opt.label ?? opt.text ?? opt.value, value: opt.value }
-      }
-      return { label: opt, value: opt }
-    })
-  }
+  // Normaliza tanto Objetos quanto Arrays em um formato padrão: [{ label, value }]
+  const normalizedOptions = computed(() => {
+    if (Array.isArray(props.options)) {
+      return props.options.map(opt => {
+        if (typeof opt === 'object' && opt !== null) {
+          return { label: opt.label ?? opt.text ?? opt.value, value: opt.value }
+        }
+        return { label: opt, value: opt }
+      })
+    }
 
-  if (props.options && typeof props.options === 'object') {
-    return Object.entries(props.options).map(([value, label]) => ({
-      label,
-      value
-    }))
-  }
+    if (props.options && typeof props.options === 'object') {
+      return Object.entries(props.options).map(([value, label]) => ({
+        label,
+        value
+      }))
+    }
 
-  return []
-})
+    return []
+  })
 </script>

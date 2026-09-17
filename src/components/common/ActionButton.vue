@@ -85,6 +85,7 @@
   }
   .action-btn.subtle:hover{
     border-color: var(--color-border-brand);
+    background: var(--color-bg-primary);
   }
 
   /* 3. Destructive */
@@ -116,6 +117,7 @@
 <script setup>
   import { computed } from "vue"
   import { RouterLink } from "vue-router"
+
   import Icon from "./Icon.vue"
 
   const VARIANTS = ["highlight", "subtle", "destructive", "transparent"]

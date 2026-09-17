@@ -23,8 +23,10 @@
 
 <script setup>
   import { icons } from "../../assets/icons/icons.js"
-  import ActionButton from "./ActionButton.vue"
   import { computed } from "vue"
+
+  import ActionButton from "./ActionButton.vue"
+
   import * as projectConfig from "../../locales/projectConfig.js"
 
   const props = defineProps({

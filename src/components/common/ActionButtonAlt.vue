@@ -119,8 +119,9 @@
 
 <script setup>
   import { computed } from "vue"
+  import { RouterLink } from "vue-router"
+
   import Icon from "./Icon.vue"
-  import {RouterLink} from "vue-router";
 
   const COLORS_LIST = ["blue", "orange", "red", "green"]
   const DEFAULT_COLOR = "blue"

@@ -39,6 +39,7 @@
 
 <script setup>
   import { computed } from "vue"
+
   import Icon from "./Icon.vue"
 
   const props = defineProps({

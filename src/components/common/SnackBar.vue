@@ -1,6 +1,6 @@
 <template>
   <div
-      class="snackbar flex gap1 justify-between cursor-pointer active-border"
+      class="snackbar flex gap1 justify-between cursor-pointer active-border absolute"
       :class="variantClass"
       @click="$emit('close')"
   >
@@ -11,7 +11,7 @@
       />
 
       <span class="snackbar-text flex-grow-1">
-        <slot name="message">{{ message }}</slot>
+        <slot name="message">{{ warningMessage }}</slot>
       </span>
     </span>
 
@@ -23,16 +23,20 @@
   .snackbar{
     padding: 1rem;
 
+    bottom: 2em;
+    left: 50%;
+    transform: translateX(-50%);
+
     width: 90dvw;
     max-width: 450px;
 
     border-radius: var(--radius-md);
     font-size: var(--text-body-md);
 
-    animation: fade-in 0.5s ease-out forwards;
+    z-index: 10;
   }
   .snackbar:active{
-    transform: scale(0.98);
+    transform: scale(0.98) translateX(-50%);
   }
 
   .snackbar .right-icon{
@@ -68,9 +72,12 @@
 
 <script setup>
   import { computed } from "vue"
-  import Icon from "./Icon.vue"
   import { icons } from "../../assets/icons/icons.js"
+  import { useI18n } from "vue-i18n"
 
+  import Icon from "./Icon.vue"
+
+  const { t } = useI18n()
   const INTERVAL = 5000
   const VARIANTS = ["success", "error", "warning", "info"]
   const DEFAULT_VARIANT = "success"
@@ -108,4 +115,7 @@
   const leftIcon = computed(() => {
     return iconMap[variantClass.value]
   })
+
+  // return translated warning message
+  const warningMessage = computed(() => t(`warningMessages.${props.message}.title`))
 </script>

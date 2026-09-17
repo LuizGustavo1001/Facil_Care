@@ -39,6 +39,7 @@
 
 <script setup>
   import { icons } from "../../assets/icons/icons.js"
+
   import IconBtnAlt from "./IconBtnAlt.vue"
   import IconBtn from "./IconBtn.vue"
 

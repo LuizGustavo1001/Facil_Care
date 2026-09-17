@@ -23,7 +23,7 @@
 </style>
 
 <script setup>
-  import {computed} from "vue"
+  import { computed } from "vue"
 
   defineOptions({
     inheritAttrs: false

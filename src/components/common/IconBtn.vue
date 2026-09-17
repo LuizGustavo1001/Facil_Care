@@ -83,7 +83,8 @@
 
 <script setup>
   import { computed } from "vue"
-  import Icon from "./Icon.vue";
+
+  import Icon from "./Icon.vue"
 
   const VARIANTS = ["brand", "border", "bg-clr", "transparent", "subtle"]
   const DEFAULT_VARIANT = "brand"

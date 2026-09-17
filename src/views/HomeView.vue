@@ -1,11 +1,18 @@
 <template>
   <div class="view">
+
+    <SnackBar
+        v-if="error"
+        :message="error"
+        :variant="errorType"
+    />
+
     <AppOverlay :class="{ active: overlayIsActive }"/>
 
     <AppSidebar :class="{ active: sidebarIsActive }"/>
 
-    <AppHeader @sidebar-toggle="handleSidebarToggle">
-      {{ $t('greetings.hello') }}, <strong>{{ username }}</strong>!
+    <AppHeader v-if="!loading" @sidebar-toggle="handleSidebarToggle">
+      {{ $t('greetings.hello') }}, <strong>{{ patientName }}</strong>!
     </AppHeader>
 
     <main class="flex flex-column gap-15 relative flex-grow-1">
@@ -109,6 +116,7 @@
 
 <script setup>
   import { ref, onMounted } from "vue"
+  import { usePatient } from "../composables/usePatient.js"
 
   import { homeView } from "../locales/projectConfig.js"
   import { useSidebar } from "../composables/useSidebar.js"
@@ -118,6 +126,7 @@
   import AppSidebar from "../components/common/AppSidebar.vue"
   import AppOverlay from "../components/common/AppOverlay.vue"
   import AppFooter from "../components/common/AppFooter.vue"
+  import SnackBar from "../components/common/SnackBar.vue";
 
   // Composables
   const {
@@ -127,11 +136,11 @@
   } = useSidebar()
 
   // Functions
-  const username = ref('')
+  const patientId = ref('pat_1001')
 
-  import Patients from "../models/Patients.js"
+  const { patientName, loading, fetchPatientName, error, errorType } = usePatient()
 
   onMounted(async () => {
-    username.value = await Patients.getName("pat_1001")
+    await fetchPatientName(patientId.value)
   })
 </script>

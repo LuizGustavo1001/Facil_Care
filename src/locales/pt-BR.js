@@ -339,5 +339,10 @@ export default {
                 }
             }
         }
+    },
+    warningMessages: {
+        PatientNotFound: {
+            title: "Paciente não encontrado"
+        }
     }
 }

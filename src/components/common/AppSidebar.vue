@@ -28,7 +28,7 @@
               <ActionButton
                   tag="router"
                   :leftIcon="item.icon"
-                  variant="transparent"
+                  variant="subtle"
                   :title="$t(`sidebar.sections.${sec.id}.items.${item.id}.title`)"
                   padding="sm"
                   class="truncate-single"
@@ -110,9 +110,9 @@
 </style>
 
 <script setup>
-  import Icon from "./Icon.vue"
-  import {icons} from "../../assets/icons/icons.js"
-  import ActionButton from "./ActionButton.vue"
-
   import { sidebar } from "../../locales/projectConfig.js"
+  import { icons } from "../../assets/icons/icons.js"
+
+  import ActionButton from "./ActionButton.vue"
+  import Icon from "./Icon.vue"
 </script>
