@@ -10,9 +10,7 @@
   <AppFooter page="terms" />
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
 
 <script setup>
   import { icons } from "../assets/icons/icons.js"

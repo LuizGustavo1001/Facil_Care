@@ -9,7 +9,7 @@
       :class="variantClass"
       :style="paddingStyle"
   >
-    <Icon :icon="icon" :size="size"/>
+    <Icon :icon="icon" :size="size" />
   </component>
 </template>
 
@@ -78,7 +78,6 @@
   .icon-btn.subtle:hover{
     border-color: var(--color-border-default);
   }
-
 </style>
 
 <script setup>

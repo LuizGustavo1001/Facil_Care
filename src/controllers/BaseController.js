@@ -4,7 +4,7 @@ import { reactive } from "vue"
 
 /**
  * Base Controller: Controller superclass to:
-  - loading: If operation still running
+ * - loading: If operation still running
  * - message: any message from the query
  * - messageType: message type (error, warning or success)
  **/
@@ -13,7 +13,6 @@ export default class BaseController {
         this.state = reactive({
             loading: false,
             message: '',
-            messageType: ''
         })
     }
 
@@ -27,11 +26,9 @@ export default class BaseController {
         this.clearMessage()
 
         try{
-            const result = await operation()
-
             return await operation()
         }catch(error){
-            this.setMessage(error.message, 'error')
+            this.setMessage(error.message)
             return null
         }finally{
             this.state.loading = false
@@ -44,13 +41,11 @@ export default class BaseController {
      * @param { String } message - message text
      * @param { String } type - message type
      **/
-    setMessage(message, type= 'error'){
+    setMessage(message){
         this.state.message = message
-        this.messageType = type
     }
 
     clearMessage(){
         this.state.message = ''
-        this.state.messageType = ''
     }
 }

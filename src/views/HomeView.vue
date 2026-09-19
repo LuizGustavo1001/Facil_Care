@@ -3,7 +3,6 @@
     <SnackBar
         v-if="patientController.state.message"
         :message="patientController.state.message"
-        :variant="patientController.state.messageType"
     />
 
     <AppOverlay :class="{ active: overlayIsActive }"/>
@@ -47,7 +46,7 @@
 <style scoped>
   .home-nav{
     border-radius: var(--radius-md);
-    padding: var(--spacing-md);
+    padding: var(--spacing-sm);
 
     background: var(--color-bg-subtle);
   }
@@ -57,6 +56,7 @@
     padding: var(--spacing-lg);
 
     border-radius: var(--radius-md);
+    border: 1px solid transparent;
 
     transition: 0.2s ease-out;
   }
@@ -83,11 +83,17 @@
     background: var(--red-100);
     color: var(--red-500);
   }
+  .home-card.red:hover{
+    border-color: var(--red-500);
+  }
 
   /* 2. Orange */
   .home-card.orange{
     background: var(--orange-100);
     color: var(--orange-500);
+  }
+  .home-card.orange:hover{
+    border-color: var(--orange-500);
   }
 
   /* 3. Blue */
@@ -95,11 +101,17 @@
     background: var(--blue-100);
     color: var(--blue-500);
   }
+  .home-card.blue:hover{
+    border-color: var(--blue-500);
+  }
 
   /* 4. Green */
   .home-card.green{
     background: var(--green-100);
     color: var(--green-500);
+  }
+  .home-card.green:hover{
+    border-color: var(--green-500);
   }
 
   /* 5. Yellow */
@@ -107,16 +119,22 @@
     background: var(--yellow-100);
     color: var(--yellow-600);
   }
+  .home-card.yellow:hover{
+    border-color: var(--yellow-600);
+  }
 
   /* 6. Purple */
   .home-card.purple{
     background: var(--purple-200);
     color: var(--purple-500);
   }
+  .home-card.purple:hover{
+    border-color: var(--purple-500);
+  }
 </style>
 
 <script setup>
-  import { onMounted, ref} from "vue"
+  import { onMounted, ref } from "vue"
 
   import { homeView } from "../locales/projectConfig.js"
   import { useSidebar } from "../composables/useSidebar.js"
@@ -157,10 +175,9 @@
   onMounted(async() => {
     const data = await patientController.getPatient()
 
-    // update frontend patient
+    // Update frontend patient data
     if(data){
       Object.assign(patient.value, data)
     }
   })
-
 </script>

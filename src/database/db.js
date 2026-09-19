@@ -1,14 +1,14 @@
 import { Dexie } from 'dexie'
 
-let db = new Dexie('facilCareDB')
+const db = new Dexie('facilCareDB')
 
 db.version(1).stores({
     patients: '_id, name',
-    vitalSigns: '_id, patientId, dateTime, vitalSign, caregiverId',
-    followUps: '_id, patientId, dateTime',
-    medicines: '_id, patientId, active',
-    medicineRegistries: '_id, patientId, medicationId, dateTime, caregiverId',
-    notifications: '_id, patientId, red, dateTime'
+    vitalSigns: '_id, dateTime, vitalSign, caregiverId, [vitalSign+dateTime]',
+    followUps: '_id, dateTime, followUp, caregiverId, [followUp+dateTime]',
+    medicines: '_id, active',
+    medicineRegistries: '_id, medicationId, dateTime, caregiverId',
+    notifications: '_id, red, dateTime, read'
 })
 
 // Populate Event
@@ -51,9 +51,8 @@ db.on("populate", (transaction) => {
     transaction.table('vitalSigns').bulkAdd([
         {
             _id: 'vs_2001',
-            patientId: 'pat_1001',
-            dateTime: '2026-09-15T14:30:00Z',
-            vitalSign: 'Pressão Sanguínea',
+            dateTime: new Date(),
+            vitalSign: 'bloodPressure',
             value: '120/80',
             unit: 'mmHg',
             caregiverId: 'cg_301',
@@ -64,29 +63,34 @@ db.on("populate", (transaction) => {
 
     transaction.table('followUps').bulkAdd([
         {
-            _id: 'fu_3001',
-            patientId: 'pat_1001',
-            dateTime: '2026-09-15T20:00:00Z',
-            mood: 'Paciente calmo e colaborativo',
-            painLevel: {
-                numericScale: 3,
-                facesScale: 'Dor Leve'
-            },
-            sleepQuality: 85,
-            foodAcceptance: 'Comeu toda a sopa do jantar',
-            waterIngestionLiters: 1.5,
-            bowelControl: 'Funcionando normalmente',
-            diureticControl: 'Sem queixas, urina clara',
-            pictureUrl: 'https://storage.seuapp.com/patients/pat_1001/followups/fu_3001.jpg',
+            _id: 'fu_1001',
+            dateTime: new Date(),
+            followUp: 'mood',
+            value: 'Paciente calmo e colaborativo',
             caregiverId: 'cg_301',
-            caregiverName: 'Marina Souza'
+            caregiverName: 'Marina Souza',
+        },
+        {
+            _id: 'fu_1002',
+            dateTime: new Date(),
+            followUp: 'sleep',
+            value: 85,
+            caregiverId: 'cg_301',
+            caregiverName: 'Marina Souza',
+        },
+        {
+            _id: 'fu_1003',
+            dateTime: new Date(),
+            followUp: 'foodAcceptance',
+            value: 'Comeu toda a sopa do jantar',
+            caregiverId: 'cg_301',
+            caregiverName: 'Marina Souza',
         }
     ])
 
     transaction.table('medicines').bulkAdd([
         {
             _id: 'med_4001',
-            patientId: 'pat_1001',
             name: 'Metformina 850mg',
             dosage: '1 comprimido',
             routeAdmin: 'Via oral',
@@ -99,11 +103,10 @@ db.on("populate", (transaction) => {
     transaction.table('medicineRegistries').bulkAdd([
         {
             _id: 'mr_5001',
-            patientId: 'pat_1001',
             medicationId: 'med_4001',
             medicationName: 'Metformina 850mg',
             medicationDosage: '1 comprimido',
-            dateTime: '2026-09-15T20:05:00Z',
+            dateTime: new Date(),
             caregiverId: 'cg_301',
             caregiverName: 'Marina Souza',
             observations: 'Paciente tomou sem resistência'
@@ -113,12 +116,10 @@ db.on("populate", (transaction) => {
     transaction.table('notifications').bulkAdd([
         {
             _id: 'notif_6001',
-            patientId: 'pat_1001',
-            recipientId: 'cg_301',
             title: 'Horário de Medicamento',
             description: 'Metformina 850mg pendente de administração às 20:00.',
             read: false,
-            dateTime: '2026-09-15T20:00:00Z'
+            dateTime: new Date()
         }
     ])
 })

@@ -5,10 +5,6 @@
   </div>
 </template>
 
-<style scoped>
+<style scoped></style>
 
-</style>
-
-<script setup>
-
-</script>
+<script setup></script>

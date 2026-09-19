@@ -1,7 +1,7 @@
 <template>
   <div
       class="snackbar flex gap1 justify-between cursor-pointer active-border absolute"
-      :class="variantClass"
+      :class="warningData.type"
       @click="$emit('close')"
   >
     <span class="flex gap-05 align-center flex-grow-1">
@@ -21,7 +21,7 @@
 
 <style scoped>
   .snackbar{
-    padding: 1rem;
+    padding: var(--spacing-md);
 
     bottom: 2em;
     left: 50%;
@@ -31,7 +31,7 @@
     max-width: 450px;
 
     border-radius: var(--radius-md);
-    font-size: var(--text-body-md);
+    font-size: var(--text-body-lg);
 
     animation: fade-in 0.5s ease-out forwards;
 
@@ -46,7 +46,6 @@
   }
 
   /* VARIANTS */
-
   /* 1. success */
   .snackbar.success{
     background: var(--green-100);
@@ -79,17 +78,12 @@
 
   import Icon from "./Icon.vue"
 
+  import { warningMessages } from "../../locales/projectConfig.js"
+
   const { t } = useI18n()
   const INTERVAL = 5000
-  const VARIANTS = ["success", "error", "warning", "info"]
-  const DEFAULT_VARIANT = "success"
 
   const props = defineProps({
-    variant: {
-      type: String,
-      default: "success",
-      validator: (value) => ["success", "error", "warning", "info"].includes(value)
-    },
     message: String
   })
 
@@ -108,16 +102,15 @@
     emit("close")
   }, INTERVAL)
 
-  // avoid invalid variant classes
-  const variantClass = computed(() => {
-    return VARIANTS.includes(props.variant) ? props.variant : DEFAULT_VARIANT
+  const warningData = computed(() => {
+    return warningMessages.find(item => item.id === props.message)
   })
 
-  // return leftIcon value based in the selected variant class
+  // Return leftIcon value based in the selected variant class
   const leftIcon = computed(() => {
-    return iconMap[variantClass.value]
+    return iconMap[warningData.value.type]
   })
 
-  // return translated warning message
-  const warningMessage = computed(() => t(`warningMessages.${props.message}.title`))
+  // Return translated warning message
+  const warningMessage = computed(() => t(`warningMessages.${warningData.value.id}.title`))
 </script>

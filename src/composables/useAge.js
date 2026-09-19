@@ -6,7 +6,6 @@ export function useAge() {
     * @param { Date } birthDate - Patient birth date
     **/
     const getAge = (birthDate) => {
-        console.log(birthDate)
         const today = new Date()
 
         let age = today.getFullYear() - birthDate.getFullYear()
@@ -19,5 +18,27 @@ export function useAge() {
         return age
     }
 
-    return { getAge }
+    /**
+     * example: getFormattedDate("2026-09-19T14:24:36.172Z") -> "11:24 - 19/09/2026"
+     *
+     * @param { Date | String } dateInput - Patient birth date ISO or String
+     * @param { String } format - date format ('pt-BR', 'en-US', ...)
+     **/
+    const getFormattedDate = (dateInput, format = 'pt-BR') => {
+        const date = new Date(dateInput);
+
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
+        const hour = String(date.getHours()).padStart(2, '0');
+        const minute = String(date.getMinutes()).padStart(2, '0');
+
+        if(format !== 'pt-BR'){
+            return `${hour}:${minute} - ${year}/${month}/${day}`
+        }
+
+        return `${hour}h ${minute} min - ${day}/${month}/${year}`
+    }
+
+    return { getAge, getFormattedDate }
 }

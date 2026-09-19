@@ -33,6 +33,8 @@
   </div>
 </template>
 
+<style scoped></style>
+
 <script setup>
   import { computed } from "vue"
 
@@ -56,7 +58,7 @@
     return props.id || (props.name ? `input-${props.name}` : undefined)
   })
 
-  // Normaliza tanto Objetos quanto Arrays em um formato padrão: [{ label, value }]
+  // Normalize Objects and Arrays [{ label, value }]
   const normalizedOptions = computed(() => {
     if (Array.isArray(props.options)) {
       return props.options.map(opt => {

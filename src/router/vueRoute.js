@@ -11,7 +11,7 @@ const routes = [
       }
     },
     {
-        path: '/monitoring/:itemId',
+        path: '/monitoring/:type',
         name: 'monitoring',
         component: () => import('/src/views/MonitoringView.vue'),
         meta: {
@@ -19,7 +19,7 @@ const routes = [
         }
     },
     {
-        path: '/monitoring/overview/:itemId',
+        path: '/monitoring/:type/:itemId',
         name: 'monitoring-overview',
         component: () => import('/src/views/MonitoringOverView.vue'),
         meta: {

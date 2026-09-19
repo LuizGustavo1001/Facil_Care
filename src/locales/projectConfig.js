@@ -62,16 +62,7 @@ export const homeView = {
             icon: icons["virus-fill"],
             route: "/manage/allergies"
         }
-    ],
-    footer: {
-        buttons: [
-            {
-                id: "primary",
-                leftIcon: icons["medicine-bottle-fill"],
-                link: "/register/administeredMedication"
-            }
-        ]
-    }
+    ]
 }
 
 export const preferencesView = {
@@ -93,10 +84,7 @@ export const preferencesView = {
                 }
             ]
         }
-    ],
-    footer: {
-
-    }
+    ]
 }
 
 export const sidebar = {
@@ -106,12 +94,12 @@ export const sidebar = {
             items: [
                 {
                     id: "emergency",
-                    icon: icons["first-aid-fill"],
+                    icon: icons["first-aid-line"],
                     route: "/emergency-data"
                 },
                 {
                     id: "preferences",
-                    icon: icons["settings-fill"],
+                    icon: icons["settings-line"],
                     route: "/preferences"
                 }
             ]
@@ -121,12 +109,12 @@ export const sidebar = {
             items: [
                 {
                     id: "export",
-                    icon: icons["qr-code-fill"],
+                    icon: icons["qr-code-line"],
                     route: "/backup/export"
                 },
                 {
                     id: "import",
-                    icon: icons["qr-scan-fill"],
+                    icon: icons["qr-scan-line"],
                     route: "/backup/import"
                 }
             ]
@@ -136,12 +124,12 @@ export const sidebar = {
             items: [
                 {
                     id: "manual",
-                    icon: icons["book-read-fill"],
+                    icon: icons["book-read-line"],
                     route: "/manual"
                 },
                 {
                     id: "terms",
-                    icon: icons["shield-user-fill"],
+                    icon: icons["shield-user-line"],
                     route: "/terms"
                 }
             ]
@@ -231,42 +219,33 @@ export const vitalSignsView = {
             id: "bodyTemperature",
             icon: icons["thermometer-line"],
             color: "red",
-            link: "/monitoring/overview/bodyTemperature"
+            link: "/monitoring/vitalSigns/bodyTemperature"
         },
         {
             id: "bloodPressure",
             icon: icons["blood-pressure-line"],
             color: "orange",
-            link: "/monitoring/overview/bloodPressure"
+            link: "/monitoring/vitalSigns/bloodPressure"
         },
         {
             id: "oxygenSaturation",
             icon: icons["oxygen-line"],
             color: "blue",
-            link: "/monitoring/overview/oxygenSaturation"
+            link: "/monitoring/vitalSigns/oxygenSaturation"
         },
         {
             id: "bloodGlucose",
             icon: icons["glucose-line"],
             color: "red",
-            link: "/monitoring/overview/bloodGlucose"
+            link: "/monitoring/vitalSigns/bloodGlucose"
         },
         {
             id: "heartRate",
             icon: icons["heart-pulse-line"],
             color: "orange",
-            link: "/monitoring/overview/heartRate"
+            link: "/monitoring/vitalSigns/heartRate"
         }
-    ],
-    footer: {
-        buttons: [
-            {
-                id: "primary",
-                leftIcon: icons["heart-fill"],
-                link: "/register/vitalSigns"
-            }
-        ]
-    }
+    ]
 }
 
 export const followUpView = {
@@ -275,114 +254,45 @@ export const followUpView = {
             id: "mood",
             icon: icons["user-smile-line"],
             color: "blue",
-            link: "/monitoring/overview/mood"
+            link: "/monitoring/followUps/mood"
         },
         {
             id: "painLevel",
             icon: icons["emotion-unhappy-line"],
             color: "red",
-            link: "/monitoring/overview/painLevel"
+            link: "/monitoring/followUps/painLevel"
         },
         {
             id: "sleepQuality",
             icon: icons["zzz"],
             color: "blue",
-            link: "/monitoring/overview/sleep"
+            link: "/monitoring/followUps/sleep"
         },
         {
             id: "waterIntake",
             icon: icons["drop-fill"],
             color: "blue",
-            link: "/monitoring/overview/waterIntake"
+            link: "/monitoring/followUps/waterIntake"
         },
         {
             id: "mealAcceptance",
             icon: icons["restaurant"],
             color: "orange",
-            link: "/monitoring/overview/mealAcceptance"
+            link: "/monitoring/followUps/mealAcceptance"
         },
         {
             id: "weight",
             icon: icons["weight-line"],
             color: "green",
-            link: "/monitoring/overview/weight"
+            link: "/monitoring/followUps/weight"
         },
         {
             id: "necessities",
             icon: icons["drop-line"],
             color: "orange",
-            link: "/monitoring/overview/necessities"
+            link: "/monitoring/followUps/necessities"
         }
-    ],
-    footer: {
-        buttons: [
-            {
-                id: "primary",
-                leftIcon: icons["mental-health-fill"],
-                link: "development"
-            }
-        ]
-    }
-}
-
-export const medicinesView = {
-    items: [
-
-    ],
-    footer: {
-        buttons: [
-            {
-                id: "primary",
-                leftIcon: icons["capsule-fill"],
-                link: "register/medicines/"
-            }
-        ]
-    }
-}
-
-export const caregiversView = {
-    items: [
-
-    ],
-    footer: {
-        buttons: [
-            {
-                id: "primary",
-                leftIcon: icons["user-fill"],
-                link: "register/caregivers"
-            }
-        ]
-    }
-}
-
-export const doctorsView = {
-    items: [
-
-    ],
-    footer: {
-        buttons: [
-            {
-                id: "primary",
-                leftIcon: icons["stethoscope-line"],
-                link: "register/doctors"
-            }
-        ]
-    }
-}
-
-export const allergiesView = {
-    items: [
-
-    ],
-    footer: {
-        buttons: [
-            {
-                id: "primary",
-                leftIcon: icons["virus-fill"],
-                link: "register/allergies"
-            }
-        ]
-    }
+    ]
 }
 
 export const registerView = {
@@ -445,3 +355,108 @@ export const registerView = {
         }
     ]
 }
+
+export const warningMessages = [
+    {
+        id: "PatientNotFound",
+        type: "error"
+    },
+    {
+        id: "PatientUpdated",
+        type: "success"
+    },
+    {
+        id: "NoFollowUps",
+        type: "warning"
+    },
+    {
+        id: "NoFollowUpsByType",
+        type: "warning"
+    },
+    {
+        id: "NoFollowUpsByDate",
+        type: "warning"
+    },
+    {
+        id: "NoFollowUpsByTypeAndDate",
+        type: "warning"
+    },
+    {
+        id: "InvalidDateInterval",
+        type: "error"
+    }
+]
+
+
+export const footers = [
+    {
+        id: "home",
+        buttons: [
+            {
+                id: "primary",
+                leftIcon: icons["medicine-bottle-fill"],
+                link: "/register/administeredMedication"
+            }
+        ]
+    },
+    {
+        id: "vitalSigns",
+        buttons: [
+            {
+                id: "primary",
+                leftIcon: icons["heart-fill"],
+                link: "/register/vitalSigns"
+            }
+        ]
+    },
+    {
+        id: "followUp",
+        buttons: [
+            {
+                id: "primary",
+                leftIcon: icons["mental-health-fill"],
+                link: "development"
+            }
+        ]
+    },
+    {
+        id: "medicines",
+        buttons: [
+            {
+                id: "primary",
+                leftIcon: icons["capsule-fill"],
+                link: "register/medicines/"
+            }
+        ]
+    },
+    {
+        id: "allergies",
+        buttons: [
+            {
+                id: "primary",
+                leftIcon: icons["virus-fill"],
+                link: "register/allergies"
+            }
+        ]
+    },
+    {
+        id: "doctors",
+        buttons: [
+            {
+                id: "primary",
+                leftIcon: icons["stethoscope-line"],
+                link: "register/doctors"
+            }
+        ]
+    },
+    {
+        id: "caregivers",
+        buttons: [
+            {
+                id: "primary",
+                leftIcon: icons["user-fill"],
+                link: "register/caregivers"
+            }
+        ]
+    }
+]

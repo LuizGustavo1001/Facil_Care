@@ -27,7 +27,7 @@
     background: var(--color-bg-primary);
 
     border-radius: 0 0 var(--radius-xl) var(--radius-xl);
-    box-shadow: 0 0 4px 5px var(--color-shadow-subtle);
+    box-shadow: 0 0 7px 5px var(--color-shadow-subtle);
 
     z-index: 1;
   }

@@ -4,10 +4,12 @@ export default class Patient {
     }
 
     /**
-     * Return patient data
+     * Returns patient data
      **/
     async getPatient(){
-        return await this.table.toCollection().first()
+        return await this.table
+            .toCollection()
+            .first()
     }
 
     /**

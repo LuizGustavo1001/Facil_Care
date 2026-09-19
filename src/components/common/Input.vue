@@ -19,8 +19,7 @@
   </div>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>
 
 <script setup>
   import { computed } from "vue"
@@ -41,7 +40,7 @@
     name: String
   })
 
-  // make sure that input ID match each other
+  // Make sure that input ID matches label Id
   const computedId = computed(() => {
     return props.for || (props.name ? `input-${props.name}` : undefined)
   })

@@ -2,14 +2,14 @@
   <div class="view">
     <template v-if="currentItem">
       <AppHeader
-          :title="$t(`views.${itemId}.headerTitle`)"
+          :title="$t(`views.${itemType}.headerTitle`)"
           :leftBtnIcon="icons['chevron-left']"
           @return-page="handleReturn"
       />
 
       <main>
         <section class="flex flex-column gap-1">
-          <p class="text-muted">{{ t(`views.${itemId}.subtitle`) }}:</p>
+          <p class="text-muted">{{ t(`views.${itemType}.subtitle`) }}:</p>
 
           <ul class="flex flex-column gap-1">
             <li
@@ -30,24 +30,7 @@
         </section>
       </main>
 
-
-      <AppFooter :page="itemId" />
-      <footer class="flex flex-column gap-05">
-        <div>
-          <template v-for="btn in currentItem.footer.buttons" :key="btn.id">
-            <ActionButton
-                tag="router"
-                :to="btn.link"
-                :leftIcon="btn.leftIcon"
-                padding="md"
-                :rightIcon="btn.rightIcon || icons['chevron-right']"
-                :title="$t(`views.${itemId}.footer.buttons.${btn.id}.title`)"
-            />
-          </template>
-        </div>
-
-        <p class="brand text-muted-lighter">Facil Care - 2026</p>
-      </footer>
+      <AppFooter :page="String(itemType)" />
     </template>
 
     <template v-else>
@@ -56,9 +39,7 @@
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
 
 <script setup>
   import { useI18n } from "vue-i18n"
@@ -68,13 +49,13 @@
   import { useNavigation } from "../composables/useNavigation.js"
   import { icons } from "../assets/icons/icons.js"
 
-  import ActionButton from "../components/common/ActionButton.vue"
   import AppHeader from "../components/common/AppHeader.vue"
   import ActionButtonAlt from "../components/common/ActionButtonAlt.vue"
   import AppFallback from "./AppFallback.vue"
   import AppFooter from "../components/common/AppFooter.vue"
 
   import * as projectConfig from "../locales/projectConfig.js"
+  import SnackBar from "../components/common/SnackBar.vue";
 
   const { t } = useI18n()
   const route = useRoute()
@@ -83,16 +64,16 @@
   const { handleReturn } = useNavigation()
 
   // Functions
-  // retrieve page data
-  const itemId = computed(() => route.params.itemId)
 
+  // Retrieve page data
+  const itemType = computed(() => route.params.type)
   const currentItem = computed(() => {
-    const id = itemId.value + 'View'
+    const id = itemType.value + 'View'
     return projectConfig[id] || null
   })
 
-  // return button label
+  // Return button label
   const getItemTitle = (id) => {
-    return t(`views.${itemId.value}.items.${id}.title`)
+    return t(`views.${itemType.value}.items.${id}.title`)
   }
 </script>

@@ -1,7 +1,7 @@
 @font-face {
-    font-family: "Plus Jakarta Sans";
-    src: url('../fonts/PlusJakartaSans-VariableFont_wght.ttf') format('truetype');
-    font-weight: 400 800;
+    font-family: 'Figtree';
+    src: url('../fonts/Figtree-VariableFont_wght.ttf') format('woff2-variations');
+    font-weight: 300 900;
     font-style: normal;
     font-display: swap;
 }
@@ -76,11 +76,11 @@
     --spacing-xl: 24px;
 
     /* Font Weight & Family */
-    --font-default: 'Plus Jakarta Sans', system-ui;
-    --normal-weight: 400;
-    --medium-weight: 550;
-    --bold-weight: 700;
-    --bolder-weight: 800;
+    --font-default: 'Figtree', system-ui;
+    --normal-weight: 300;
+    --medium-weight: 450;
+    --bold-weight: 550;
+    --bolder-weight: 650;
 
     /* -=-=-=- SEMANTIC TOKENS -=-=-=- */
     /* Text Color */
@@ -162,21 +162,6 @@ ul{
     list-style: none;
 }
 
-footer{
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-
-    padding: var(--spacing-sm);
-    background: var(--color-bg-primary);
-    box-shadow: 0 0 4px 5px var(--alpha-black-05);
-}
-footer .brand{
-    text-align: center;
-    font-size: var(--text-body-md);
-    font-weight: var(--bold-weight);
-}
-
 #app{
     flex-grow: 1;
 
@@ -187,7 +172,9 @@ footer .brand{
 .absolute{
     position: absolute;
 }
-
+.fixed{
+    position: fixed;
+}
 .relative{
     position: relative;
 }

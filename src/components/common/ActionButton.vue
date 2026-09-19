@@ -59,17 +59,16 @@
   }
 
   .btn-content .btn-content-title{
-    font-size: var(--text-body-md);
+    font-size: var(--text-body-lg);
     font-weight: var(--bold-weight);
   }
 
   .btn-content .btn-content-description{
     font-weight: var(--medium-weight);
-    font-size: var(--text-body-sm);
+    font-size: var(--text-body-md);
   }
 
   /* VARIANTS */
-
   /* 1. Transparent */
   .action-btn.transparent{
     background: transparent;

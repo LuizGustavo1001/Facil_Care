@@ -46,7 +46,7 @@
   .action-btn-alt{
     border: 1px solid transparent;
 
-    padding: 4px 8px 4px 4px;
+    padding:  var(--spacing-2xs) var(--spacing-xs) var(--spacing-2xs) var(--spacing-2xs);
     border-radius: var(--radius-lg);
 
     background: var(--color-bg-subtle);
@@ -129,7 +129,7 @@
   const props = defineProps({
     tag: {
       type: String,
-      default: 'a',
+      default: 'a'
     },
     leftIcon: {
       type: String,

@@ -22,9 +22,7 @@
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
 
 <script setup>
   import { useRoute } from "vue-router"
@@ -38,7 +36,7 @@
 
   const route = useRoute()
 
-  // retrieve page data
+  // Retrieve page data
   const itemId = computed(() => route.params.backupId)
 
   // Composables

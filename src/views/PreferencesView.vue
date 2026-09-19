@@ -39,15 +39,12 @@
 
     <AppFooter page="preferences" />
   </div>
-
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
 
 <script setup>
-  import { icons } from "../assets/icons/icons.js";
+  import { icons } from "../assets/icons/icons.js"
   import { useNavigation } from "../composables/useNavigation.js"
   import { preferencesView } from "../locales/projectConfig.js"
 

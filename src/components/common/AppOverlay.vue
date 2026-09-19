@@ -1,5 +1,5 @@
 <template>
-  <div class="overlay absolute"></div>
+  <div class="overlay fixed"></div>
 </template>
 
 <style scoped>
@@ -17,6 +17,4 @@
 }
 </style>
 
-<script setup>
-
-</script>
+<script setup></script>

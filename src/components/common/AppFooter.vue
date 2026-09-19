@@ -1,14 +1,15 @@
 <template>
-  <footer class="flex flex-column gap-05">
-    <div v-if="currentPage && currentPage.footer && currentPage.footer.buttons">
-      <template v-for="btn in currentPage.footer.buttons" :key="btn.id">
+  <footer class="footer flex flex-column gap-05">
+    <div v-if="currentPage">
+      <template v-for="btn in currentPage.buttons" :key="btn.id">
         <ActionButton
             tag="router"
             :to="btn.link"
             :leftIcon="btn.leftIcon"
             padding="md"
             :rightIcon="btn.rightIcon || icons['chevron-right']"
-            :title="$t(`views.${pageValue}.footer.buttons.${btn.id}.title`)"
+            :title="$t(`footer.${props.page}.buttons.${btn.id}.title`)"
+            style="border-radius: var(--radius-2xl)"
         />
       </template>
     </div>
@@ -18,16 +19,31 @@
 </template>
 
 <style scoped>
+  .footer{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 
+    padding: var(--spacing-sm);
+    background: var(--color-bg-primary);
+    box-shadow: 0 0 7px 5px var(--alpha-black-05);
+
+    border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
+  }
+  .footer .brand{
+    text-align: center;
+    font-size: var(--text-body-md);
+    font-weight: var(--bold-weight);
+  }
 </style>
 
 <script setup>
-  import { icons } from "../../assets/icons/icons.js"
   import { computed } from "vue"
 
-  import ActionButton from "./ActionButton.vue"
+  import { icons } from "../../assets/icons/icons.js"
+  import { footers } from "../../locales/projectConfig.js"
 
-  import * as projectConfig from "../../locales/projectConfig.js"
+  import ActionButton from "./ActionButton.vue"
 
   const props = defineProps({
     page: {
@@ -36,14 +52,9 @@
     }
   })
 
-  const pageValue = computed(() => props.page)
   const currentPage = computed(() => {
-    const id = props.page + 'View'
+    const pageExists = footers.find(footer => footer.id === props.page)
 
-    return projectConfig[id] || null
-  })
-
-  const pageExists = computed(() => {
-    !!(currentPage && currentPage.footer && currentPage.footer.buttons)
+    return pageExists ? footers.find(footer => footer.id === props.page) : null
   })
 </script>

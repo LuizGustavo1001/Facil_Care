@@ -51,7 +51,7 @@ export default {
         painLevel: {
             title: "Nível de dor"
         },
-        sleepQuality: {
+        sleep: {
             title: "Qualidade do Sono"
         },
         waterIntake: {
@@ -95,14 +95,6 @@ export default {
                     title: "Alergias",
                     description: "Gerenciar alergias do paciente"
                 }
-            },
-
-            footer: {
-                buttons: {
-                    primary: {
-                        title: "Administrar Medicamento"
-                    }
-                }
             }
         },
         vitalSigns: {
@@ -123,13 +115,6 @@ export default {
                 },
                 heartRate: {
                     title: "Batimentos Cardíacos"
-                }
-            },
-            footer:{
-                buttons: {
-                    primary: {
-                        title: "Registrar Sinais Vitais"
-                    }
                 }
             }
         },
@@ -157,13 +142,6 @@ export default {
                 },
                 necessities: {
                     title: "Controle de Evacuação e Diurese"
-                }
-            },
-            footer:{
-                buttons: {
-                    primary: {
-                        title: "Registrar Estado Físico / Comportamental"
-                    }
                 }
             }
         },
@@ -219,13 +197,6 @@ export default {
                 registers: {
                     title: "Medicamentos Cadastrados"
                 }
-            },
-            footer:{
-                buttons: {
-                    primary: {
-                        title: "Registrar Novo Medicamento"
-                    }
-                }
             }
         },
         allergies: {
@@ -233,13 +204,6 @@ export default {
             sections: {
                 registers: {
                     title: "Alergias Cadastradas"
-                }
-            },
-            footer:{
-                buttons: {
-                    primary: {
-                        title: "Registrar Nova Alergia"
-                    }
                 }
             }
         },
@@ -249,13 +213,6 @@ export default {
                 registers: {
                     title: "Médicos Cadastrados"
                 }
-            },
-            footer:{
-                buttons: {
-                    primary: {
-                        title: "Registrar Novo Médico"
-                    }
-                }
             }
         },
         caregivers: {
@@ -263,13 +220,6 @@ export default {
             sections: {
                 registers: {
                     title: "Cuidadores Cadastrados"
-                }
-            },
-            footer:{
-                buttons: {
-                    primary: {
-                        title: "Registrar Novo Cuidador"
-                    }
                 }
             }
         },
@@ -341,9 +291,78 @@ export default {
             }
         }
     },
+    footer: {
+        home: {
+            buttons: {
+                primary: {
+                    title: "Administrar Medicamento"
+                }
+            }
+        },
+        vitalSigns: {
+            buttons: {
+                primary: {
+                    title: "Registrar Sinais Vitais"
+                }
+            }
+        },
+        followUp: {
+            buttons: {
+                primary: {
+                    title: "Registrar Estado Físico / Comportamental"
+                }
+            }
+        },
+        medicines: {
+            buttons: {
+                primary: {
+                    title: "Registrar Novo Medicamento"
+                }
+            }
+        },
+        allergies: {
+            buttons: {
+                primary: {
+                    title: "Registrar Nova Alergia"
+                }
+            }
+        },
+        doctors: {
+            buttons: {
+                primary: {
+                    title: "Registrar Novo Médico"
+                }
+            }
+        },
+        caregivers: {
+            buttons: {
+                primary: {
+                    title: "Registrar Novo Cuidador"
+                }
+            }
+        }
+    },
     warningMessages: {
         PatientNotFound: {
             title: "Paciente não encontrado"
+        },
+        PatientUpdated: {
+            title: "Dados do paciente atualizados com sucesso"
+        },
+        NoFollowUps: {
+            title: "Nenhum acompanhamento encontrado"
+        },
+        NoFollowUpsByType: {
+            title: "Nenhum acompanhamento encontrado com base no tipo selecionado"
+        },
+        NoFollowUpsByDate: {
+            title: "Nenhum acompanhamento encontrado com base nas datas selecionadas"
+        },
+        NoFollowUpsByTypeAndDate: {
+            title: "Nenhum acompanhamento encontrado com base nas datas e tipo selecionados"
+        },
+        InvalidDateInterval: {
+            title: "Intervalo de data inválido. Data mínima deve ser menor que a data máxima"
         }
     }
 }

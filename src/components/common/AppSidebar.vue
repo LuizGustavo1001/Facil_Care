@@ -1,5 +1,5 @@
 <template>
-  <aside id="sidebar" class="flex flex-column gap-05 absolute overflow-auto">
+  <aside id="sidebar" class="flex flex-column gap-05 absolute overflow-auto fixed">
     <div class="brand-info flex gap-05 align-center">
       <Icon :icon="icons['logo-fill-colorful']" size="35px"></Icon>
 
@@ -69,22 +69,18 @@
     z-index: 10;
     background: var(--color-bg-subtle);
 
-    position: fixed;
-
+    padding: var(--spacing-md);
     margin-inline: 0.5em;
     top: 0.5em;
 
     border-radius: var(--radius-xl);
     border: 1px solid var(--color-border-default);
 
-    padding: var(--spacing-md);
-
     height: calc(100dvh - 1em);
     width: 350px;
     max-width: 60dvw;
 
     transform: translateX(-120%);
-
     transition: transform 0.25s ease-out;
   }
   aside.active{
