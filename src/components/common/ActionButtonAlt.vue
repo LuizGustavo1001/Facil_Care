@@ -10,7 +10,7 @@
       :class="colorVariant"
   >
     <span class="flex gap-05 align-center">
-        <span class="left-icon-wrapper">
+        <span v-if="leftIcon" class="left-icon-wrapper">
           <Icon
               v-if="leftIcon"
               :icon="leftIcon"
@@ -53,6 +53,7 @@
 
     text-align: start;
 
+    font-family: inherit;
     cursor: pointer;
     transition: 0.2s ease-out;
   }

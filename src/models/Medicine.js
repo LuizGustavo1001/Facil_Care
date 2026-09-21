@@ -1,6 +1,6 @@
 export default class Medicine {
     constructor(db){
-        this.table = db.table('vitalSigns')
+        this.table = db.table('medicines')
     }
 
     /**

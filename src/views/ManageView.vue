@@ -58,7 +58,7 @@
 
 <script setup>
   import { useRoute } from "vue-router"
-  import { computed, onMounted, ref } from "vue"
+  import {computed, onMounted, ref, watch} from "vue"
 
   import { icons } from "../assets/icons/icons.js"
   import { useNavigation } from "../composables/useNavigation.js"
@@ -74,6 +74,7 @@
 
   import db from "../database/db.js"
   import PatientController from "../controllers/PatientController.js"
+  import MedicinesController from "../controllers/MedicinesController.js"
 
   const route = useRoute()
 
@@ -94,48 +95,76 @@
 
   // Functions
   const patientController = new PatientController(db)
+  const medicineController = new MedicinesController(db)
 
+  const patient = ref(null)
+  const medicines = ref([])
   const formattedData = ref([])
 
-  onMounted(async() => {
-    const patient = await patientController.getPatient()
+  const fillSection = () => {
+    // clears old formattedData
+    formattedData.value = []
 
-    if(patient){
-      switch(itemId.value){
-        case "caregivers": // Object
-          for(const caregiver of patient.caregivers ?? []){
-            const descriptionParts = [caregiver.phone, caregiver.startDate]
-
-            formattedData.value.push({
-              id: caregiver._id,
-              title: caregiver.name,
-              description: descriptionParts.join(" • ")
-            })
-          }
-          break
-        case "doctors": // Object
-          for(const doctor of patient.doctors ?? []){
-            const descriptionParts = [doctor.speciality, doctor.phone]
-
-            formattedData.value.push({
-              id: doctor._id,
-              title: doctor.name,
-              description: descriptionParts.join(" • ")
-            })
-          }
-          break
-        case "allergies": // Array
-          for(let i = 0; i < patient.allergies.length; i++){
-            formattedData.value.push({
-              id: i,
-              title: patient.allergies[i]
-            })
-          }
-          break
-        case "medicines": // Object
-          // development...
-          break
-      }
+    const data = {
+      ...patient.value,
+      medicines: medicines.value
     }
+
+    switch(itemId.value){
+      case "caregivers":
+        for(const caregiver of data.caregivers ?? []){
+          formattedData.value.push({
+            id: caregiver.id,
+            title: caregiver.name,
+            description: getDescription([
+              caregiver.phone,
+              caregiver.startDate
+            ])
+          })
+        }
+        break
+      case "doctors":
+        for(const doctor of data.doctors ?? []){
+          formattedData.value.push({
+            id: doctor._id,
+            title: doctor.name,
+            description: getDescription([
+              doctor.speciality,
+              doctor.phone
+            ])
+          })
+        }
+        break
+      case "allergies":
+        for(const [i, allergy] of (data.allergies ?? []).entries()){
+          formattedData.value.push({
+            id: i,
+            title: allergy
+          })
+        }
+        break
+      case "medicines":
+        for(const medicine of data.medicines ?? []){
+          formattedData.value.push({
+            id: medicine._id,
+            title: medicine.name
+          })
+        }
+        break
+    }
+  }
+
+  const getDescription = (...parts) => {
+    return parts.filter(Boolean).join(" • ")
+  }
+
+  // If updates -> refill section
+  watch([patient, medicines, itemId], () => {
+    fillSection()
+  }, { deep: true })
+
+  onMounted(async() => {
+    patient.value = await patientController.getPatient()
+    medicines.value = await medicineController.getAll()
   })
 </script>

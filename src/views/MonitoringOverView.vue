@@ -1,8 +1,6 @@
 <template>
   <div class="view">
-    <template
-        v-if="$te(`utils.${currentItem}.title`)"
-    >
+    <template v-if="$te(`utils.${currentItem}.title`)">
       <SnackBar
           v-if="monitorignController.state.message"
           :message="monitorignController.state.message"

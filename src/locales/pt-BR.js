@@ -148,9 +148,9 @@ export default {
         emergencyData: {
             headerTitle: "Dados de Emergência",
             sections: {
-                patientData: {
+                patient: {
                     title: "Informações do Paciente",
-                    items: {
+                    buttons: {
                         patientName: {
                             title: "Nome Completo"
                         },
@@ -180,7 +180,7 @@ export default {
                 },
                 others: {
                     title: "Outros",
-                    items: {
+                    buttons: {
                         doctors: {
                             title: "Médicos Cadastrados"
                         },
@@ -349,16 +349,16 @@ export default {
         PatientUpdated: {
             title: "Dados do paciente atualizados com sucesso"
         },
-        NoFollowUps: {
+        NoRecords: {
             title: "Nenhum acompanhamento encontrado"
         },
-        NoFollowUpsByType: {
+        NoRecordsByType: {
             title: "Nenhum acompanhamento encontrado com base no tipo selecionado"
         },
-        NoFollowUpsByDate: {
+        NoRecordsByDate: {
             title: "Nenhum acompanhamento encontrado com base nas datas selecionadas"
         },
-        NoFollowUpsByTypeAndDate: {
+        NoRecordsByTypeAndDate: {
             title: "Nenhum acompanhamento encontrado com base nas datas e tipo selecionados"
         },
         InvalidDateInterval: {

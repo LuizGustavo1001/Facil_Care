@@ -25,14 +25,14 @@ export default class PatientRecordController extends BaseController {
      **/
     async getAll() {
         return await this.execute(async () => {
-            const followUps = await this.model.getAll()
+            const records = await this.model.getAll()
 
-            if(followUps.length <= 0){
-                this.setMessage("NoFollowUps")
+            if(records.length <= 0){
+                this.setMessage("NoRecords")
                 return []
             }
 
-            return followUps
+            return records
         })
     }
 
@@ -43,14 +43,14 @@ export default class PatientRecordController extends BaseController {
      **/
     async getByType(type) {
         return await this.execute(async () => {
-            const followUps = await this.model.getByType(type)
+            const records = await this.model.getByType(type)
 
-            if(followUps.length <= 0){
-                this.setMessage("NoFollowUpsByType")
+            if(records.length <= 0){
+                this.setMessage("NoRecordsByType")
                 return []
             }
 
-            return followUps
+            return records
         })
     }
 
@@ -67,14 +67,14 @@ export default class PatientRecordController extends BaseController {
         }
 
         return await this.execute(async () => {
-            const followUps = await this.model.getByDate(minDate, maxDate)
+            const records = await this.model.getByDate(minDate, maxDate)
 
-            if(followUps.length <= 0){
-                this.setMessage("NoFollowUpsByDate")
+            if(records.length <= 0){
+                this.setMessage("NoRecordsByDate")
                 return []
             }
 
-            return followUps
+            return records
         })
     }
 
@@ -92,14 +92,14 @@ export default class PatientRecordController extends BaseController {
         }
 
         return await this.execute(async () => {
-            const followUps = await this.model.getByDate(minDate, maxDate)
+            const records = await this.model.getByDate(minDate, maxDate)
 
-            if(followUps.length <= 0){
-                this.setMessage("NoFollowUpsByTypeAndDate")
+            if(records.length <= 0){
+                this.setMessage("NoRecordsByTypeAndDate")
                 return []
             }
 
-            return followUps
+            return records
         })
     }
 }
