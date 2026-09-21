@@ -1,3 +1,5 @@
+import { currentLanguage } from "./useLanguage.js"
+
 export function useAge() {
 
     /**
@@ -22,9 +24,8 @@ export function useAge() {
      * example: getFormattedDate("2026-09-19T14:24:36.172Z") -> "11:24 - 19/09/2026"
      *
      * @param { Date | String } dateInput - Patient birth date ISO or String
-     * @param { String } format - date format ('pt-BR', 'en-US', ...)
      **/
-    const getFormattedDate = (dateInput, format = 'pt-BR') => {
+    const getFormattedDate = (dateInput) => {
         const date = new Date(dateInput);
 
         const day = String(date.getDate()).padStart(2, '0');
@@ -33,7 +34,7 @@ export function useAge() {
         const hour = String(date.getHours()).padStart(2, '0');
         const minute = String(date.getMinutes()).padStart(2, '0');
 
-        if(format !== 'pt-BR'){
+        if(currentLanguage.value !== 'pt-BR'){
             return `${hour}:${minute} - ${year}/${month}/${day}`
         }
 

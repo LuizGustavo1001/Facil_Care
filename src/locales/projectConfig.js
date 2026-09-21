@@ -17,10 +17,10 @@ export const themes = [
 
 export const languages = [
     {
-        id: "pt-BR"
+        id: "ptBR"
     },
     {
-        id: "en-US"
+        id: "enUS"
     }
 ]
 
@@ -74,12 +74,14 @@ export const preferencesView = {
                     id: "themes",
                     name: "app-theme",
                     for: "app-theme",
+                    event: "toggle-theme",
                     options: themes
                 },
                 {
                     id: "languages",
                     name: "app-lang",
                     for: "app-lang",
+                    event: "toggle-language",
                     options: languages
                 }
             ]
@@ -366,19 +368,19 @@ export const warningMessages = [
         type: "success"
     },
     {
-        id: "NoFollowUps",
+        id: "NoRecords",
         type: "warning"
     },
     {
-        id: "NoFollowUpsByType",
+        id: "NoRecordsByType",
         type: "warning"
     },
     {
-        id: "NoFollowUpsByDate",
+        id: "NoRecordsByDate",
         type: "warning"
     },
     {
-        id: "NoFollowUpsByTypeAndDate",
+        id: "NoRecordsByTypeAndDate",
         type: "warning"
     },
     {

@@ -154,7 +154,7 @@
     }
   }
 
-  const getDescription = (...parts) => {
+  const getDescription = (parts) => {
     return parts.filter(Boolean).join(" • ")
   }
 

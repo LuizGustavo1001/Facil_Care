@@ -12,24 +12,20 @@
           :key="section.id"
           class="flex flex-column gap-1"
       >
-        <h2 class="section-title text-muted">{{ $t(`views.preferences.sections.${section.id}.title`) }}</h2>
+        <h2 class="section-title text-muted">{{ getSectionTitle(section) }}</h2>
 
         <ul class="flex flex-column gap-1">
-          <li
-              v-for="item in section.items"
-              :key="item.id"
-          >
+          <li v-for="item in section.items" :key="item.id" >
             <SelectInput
-                :label="$t(`views.preferences.sections.${section.id}.items.${item.id}.title`)"
-                :name="item.name"
-                :for="item.for"
+                :model-value="getCurrentEventValue(item)"
+                v-bind="getInputProps(section, item)"
+                @change="handleSelect(item.event, $event)"
             >
               <option
-                  v-for="option in item.options"
-                  :key="option.id"
+                  v-for="option in item.options" :key="option.id"
                   :value="option.id"
               >
-                {{ $t(`utils.${item.id}.${option.id}.label`) }}
+                {{ getOptionLabel(item, option) }}
               </option>
             </SelectInput>
           </li>
@@ -46,6 +42,9 @@
 <script setup>
   import { icons } from "../assets/icons/icons.js"
   import { useNavigation } from "../composables/useNavigation.js"
+  import { useLanguage } from "../composables/useLanguage.js"
+  import { useTheme } from "../composables/useTheme.js"
+  import { useI18n } from "vue-i18n"
   import { preferencesView } from "../locales/projectConfig.js"
 
   import AppHeader from "../components/common/AppHeader.vue"
@@ -54,4 +53,47 @@
 
   // Composables
   const { handleReturn } = useNavigation()
+  const { initLanguage } = useLanguage()
+  const { toggleTheme, currentTheme } = useTheme()
+  const { t, te, locale } = useI18n()
+
+  // Functions
+  const getCurrentEventValue = (item) => {
+    if(item.event === "toggle-theme"){
+      return currentTheme.value
+    }
+    if(item.event === "toggle-language"){
+      return locale.value
+    }
+
+    return item.for
+  }
+
+  const handleSelect = (eventType, event) => {
+    const selectedValue = event.target ? event.target.value : event
+
+    switch(eventType){
+      case "toggle-theme":
+        toggleTheme(selectedValue)
+        break
+      case "toggle-language":
+        initLanguage(selectedValue)
+        break
+    }
+  }
+
+  const getInputProps = (section, item) => {
+    return {
+      label: t(`views.preferences.sections.${section.id}.items.${item.id}.title`),
+      name: item.name
+    }
+  }
+
+  const getSectionTitle = (section) => {
+    return te(`views.preferences.sections.${section.id}.title`) ? t(`views.preferences.sections.${section.id}.title`) : ""
+  }
+
+  const getOptionLabel = (item, option) => {
+    return te(`utils.${item.id}.${option.id}.label`) ? t(`utils.${item.id}.${option.id}.label`) : ""
+  }
 </script>

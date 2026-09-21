@@ -1,291 +1,291 @@
 export default {
     greetings: {
-        hello: "Olá",
+        hello: "Hello",
     },
     utils: {
-        years: "anos",
+        years: "years",
         themes: {
             light: {
-                label: "Tema Claro"
+                label: "Light Mode"
             },
             dark: {
-                label: "Tema Escuro"
+                label: "Dark Mode"
             },
             system: {
-                label: "Seguir Sistema"
+                label: "Follow System"
             },
             highContrast: {
-                label: "Alto Contraste"
+                label: "High Contrast"
             }
         },
         languages: {
             ptBR: {
-                label: "Português Brasil"
+                label: "Portuguese Brazil"
             },
             enUS: {
-                label: "Inglês"
+                label: "English"
             }
         },
         pageFallback: {
-            title: "Página não encontrada",
-            button: "Clique aqui para voltar para a página inicial"
+            title: "Page not found",
+            button: "Click to go to the homepage",
         },
         bodyTemperature: {
-            title: "Temperatura Corporal"
+            title: "Body Temperature"
         },
         bloodPressure: {
-            title: "Pressão Arterial"
+            title: "Blood Pressure"
         },
         oxygenSaturation: {
-            title: "Saturação de Oxigênio"
+            title: "Oxygen Saturation"
         },
         bloodGlucose: {
-            title: "Glicemia"
+            title: "Glucose"
         },
         heartRate: {
-            title: "Batimentos Cardíacos"
+            title: "Heartbeat"
         },
         mood: {
-            title: "Humor"
+            title: "Mood"
         },
         painLevel: {
-            title: "Nível de dor"
+            title: "Pain Level"
         },
         sleep: {
-            title: "Qualidade do Sono"
+            title: "Sleep Quality"
         },
         waterIntake: {
-            title: "Ingestão de Água"
+            title: "Water Ingestion"
         },
         mealAcceptance: {
-            title: "Aceitação de Refeições"
+            title: "Food Acceptance"
         },
         weight: {
-            title: "Peso"
+            title: "Weight"
         },
         necessities: {
-            title: "Controle de Evacuação e Diurese"
+            title: "Monitoring of bowel and urine"
         }
     },
     views: {
         home: {
-            subtitle: "Selecione uma das opções abaixo para visualizar as informações desejadas",
+            subtitle: "Select one of the options bellow to view the desired information",
             buttons: {
                 vitalSigns: {
-                    title: "Registros de Sinais Vitais",
-                    description: "Gerenciar medições diárias"
+                    title: "Vital Sign Records",
+                    description: "Manage daily measurements"
                 },
                 followUp: {
-                    title: "Acompanhamento Fisiológico e Comportamental",
-                    description: "Gerenciar dados comportamentais e fisiológicos"
+                    title: "Physiological and Behavioral Monitoring",
+                    description: "Manage physiological and behavioral data"
                 },
                 medicine: {
-                    title: "Medicamentos",
-                    description: "Gerenciar medicamentos utilizados pelo paciente"
+                    title: "Medicines",
+                    description: "Manage medicines used by the patient"
                 },
                 caregiver: {
-                    title: "Cuidadores",
-                    description: "Gerenciar cuidadores do paciente"
+                    title: "Caregivers",
+                    description: "Manage patient's caregivers"
                 },
                 doctors: {
-                    title: "Médicos",
-                    description: "Gerenciar médicos do paciente"
+                    title: "Doctors",
+                    description: "Manage patient's doctors"
                 },
                 allergies: {
-                    title: "Alergias",
-                    description: "Gerenciar alergias do paciente"
+                    title: "Allergies",
+                    description: "Manage patient's allergies"
                 }
             }
         },
         vitalSigns: {
-            headerTitle: "Sinais Vitais",
-            subtitle: "Selecione uma das opções abaixo para visualizar cada tópico individualmente",
+            headerTitle: "Vital Signs",
+            subtitle: "Select one of the options bellow to view the desired information individualy",
             items: {
                 bodyTemperature: {
-                    title: "Temperatura Corporal"
+                    title: "Body Temperature",
                 },
                 bloodPressure: {
-                    title: "Pressão Arterial"
+                    title: "Blood Pressure"
                 },
                 oxygenSaturation: {
-                    title: "Saturação de Oxigênio"
+                    title: "Oxygen Saturation"
                 },
                 bloodGlucose: {
-                    title: "Glicemia"
+                    title: "Glucose"
                 },
                 heartRate: {
-                    title: "Batimentos Cardíacos"
+                    title: "Heartbeat"
                 }
             }
         },
         followUp: {
-            headerTitle: "Acompanhamento Fisiológico e Comportamental",
+            headerTitle: "Physiological and Behavioral Monitoring",
             subtitle: "Selecione uma das opções abaixo para visualizar cada tópico individualmente",
             items: {
                 mood: {
-                    title: "Humor"
+                    title: "Mood"
                 },
                 painLevel: {
-                    title: "Nível de dor"
+                    title: "Pain Level"
                 },
                 sleepQuality: {
-                    title: "Qualidade do Sono"
+                    title: "Sleep Quality"
                 },
                 waterIntake: {
-                    title: "Ingestão de Água"
+                    title: "Water Ingestion"
                 },
                 mealAcceptance: {
-                    title: "Aceitação de Refeições"
+                    title: "Food Acceptance"
                 },
                 weight: {
-                    title: "Peso"
+                    title: "Weight"
                 },
                 necessities: {
-                    title: "Controle de Evacuação e Diurese"
+                    title: "Bowel and Urine"
                 }
             }
         },
         emergencyData: {
-            headerTitle: "Dados de Emergência",
+            headerTitle: "Emergency Data",
             sections: {
                 patient: {
-                    title: "Informações do Paciente",
+                    title: "Patient Information",
                     buttons: {
                         patientName: {
-                            title: "Nome Completo"
+                            title: "Full Name"
                         },
                         birthDate: {
-                            title: "Data de Nascimento",
+                            title: "Birth Date",
                         },
                         bloodType: {
-                            title: "Tipo Sanguíneo",
+                            title: "Blood Type",
                         },
                         weight: {
-                            title: "Peso (Kg)"
+                            title: "Weight"
                         },
                         address: {
-                            title: "Endereço"
+                            title: "Address"
                         }
                     }
                 },
                 emergencyContact: {
-                    title: "Contatos de Emergência",
-                    subtitle: "Clique em um contato para ser redirecionado para o aplicativo de telefonia"
+                    title: "Emergency Contacts",
+                    subtitle: "Click in a contact to be redirected to your call's app"
                 },
                 allergies: {
-                    title: "Alergias Conhecidas"
+                    title: "Known Allergies"
                 },
                 healthPlans: {
-                    title: "Planos de Saúde"
+                    title: "Health Ensure Plans"
                 },
                 others: {
-                    title: "Outros",
+                    title: "Others",
                     buttons: {
                         doctors: {
-                            title: "Médicos Cadastrados"
+                            title: "Registered Doctors"
                         },
                         medicines: {
-                            title: "Medicamentos Cadastrados"
+                            title: "Registered Medicines"
                         }
                     }
                 }
             }
         },
         medicines: {
-            headerTitle: "Medicamentos",
+            headerTitle: "Medicines",
             sections: {
                 registers: {
-                    title: "Medicamentos Cadastrados"
+                    title: "Registered Medicines"
                 }
             }
         },
         allergies: {
-            headerTitle: "Alergias",
+            headerTitle: "Allergies",
             sections: {
                 registers: {
-                    title: "Alergias Cadastradas"
+                    title: "Registered Allergies"
                 }
             }
         },
         doctors: {
-            headerTitle: "Médicos",
+            headerTitle: "Doctors",
             sections: {
                 registers: {
-                    title: "Médicos Cadastrados"
+                    title: "Registered Doctors"
                 }
             }
         },
         caregivers: {
-            headerTitle: "Cuidadores",
+            headerTitle: "Caregivers",
             sections: {
                 registers: {
-                    title: "Cuidadores Cadastrados"
+                    title: "Registered Caregivers"
                 }
             }
         },
         preferences:{
-            headerTitle: "Preferências do Usuário",
+            headerTitle: "User Preferences",
             sections: {
                 general: {
-                    title: "Geral",
+                    title: "General",
                     items: {
                         themes: {
-                            title: "Tema do Sistema"
+                            title: "System Theme"
                         },
                         languages: {
-                            title: "Idioma do Sistema"
+                            title: "System Language"
                         }
                     }
                 }
             }
         },
         import: {
-            headerTitle: "Importar Dados",
+            headerTitle: "Import Data",
             subtitle: ""
         },
         export: {
-            headerTitle: "Exportar Dados",
-            subtitle: "Escaneie o código QR abaixo para importar dados de {name}"
+            headerTitle: "Export Data",
+            subtitle: "Scan the QR code bellow to import data from {name}"
         },
         userManual: {
-            headerTitle: "Manual do Usuário"
+            headerTitle: "User's Manual"
         },
         terms: {
-            headerTitle: "Termos de Responsabilidade"
+            headerTitle: "Terms of Service"
         }
     },
     sidebar: {
         sections: {
             general: {
-                title: "Geral",
+                title: "General",
                 items: {
                     emergency: {
-                        title: "Dados de Emergência"
+                        title: "Emergency Data"
                     },
                     preferences: {
-                        title: "Preferências"
+                        title: "Preferences"
                     }
                 }
             },
             import: {
-                title: "Gerenciar Dados",
+                title: "Manage Data",
                 items: {
                     export: {
-                        title: "Exportar Dados"
+                        title: "Export Data"
                     },
                     import: {
-                        title: "Importar Dados"
+                        title: "Import Data"
                     }
                 }
             },
             others: {
-                title: "Outros",
+                title: "Others",
                 items: {
                     manual: {
-                        title: "Manual do Usuário"
+                        title: "User's Manual"
                     },
                     terms: {
-                        title: "Termos de Responsabilidade"
+                        title: "Terms of Service"
                     }
                 }
             }
@@ -295,74 +295,74 @@ export default {
         home: {
             buttons: {
                 primary: {
-                    title: "Administrar Medicamento"
+                    title: "Administer Medication"
                 }
             }
         },
         vitalSigns: {
             buttons: {
                 primary: {
-                    title: "Registrar Sinais Vitais"
+                    title: "Record Vital Sign"
                 }
             }
         },
         followUp: {
             buttons: {
                 primary: {
-                    title: "Registrar Estado Físico / Comportamental"
+                    title: "Record Physiological / Behavioral State"
                 }
             }
         },
         medicines: {
             buttons: {
                 primary: {
-                    title: "Registrar Novo Medicamento"
+                    title: "Record New Medicine"
                 }
             }
         },
         allergies: {
             buttons: {
                 primary: {
-                    title: "Registrar Nova Alergia"
+                    title: "Record new Allergie"
                 }
             }
         },
         doctors: {
             buttons: {
                 primary: {
-                    title: "Registrar Novo Médico"
+                    title: "Record New Doctor"
                 }
             }
         },
         caregivers: {
             buttons: {
                 primary: {
-                    title: "Registrar Novo Cuidador"
+                    title: "Record New Caregiver"
                 }
             }
         }
     },
     warningMessages: {
         PatientNotFound: {
-            title: "Paciente não encontrado"
+            title: "Patient not found"
         },
         PatientUpdated: {
-            title: "Dados do paciente atualizados com sucesso"
+            title: "Patient data updated with success"
         },
         NoRecords: {
-            title: "Nenhum acompanhamento encontrado"
+            title: "No follow-ups founded"
         },
         NoRecordsByType: {
-            title: "Nenhum acompanhamento encontrado com base no tipo selecionado"
+            title: "No follow-ups founded with selected type"
         },
         NoRecordsByDate: {
-            title: "Nenhum acompanhamento encontrado com base nas datas selecionadas"
+            title: "No follow-ups founded with selected dates"
         },
         NoRecordsByTypeAndDate: {
-            title: "Nenhum acompanhamento encontrado com base nas datas e tipo selecionados"
+            title: "No follow-ups founded with selected type and dates"
         },
         InvalidDateInterval: {
-            title: "Intervalo de data inválido. Data mínima deve ser menor que a data máxima"
+            title: "Invalid date interval. Minimum date needs to be lower than maximum date"
         }
     }
 }

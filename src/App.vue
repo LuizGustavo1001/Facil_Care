@@ -9,4 +9,15 @@
 
 <script setup>
   import { RouterView } from 'vue-router'
+  import { onMounted } from "vue"
+  import { useTheme } from "./composables/useTheme.js"
+  import {useLanguage} from "./composables/useLanguage.js";
+
+  const { toggleTheme } = useTheme()
+  const { initLanguage } = useLanguage()
+
+  onMounted(() => {
+    toggleTheme()
+    initLanguage()
+  })
 </script>
