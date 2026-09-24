@@ -29,6 +29,7 @@ export default {
         necessities: "Controle de Evacuação e Diurese"
     },
     utils: {
+        deleteAccount: "Apagar Dados",
         years: "anos",
         themes: {
             light: {

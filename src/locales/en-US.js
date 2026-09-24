@@ -29,6 +29,7 @@ export default {
         necessities: "Monitoring of bowel and urine"
     },
     utils: {
+        deleteAccount: "Erase Data",
         years: "years",
         themes: {
             light: {

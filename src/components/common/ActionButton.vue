@@ -59,13 +59,13 @@
   }
 
   .btn-content .btn-content-title{
-    font-size: var(--text-body-lg);
+    font-size: var(--text-heading-md);
     font-weight: var(--bold-weight);
   }
 
   .btn-content .btn-content-description{
-    font-weight: var(--medium-weight);
-    font-size: var(--text-body-md);
+    font-weight: var(--bold-weight);
+    font-size: var(--text-body-lg);
   }
 
   /* VARIANTS */

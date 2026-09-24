@@ -71,13 +71,13 @@
   }
 
   .btn-content .btn-content-title{
-    font-size: var(--text-heading-sm);
+    font-size: var(--text-heading-md);
     font-weight: var(--bold-weight);
     color: var(--color-text-primary);
   }
 
   .btn-content .btn-content-description{
-    font-size: var(--text-body-sm);
+    font-size: var(--text-body-md);
   }
 
   /* COLOR VARIANTS */
