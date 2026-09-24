@@ -90,11 +90,11 @@
 
   /* 3. Destructive */
   .action-btn.destructive{
-    color: var(--red-500);
-    background: var(--red-100);
+    color: var(--color-text-red);
+    background: var(--color-bg-red);
   }
   .action-btn.destructive:hover{
-    background: var(--red-300);
+    background: var(--color-bg-red);
   }
   .action-btn.destructive .btn-content-description{
     color: var(--red-500);

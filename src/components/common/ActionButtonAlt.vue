@@ -83,38 +83,38 @@
   /* COLOR VARIANTS */
   /* 1. Blue */
   .action-btn-alt.blue .left-icon-wrapper{
-    background-color: var(--blue-100);
-    color: var(--blue-500);
+    background-color: var(--color-bg-blue);
+    color: var(--color-text-blue);
   }
   .action-btn-alt.blue:hover{
-    border-color: var(--blue-500);
+    border-color: var(--color-bg-blue);
   }
 
   /* 2. Orange */
   .action-btn-alt.orange .left-icon-wrapper{
-    background-color: var(--orange-100);
-    color: var(--orange-500);
+    background-color: var(--color-bg-orange);
+    color: var(--color-text-orange);
   }
   .action-btn-alt.orange:hover{
-    border-color: var(--orange-500);
+    border-color: var(--color-bg-orange);
   }
 
   /* 3. Red */
   .action-btn-alt.red .left-icon-wrapper{
-    background-color: var(--red-100);
-    color: var(--red-500);
+    background-color: var(--color-bg-red);
+    color: var(--color-text-red);
   }
   .action-btn-alt.red:hover{
-    border-color: var(--red-500);
+    border-color: var(--color-bg-red);
   }
 
   /* 4. Green */
   .action-btn-alt.green .left-icon-wrapper{
-    background-color: var(--green-100);
-    color: var(--green-500);
+    background-color: var(--color-bg-green);
+    color: var(--color-text-green);
   }
   .action-btn-alt.green:hover{
-    border-color: var(--green-500);
+    border-color: var(--color-bg-green);
   }
 </style>
 

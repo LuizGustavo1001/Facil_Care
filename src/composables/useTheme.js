@@ -2,16 +2,22 @@ import { ref } from "vue"
 
 const THEMES = ["light", "dark", "highContrast", "system"]
 
-export function useTheme() {
-    const currentTheme = ref("light")
+const currentTheme = ref("light")
 
+export function useTheme() {
     /**
      * @param { String } nextTheme
      **/
     const toggleTheme = (nextTheme = null) => {
         // 1. Specific theme required
         if(nextTheme){
-            if(nextTheme === "system") setSystemPreference()
+            // 1.1 Follow system theme
+            if(nextTheme === "system"){
+                setSystemPreference()
+                return
+            }
+
+            // 1.2 Other theme
             setBodyClass(nextTheme)
             return
         }
@@ -31,6 +37,7 @@ export function useTheme() {
     * @param { String } nextTheme
     **/
     const setBodyClass = (nextTheme) => {
+        console.log(nextTheme)
         if(!THEMES.includes(nextTheme)) return
 
         // Remove all theme classes from body
@@ -44,6 +51,7 @@ export function useTheme() {
 
     const setSystemPreference = () => {
         const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+
         setBodyClass(systemDark ? "dark" : "light")
     }
 

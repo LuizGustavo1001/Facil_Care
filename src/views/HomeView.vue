@@ -81,56 +81,56 @@
   /* VARIANT */
   /* 1. Red */
   .home-card.red{
-    background: var(--red-100);
-    color: var(--red-500);
+    background: var(--color-bg-red);
+    color: var(--color-text-red);
   }
   .home-card.red:hover{
-    border-color: var(--red-500);
+    border-color: var(--color-text-red);
   }
 
   /* 2. Orange */
   .home-card.orange{
-    background: var(--orange-100);
-    color: var(--orange-500);
+    background: var(--color-bg-orange);
+    color: var(--color-text-orange);
   }
   .home-card.orange:hover{
-    border-color: var(--orange-500);
+    border-color: var(--color-text-orange);
   }
 
   /* 3. Blue */
   .home-card.blue{
-    background: var(--blue-100);
-    color: var(--blue-500);
+    background: var(--color-bg-blue);
+    color: var(--color-text-blue);
   }
   .home-card.blue:hover{
-    border-color: var(--blue-500);
+    border-color: var(--color-text-blue);
   }
 
   /* 4. Green */
   .home-card.green{
-    background: var(--green-100);
-    color: var(--green-500);
+    background: var(--color-bg-green);
+    color: var(--color-text-green);
   }
   .home-card.green:hover{
-    border-color: var(--green-500);
+    border-color: var(--color-text-green);
   }
 
   /* 5. Yellow */
   .home-card.yellow{
-    background: var(--yellow-100);
-    color: var(--yellow-600);
+    background: var(--color-bg-yellow);
+    color: var(--color-text-yellow);
   }
   .home-card.yellow:hover{
-    border-color: var(--yellow-600);
+    border-color: var(--color-text-yellow);
   }
 
   /* 6. Purple */
   .home-card.purple{
-    background: var(--purple-200);
-    color: var(--purple-500);
+    background: var(--color-bg-purple);
+    color: var(--color-text-purple);
   }
   .home-card.purple:hover{
-    border-color: var(--purple-500);
+    border-color: var(--color-text-purple);
   }
 </style>
 

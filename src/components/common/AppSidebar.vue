@@ -68,7 +68,7 @@
 </template>
 
 <style scoped>
-  aside{
+  #sidebar{
     z-index: 10;
     background: var(--color-bg-subtle);
 
@@ -86,8 +86,12 @@
     transform: translateX(-120%);
     transition: transform 0.25s ease-out;
   }
-  aside.active{
+  #sidebar.active{
     transform: translateX(0);
+  }
+
+  body.dark #sidebar{
+    background: var(--color-bg-primary);
   }
 
   .brand-info h1{
@@ -101,13 +105,12 @@
 
   .sidebar-item{
     padding: var(--spacing-sm);
-    background: var(--color-bg-subtle);
     color: inherit;
     border-radius: var(--radius-md);
     transition: 0.2s all;
   }
   .sidebar-item:hover{
-    background: var(--color-bg-primary);
+    background: var(--color-bg-hover);
   }
 
   .sidebar-item .icon{

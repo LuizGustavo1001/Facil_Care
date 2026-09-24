@@ -48,26 +48,26 @@
   /* VARIANTS */
   /* 1. success */
   .snackbar.success{
-    background: var(--green-100);
-    color: var(--green-500);
+    background: var(--color-bg-green);
+    color: var(--color-text-green);
   }
 
   /* 2. error */
   .snackbar.error{
-    background: var(--red-100);
-    color: var(--red-500);
+    background: var(--color-bg-red);
+    color: var(--color-text-red);
   }
 
   /* 3. warning */
   .snackbar.warning{
-    background: var(--orange-100);
-    color: var(--orange-500);
+    background: var(--color-bg-orange);
+    color: var(--color-text-orange);
   }
 
   /* 4. info */
   .snackbar.info{
-    background: var(--blue-100);
-    color: var(--blue-500);
+    background: var(--color-bg-blue);
+    color: var(--color-text-blue);
   }
 </style>
 
