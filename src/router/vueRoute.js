@@ -21,7 +21,7 @@ const routes = [
     {
         path: '/monitoring/:type/:itemId',
         name: 'monitoring-overview',
-        component: () => import('/src/views/MonitoringOverView.vue'),
+        component: () => import('/src/views/MonitoringOverview.vue'),
         meta: {
             title: 'Monitoramento | Facil Care'
         }

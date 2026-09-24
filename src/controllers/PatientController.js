@@ -15,11 +15,18 @@ export default class PatientController extends BaseController {
             const patient = await this.model.getPatient()
 
             if(!patient){
-                this.setMessage("PatientNotFound")
-                return null
+                return {
+                    success: false,
+                    code: "PatientNotFound",
+                    data: []
+                }
             }
 
-            return patient
+            return {
+                success: true,
+                code: null,
+                data: patient
+            }
         })
     }
 
@@ -33,12 +40,18 @@ export default class PatientController extends BaseController {
             const patient = await this.model.updatePatient(newData)
 
             if(!patient){
-                this.setMessage("PatientNotFound")
-                return null
+                return {
+                    success: false,
+                    code: "PatientNotFound",
+                    data: []
+                }
             }
 
-            this.setMessage("PatientUpdated")
-            return patient
+            return {
+                success: true,
+                code: "PatientUpdated",
+                data: patient
+            }
         })
     }
 }

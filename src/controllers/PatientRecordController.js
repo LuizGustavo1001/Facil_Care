@@ -19,11 +19,18 @@ export default class PatientRecordController extends BaseController {
             const records = await this.model.getAll()
 
             if(records.length <= 0){
-                this.setMessage("NoRecords")
-                return []
+                return {
+                    success: false,
+                    code: "NoRecords",
+                    data: []
+                }
             }
 
-            return records
+            return {
+                success: true,
+                code: null,
+                data: records
+            }
         })
     }
 
@@ -37,11 +44,18 @@ export default class PatientRecordController extends BaseController {
             const records = await this.model.getByType(type)
 
             if(records.length <= 0){
-                this.setMessage("NoRecordsByType")
-                return []
+                return {
+                    success: false,
+                    code: "NoRecordsByType",
+                    data: []
+                }
             }
 
-            return records
+            return {
+                success: true,
+                code: null,
+                data: records
+            }
         })
     }
 
@@ -53,19 +67,29 @@ export default class PatientRecordController extends BaseController {
      **/
     async getByDate(minDate, maxDate = new Date()) {
         if(minDate > maxDate){
-            this.setMessage("InvalidDateInterval")
-            return []
+            return {
+                success: false,
+                code: "InvalidDateInterval",
+                data: []
+            }
         }
 
         return await this.execute(async () => {
             const records = await this.model.getByDate(minDate, maxDate)
 
             if(records.length <= 0){
-                this.setMessage("NoRecordsByDate")
-                return []
+                return {
+                    success: false,
+                    code: "NoRecordsByDate",
+                    data: []
+                }
             }
 
-            return records
+            return {
+                success: true,
+                code: null,
+                data: records
+            }
         })
     }
 
@@ -78,19 +102,29 @@ export default class PatientRecordController extends BaseController {
      **/
     async getByTypeAndDate(type, minDate, maxDate = new Date()){
         if(minDate > maxDate){
-            this.setMessage("InvalidDateInterval")
-            return []
+            return {
+                success: false,
+                code: "InvalidDateInterval",
+                data: []
+            }
         }
 
         return await this.execute(async () => {
             const records = await this.model.getByTypeAndDate(type, minDate, maxDate)
 
             if(records.length <= 0){
-                this.setMessage("NoRecordsByTypeAndDate")
-                return []
+                return {
+                    success: false,
+                    code: "NoRecordsByTypeAndDate",
+                    data: []
+                }
             }
 
-            return records
+            return {
+                success: true,
+                code: null,
+                data: records
+            }
         })
     }
 }

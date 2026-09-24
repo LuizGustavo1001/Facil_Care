@@ -346,6 +346,9 @@ export default {
         },
         InvalidDateInterval: {
             title: "Intervalo de data inválido. Data mínima deve ser menor que a data máxima"
+        },
+        generic: {
+            title: "Um erro inesperado aconteceu. Tente novamente mais tarde"
         }
     }
 }

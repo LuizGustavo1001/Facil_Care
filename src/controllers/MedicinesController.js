@@ -16,10 +16,18 @@ export default class MedicinesController extends BaseController {
 
             if(!medicines){
                 this.setMessage("NoMedicinesFound")
-                return null
+                return {
+                    success: false,
+                    code: "NoMedicinesFound",
+                    data: []
+                }
             }
 
-            return medicines
+            return {
+                success: true,
+                code: null,
+                data: medicines
+            }
         })
     }
 }

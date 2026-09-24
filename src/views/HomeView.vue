@@ -1,8 +1,9 @@
 <template>
   <div class="view">
     <SnackBar
-        v-if="patientController.state.message"
-        :message="patientController.state.message"
+        v-if="warning.message !== ''"
+        :message="warning.message"
+        :type="warning.type || undefined"
     />
 
     <AppOverlay :class="{ active: overlayIsActive }" />
@@ -138,6 +139,7 @@
 
   import { homeView } from "../locales/projectConfig.js"
   import { useSidebar } from "../composables/useSidebar.js"
+  import { useWarning } from "../composables/useWarning.js"
 
   import AppHeader from "../components/common/AppHeader.vue"
   import Icon from "../components/common/Icon.vue"
@@ -155,17 +157,20 @@
     sidebarIsActive,
     handleSidebarToggle
   } = useSidebar()
+  const { warning, getWarning } = useWarning()
 
   // Functions
   const patientController = new PatientController(db)
   const patient = ref({})
 
   onMounted(async() => {
-    const data = await patientController.getPatient()
+    const result = await patientController.getPatient()
 
     // Update frontend patient data
-    if(data){
-      Object.assign(patient.value, data)
+    if(result.success){
+      Object.assign(patient.value, result.data)
+    }else{
+      getWarning(result.code)
     }
   })
 </script>

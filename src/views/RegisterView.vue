@@ -1,5 +1,11 @@
 <template>
   <div class="view">
+    <SnackBar
+        v-if="warning.message !== ''"
+        :message="warning.message"
+        :type="warning.type || undefined"
+    />
+
     <AppHeader
         title="Registrar Administração"
         :leftBtnIcon="icons['chevron-left']"
@@ -28,11 +34,14 @@
 <script setup>
   import { icons } from "../assets/icons/icons.js"
   import { useNavigation } from "../composables/useNavigation.js"
+  import { useWarning } from "../composables/useWarning.js"
 
   import AppHeader from "../components/common/AppHeader.vue"
-  import Input from "../components/common/Input.vue";
+  import Input from "../components/common/Input.vue"
   import AppFooter from "../components/common/AppFooter.vue"
+  import SnackBar from "../components/common/SnackBar.vue"
 
   // Composables
   const { handleReturn } = useNavigation()
+  const { warning, getWarning } = useWarning()
 </script>

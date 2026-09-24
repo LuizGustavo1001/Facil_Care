@@ -2,8 +2,9 @@
   <div class="view">
     <template v-if="pageExists">
       <SnackBar
-          v-if="patientController.state.message"
-          :message="patientController.state.message"
+          v-if="warning.message !== ''"
+          :message="warning.message"
+          :type="warning.type || undefined"
       />
 
       <AppHeader
@@ -65,6 +66,7 @@
   import { useUtils } from "../composables/useUtils.js"
   import { useRoute } from "vue-router"
   import { useI18n } from "vue-i18n"
+  import { useWarning } from "../composables/useWarning.js"
 
   import AppHeader from "../components/common/AppHeader.vue"
   import ActionButton from "../components/common/ActionButton.vue"
@@ -81,6 +83,7 @@
   const { t, te } = useI18n()
   const { handleReturn } = useNavigation()
   const { getPageTitle, MANAGE_PAGES } = useUtils()
+  const { warning, getWarning } = useWarning()
 
   // Functions
   // Retrieve page data
@@ -170,7 +173,19 @@
   }, { deep: true })
 
   onMounted(async() => {
-    patient.value = await patientController.getPatient()
-    medicines.value = await medicineController.getAll()
+    const patientResult = await patientController.getPatient()
+
+    if(patientResult.success){
+      patient.value = patientResult.data
+    }else{
+      getWarning(patientResult.code)
+    }
+
+    const medicinesResult = await medicineController.getAll()
+    if(medicinesResult.success){
+      medicines.value = medicinesResult.data
+    }else{
+      getWarning(medicinesResult.code)
+    }
   })
 </script>

@@ -1,5 +1,11 @@
 <template>
   <div class="view">
+    <SnackBar
+        v-if="warning.message !== ''"
+        :message="warning.message"
+        :type="warning.type || undefined"
+    />
+
     <AppHeader
         :title="getPageTitle(PAGES['EMERGENCY_DATA'])"
         :leftBtnIcon="icons['chevron-left']"
@@ -55,11 +61,13 @@
   import { usePopup } from "../composables/usePopup.js"
   import { useUtils } from "../composables/useUtils.js"
   import { useI18n } from "vue-i18n"
+  import { useWarning } from "../composables/useWarning.js"
 
   import AppHeader from "../components/common/AppHeader.vue"
   import AppFooter from "../components/common/AppFooter.vue"
   import ActionButton from "../components/common/ActionButton.vue"
   import ActionButtonAlt from "../components/common/ActionButtonAlt.vue"
+  import SnackBar from "../components/common/SnackBar.vue"
 
   import PatientController from "../controllers/PatientController.js"
   import MedicinesController from "../controllers/MedicinesController.js"
@@ -70,6 +78,7 @@
   const { handleReturn } = useNavigation()
   const { handlePopup } = usePopup()
   const { getPageTitle, PAGES } = useUtils()
+  const { getWarning, warning } = useWarning()
 
   // Functions
   const patientController = new PatientController(db)
@@ -184,13 +193,17 @@
     const medicineData = await medicineController.getAll()
 
     // Update frontend patient data
-    if(patientData){
-      Object.assign(patient.value, patientData)
+    if(patientData.success){
+      Object.assign(patient.value, patientData.data)
+    }else{
+      getWarning(patientData.code)
     }
 
     // Update frontend medicines data
     if(medicineData){
-      medicines.value.push(medicineData)
+      medicines.value.push(medicineData.data)
+    }else{
+      getWarning(medicineData.code)
     }
   })
 </script>

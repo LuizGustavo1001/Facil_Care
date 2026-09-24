@@ -1,5 +1,11 @@
 <template>
   <div class="view">
+    <SnackBar
+        v-if="warning.message !== ''"
+        :message="warning.message"
+        :type="warning.type || undefined"
+    />
+
     <AppHeader
         :title="getPageTitle(itemId)"
         :leftBtnIcon="icons['chevron-left']"
@@ -31,12 +37,15 @@
   import { useRoute } from "vue-router"
   import { useNavigation } from "../composables/useNavigation.js"
   import { useUtils } from "../composables/useUtils.js"
+  import { useWarning } from "../composables/useWarning.js"
 
   import AppHeader from "../components/common/AppHeader.vue"
   import AppFooter from "../components/common/AppFooter.vue"
+  import SnackBar from "../components/common/SnackBar.vue"
 
   // Composables
   const route = useRoute()
+  const { warning } = useWarning()
   const { handleReturn } = useNavigation()
   const { getPageTitle } = useUtils()
 

@@ -21,12 +21,10 @@ export class PatientRecord {
      * @param { String } type
      **/
     async getByType(type){
-        const result = await this.table
+        return await this.table
             .where(this.typeField)
             .equals(type)
             .toArray()
-
-        return result
     }
 
     /**

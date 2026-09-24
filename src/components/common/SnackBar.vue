@@ -1,17 +1,17 @@
 <template>
   <div
       class="snackbar flex gap1 justify-between cursor-pointer active-border absolute"
-      :class="warningData.type"
+      :class="props.type"
       @click="$emit('close')"
   >
     <span class="flex gap-05 align-center flex-grow-1">
       <Icon
-          :icon="leftIcon"
+          :icon="icons['warning-circle-fill']"
           size="25px"
       />
 
       <span class="snackbar-text flex-grow-1">
-        <slot name="message">{{ warningMessage }}</slot>
+        <slot name="message">{{ props.message }}</slot>
       </span>
     </span>
 
@@ -78,39 +78,21 @@
 
   import Icon from "./Icon.vue"
 
-  import { warningMessages } from "../../locales/projectConfig.js"
-
-  const { t } = useI18n()
   const INTERVAL = 5000
 
   const props = defineProps({
-    message: String
+    message: String,
+    type: {
+      type: String,
+      default: 'success'
+    }
   })
 
   // close snackbar event
   const emit = defineEmits(["close"])
 
-  const iconMap = {
-    success: icons["checkbox-circle-fill"],
-    error: icons["indeterminate-circle-fill"],
-    warning: icons["warning-circle-fill"],
-    info: icons["user-smile-fill"],
-  }
-
   // interval to auto close snackbar
   setInterval(() => {
     emit("close")
   }, INTERVAL)
-
-  const warningData = computed(() => {
-    return warningMessages.find(item => item.id === props.message)
-  })
-
-  // Return leftIcon value based in the selected variant class
-  const leftIcon = computed(() => {
-    return iconMap[warningData.value.type]
-  })
-
-  // Return translated warning message
-  const warningMessage = computed(() => t(`warningMessages.${warningData.value.id}.title`))
 </script>

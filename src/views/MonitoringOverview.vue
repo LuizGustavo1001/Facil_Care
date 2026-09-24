@@ -2,6 +2,12 @@
   <div class="view">
     <template v-if="pageExists(currentType)">
 
+      <SnackBar
+          v-if="warning.message !== ''"
+          :message="warning.message"
+          :type="warning.type || undefined"
+      />
+
       <AppHeader
           :title="getPageTitle(currentItem)"
           :leftBtnIcon="icons['chevron-left']"
@@ -71,9 +77,12 @@
   import db from "../database/db.js"
   import VitalSignsController from "../controllers/VitalSignsController.js"
   import FollowUpsController from "../controllers/FollowUpsController.js"
+  import {useWarning} from "../composables/useWarning.js";
+
 
   // Composables
   const route = useRoute()
+  const { getWarning, warning } = useWarning()
   const { handleReturn } = useNavigation()
   const { getFormattedDate } = useAge()
   const { getPageTitle, PAGES, MONITORING_VITAL_SIGNS_PAGES, MONITORING_FOLLOW_UPS_PAGES } = useUtils()
@@ -120,12 +129,14 @@
         break
     }
 
-    if(result && result.length > 0){
-      monitoringData.value = result
+    if(result.success){
+      monitoringData.value = result.data
+    }else{
+      getWarning(result.code)
     }
 
     // Formatting result
-    for(const item of result){
+    for(const item of result.data){
       const formattedDate = item.dateTime ? getFormattedDate(new Date(item.dateTime)) : null
       const descriptionParts = [item.caregiverName, formattedDate].filter(Boolean)
       const unitText = item.unit ? item.unit : ''
