@@ -137,8 +137,9 @@ export default {
             sections: {
                 patient: {
                     title: "Informações do Paciente",
+                    subtitle: "Clique em um das opções abaixo para editar seus dados",
                     buttons: {
-                        patientName: {
+                        name: {
                             title: "Nome Completo"
                         },
                         birthDate: {
@@ -155,9 +156,8 @@ export default {
                         }
                     }
                 },
-                emergencyContact: {
-                    title: "Contatos de Emergência",
-                    subtitle: "Clique em um contato para ser redirecionado para o aplicativo de telefonia"
+                emergencyContacts: {
+                    title: "Contatos de Emergência"
                 },
                 allergies: {
                     title: "Alergias Conhecidas"
@@ -176,7 +176,8 @@ export default {
                         }
                     }
                 }
-            }
+            },
+            fallback: "Nenhuma informação encontrada para categoria selecionada"
         },
         medicines: {
             sections: {

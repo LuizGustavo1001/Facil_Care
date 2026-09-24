@@ -108,7 +108,7 @@ export default {
             }
         },
         followUps: {
-            subtitle: "Selecione uma das opções abaixo para visualizar cada tópico individualmente",
+            subtitle: "Select one of the options bellow to view the desired information individualy",
             items: {
                 mood: {
                     title: "Mood"
@@ -137,8 +137,9 @@ export default {
             sections: {
                 patient: {
                     title: "Patient Information",
+                    subtitle: "Click in a option to edit its information",
                     buttons: {
-                        patientName: {
+                        name: {
                             title: "Full Name"
                         },
                         birthDate: {
@@ -155,9 +156,8 @@ export default {
                         }
                     }
                 },
-                emergencyContact: {
-                    title: "Emergency Contacts",
-                    subtitle: "Click in a contact to be redirected to your call's app"
+                emergencyContacts: {
+                    title: "Emergency Contacts"
                 },
                 allergies: {
                     title: "Known Allergies"
@@ -176,7 +176,8 @@ export default {
                         }
                     }
                 }
-            }
+            },
+            fallback: "No Information founded for this category"
         },
         medicines: {
             sections: {

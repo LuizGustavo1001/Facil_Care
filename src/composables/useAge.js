@@ -24,21 +24,23 @@ export function useAge() {
      * example: getFormattedDate("2026-09-19T14:24:36.172Z") -> "11:24 - 19/09/2026"
      *
      * @param { Date | String } dateInput - Patient birth date ISO or String
+     * @param { boolean } full - Short date(false) or Full date(true)
      **/
-    const getFormattedDate = (dateInput) => {
-        const date = new Date(dateInput);
+    const getFormattedDate = (dateInput, full = true) => {
+        const time = new Date(dateInput)
 
-        const day = String(date.getDate()).padStart(2, '0');
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const year = date.getFullYear();
-        const hour = String(date.getHours()).padStart(2, '0');
-        const minute = String(date.getMinutes()).padStart(2, '0');
+        const day = String(time.getDate()).padStart(2, '0')
+        const month = String(time.getMonth() + 1).padStart(2, '0')
+        const year = time.getFullYear()
+        const hour = String(time.getHours()).padStart(2, '0')
+        const minute = String(time.getMinutes()).padStart(2, '0')
 
-        if(currentLanguage.value !== 'pt-BR'){
-            return `${hour}:${minute} - ${year}/${month}/${day}`
-        }
+        let hoursFormatted = `${hour}h ${minute} min`
+        let dateFormatted = currentLanguage.value !== 'pt-BR' ? `${day}/${month}/${year}` : `${year}/${month}/${day}`
 
-        return `${hour}h ${minute} min - ${day}/${month}/${year}`
+        return full ?
+            `${hoursFormatted} - ${dateFormatted}` :
+            `${dateFormatted}`
     }
 
     return { getAge, getFormattedDate }

@@ -14,7 +14,7 @@
 
     <main class="flex flex-column gap-15 relative flex-grow-1">
       <section
-          v-for="content in emergencyDataView.sections"
+          v-for="content in dynamicSections"
           :key="content.id"
           class="flex flex-column gap-05"
       >
@@ -28,8 +28,9 @@
           </p>
         </div>
 
-        <ul class="flex flex-column gap-1">
+        <ul class="flex flex-column gap-05">
           <li
+            v-if="content.buttons.length > 0"
             v-for="btn in content.buttons"
             :key="btn.id"
           >
@@ -41,6 +42,8 @@
             >
             </component>
           </li>
+
+          <li v-else>{{ t("views.emergencyData.fallback") }}</li>
         </ul>
       </section>
     </main>
@@ -52,7 +55,7 @@
 <style scoped></style>
 
 <script setup>
-  import { onMounted, ref } from "vue"
+  import { computed, onMounted, ref } from "vue"
   import { icons } from "../assets/icons/icons.js"
 
   import { emergencyDataView } from "../locales/projectConfig.js"
@@ -62,6 +65,7 @@
   import { useUtils } from "../composables/useUtils.js"
   import { useI18n } from "vue-i18n"
   import { useWarning } from "../composables/useWarning.js"
+  import { useAge } from "../composables/useAge.js"
 
   import AppHeader from "../components/common/AppHeader.vue"
   import AppFooter from "../components/common/AppFooter.vue"
@@ -79,6 +83,7 @@
   const { handlePopup } = usePopup()
   const { getPageTitle, PAGES } = useUtils()
   const { getWarning, warning } = useWarning()
+  const { getFormattedDate } = useAge()
 
   // Functions
   const patientController = new PatientController(db)
@@ -86,36 +91,113 @@
   const patient = ref({})
   const medicines = ref([])
 
+  // Dynamic map of emergency data sections, based at database and translate data (i18n)
+  const dynamicSections = computed(() => {
+    return emergencyDataView.sections.map((section) => {
+      let dbButtons = [] // stores all buttons from section
+
+      section.buttons = section.buttons || []
+
+      switch(section.id){
+        case "patient":
+          dbButtons = (section.buttons).map((button) => {
+
+            let dbValue = patient.value[button.id]
+
+            if(button.id === 'birthDate'){
+              dbValue = getFormattedDate(patient.value[button.id], false)
+            }
+
+            return {
+              ...button,
+              subtitle: dbValue !== undefined && dbValue !== null
+                  ? String(dbValue)
+                  : "--"
+            }
+          })
+          break
+
+        case "emergencyContacts":
+          if(Array.isArray(patient.value.emergencyContacts)){
+            dbButtons = patient.value.emergencyContacts.map((contact) => ({
+              id: contact.id,
+              title: contact.name,
+              subtitle: `${contact.kinship || ''} • ${contact.phone || ''}`
+            }))
+          }
+
+          dbButtons = [...dbButtons, ...(section.buttons)]
+          break
+
+        case "allergies":
+          if (Array.isArray(patient.value.allergies)) {
+            dbButtons = patient.value.allergies.map((allergy, index) => ({
+              id: index,
+              title: allergy
+            }))
+          }
+          dbButtons = [...dbButtons, ...(section.buttons)]
+          break
+
+        case "healthPlans":
+          if(Array.isArray(patient.value.healthPlans)){
+            dbButtons = patient.value.healthPlans.map((plan, index) => ({
+              id: index,
+              title: plan
+            }))
+          }
+          dbButtons = [...dbButtons, ...(section.buttons)]
+          break
+
+        case "others": {
+          const doctorsCount = Array.isArray(patient.value.doctors)
+              ? patient.value.doctors.length
+              : 0
+          const medicineCount = Array.isArray(medicines.value)
+              ? medicines.value.length
+              : 0
+
+          dbButtons = (section.buttons).map((button) => {
+            let count = 0
+
+            if(button.id === "doctors"){
+              count = doctorsCount
+            }else if(button.id === "medicines"){
+              count = medicineCount
+            }
+
+            return {
+              ...button,
+              subtitle: `${count}`
+            }
+          })
+          break
+        }
+      }
+
+      return {
+        ...section,
+        buttons: dbButtons
+      }
+    })
+  })
+
   const handleButtonAction = (section, button) => {
-    switch (section.btnAction){
-      case "popup":
-        handlePopup(button)
-        break
-      case "externalLink": // desnecessário
-        handleExternalLink(button)
-        break
-      case "internalLink": // desnecessário
-        handleInternalLink(button)
-        break
+    if(section.btnAction === "popup"){
+      handlePopup(button)
     }
   }
 
-  const handleExternalLink = (button) => {
-
-  }
-
-  const handleInternalLink = (button) => {
-
-  }
-
   const buttonComponent = (section) => {
-    return section.component === "alt" ? ActionButtonAlt : ActionButton
+    return section.component === "alt"
+        ? ActionButtonAlt
+        : ActionButton
   }
 
   const getButtonProps = (section, button) => {
     return {
       ...getButtonPropsAction(section),
-    ...getButtonPropsComponent(section, button)
+      ...getButtonPropsComponent(section, button)
     }
   }
 
@@ -125,13 +207,16 @@
         leftIcon: button.icon,
         color: button.color,
         title: getButtonTitle(section, button),
-        description: getButtonSubtitle(section, button)
+        description: getButtonSubtitle(section, button),
+        to: button.link || undefined
       }
     }
 
     return { // section.component === "default"
       title: getButtonTitle(section, button),
-      description: getButtonSubtitle(section, button)
+      description: getButtonSubtitle(section, button),
+      variant: "subtle",
+      padding: "lg"
     }
   }
 
@@ -157,35 +242,42 @@
       }
     }
 
-    return { // section.btnAction === "default"
+    // section.btnAction === "default" or nothing
+    return {
       tag: "button"
     }
   }
 
   const getButtonTitle = (section, button) => {
-    if(te(`views.emergencyData.sections.${section.id}.buttons.${button.id}.title`)){
-      return t(`views.emergencyData.sections.${section.id}.buttons.${button.id}.title`)
-    }
+    // 1. Gets from database
+    if(button.title) return button.title
 
-    // returns from database
-    return "DatabaseTitle"
+    // 2. Gets from translate or Fallback
+    return te(`views.emergencyData.sections.${section.id}.buttons.${button.id}.title`)
+        ? t(`views.emergencyData.sections.${section.id}.buttons.${button.id}.title`)
+        : ""
   }
 
   const getButtonSubtitle = (section, button) => {
-    if(te(`views.emergencyData.sections.${section.id}.buttons.${button.id}.subtitle`)){
-      return t(`views.emergencyData.sections.${section.id}.buttons.${button.id}.subtitle`)
-    }
+    // 1. Gets from database
+    if(button.subtitle) return button.subtitle
 
-    // returns from database
-    return "DatabaseDescription"
+    // 2. Gets from translate or Fallback
+    return te(`views.emergencyData.sections.${section.id}.buttons.${button.id}.subtitle`)
+      ? t(`views.emergencyData.sections.${section.id}.buttons.${button.id}.subtitle`)
+      : ""
   }
 
   const getSectionTitle = (section) => {
-    return te(`views.emergencyData.sections.${section.id}.title`) ? t(`views.emergencyData.sections.${section.id}.title`) : ""
+    return te(`views.emergencyData.sections.${section.id}.title`)
+        ? t(`views.emergencyData.sections.${section.id}.title`)
+        : ""
   }
 
   const getSectionSubtitle = (section) => {
-    return te(`views.emergencyData.sections.${section.id}.subtitle`) ? t(`views.emergencyData.sections.${section.id}.subtitle`) : ""
+    return te(`views.emergencyData.sections.${section.id}.subtitle`)
+        ? t(`views.emergencyData.sections.${section.id}.subtitle`)
+        : ""
   }
 
   onMounted(async() => {
@@ -194,15 +286,15 @@
 
     // Update frontend patient data
     if(patientData.success){
-      Object.assign(patient.value, patientData.data)
-    }else{
+      patient.value = patientData.data
+    }else if(!patientData.success){
       getWarning(patientData.code)
     }
 
     // Update frontend medicines data
-    if(medicineData){
-      medicines.value.push(medicineData.data)
-    }else{
+    if(medicineData.success){
+      medicines.value = medicineData.data
+    }else if(!medicineData.success){
       getWarning(medicineData.code)
     }
   })

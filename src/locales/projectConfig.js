@@ -155,7 +155,7 @@ export const emergencyDataView = {
             btnAction: "popup",
             buttons: [
                 {
-                    id: "patientName",
+                    id: "name",
                     color: "blue",
                     icon: icons["user-fill"],
                 },
@@ -182,9 +182,9 @@ export const emergencyDataView = {
             ]
         },
         {
-            id: "emergencyContact",
+            id: "emergencyContacts",
             component: "default",
-            btnAction: "externalLink"
+            btnAction: "default"
         },
         {
             id: "allergies",
@@ -204,12 +204,14 @@ export const emergencyDataView = {
                 {
                     id: "doctors",
                     color: "blue",
-                    icon: icons["stethoscope-line"]
+                    icon: icons["stethoscope-line"],
+                    link: "/manage/doctors"
                 },
                 {
                     id: "medicines",
                     color: "green",
-                    icon: icons["medicine-bottle-line"]
+                    icon: icons["medicine-bottle-line"],
+                    link: "/manage/medicines"
                 }
             ]
         }
