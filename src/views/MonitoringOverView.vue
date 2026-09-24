@@ -1,13 +1,9 @@
 <template>
   <div class="view">
-    <template v-if="$te(`utils.${currentItem}.title`)">
-      <SnackBar
-          v-if="monitorignController.state.message"
-          :message="monitorignController.state.message"
-      />
+    <template v-if="pageExists(currentType)">
 
       <AppHeader
-          :title="$t(`utils.${currentItem}.title`)"
+          :title="getPageTitle(currentItem)"
           :leftBtnIcon="icons['chevron-left']"
           @return-page="handleReturn"
       />
@@ -16,7 +12,7 @@
         <section>
           <ul
               v-if="formattedData.length > 0"
-              class="list flex flex-column gap-1"
+              class="list flex flex-column gap-1 overflow-hidden"
           >
             <li
                 v-for="item in formattedData"
@@ -36,7 +32,7 @@
           </ul>
 
           <div v-else>
-            <p>Nenhum monitoramento encontrado...</p>
+            <p>{{ $t(`warningMessages.NoMonitoring.title`) }}...</p>
           </div>
 
         </section>
@@ -54,17 +50,17 @@
 <style scoped>
   .list{
     border-radius: var(--radius-lg);
-    overflow: hidden
   }
 </style>
 
 <script setup>
   import { computed, onMounted, ref } from "vue"
-  import { useRoute } from "vue-router"
-
   import { icons } from "../assets/icons/icons.js"
+
+  import { useRoute } from "vue-router"
   import { useNavigation } from "../composables/useNavigation.js"
   import { useAge } from "../composables/useAge.js"
+  import { useUtils } from "../composables/useUtils.js"
 
   import AppHeader from "../components/common/AppHeader.vue"
   import AppFallback from "./AppFallback.vue"
@@ -73,10 +69,16 @@
   import ActionButton from "../components/common/ActionButton.vue"
 
   import db from "../database/db.js"
-  import PatientRecordController from "../controllers/PatientRecordController.js"
+  import VitalSignsController from "../controllers/VitalSignsController.js"
+  import FollowUpsController from "../controllers/FollowUpsController.js"
 
+  // Composables
   const route = useRoute()
+  const { handleReturn } = useNavigation()
+  const { getFormattedDate } = useAge()
+  const { getPageTitle, PAGES, MONITORING_VITAL_SIGNS_PAGES, MONITORING_FOLLOW_UPS_PAGES } = useUtils()
 
+  // Functions
   // Returns selected monitoring type
   const currentType = computed(() => {
     return route.params.type || null
@@ -87,31 +89,46 @@
     return route.params.itemId || null
   })
 
-  // Composables
-  const { handleReturn } = useNavigation()
-  const { getFormattedDate } = useAge()
+  // Verify if selected monitoring overview page exists
+  const pageExists = () => {
+    if(currentType.value === PAGES['FOLLOW_UPS']){
+      return MONITORING_FOLLOW_UPS_PAGES.includes(currentItem.value)
+    }
 
-  // Functions
-  const monitorignController = new PatientRecordController(db, currentType.value)
+    if(currentType.value === PAGES['VITAL_SIGN']){
+      return MONITORING_VITAL_SIGNS_PAGES.includes(currentItem.value)
+    }
+
+    return false
+  }
+
+  const vitalSignsController = new VitalSignsController(db)
+  const followUpsController = new FollowUpsController(db)
+
   const monitoringData = ref([])
-
   const formattedData = ref([])
 
   onMounted(async () => {
-    const result = await monitorignController.getByType(currentItem.value)
+    let result = []
 
-    if(result.length > 0){
-      Object.assign(monitoringData.value, result)
+    switch(currentType.value){
+      case PAGES['FOLLOW_UPS']:
+        result = await followUpsController.getByType(currentItem.value)
+        break
+      case PAGES['VITAL_SIGN']:
+        result = await vitalSignsController.getByType(currentItem.value)
+        break
+    }
+
+    if(result && result.length > 0){
+      monitoringData.value = result
     }
 
     // Formatting result
     for(const item of result){
       const formattedDate = item.dateTime ? getFormattedDate(new Date(item.dateTime)) : null
-
       const descriptionParts = [item.caregiverName, formattedDate].filter(Boolean)
-
-      const hasUnit = item.unit
-      const unitText = hasUnit ? item.unit : ''
+      const unitText = item.unit ? item.unit : ''
 
       formattedData.value.push({
         id: item.id,

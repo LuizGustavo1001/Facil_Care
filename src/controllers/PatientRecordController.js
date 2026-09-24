@@ -1,20 +1,11 @@
 import BaseController from "./BaseController.js"
-import FollowUp from "../models/FollowUp.js"
-import VitalSign from "../models/VitalSign.js"
-
-const MODEL_MAP = {
-    followUps: FollowUp,
-    vitalSigns: VitalSign
-}
 
 export default class PatientRecordController extends BaseController {
-    constructor(db, model) {
+    constructor(db, Model) {
         super()
 
-        const Model = MODEL_MAP[model]
-
         if(!Model){
-            throw new Error(`Invalid patient record model: ${model}`)
+            throw new Error("Model class must be provided to PatientRecordController")
         }
 
         this.model = new Model(db)
@@ -92,7 +83,7 @@ export default class PatientRecordController extends BaseController {
         }
 
         return await this.execute(async () => {
-            const records = await this.model.getByDate(minDate, maxDate)
+            const records = await this.model.getByTypeAndDate(type, minDate, maxDate)
 
             if(records.length <= 0){
                 this.setMessage("NoRecordsByTypeAndDate")

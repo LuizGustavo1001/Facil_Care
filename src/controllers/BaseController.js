@@ -39,7 +39,6 @@ export default class BaseController {
      * Set a controllers message
      *
      * @param { String } message - message text
-     * @param { String } type - message type
      **/
     setMessage(message){
         this.state.message = message

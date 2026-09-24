@@ -5,7 +5,7 @@
         :message="patientController.state.message"
     />
 
-    <AppOverlay :class="{ active: overlayIsActive }"/>
+    <AppOverlay :class="{ active: overlayIsActive }" />
 
     <AppSidebar
         :patientData="patient"
@@ -159,18 +159,6 @@
   // Functions
   const patientController = new PatientController(db)
   const patient = ref({})
-
-  /*
-  const handleUpdate = async () => {
-    // update database patient
-    const updatePatient = await patientController.updatePatient(patient)
-
-    // update frontend patient
-    if(updatePatient) {
-      Object.assign(patient, updatePatient)
-    }
-  }
-  */
 
   onMounted(async() => {
     const data = await patientController.getPatient()

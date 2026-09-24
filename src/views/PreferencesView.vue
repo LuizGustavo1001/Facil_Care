@@ -1,7 +1,7 @@
 <template>
   <div class="view">
     <AppHeader
-        :title="$t('views.preferences.headerTitle')"
+        :title="getPageTitle(PAGES['PREFERENCES'])"
         :leftBtnIcon="icons['chevron-left']"
         @return-page="handleReturn"
     />
@@ -45,6 +45,7 @@
   import { useLanguage } from "../composables/useLanguage.js"
   import { useTheme } from "../composables/useTheme.js"
   import { useI18n } from "vue-i18n"
+  import { useUtils } from "../composables/useUtils.js"
   import { preferencesView } from "../locales/projectConfig.js"
 
   import AppHeader from "../components/common/AppHeader.vue"
@@ -54,6 +55,7 @@
   // Composables
   const { handleReturn } = useNavigation()
   const { initLanguage } = useLanguage()
+  const { getPageTitle, PAGES } = useUtils()
   const { toggleTheme, currentTheme } = useTheme()
   const { t, te, locale } = useI18n()
 

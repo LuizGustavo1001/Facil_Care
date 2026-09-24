@@ -1,20 +1,20 @@
 <template>
   <div class="view">
-    <template v-if="currentItem">
+    <template v-if="pageExists">
       <SnackBar
           v-if="patientController.state.message"
           :message="patientController.state.message"
       />
 
       <AppHeader
-          :title="$t(`views.${itemId}.headerTitle`)"
+          :title="getPageTitle(itemId)"
           :leftBtnIcon="icons['chevron-left']"
           @return-page="handleReturn"
       />
 
       <main>
         <section class="flex flex-column gap-1">
-          <h2 class="section-title text-muted">{{ $t(`views.${itemId}.sections.registers.title`) }}</h2>
+          <h2 class="section-title text-muted">{{ getSectionTitle(itemId) }}</h2>
 
           <ul
               v-if="formattedData.length > 0"
@@ -57,14 +57,14 @@
 </style>
 
 <script setup>
-  import { useRoute } from "vue-router"
-  import {computed, onMounted, ref, watch} from "vue"
+  import { computed, onMounted, ref, watch } from "vue"
 
   import { icons } from "../assets/icons/icons.js"
-  import { useNavigation } from "../composables/useNavigation.js"
   import { footers } from "../locales/projectConfig.js"
-
-  import * as projectConfig from "../locales/projectConfig.js"
+  import { useNavigation } from "../composables/useNavigation.js"
+  import { useUtils } from "../composables/useUtils.js"
+  import { useRoute } from "vue-router"
+  import { useI18n } from "vue-i18n"
 
   import AppHeader from "../components/common/AppHeader.vue"
   import ActionButton from "../components/common/ActionButton.vue"
@@ -76,24 +76,26 @@
   import PatientController from "../controllers/PatientController.js"
   import MedicinesController from "../controllers/MedicinesController.js"
 
+  // Composables
   const route = useRoute()
+  const { t, te } = useI18n()
+  const { handleReturn } = useNavigation()
+  const { getPageTitle, MANAGE_PAGES } = useUtils()
 
+  // Functions
   // Retrieve page data
   const footerMap = computed(() => new Map(footers.map(item => [item.id, item])))
   const itemId = computed(() => route.params.itemId)
-  const currentItem = computed(() => {
+
+  // Verify if selected manage page exists
+  const pageExists = computed(() => {
     const rawId = itemId.value
+
     if(!rawId) return null
 
-    const id = `${rawId}View`
-
-    return projectConfig[id] ?? footerMap.value.get(itemId.value) ?? null
+    return MANAGE_PAGES.includes(rawId)
   })
 
-  // Composables
-  const { handleReturn } = useNavigation()
-
-  // Functions
   const patientController = new PatientController(db)
   const medicineController = new MedicinesController(db)
 
@@ -102,7 +104,7 @@
   const formattedData = ref([])
 
   const fillSection = () => {
-    // clears old formattedData
+    // Clears old formattedData
     formattedData.value = []
 
     const data = {
@@ -156,6 +158,10 @@
 
   const getDescription = (parts) => {
     return parts.filter(Boolean).join(" • ")
+  }
+
+  const getSectionTitle = (itemId) => {
+    return te(`views.${itemId}.sections.registers.title`) ? t(`views.${itemId}.sections.registers.title`) : ""
   }
 
   // If updates -> refill section

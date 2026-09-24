@@ -1,8 +1,8 @@
 <template>
   <div class="view">
-    <template v-if="currentItem">
+    <template v-if="pageExists">
       <AppHeader
-          :title="$t(`views.${itemType}.headerTitle`)"
+          :title="getPageTitle(itemType)"
           :leftBtnIcon="icons['chevron-left']"
           @return-page="handleReturn"
       />
@@ -42,11 +42,11 @@
 <style scoped></style>
 
 <script setup>
-  import { useI18n } from "vue-i18n"
   import { computed } from "vue"
   import { useRoute } from "vue-router"
-
+  import { useI18n } from "vue-i18n"
   import { useNavigation } from "../composables/useNavigation.js"
+  import { useUtils } from "../composables/useUtils.js"
   import { icons } from "../assets/icons/icons.js"
 
   import AppHeader from "../components/common/AppHeader.vue"
@@ -55,24 +55,32 @@
   import AppFooter from "../components/common/AppFooter.vue"
 
   import * as projectConfig from "../locales/projectConfig.js"
-  import SnackBar from "../components/common/SnackBar.vue";
-
-  const { t } = useI18n()
-  const route = useRoute()
 
   // Composables
   const { handleReturn } = useNavigation()
+  const { getPageTitle, MONITORING_PAGES } = useUtils()
+  const route = useRoute()
+  const { t } = useI18n()
 
   // Functions
-
   // Retrieve page data
   const itemType = computed(() => route.params.type)
+
   const currentItem = computed(() => {
     const id = itemType.value + 'View'
     return projectConfig[id] || null
   })
 
-  // Return button label
+  // Verify if monitoring page exists
+  const pageExists = computed(() => {
+    const rawId = itemType.value
+
+    if(!rawId) return null
+
+    return MONITORING_PAGES.includes(rawId)
+  })
+
+  // Returns button label
   const getItemTitle = (id) => {
     return t(`views.${itemType.value}.items.${id}.title`)
   }

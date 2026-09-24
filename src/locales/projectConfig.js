@@ -36,7 +36,7 @@ export const homeView = {
             id: "followUp",
             color: "yellow",
             icon: icons["mental-health-fill"],
-            route: "/monitoring/followUp"
+            route: "/monitoring/followUps"
         },
         {
             id: "medicine",
@@ -97,7 +97,7 @@ export const sidebar = {
                 {
                     id: "emergency",
                     icon: icons["first-aid-line"],
-                    route: "/emergency-data"
+                    route: "/emergency"
                 },
                 {
                     id: "preferences",
@@ -139,44 +139,43 @@ export const sidebar = {
     ]
 }
 
-/*
-* isConst:
-*   - false: Every data comes from database (dynamic data)
-*   - true: Some data content, at least, is constant
-*/
+
+/**
+ * btnAction: Button event when clicked
+ *  - popup
+ *  - externalLink
+ *  - internalLink (route)
+ *  - default (nothing)
+ **/
 export const emergencyDataView = {
     sections: [
         {
-            id: "patientData",
-            isConst: true,
-            items: [
+            id: "patient",
+            component: "alt",
+            btnAction: "popup",
+            buttons: [
                 {
                     id: "patientName",
-                    onClick: "popup",
                     color: "blue",
-                    icon: icons["user-line"]
+                    icon: icons["user-fill"],
                 },
                 {
                     id: "birthDate",
-                    onClick: "popup",
                     color: "green",
                     icon: icons["cake-line"]
                 },
                 {
                     id: "bloodType",
-                    onClick: "popup",
                     color: "red",
                     icon: icons["drop-fill"]
                 },
                 {
                     id: "weight",
-                    onClick: "popup",
                     color: "orange",
                     icon: icons["weight-line"]
                 },
                 {
                     id: "address",
-                    onClick: "popup",
                     color: "orange",
                     icon: icons["pin-user-line"]
                 }
@@ -184,29 +183,31 @@ export const emergencyDataView = {
         },
         {
             id: "emergencyContact",
-            isConst: false
+            component: "default",
+            btnAction: "externalLink"
         },
         {
             id: "allergies",
-            isConst: false
+            component: "default",
+            btnAction: "default"
         },
         {
             id: "healthPlans",
-            isConst: false
+            component: "default",
+            btnAction: "default"
         },
         {
             id: "others",
-            isConst: true,
-            items: [
+            component: "alt",
+            btnAction: "internalLink",
+            buttons: [
                 {
                     id: "doctors",
-                    onClick: "internalLink",
                     color: "blue",
-                    icon: icons["stethoscope-line"],
+                    icon: icons["stethoscope-line"]
                 },
                 {
                     id: "medicines",
-                    onClick: "internalLink",
                     color: "green",
                     icon: icons["medicine-bottle-line"]
                 }
@@ -250,7 +251,7 @@ export const vitalSignsView = {
     ]
 }
 
-export const followUpView = {
+export const followUpsView = {
     items: [
         {
             id: "mood",
@@ -412,7 +413,7 @@ export const footers = [
         ]
     },
     {
-        id: "followUp",
+        id: "followUps",
         buttons: [
             {
                 id: "primary",

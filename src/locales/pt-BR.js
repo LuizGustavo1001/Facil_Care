@@ -2,6 +2,32 @@ export default {
     greetings: {
         hello: "Olá",
     },
+    pageTitle: {
+        vitalSigns: "Sinais Vitais",
+        followUps: "Acompanhamento Fisiológico e Comportamental",
+        emergencyData: "Dados de Emergência",
+        medicines: "Medicamentos",
+        allergies: "Alergias",
+        doctors: "Médicos",
+        caregivers: "Cuidadores",
+        preferences: "Preferências",
+        import: "Importar Dados",
+        export: "Exportar Dados",
+        userManual: "Manual do Usuário",
+        terms: "Termos de Responsabilidade",
+        bodyTemperature: "Temperatura Corporal",
+        bloodPressure: "Pressão Arterial",
+        oxygenSaturation: "Saturação de Oxigênio",
+        bloodGlucose: "Glicemia",
+        heartRate: "Batimentos Cardíacos",
+        mood: "Humor",
+        painLevel: "Nível de Dor",
+        sleep: "Qualidade do Sono",
+        waterIntake: "Ingestão de Água",
+        mealAcceptance: "Aceitação de Refeições",
+        weight: "Peso Corporal",
+        necessities: "Controle de Evacuação e Diurese"
+    },
     utils: {
         years: "anos",
         themes: {
@@ -29,42 +55,6 @@ export default {
         pageFallback: {
             title: "Página não encontrada",
             button: "Clique aqui para voltar para a página inicial"
-        },
-        bodyTemperature: {
-            title: "Temperatura Corporal"
-        },
-        bloodPressure: {
-            title: "Pressão Arterial"
-        },
-        oxygenSaturation: {
-            title: "Saturação de Oxigênio"
-        },
-        bloodGlucose: {
-            title: "Glicemia"
-        },
-        heartRate: {
-            title: "Batimentos Cardíacos"
-        },
-        mood: {
-            title: "Humor"
-        },
-        painLevel: {
-            title: "Nível de dor"
-        },
-        sleep: {
-            title: "Qualidade do Sono"
-        },
-        waterIntake: {
-            title: "Ingestão de Água"
-        },
-        mealAcceptance: {
-            title: "Aceitação de Refeições"
-        },
-        weight: {
-            title: "Peso"
-        },
-        necessities: {
-            title: "Controle de Evacuação e Diurese"
         }
     },
     views: {
@@ -98,7 +88,6 @@ export default {
             }
         },
         vitalSigns: {
-            headerTitle: "Sinais Vitais",
             subtitle: "Selecione uma das opções abaixo para visualizar cada tópico individualmente",
             items: {
                 bodyTemperature: {
@@ -118,8 +107,7 @@ export default {
                 }
             }
         },
-        followUp: {
-            headerTitle: "Acompanhamento Fisiológico e Comportamental",
+        followUps: {
             subtitle: "Selecione uma das opções abaixo para visualizar cada tópico individualmente",
             items: {
                 mood: {
@@ -146,7 +134,6 @@ export default {
             }
         },
         emergencyData: {
-            headerTitle: "Dados de Emergência",
             sections: {
                 patient: {
                     title: "Informações do Paciente",
@@ -192,7 +179,6 @@ export default {
             }
         },
         medicines: {
-            headerTitle: "Medicamentos",
             sections: {
                 registers: {
                     title: "Medicamentos Cadastrados"
@@ -200,7 +186,6 @@ export default {
             }
         },
         allergies: {
-            headerTitle: "Alergias",
             sections: {
                 registers: {
                     title: "Alergias Cadastradas"
@@ -208,7 +193,6 @@ export default {
             }
         },
         doctors: {
-            headerTitle: "Médicos",
             sections: {
                 registers: {
                     title: "Médicos Cadastrados"
@@ -216,7 +200,6 @@ export default {
             }
         },
         caregivers: {
-            headerTitle: "Cuidadores",
             sections: {
                 registers: {
                     title: "Cuidadores Cadastrados"
@@ -224,7 +207,6 @@ export default {
             }
         },
         preferences:{
-            headerTitle: "Preferências do Usuário",
             sections: {
                 general: {
                     title: "Geral",
@@ -240,18 +222,16 @@ export default {
             }
         },
         import: {
-            headerTitle: "Importar Dados",
             subtitle: ""
         },
         export: {
-            headerTitle: "Exportar Dados",
             subtitle: "Escaneie o código QR abaixo para importar dados de {name}"
         },
         userManual: {
-            headerTitle: "Manual do Usuário"
+
         },
         terms: {
-            headerTitle: "Termos de Responsabilidade"
+
         }
     },
     sidebar: {
@@ -306,7 +286,7 @@ export default {
                 }
             }
         },
-        followUp: {
+        followUps: {
             buttons: {
                 primary: {
                     title: "Registrar Estado Físico / Comportamental"
@@ -360,6 +340,9 @@ export default {
         },
         NoRecordsByTypeAndDate: {
             title: "Nenhum acompanhamento encontrado com base nas datas e tipo selecionados"
+        },
+        NoMonitoring: {
+            title: "Nenhum acompanhamento encontrado"
         },
         InvalidDateInterval: {
             title: "Intervalo de data inválido. Data mínima deve ser menor que a data máxima"

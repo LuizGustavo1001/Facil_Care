@@ -1,9 +1,9 @@
 import { ref, onMounted, onUnmounted } from "vue"
 
-export function useSidebar(){
-    const overlayIsActive = ref(false)
-    const sidebarIsActive = ref(false)
+const overlayIsActive = ref(false)
+const sidebarIsActive = ref(false)
 
+export function useSidebar(){
     const handleSidebarToggle = () => {
         sidebarIsActive.value = !sidebarIsActive.value
         overlayIsActive.value = sidebarIsActive.value
@@ -12,7 +12,7 @@ export function useSidebar(){
     const handleClickOutside = (event) => {
         const clickedInsideSidebar = event.target.closest('#sidebar')
 
-        // avoid function when clicking within the sidebar
+        // Avoid function when clicking within the sidebar
         if (sidebarIsActive.value && !clickedInsideSidebar) {
             handleSidebarToggle()
         }
@@ -26,9 +26,5 @@ export function useSidebar(){
         window.removeEventListener("click", handleClickOutside)
     })
 
-    return{
-        overlayIsActive,
-        sidebarIsActive,
-        handleSidebarToggle
-    }
+    return{ overlayIsActive, sidebarIsActive, handleSidebarToggle }
 }

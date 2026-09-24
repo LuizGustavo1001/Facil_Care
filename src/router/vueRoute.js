@@ -35,7 +35,7 @@ const routes = [
         }
     },
     {
-        path: "/emergency-data",
+        path: "/emergency",
         name: "emergency-data",
         component: () => import('/src/views/EmergencyDataView.vue'),
         meta: {
@@ -78,14 +78,6 @@ const routes = [
         path: '/terms',
         name: 'terms',
         component: () => import('/src/views/TermsView.vue'),
-    },
-    {
-        path: "/refresh-theme",
-        name: 'refresh-theme',
-        component: () => import('/src/views/RefreshThemeView.vue'),
-        meta: {
-            title: 'Refresh Theme | Facil Care'
-        }
     },
     {
         path: "/not-found",

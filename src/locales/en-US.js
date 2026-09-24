@@ -2,6 +2,32 @@ export default {
     greetings: {
         hello: "Hello",
     },
+    pageTitle: {
+        vitalSigns: "Vital Signs",
+        followUps: "Physiological and Behavioral Monitoring",
+        emergencyData: "Emergency Data",
+        medicines: "Medicines",
+        allergies: "Allergies",
+        doctors: "Doctors",
+        caregivers: "Caregivers",
+        preferences: "Preferences",
+        import: "Import Data",
+        export: "Export Data",
+        userManual: "User's Manual",
+        terms: "Terms of Service",
+        bodyTemperature: "Body Temperature",
+        bloodPressure: "Blood Pressure",
+        oxygenSaturation: "Oxygen Saturation",
+        bloodGlucose: "Glucose",
+        heartRate: "Heart Rate",
+        mood: "Mood",
+        painLevel: "Pain Level",
+        sleep: "Slee Quality",
+        waterIntake: "Water Intake",
+        mealAcceptance: "Food Acceptance",
+        weight: "Weight",
+        necessities: "Monitoring of bowel and urine"
+    },
     utils: {
         years: "years",
         themes: {
@@ -29,42 +55,6 @@ export default {
         pageFallback: {
             title: "Page not found",
             button: "Click to go to the homepage",
-        },
-        bodyTemperature: {
-            title: "Body Temperature"
-        },
-        bloodPressure: {
-            title: "Blood Pressure"
-        },
-        oxygenSaturation: {
-            title: "Oxygen Saturation"
-        },
-        bloodGlucose: {
-            title: "Glucose"
-        },
-        heartRate: {
-            title: "Heartbeat"
-        },
-        mood: {
-            title: "Mood"
-        },
-        painLevel: {
-            title: "Pain Level"
-        },
-        sleep: {
-            title: "Sleep Quality"
-        },
-        waterIntake: {
-            title: "Water Ingestion"
-        },
-        mealAcceptance: {
-            title: "Food Acceptance"
-        },
-        weight: {
-            title: "Weight"
-        },
-        necessities: {
-            title: "Monitoring of bowel and urine"
         }
     },
     views: {
@@ -98,7 +88,6 @@ export default {
             }
         },
         vitalSigns: {
-            headerTitle: "Vital Signs",
             subtitle: "Select one of the options bellow to view the desired information individualy",
             items: {
                 bodyTemperature: {
@@ -118,8 +107,7 @@ export default {
                 }
             }
         },
-        followUp: {
-            headerTitle: "Physiological and Behavioral Monitoring",
+        followUps: {
             subtitle: "Selecione uma das opções abaixo para visualizar cada tópico individualmente",
             items: {
                 mood: {
@@ -146,7 +134,6 @@ export default {
             }
         },
         emergencyData: {
-            headerTitle: "Emergency Data",
             sections: {
                 patient: {
                     title: "Patient Information",
@@ -192,7 +179,6 @@ export default {
             }
         },
         medicines: {
-            headerTitle: "Medicines",
             sections: {
                 registers: {
                     title: "Registered Medicines"
@@ -200,7 +186,6 @@ export default {
             }
         },
         allergies: {
-            headerTitle: "Allergies",
             sections: {
                 registers: {
                     title: "Registered Allergies"
@@ -208,7 +193,6 @@ export default {
             }
         },
         doctors: {
-            headerTitle: "Doctors",
             sections: {
                 registers: {
                     title: "Registered Doctors"
@@ -216,7 +200,6 @@ export default {
             }
         },
         caregivers: {
-            headerTitle: "Caregivers",
             sections: {
                 registers: {
                     title: "Registered Caregivers"
@@ -224,7 +207,6 @@ export default {
             }
         },
         preferences:{
-            headerTitle: "User Preferences",
             sections: {
                 general: {
                     title: "General",
@@ -240,18 +222,16 @@ export default {
             }
         },
         import: {
-            headerTitle: "Import Data",
             subtitle: ""
         },
         export: {
-            headerTitle: "Export Data",
             subtitle: "Scan the QR code bellow to import data from {name}"
         },
         userManual: {
-            headerTitle: "User's Manual"
+
         },
         terms: {
-            headerTitle: "Terms of Service"
+
         }
     },
     sidebar: {
@@ -306,7 +286,7 @@ export default {
                 }
             }
         },
-        followUp: {
+        followUps: {
             buttons: {
                 primary: {
                     title: "Record Physiological / Behavioral State"
@@ -360,6 +340,9 @@ export default {
         },
         NoRecordsByTypeAndDate: {
             title: "No follow-ups founded with selected type and dates"
+        },
+        NoMonitoring: {
+            title: "No monitoring founded"
         },
         InvalidDateInterval: {
             title: "Invalid date interval. Minimum date needs to be lower than maximum date"

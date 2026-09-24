@@ -36,10 +36,7 @@ export function useLanguage() {
     }
 
     const setLanguage = (nextLanguage) => {
-        console.log(nextLanguage)
         if(!LANGUAGES.includes(nextLanguage)) return
-
-        console.log("adsadad")
 
         currentLanguage.value = nextLanguage
 
