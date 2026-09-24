@@ -9,44 +9,47 @@
 :root{
     /* -=-=-=- PRIMAL TOKENS -=-=-=- */
     /* Colors */
-    --blue-1000: #0F172A;
-    --blue-900: #1A2947;
-    --blue-700: #2F4E8D;
-    --blue-500: #206197;
-    --blue-400: #2f77b2;
-    --blue-100: #edf2ff;
+    --gray-900: #2e3440;
+    --gray-800:#3b4252;
+    --gray-700: #434c5e;
+    --gray-600: #4c566a;
+    --gray-400: #b3bdd0;
+    --gray-300: #d8dee9;
+    --gray-200: #e5e9f0;
+    --gray-100: #eceff4;
 
-    --slate-600: #57667B;
-    --slate-500: #73869d;
+    --blue-700: #2a507e;
+    --blue-600: #366298;
+    --blue-500: #50719a;
+    --blue-400: #81a1c1;
+    --blue-200: #b7d6ef;
+    --blue-100: #d3ecff;
 
-    --gray-300: #D4D4D4;
-    --gray-100: #F6F7F8;
+    --red-700: #7e2a2a;
+    --red-500: #bf616a;
+    --red-400: #c18181;
+    --red-100: #ffdcdc;
 
-    --purple-700: #624096;
-    --purple-500: #8039d7;
-    --purple-200: #ede0ff;
+    --orange-700: #9a553f;
+    --orange-500: #d08770;
+    --orange-400: #e3a18c;
+    --orange-100: #ffddd1;
 
-    --red-700: #964040;
-    --red-500: #D73940;
-    --red-400: #e56d72;
-    --red-300: #F3D1D1;
-    --red-200: #FDDFDF;
-    --red-100: #FFF3F3;
+    --purple-700: #7c5376;
+    --purple-500: #a8749f;
+    --purple-400: #e0b5d7;
+    --purple-100: #ffd6f6;
 
-    --green-700: #439640;
-    --green-500: #209768;
-    --green-100: #ebfff8;
+    --green-700: #6a8d4c;
+    --green-500: #84a46a;
+    --green-400: #b0e09e;
+    --green-100: #e7ffd2;
 
-    --orange-700: #966540;
-    --orange-500: #EA7624;
-    --orange-400: #eca069;
-    --orange-200: #F3E5D4;
-    --orange-100: #FDF0E9;
-
-    --yellow-700: #7e6831;
-    --yellow-600: #a4761d;
-    --yellow-400: #e0ad4b;
-    --yellow-100: #fdf9e9;
+    --yellow-700: #c79841;
+    --yellow-500-alt: #ffdc00;
+    --yellow-500: #ccab69;
+    --yellow-400: #ebcb8b;
+    --yellow-100: #fff0d5;
 
     --white: #FFFFFF;
     --black: #000000;
@@ -93,38 +96,38 @@
 
     /* -=-=-=- SEMANTIC TOKENS -=-=-=- */
     /* Text Color */
-    --color-text-primary: var(--blue-900);
-    --color-text-primary-muted: var(--slate-600);
-    --color-text-primary-subtle: var(--gray-300);
+    --color-text-primary: var(--gray-900);
+    --color-text-primary-muted: var(--gray-700);
+    --color-text-primary-subtle: var(--gray-800);
 
-    --color-text-inverse: var(--white);
+    --color-text-inverse: var(--gray-100);
     --color-text-inverse-muted: var(--gray-300);
-    --color-text-inverse-subtle: var(--gray-100);
+    --color-text-inverse-subtle: var(--gray-200);
 
-    --color-text-brand: var(--blue-700);
-    --color-text-brand-subtle: var(--blue-500);
+    --color-text-brand: var(--blue-500);
+    --color-text-brand-subtle: var(--blue-400);
 
-    --color-text-red: var(--red-500);
-    --color-text-yellow: var(--yellow-600);
-    --color-text-green: var(--green-500);
-    --color-text-orange: var(--orange-500);
-    --color-text-blue: var(--blue-500);
-    --color-text-purple: var(--purple-500);
+    --color-text-red: var(--red-700);
+    --color-text-yellow: var(--yellow-700);
+    --color-text-green: var(--green-700);
+    --color-text-orange: var(--orange-700);
+    --color-text-blue: var(--blue-700);
+    --color-text-purple: var(--purple-700);
 
     /* Background Color */
     --color-bg-primary: var(--gray-100);
     --color-bg-subtle: var(--white);
     --color-bg-hover: var(--gray-300);
 
-    --color-bg-brand: var(--blue-900);
-    --color-bg-brand-hover: var(--blue-700);
+    --color-bg-brand: var(--blue-700);
+    --color-bg-brand-hover: var(--blue-600);
 
     --color-bg-red: var(--red-100);
     --color-bg-yellow: var(--yellow-100);
     --color-bg-green: var(--green-100);
     --color-bg-orange: var(--orange-100);
     --color-bg-blue: var(--blue-100);
-    --color-bg-purple: var(--purple-200);
+    --color-bg-purple: var(--purple-100);
 
     /* Border Color */
     --color-border-default: var(--gray-300);
@@ -148,40 +151,40 @@
 body.dark {
     /* Text Color */
     --color-text-primary: var(--gray-100);
-    --color-text-primary-muted: var(--gray-300);
-    --color-text-primary-subtle: var(--slate-500);
+    --color-text-primary-muted: var(--gray-400);
+    --color-text-primary-subtle: var(--gray-200);
 
-    --color-text-inverse: var(--blue-1000);
-    --color-text-inverse-muted: var(--blue-900);
-    --color-text-inverse-subtle: var(--blue-700);
+    --color-text-inverse: var(--gray-900);
+    --color-text-inverse-muted: var(--gray-700);
+    --color-text-inverse-subtle: var(--gray-800);
 
     --color-text-brand: var(--blue-100);
-    --color-text-brand-subtle: var(--blue-500);
+    --color-text-brand-subtle: var(--blue-400);
 
     --color-text-red: var(--red-100);
     --color-text-yellow: var(--yellow-100);
     --color-text-green: var(--green-100);
     --color-text-orange: var(--orange-100);
     --color-text-blue: var(--blue-100);
-    --color-text-purple: var(--purple-200);
+    --color-text-purple: var(--purple-100);
 
     /* Background Color */
-    --color-bg-primary: var(--blue-1000);
-    --color-bg-subtle: var(--blue-900);
-    --color-bg-hover: var(--blue-700);
+    --color-bg-primary: var(--gray-900);
+    --color-bg-subtle: var(--gray-800);
+    --color-bg-hover: var(--gray-700);
 
     --color-bg-brand: var(--blue-400);
-    --color-bg-brand-hover: var(--blue-700);
+    --color-bg-brand-hover: var(--blue-100);
 
-    --color-bg-red: var(--red-700);
-    --color-bg-yellow: var(--yellow-700);
-    --color-bg-green: var(--green-700);
-    --color-bg-orange: var(--orange-700);
-    --color-bg-blue: var(--blue-700);
-    --color-bg-purple: var(--purple-700);
+    --color-bg-red: var(--red-500);
+    --color-bg-yellow: var(--yellow-500);
+    --color-bg-green: var(--green-500);
+    --color-bg-orange: var(--orange-500);
+    --color-bg-blue: var(--blue-500);
+    --color-bg-purple: var(--purple-500);
 
     /* Border Color */
-    --color-border-default: var(--blue-900);
+    --color-border-default: var(--gray-700);
     --color-border-brand: var(--blue-500);
 
     /* Shadow */
@@ -200,20 +203,20 @@ body.highContrast {
     --color-text-inverse-muted: var(--black);
     --color-text-inverse-subtle: var(--black);
 
-    --color-text-brand: var(--yellow-100);
-    --color-text-brand-subtle: var(--yellow-600);
+    --color-text-brand: var(--yellow-500-alt);
+    --color-text-brand-subtle: var(--yellow-500-alt);
 
     /* Background Color */
     --color-bg-primary: var(--black);
     --color-bg-subtle: #1c1c1c;
     --color-bg-hover: var(--black);
 
-    --color-bg-brand: var(--white);
-    --color-bg-brand-hover: var(--gray-100);
+    --color-bg-brand: var(--yellow-500-alt);
+    --color-bg-brand-hover: var(--yellow-500-alt);
 
     /* Border Color */
-    --color-border-default: var(--white);
-    --color-border-brand: var(--yellow-100);
+    --color-border-default: var(--yellow-500);
+    --color-border-brand: var(--yellow-500);
 
     /* Shadow (Unavailable) */
     --color-shadow-subtle: none;
