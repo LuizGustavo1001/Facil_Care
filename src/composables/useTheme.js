@@ -1,52 +1,74 @@
 import { ref } from "vue"
 
-const THEMES = ["light", "dark", "highContrast", "system"]
+const THEMES = ["light", "dark", "highContrast"]
+const THEME_PREFERENCE = [...THEMES, "system"]
 
-const currentTheme = ref("light")
+const currentTheme = ref("light") // current applied theme
+const currentPreference = ref("system") // user's selection
 
 export function useTheme() {
     /**
-     * @param { String } nextTheme
+     * @param { String } nextPreference
      **/
-    const toggleTheme = (nextTheme = null) => {
-        // 1. Specific theme required
-        if(nextTheme){
-            // 1.1 Follow system theme
-            if(nextTheme === "system"){
-                setSystemPreference()
-                return
-            }
+    const initToggleTheme = (nextPreference = null) => {
+        let preference = null
 
-            // 1.2 Other theme
-            setBodyClass(nextTheme)
+        // 1. Specific preference required
+        if(nextPreference && THEME_PREFERENCE.includes(nextPreference)){
+            preference = nextPreference
+        }
+
+        // 2. Try get preference from localStorage
+        const savedPreference = localStorage.getItem("theme")
+        if(!preference && savedPreference && THEME_PREFERENCE.includes(savedPreference)){
+            preference = savedPreference
+        }
+
+        // 3. No local storage item -> set browser default
+        if(!preference){
+            preference = "system"
+        }
+
+        toggleTheme(preference)
+    }
+
+    /**
+     * @param { String } nextPreference
+     **/
+    const toggleTheme = (nextPreference = null) => {
+        // Update user's preference
+        currentPreference.value = nextPreference
+
+        // save user's preference
+        setLocalStorage(nextPreference)
+
+        // System preference
+        if(nextPreference === "system"){
+            setSystemPreference()
             return
         }
 
-        // 2. No theme specified -> try get from localStorage
-        const savedTheme = localStorage.getItem("theme")
-        if(savedTheme){
-            setBodyClass(savedTheme)
-            return
-        }
-
-        // 3. System Preference
-        setSystemPreference()
+        // Specific theme
+        setBodyClass(nextPreference)
     }
 
     /**
     * @param { String } nextTheme
     **/
     const setBodyClass = (nextTheme) => {
-        console.log(nextTheme)
         if(!THEMES.includes(nextTheme)) return
 
-        // Remove all theme classes from body
+        // Remove all theme classes from body and add current one
         document.body.classList.remove(...THEMES)
         document.body.classList.add(nextTheme)
 
-        // Save at LocalStorage + update currentTheme variable
-        localStorage.setItem("theme", nextTheme)
+        // Update current applied theme
         currentTheme.value = nextTheme
+    }
+
+    // Save at LocalStorage
+    const setLocalStorage = (nextTheme) => {
+        localStorage.setItem("theme", nextTheme)
     }
 
     const setSystemPreference = () => {
@@ -55,5 +77,5 @@ export function useTheme() {
         setBodyClass(systemDark ? "dark" : "light")
     }
 
-    return { toggleTheme, currentTheme }
+    return { initToggleTheme, currentTheme , currentPreference }
 }

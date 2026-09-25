@@ -56,13 +56,13 @@
   const { handleReturn } = useNavigation()
   const { initLanguage } = useLanguage()
   const { getPageTitle, PAGES } = useUtils()
-  const { toggleTheme, currentTheme } = useTheme()
+  const { initToggleTheme, currentPreference } = useTheme()
   const { t, te, locale } = useI18n()
 
   // Functions
   const getCurrentEventValue = (item) => {
     if(item.event === "toggle-theme"){
-      return currentTheme.value
+      return currentPreference.value
     }
     if(item.event === "toggle-language"){
       return locale.value
@@ -72,11 +72,13 @@
   }
 
   const handleSelect = (eventType, event) => {
-    const selectedValue = event.target ? event.target.value : event
+    const selectedValue = event.target
+        ? event.target.value
+        : event
 
     switch(eventType){
       case "toggle-theme":
-        toggleTheme(selectedValue)
+        initToggleTheme(selectedValue)
         break
       case "toggle-language":
         initLanguage(selectedValue)

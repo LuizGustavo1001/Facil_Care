@@ -148,6 +148,7 @@
     --color-shadow-strong: var(--alpha-black-20);
 }
 
+/* Dark Mode Settings */
 body.dark {
     /* Text Color */
     --color-text-primary: var(--gray-100);
@@ -193,6 +194,7 @@ body.dark {
     --color-shadow-strong: var(--alpha-black-40);
 }
 
+/* High Contrasts Mode Settings */
 body.highContrast {
     /* Text Color */
     --color-text-primary: var(--white);
@@ -218,7 +220,7 @@ body.highContrast {
     --color-border-default: var(--yellow-500);
     --color-border-brand: var(--yellow-500);
 
-    /* Shadow (Unavailable) */
+    /* Shadow (Removed) */
     --color-shadow-subtle: none;
     --color-shadow-default: none;
     --color-shadow-strong: none;
@@ -254,7 +256,7 @@ ul{
     list-style: none;
 }
 
-#app{
+.app-container{
     flex-grow: 1;
 
     display: flex;
