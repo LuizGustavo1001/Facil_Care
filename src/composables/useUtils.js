@@ -28,6 +28,8 @@ export function useUtils() {
         OXYGEN_SATURATION: "oxygenSaturation",
         BLOOD_GLUCOSE: "bloodGlucose",
         HEART_RATE: "heartRate",
+        NOTIFICATIONS: "notifications",
+        ERASE: "erase"
     }
 
     const MANAGE_PAGES = [

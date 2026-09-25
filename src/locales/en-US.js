@@ -26,7 +26,24 @@ export default {
         waterIntake: "Water Intake",
         mealAcceptance: "Food Acceptance",
         weight: "Weight",
-        necessities: "Monitoring of bowel and urine"
+        necessities: "Monitoring of bowel and urine",
+        notifications: "Notifications",
+        erase: "Erase Data"
+    },
+    meta: {
+        home: "Home",
+        monitoring: "Monitoring",
+        monitoringOverview: "Monitoring",
+        manageOverview: "Manage",
+        emergencyData: "Emergency Data",
+        preferences: "Preferences",
+        register: "Register",
+        backup: "Backup",
+        manual: "User's Manual",
+        terms: "Terms of Service",
+        notifications: "Notifications",
+        notFound: 'Page not Found',
+        erase: "Erase Data"
     },
     utils: {
         deleteAccount: "Erase Data",

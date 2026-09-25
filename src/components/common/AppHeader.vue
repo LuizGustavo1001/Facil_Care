@@ -15,7 +15,14 @@
       </p>
     </div>
 
-    <IconBtn :icon="icons['notification-line']" size="25px" variant="transparent" />
+    <IconBtn
+        tag="router"
+        target="_self"
+        to="/notifications"
+        :icon="icons['notification-line']"
+        size="25px"
+        variant="transparent"
+    />
   </header>
 </template>
 

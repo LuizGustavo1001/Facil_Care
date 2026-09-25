@@ -26,7 +26,24 @@ export default {
         waterIntake: "Ingestão de Água",
         mealAcceptance: "Aceitação de Refeições",
         weight: "Peso Corporal",
-        necessities: "Controle de Evacuação e Diurese"
+        necessities: "Controle de Evacuação e Diurese",
+        notifications: "Notificações",
+        erase: "Apagar Dados"
+    },
+    meta: {
+        home: "Início",
+        monitoring: "Monitoramento",
+        monitoringOverview: "Monitoramento",
+        manageOverview: "Gerenciamento",
+        emergencyData: "Dados de Emergência",
+        preferences: "Preferências",
+        register: "Registrar",
+        backup: "Backup",
+        manual: "Manual do Usuário",
+        terms: "Termos de Usuário",
+        notifications: "Notificações",
+        notFound: 'Página não encontrada',
+        erase: "Apagar Dados"
     },
     utils: {
         deleteAccount: "Apagar Dados",

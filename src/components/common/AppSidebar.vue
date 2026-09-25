@@ -44,7 +44,8 @@
       <!-- Delete Account Data Button -->
       <ActionButton
           v-if="patientData"
-          tag="button"
+          tag="router"
+          to="/erase"
           :leftIcon="icons['delete-bin-line']"
           variant="destructive"
           :title="$t(`utils.deleteAccount`)"

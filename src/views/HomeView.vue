@@ -22,6 +22,18 @@
         <p class="text-muted">{{ $t("views.home.subtitle") }}:</p>
 
         <nav class="home-nav flex flex-column gap-1">
+          <ActionButtonAlt
+            v-for="btn in homeView.buttons"
+            :key="btn.id"
+            tag="router"
+            :to="btn.route"
+            :leftIcon="btn.icon"
+            leftIconSize="30px"
+            :color="btn.color"
+            :title="$t(`views.home.buttons.${btn.id}.title`)"
+            :description="$t(`views.home.buttons.${btn.id}.description`)"
+          />
+          <!--
           <router-link
               v-for="btn in homeView.buttons"
               :key="btn.id"
@@ -36,6 +48,7 @@
 
             <Icon :icon="btn.icon" class="muted" size="35px"/>
           </router-link>
+          -->
         </nav>
       </section>
     </main>
@@ -44,95 +57,7 @@
   </div>
 </template>
 
-<style scoped>
-  .home-nav{
-    border-radius: var(--radius-md);
-    padding: var(--spacing-sm);
-
-    background: var(--color-bg-subtle);
-  }
-
-  .home-card{
-    color: inherit;
-    padding: var(--spacing-lg);
-
-    border-radius: var(--radius-md);
-    border: 1px solid transparent;
-
-    transition: 0.2s ease-out;
-  }
-  .home-card:active, .home-card:focus-visible{
-    transform: scale(0.98);
-  }
-
-  .home-card h1{
-    font-size: var(--text-heading-sm);
-    text-transform: uppercase;
-  }
-  .home-card p{
-    font-size: var(--text-body-md);
-    font-weight: 500;
-  }
-
-  .home-card .muted{
-    opacity: 0.75;
-  }
-
-  /* VARIANT */
-  /* 1. Red */
-  .home-card.red{
-    background: var(--color-bg-red);
-    color: var(--color-text-red);
-  }
-  .home-card.red:hover{
-    border-color: var(--color-text-red);
-  }
-
-  /* 2. Orange */
-  .home-card.orange{
-    background: var(--color-bg-orange);
-    color: var(--color-text-orange);
-  }
-  .home-card.orange:hover{
-    border-color: var(--color-text-orange);
-  }
-
-  /* 3. Blue */
-  .home-card.blue{
-    background: var(--color-bg-blue);
-    color: var(--color-text-blue);
-  }
-  .home-card.blue:hover{
-    border-color: var(--color-text-blue);
-  }
-
-  /* 4. Green */
-  .home-card.green{
-    background: var(--color-bg-green);
-    color: var(--color-text-green);
-  }
-  .home-card.green:hover{
-    border-color: var(--color-text-green);
-  }
-
-  /* 5. Yellow */
-  .home-card.yellow{
-    background: var(--color-bg-yellow);
-    color: var(--color-text-yellow);
-  }
-  .home-card.yellow:hover{
-    border-color: var(--color-text-yellow);
-  }
-
-  /* 6. Purple */
-  .home-card.purple{
-    background: var(--color-bg-purple);
-    color: var(--color-text-purple);
-  }
-  .home-card.purple:hover{
-    border-color: var(--color-text-purple);
-  }
-</style>
+<style scoped></style>
 
 <script setup>
   import { onMounted, ref } from "vue"
@@ -150,6 +75,7 @@
 
   import PatientController from "../controllers/PatientController.js"
   import db from "../database/db.js"
+  import ActionButtonAlt from "../components/common/ActionButtonAlt.vue";
 
   // Composables
   const {

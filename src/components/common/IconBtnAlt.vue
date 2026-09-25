@@ -23,7 +23,7 @@
 
 .outline-layer, .inline-layer{
   background: var(--color-bg-primary);
-  border: 2px solid var(--color-border-default);
+  border: 1px solid var(--color-border-default);
   border-radius: var(--radius-lg);
 }
 

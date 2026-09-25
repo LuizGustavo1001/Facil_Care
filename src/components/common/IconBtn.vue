@@ -1,8 +1,9 @@
 <template>
   <component
-      :is="tag"
+      :is="componentTag"
       :type="isButton ? 'button' : undefined"
-      :href="!isButton ? (link || undefined) : undefined"
+      :to="isRouterLink ? to : undefined"
+      :href="!isButton ? (to || undefined) : undefined"
       :target="!isButton ? target : undefined"
       :rel="!isButton && target === '_blank' ? 'noopener noreferrer' : undefined"
       class="icon-btn"
@@ -84,6 +85,7 @@
   import { computed } from "vue"
 
   import Icon from "./Icon.vue"
+  import {RouterLink} from "vue-router";
 
   const VARIANTS = ["brand", "border", "bg-clr", "transparent", "subtle"]
   const DEFAULT_VARIANT = "brand"
@@ -97,7 +99,7 @@
       type: String,
       required: true
     },
-    link: {
+    to: {
       type: String,
       default: "#"
     },
@@ -122,6 +124,18 @@
   })
 
   const isButton = computed(() => props.tag === 'button')
+
+  const isRouterLink = computed(() => props.tag === "router")
+
+  const componentTag = computed(() => {
+    // 1. Tag == RouterLink (Internal Link)
+    if(isRouterLink.value){
+      return RouterLink
+    }
+
+    // 2. Other Tag
+    return props.tag
+  })
 
   const paddingStyle = computed(() => `padding: var(--spacing-${props.padding})`)
 

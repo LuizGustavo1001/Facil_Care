@@ -57,6 +57,9 @@
     cursor: pointer;
     transition: 0.2s ease-out;
   }
+  .action-btn-alt:hover{
+    box-shadow: 0 0 5px 5px var(--alpha-black-05);
+  }
   .action-btn-alt .right-icon{
     color: var(--color-text-primary-muted);
   }
@@ -77,7 +80,8 @@
   }
 
   .btn-content .btn-content-description{
-    font-size: var(--text-body-md);
+    font-size: var(--text-body-lg);
+    font-weight: var(--bold-weight);
   }
 
   /* COLOR VARIANTS */
@@ -116,6 +120,25 @@
   .action-btn-alt.green:hover{
     border-color: var(--color-bg-green);
   }
+
+  /* 5. Yellow */
+  .action-btn-alt.yellow .left-icon-wrapper{
+    background-color: var(--color-bg-yellow);
+    color: var(--color-text-yellow);
+  }
+  .action-btn-alt.yellow:hover{
+    border-color: var(--color-bg-yellow);
+  }
+
+  /* 6. Purple */
+  .action-btn-alt.purple .left-icon-wrapper{
+    background-color: var(--color-bg-purple);
+    color: var(--color-text-purple);
+  }
+  .action-btn-alt.purple:hover{
+    border-color: var(--color-bg-purple);
+  }
+
 </style>
 
 <script setup>
@@ -124,7 +147,7 @@
 
   import Icon from "./Icon.vue"
 
-  const COLORS_LIST = ["blue", "orange", "red", "green"]
+  const COLORS_LIST = ["blue", "orange", "red", "green", "purple", "yellow"]
   const DEFAULT_COLOR = "blue"
 
   const props = defineProps({
@@ -159,7 +182,7 @@
     color: {
       type: String,
       default: 'blue',
-      validator: (value) => ["blue", "orange", "red", "green"].includes(value)
+      validator: (value) => ["blue", "orange", "red", "green", "purple", "yellow"].includes(value)
     },
     title: String,
     description: String

@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-
+import { i18n } from '../locales/i18n.js'
 // mapping routes
 const routes = [
     {
@@ -7,7 +7,7 @@ const routes = [
       name: 'home',
       component: () => import('/src/views/HomeView.vue'),
       meta: {
-          title: 'Início | Facil Care'
+          title: 'home'
       }
     },
     {
@@ -15,7 +15,7 @@ const routes = [
         name: 'monitoring',
         component: () => import('/src/views/MonitoringView.vue'),
         meta: {
-            title: 'Monitoramento | Facil Care'
+            title: 'monitoring'
         }
     },
     {
@@ -23,7 +23,7 @@ const routes = [
         name: 'monitoring-overview',
         component: () => import('/src/views/MonitoringOverview.vue'),
         meta: {
-            title: 'Monitoramento | Facil Care'
+            title: 'monitoring'
         }
     },
     {
@@ -31,7 +31,7 @@ const routes = [
         name: 'manage-overview',
         component: () => import('/src/views/ManageView.vue'),
         meta: {
-            title: 'Gerenciamento | Facil Care'
+            title: 'manageOverview'
         }
     },
     {
@@ -39,7 +39,7 @@ const routes = [
         name: "emergency-data",
         component: () => import('/src/views/EmergencyDataView.vue'),
         meta: {
-            title: 'Dados de Emergência | Facil Care'
+            title: 'emergencyData'
         }
     },
     {
@@ -47,7 +47,7 @@ const routes = [
         name: 'preferences',
         component: () => import('/src/views/PreferencesView.vue'),
         meta: {
-            title: 'Preferências | Facil Care'
+            title: 'preferences'
         }
     },
     {
@@ -55,7 +55,7 @@ const routes = [
       name: 'register',
       component: () => import('/src/views/RegisterView.vue'),
       meta: {
-          title: 'Registro | Facil Care'
+          title: 'register'
       }
     },
     {
@@ -63,7 +63,7 @@ const routes = [
         name: 'backup',
         component: () => import('/src/views/BackupView.vue'),
         meta: {
-            title: "Backup | Facil Care"
+            title: "backup"
         }
     },
     {
@@ -71,20 +71,39 @@ const routes = [
         name: 'manual',
         component: () => import('/src/views/ManualView.vue'),
         meta: {
-            title: "Manual do Usuário | Facil Care"
+            title: "manual"
         }
     },
     {
         path: '/terms',
         name: 'terms',
         component: () => import('/src/views/TermsView.vue'),
+        meta: {
+            title: "terms"
+        }
+    },
+    {
+        path: '/notifications',
+        name: 'notifications',
+        component: () => import('/src/views/NotificationsView.vue'),
+        meta: {
+            title: "notifications"
+        }
+    },
+    {
+        path: '/erase',
+        name: 'erase',
+        component: () => import('/src/views/EraseDataView.vue'),
+        meta: {
+            title: "erase"
+        }
     },
     {
         path: "/not-found",
         name: 'not-found',
         component: () => import('/src/views/AppFallback.vue'),
         meta: {
-            title: "Página não encontrada | Facil Care"
+            title: "notFound"
         }
     },
     // generic route (path not found)
@@ -107,7 +126,8 @@ const router = createRouter({
 
 // update document title
 router.afterEach((to) => {
-    document.title = to.meta.title || 'FacilCare'
+    const title = to.meta.title
+    document.title = `${i18n.global.t(`meta.${title}`)} | Facil Care`
 })
 
 export default router
