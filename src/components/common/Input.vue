@@ -24,12 +24,14 @@
 <script setup>
   import { computed } from "vue"
 
+  // MODEL
   defineOptions({
     inheritAttrs: false
   })
 
   const model = defineModel({ type: [String, Number], default: "" })
 
+  // PROPS
   const props = defineProps({
     label: String,
     for: String,
@@ -40,6 +42,7 @@
     name: String
   })
 
+  // COMPUTED PROPERTIES
   // Make sure that input ID matches label Id
   const computedId = computed(() => {
     return props.for || (props.name ? `input-${props.name}` : undefined)

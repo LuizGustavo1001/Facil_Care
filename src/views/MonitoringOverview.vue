@@ -68,26 +68,24 @@
   import { useAge } from "../composables/useAge.js"
   import { useUtils } from "../composables/useUtils.js"
 
-  import AppHeader from "../components/common/AppHeader.vue"
+  import AppHeader from "../components/AppHeader.vue"
   import AppFallback from "./AppFallback.vue"
   import SnackBar from "../components/common/SnackBar.vue"
-  import AppFooter from "../components/common/AppFooter.vue"
+  import AppFooter from "../components/AppFooter.vue"
   import ActionButton from "../components/common/ActionButton.vue"
 
-  import db from "../database/db.js"
   import VitalSignsController from "../controllers/VitalSignsController.js"
   import FollowUpsController from "../controllers/FollowUpsController.js"
   import {useWarning} from "../composables/useWarning.js";
 
-
-  // Composables
+  // COMPOSABLES
   const route = useRoute()
   const { getWarning, warning } = useWarning()
   const { handleReturn } = useNavigation()
   const { getFormattedDate } = useAge()
   const { getPageTitle, PAGES, MONITORING_VITAL_SIGNS_PAGES, MONITORING_FOLLOW_UPS_PAGES } = useUtils()
 
-  // Functions
+  // COMPUTED PROPERTIES
   // Returns selected monitoring type
   const currentType = computed(() => {
     return route.params.type || null
@@ -98,6 +96,7 @@
     return route.params.itemId || null
   })
 
+  // FUNCTIONS
   // Verify if selected monitoring overview page exists
   const pageExists = () => {
     if(currentType.value === PAGES['FOLLOW_UPS']){
@@ -111,12 +110,14 @@
     return false
   }
 
-  const vitalSignsController = new VitalSignsController(db)
-  const followUpsController = new FollowUpsController(db)
+  // Controllers
+  const vitalSignsController = new VitalSignsController()
+  const followUpsController = new FollowUpsController()
 
   const monitoringData = ref([])
   const formattedData = ref([])
 
+  // MOUNTED || UNMOUNTED
   onMounted(async () => {
     let result = []
 

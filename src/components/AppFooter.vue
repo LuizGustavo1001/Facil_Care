@@ -40,11 +40,12 @@
 <script setup>
   import { computed } from "vue"
 
-  import { icons } from "../../assets/icons/icons.js"
-  import { footers } from "../../locales/projectConfig.js"
+  import { icons } from "../assets/icons/icons.js"
+  import { footers } from "../locales/projectConfig.js"
 
-  import ActionButton from "./ActionButton.vue"
+  import ActionButton from "./common/ActionButton.vue"
 
+  //PROPS
   const props = defineProps({
     page: {
       type: String,
@@ -52,6 +53,7 @@
     }
   })
 
+  // COMPUTED PROPERTIES
   const currentPage = computed(() => {
     const pageExists = footers.find(footer => footer.id === props.page)
 

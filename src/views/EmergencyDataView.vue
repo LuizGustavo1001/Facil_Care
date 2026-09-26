@@ -67,17 +67,16 @@
   import { useWarning } from "../composables/useWarning.js"
   import { useAge } from "../composables/useAge.js"
 
-  import AppHeader from "../components/common/AppHeader.vue"
-  import AppFooter from "../components/common/AppFooter.vue"
+  import AppHeader from "../components/AppHeader.vue"
+  import AppFooter from "../components/AppFooter.vue"
   import ActionButton from "../components/common/ActionButton.vue"
   import ActionButtonAlt from "../components/common/ActionButtonAlt.vue"
   import SnackBar from "../components/common/SnackBar.vue"
 
   import PatientController from "../controllers/PatientController.js"
   import MedicinesController from "../controllers/MedicinesController.js"
-  import db from "../database/db.js"
 
-  // Composables
+  // COMPOSABLES
   const { t, te } = useI18n()
   const { handleReturn } = useNavigation()
   const { handlePopup } = usePopup()
@@ -85,12 +84,13 @@
   const { getWarning, warning } = useWarning()
   const { getFormattedDate } = useAge()
 
-  // Functions
-  const patientController = new PatientController(db)
-  const medicineController = new MedicinesController(db)
+  // COMPUTED PROPERTIES
+  const patientController = new PatientController()
+  const medicineController = new MedicinesController()
   const patient = ref({})
   const medicines = ref([])
 
+  // FUNCTIONS
   // Dynamic map of emergency data sections, based at database and translate data (i18n)
   const dynamicSections = computed(() => {
     return emergencyDataView.sections.map((section) => {

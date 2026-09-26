@@ -72,14 +72,13 @@
 </style>
 
 <script setup>
-  import { computed } from "vue"
   import { icons } from "../../assets/icons/icons.js"
-  import { useI18n } from "vue-i18n"
-
   import Icon from "./Icon.vue"
 
+  // STATIC VARIABLES
   const INTERVAL = 5000
 
+  // PROPS
   const props = defineProps({
     message: String,
     type: {
@@ -88,9 +87,11 @@
     }
   })
 
+  // EMITS
   // close snackbar event
   const emit = defineEmits(["close"])
 
+  // INTERVAL
   // interval to auto close snackbar
   setInterval(() => {
     emit("close")

@@ -49,20 +49,20 @@
   import { useUtils } from "../composables/useUtils.js"
   import { icons } from "../assets/icons/icons.js"
 
-  import AppHeader from "../components/common/AppHeader.vue"
+  import AppHeader from "../components/AppHeader.vue"
   import ActionButtonAlt from "../components/common/ActionButtonAlt.vue"
   import AppFallback from "./AppFallback.vue"
-  import AppFooter from "../components/common/AppFooter.vue"
+  import AppFooter from "../components/AppFooter.vue"
 
   import * as projectConfig from "../locales/projectConfig.js"
 
-  // Composables
+  // COMPOSABLES
   const { handleReturn } = useNavigation()
   const { getPageTitle, MONITORING_PAGES } = useUtils()
   const route = useRoute()
   const { t } = useI18n()
 
-  // Functions
+  // COMPUTED PROPERTIES
   // Retrieve page data
   const itemType = computed(() => route.params.type)
 
@@ -80,6 +80,7 @@
     return MONITORING_PAGES.includes(rawId)
   })
 
+  // FUNCTIONS
   // Returns button label
   const getItemTitle = (id) => {
     return t(`views.${itemType.value}.items.${id}.title`)

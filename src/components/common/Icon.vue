@@ -27,6 +27,7 @@
 <script setup>
   import { computed } from "vue"
 
+  // PROPS
   const props = defineProps({
     icon: {
       type: String,
@@ -43,5 +44,6 @@
     }
   })
 
+  // COMPUTED PROPERTIES
   const paddingStyle = computed(() => props.padding !== "none" ? `padding: var(--spacing-${props.padding})` : undefined)
 </script>

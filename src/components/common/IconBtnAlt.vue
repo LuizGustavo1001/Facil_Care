@@ -23,13 +23,13 @@
 
 .outline-layer, .inline-layer{
   background: var(--color-bg-primary);
-  border: 1px solid var(--color-border-default);
+  border: none;
   border-radius: var(--radius-lg);
 }
 
 .outline-layer{
-  padding: 3px;
-  box-shadow: inset -2px -4px 10px var(--color-shadow-default);
+  padding: 4px;
+  box-shadow: inset 0px 0px 10px var(--color-shadow-strong);
 }
 
 .outline-layer:active .inline-layer{
@@ -42,6 +42,7 @@
 
   import Icon from "./Icon.vue"
 
+  // PROPS
   const props = defineProps({
     tag: {
       type: String,
@@ -65,5 +66,6 @@
     }
   })
 
+  // COMPUTED PROPERTIES
   const isButton = computed(() => props.tag === 'button')
 </script>

@@ -1,8 +1,9 @@
 import BaseController from "./BaseController.js"
 import Patient from "../models/Patient.js"
+import db from "../database/db.js"
 
 export default class PatientController extends BaseController {
-    constructor(db) {
+    constructor() {
         super()
         this.model = new Patient(db)
     }

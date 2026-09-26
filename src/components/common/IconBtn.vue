@@ -87,9 +87,11 @@
   import Icon from "./Icon.vue"
   import {RouterLink} from "vue-router";
 
+  // STATIC VARIABLES
   const VARIANTS = ["brand", "border", "bg-clr", "transparent", "subtle"]
   const DEFAULT_VARIANT = "brand"
 
+  // PROPS
   const props = defineProps({
     tag: {
       type: String,
@@ -123,6 +125,7 @@
     }
   })
 
+  // COMPUTED PROPERTIES
   const isButton = computed(() => props.tag === 'button')
 
   const isRouterLink = computed(() => props.tag === "router")

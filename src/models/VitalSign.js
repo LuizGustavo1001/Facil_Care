@@ -1,4 +1,4 @@
-import { PatientRecord } from "./PatientRecord.js";
+import { PatientRecord } from "./PatientRecord.js"
 
 export default class VitalSign extends PatientRecord {
     constructor(db) {

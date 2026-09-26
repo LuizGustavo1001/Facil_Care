@@ -147,9 +147,11 @@
 
   import Icon from "./Icon.vue"
 
+  // STATIC VARIABLES
   const COLORS_LIST = ["blue", "orange", "red", "green", "purple", "yellow"]
   const DEFAULT_COLOR = "blue"
 
+  // PROPS
   const props = defineProps({
     tag: {
       type: String,
@@ -188,6 +190,7 @@
     description: String
   })
 
+  // COMPUTED PROPERTIES
   const isButton = computed(() => props.tag === 'button')
 
   const isRouterLink = computed(() => props.tag === "router")

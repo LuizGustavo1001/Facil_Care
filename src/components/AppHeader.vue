@@ -15,14 +15,20 @@
       </p>
     </div>
 
-    <IconBtn
-        tag="router"
-        target="_self"
-        to="/notifications"
-        :icon="icons['notification-line']"
-        size="25px"
-        variant="transparent"
-    />
+    <div class="relative">
+      <IconBtn
+          v-if="hasNotifications"
+          tag="button"
+          :icon="icons['notification-line']"
+          size="25px"
+          variant="transparent"
+          @click="toggleNotifications"
+      />
+      <NotificationsMenu
+        v-if="isNotificationsOpen"
+        @close="isNotificationsOpen = false"
+      />
+    </div>
   </header>
 </template>
 
@@ -45,18 +51,33 @@
 </style>
 
 <script setup>
-  import { icons } from "../../assets/icons/icons.js"
+  import { icons } from "../assets/icons/icons.js"
 
-  import IconBtnAlt from "./IconBtnAlt.vue"
-  import IconBtn from "./IconBtn.vue"
+  import IconBtnAlt from "./common/IconBtnAlt.vue"
+  import IconBtn from "./common/IconBtn.vue"
+  import NotificationsMenu from "./NotificationsMenu.vue"
+  import { ref } from "vue"
 
+  // PROPS
   const props = defineProps({
     title: String,
     leftBtnIcon: {
       type: String,
       default: icons["menu-left"]
+    },
+    hasNotifications: {
+      type: Boolean,
+      default: true
     }
   })
+
+  // REF PROPERTIES
+  const isNotificationsOpen = ref(false)
+
+  // FUNCTIONS
+  const toggleNotifications = () => {
+    isNotificationsOpen.value = !isNotificationsOpen.value
+  }
 
   /*
     <!-- Simple title -->

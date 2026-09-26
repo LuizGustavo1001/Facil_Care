@@ -137,25 +137,29 @@
 
 <script setup>
   import { computed } from "vue"
-  import { sidebar } from "../../locales/projectConfig.js"
-  import { icons } from "../../assets/icons/icons.js"
-  import { useAge } from "../../composables/useAge.js"
+  import { sidebar } from "../locales/projectConfig.js"
+  import { icons } from "../assets/icons/icons.js"
+  import { useAge } from "../composables/useAge.js"
   import { useI18n } from "vue-i18n"
 
-  import ActionButton from "./ActionButton.vue"
-  import Icon from "./Icon.vue"
+  import ActionButton from "./common/ActionButton.vue"
+  import Icon from "./common/Icon.vue"
 
+  // PROPS
   const props = defineProps({
     patientData: Object
   })
 
+  // COMPOSABLES
   const { t, te } = useI18n()
 
+  // COMPUTED PROPERTIES
   const age = computed(() => {
     const { getAge } = useAge()
     return getAge(new Date(props.patientData.birthDate))
   })
 
+  // FUNCTIONS
   const getSidebarItemTitle = (section, item) => {
     const key = `sidebar.sections.${section.id}.items.${item.id}.title`
 

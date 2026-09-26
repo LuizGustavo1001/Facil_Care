@@ -120,9 +120,11 @@
 
   import Icon from "./Icon.vue"
 
+  // STATIC VARIABLES
   const VARIANTS = ["highlight", "subtle", "destructive", "transparent"]
   const DEFAULT_VARIANT = "highlight"
 
+  // PROPS
   const props = defineProps({
     tag: {
       type: String,
@@ -166,6 +168,7 @@
     description: String
   })
 
+  // COMPUTED PROPERTIES
   // avoid invalid variant classes
   const variantClass = computed(() => {
     return VARIANTS.includes(props.variant) ? props.variant : DEFAULT_VARIANT

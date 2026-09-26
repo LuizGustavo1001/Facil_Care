@@ -36,12 +36,12 @@
   import { useNavigation } from "../composables/useNavigation.js"
   import { useWarning } from "../composables/useWarning.js"
 
-  import AppHeader from "../components/common/AppHeader.vue"
+  import AppHeader from "../components/AppHeader.vue"
   import Input from "../components/common/Input.vue"
-  import AppFooter from "../components/common/AppFooter.vue"
+  import AppFooter from "../components/AppFooter.vue"
   import SnackBar from "../components/common/SnackBar.vue"
 
-  // Composables
+  // COMPOSABLES
   const { handleReturn } = useNavigation()
   const { warning, getWarning } = useWarning()
 </script>

@@ -1,7 +1,8 @@
 import BaseController from "./BaseController.js"
+import db from "../database/db.js"
 
 export default class PatientRecordController extends BaseController {
-    constructor(db, Model) {
+    constructor(Model) {
         super()
 
         if(!Model){

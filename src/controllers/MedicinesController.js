@@ -1,8 +1,9 @@
 import BaseController from "./BaseController.js"
 import Medicine from "../models/Medicine.js"
+import db from "../database/db.js"
 
 export default class MedicinesController extends BaseController {
-    constructor(db) {
+    constructor() {
         super()
         this.model = new Medicine(db)
     }
@@ -15,7 +16,6 @@ export default class MedicinesController extends BaseController {
             const medicines = await this.model.getAll()
 
             if(!medicines){
-                this.setMessage("NoMedicinesFound")
                 return {
                     success: false,
                     code: "NoMedicinesFound",

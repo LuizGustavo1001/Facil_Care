@@ -13,15 +13,19 @@
     />
 
     <main>
-      <section>
-        <template v-if="itemId === 'export'">
+      <!-- Export Page -->
+      <template v-if="itemId === 'export'">
+        <section class="export-page">
           <p>QR Code here...</p>
-        </template>
+        </section>
+      </template>
 
-        <template v-else>
+      <!-- Import Page -->
+      <template v-else>
+        <section class="import-page">
           <p>Import options here...</p>
-        </template>
-      </section>
+        </section>
+      </template>
     </main>
 
     <AppFooter page="backup" />
@@ -39,16 +43,17 @@
   import { useUtils } from "../composables/useUtils.js"
   import { useWarning } from "../composables/useWarning.js"
 
-  import AppHeader from "../components/common/AppHeader.vue"
-  import AppFooter from "../components/common/AppFooter.vue"
+  import AppHeader from "../components/AppHeader.vue"
+  import AppFooter from "../components/AppFooter.vue"
   import SnackBar from "../components/common/SnackBar.vue"
 
-  // Composables
+  // COMPOSABLES
   const route = useRoute()
   const { warning } = useWarning()
   const { handleReturn } = useNavigation()
   const { getPageTitle } = useUtils()
 
+  // COMPUTED PROPERTIES
   // Retrieve page data
   const itemId = computed(() => route.params.backupId)
 </script>

@@ -18,10 +18,12 @@
 <script setup>
   import { useI18n } from "vue-i18n"
   import ActionButton from "../components/common/ActionButton.vue"
-  import AppFooter from "../components/common/AppFooter.vue"
+  import AppFooter from "../components/AppFooter.vue"
 
+  // COMPOSABLES
   const { t } = useI18n()
 
+  // FUNCTIONS
   const getFallbackMessage = () => {
     return t(`utils.pageFallback.title`)
   }

@@ -48,18 +48,18 @@
   import { useUtils } from "../composables/useUtils.js"
   import { preferencesView } from "../locales/projectConfig.js"
 
-  import AppHeader from "../components/common/AppHeader.vue"
-  import AppFooter from "../components/common/AppFooter.vue"
+  import AppHeader from "../components/AppHeader.vue"
+  import AppFooter from "../components/AppFooter.vue"
   import SelectInput from "../components/common/SelectInput.vue"
 
-  // Composables
+  // COMPOSABLES
   const { handleReturn } = useNavigation()
   const { initLanguage } = useLanguage()
   const { getPageTitle, PAGES } = useUtils()
   const { initToggleTheme, currentPreference } = useTheme()
   const { t, te, locale } = useI18n()
 
-  // Functions
+  // FUNCTIONS
   const getCurrentEventValue = (item) => {
     if(item.event === "toggle-theme"){
       return currentPreference.value

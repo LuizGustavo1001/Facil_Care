@@ -1,12 +1,9 @@
 /* Operations statements */
-
 import { reactive } from "vue"
 
 /**
  * Base Controller: Controller superclass to:
  * - loading: If operation still running
- * - message: any message from the query
- * - messageType: message type (error, warning or success)
  **/
 export default class BaseController {
     constructor(){

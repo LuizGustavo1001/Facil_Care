@@ -225,7 +225,7 @@ export default {
                 }
             }
         },
-        preferences:{
+        preferences: {
             sections: {
                 general: {
                     title: "Geral",
@@ -340,6 +340,10 @@ export default {
                 }
             }
         }
+    },
+    notifications: {
+        title: "Notificações",
+        markAsRead: "Marque todas como lidas"
     },
     warningMessages: {
         PatientNotFound: {

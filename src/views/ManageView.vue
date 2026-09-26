@@ -61,34 +61,39 @@
   import { computed, onMounted, ref, watch } from "vue"
 
   import { icons } from "../assets/icons/icons.js"
-  import { footers } from "../locales/projectConfig.js"
   import { useNavigation } from "../composables/useNavigation.js"
   import { useUtils } from "../composables/useUtils.js"
   import { useRoute } from "vue-router"
   import { useI18n } from "vue-i18n"
   import { useWarning } from "../composables/useWarning.js"
 
-  import AppHeader from "../components/common/AppHeader.vue"
+  import AppHeader from "../components/AppHeader.vue"
   import ActionButton from "../components/common/ActionButton.vue"
   import AppFallback from "./AppFallback.vue"
-  import AppFooter from "../components/common/AppFooter.vue"
+  import AppFooter from "../components/AppFooter.vue"
   import SnackBar from "../components/common/SnackBar.vue"
 
-  import db from "../database/db.js"
   import PatientController from "../controllers/PatientController.js"
   import MedicinesController from "../controllers/MedicinesController.js"
 
-  // Composables
+  // COMPOSABLES
   const route = useRoute()
   const { t, te } = useI18n()
   const { handleReturn } = useNavigation()
   const { getPageTitle, MANAGE_PAGES } = useUtils()
   const { warning, getWarning } = useWarning()
 
-  // Functions
+  // COMPUTED PROPERTIES
   // Retrieve page data
-  const footerMap = computed(() => new Map(footers.map(item => [item.id, item])))
   const itemId = computed(() => route.params.itemId)
+
+  // CONTROLLERS
+  const patientController = new PatientController()
+  const medicineController = new MedicinesController()
+
+  const patient = ref(null)
+  const medicines = ref([])
+  const formattedData = ref([])
 
   // Verify if selected manage page exists
   const pageExists = computed(() => {
@@ -99,13 +104,7 @@
     return MANAGE_PAGES.includes(rawId)
   })
 
-  const patientController = new PatientController(db)
-  const medicineController = new MedicinesController(db)
-
-  const patient = ref(null)
-  const medicines = ref([])
-  const formattedData = ref([])
-
+  // FUNCTIONS
   const fillSection = () => {
     // Clears old formattedData
     formattedData.value = []
@@ -167,11 +166,13 @@
     return te(`views.${itemId}.sections.registers.title`) ? t(`views.${itemId}.sections.registers.title`) : ""
   }
 
+  // WATCHES
   // If updates -> refill section
   watch([patient, medicines, itemId], () => {
     fillSection()
   }, { deep: true })
 
+  // MOUNTED || UNMOUNTED
   onMounted(async() => {
     const patientResult = await patientController.getPatient()
 

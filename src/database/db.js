@@ -120,6 +120,13 @@ db.on("populate", (transaction) => {
             description: 'Metformina 850mg pendente de administração às 20:00.',
             read: false,
             dateTime: new Date()
+        },
+        {
+            _id: 'notif_6002',
+            title: "Notificação Lida Teste",
+            description: 'Descricação de notificação lida',
+            read: true,
+            dateTime: new Date()
         }
     ])
 })

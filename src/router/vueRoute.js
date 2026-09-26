@@ -83,14 +83,6 @@ const routes = [
         }
     },
     {
-        path: '/notifications',
-        name: 'notifications',
-        component: () => import('/src/views/NotificationsView.vue'),
-        meta: {
-            title: "notifications"
-        }
-    },
-    {
         path: '/erase',
         name: 'erase',
         component: () => import('/src/views/EraseDataView.vue'),

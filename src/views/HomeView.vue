@@ -33,22 +33,6 @@
             :title="$t(`views.home.buttons.${btn.id}.title`)"
             :description="$t(`views.home.buttons.${btn.id}.description`)"
           />
-          <!--
-          <router-link
-              v-for="btn in homeView.buttons"
-              :key="btn.id"
-              :to="btn.route"
-              class="home-card flex justify-between align-center gap-05 active-border"
-              :class="btn.color"
-          >
-            <div class="flex flex-column flex-grow-1" style="gap: var(--spacing-3xs)">
-              <h1 class="truncate-multi">{{ $t(`views.home.buttons.${btn.id}.title`) }}</h1>
-              <p class="truncate-multi muted">{{ $t(`views.home.buttons.${btn.id}.description`) }}</p>
-            </div>
-
-            <Icon :icon="btn.icon" class="muted" size="35px"/>
-          </router-link>
-          -->
         </nav>
       </section>
     </main>
@@ -66,18 +50,16 @@
   import { useSidebar } from "../composables/useSidebar.js"
   import { useWarning } from "../composables/useWarning.js"
 
-  import AppHeader from "../components/common/AppHeader.vue"
-  import Icon from "../components/common/Icon.vue"
-  import AppSidebar from "../components/common/AppSidebar.vue"
-  import AppOverlay from "../components/common/AppOverlay.vue"
-  import AppFooter from "../components/common/AppFooter.vue"
+  import AppHeader from "../components/AppHeader.vue"
+  import AppSidebar from "../components/AppSidebar.vue"
+  import AppOverlay from "../components/AppOverlay.vue"
+  import AppFooter from "../components/AppFooter.vue"
   import SnackBar from "../components/common/SnackBar.vue"
 
   import PatientController from "../controllers/PatientController.js"
-  import db from "../database/db.js"
-  import ActionButtonAlt from "../components/common/ActionButtonAlt.vue";
+  import ActionButtonAlt from "../components/common/ActionButtonAlt.vue"
 
-  // Composables
+  // COMPOSABLES
   const {
     overlayIsActive,
     sidebarIsActive,
@@ -85,11 +67,12 @@
   } = useSidebar()
   const { warning, getWarning } = useWarning()
 
-  // Functions
-  const patientController = new PatientController(db)
+  // CONTROLLERS
+  const patientController = new PatientController()
   const patient = ref({})
 
-  onMounted(async() => {
+  // MOUNTED || UNMOUNTED
+  onMounted(async () => {
     const result = await patientController.getPatient()
 
     // Update frontend patient data
