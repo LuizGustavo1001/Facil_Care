@@ -71,7 +71,7 @@
     font-family: inherit;
     color: inherit;
 
-    background: var(--color-bg-subtle);
+    background: transparent;
     border: none;
     padding: var(--spacing-xs);
     border-radius: var(--radius-md);

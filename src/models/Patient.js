@@ -23,7 +23,7 @@ export default class Patient {
         const dbPatient = await this.getPatient()
 
         if(!dbPatient){
-            throw new Error('PatientNotFound')
+            return []
         }
 
         // update using the original _id (patientId)

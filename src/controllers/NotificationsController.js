@@ -67,4 +67,10 @@ export default class NotificationsController extends BaseController {
             }
         })
     }
+
+    async removeOldNotifications() {
+        return await this.execute(async () => {
+            await this.model.removeOldNotifications()
+        })
+    }
 }

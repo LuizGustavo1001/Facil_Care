@@ -16,7 +16,7 @@ export default class Notification {
         const notification = await this.table.get(id)
 
         if(!notification){
-            throw new Error('Notify not found')
+            return []
         }
 
         await this.table.put({
@@ -31,7 +31,7 @@ export default class Notification {
         const notifications = await this.getAll()
 
         if(!notifications){
-            throw new Error('Notify not found')
+            return []
         }
 
         const updatedNotifications = notifications.map(notification => ({
@@ -40,6 +40,18 @@ export default class Notification {
         }))
 
         await this.table.bulkPut(updatedNotifications)
+
+        return await this.getAll()
+    }
+
+    async removeOldNotifications() {
+        const sevenDaysAgo = new Date()
+
+        // Calculate 7 days ago date
+        sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7)
+
+        // Delete old notifications
+        await this.table.where('dateTime').below(sevenDaysAgo).delete()
 
         return await this.getAll()
     }
