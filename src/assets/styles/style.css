@@ -393,7 +393,7 @@ ul{
     background: var(--color-border-default);
 }
 
-.active-border:active, .active-border:focus-visible{
+.active-border:active, .active-border:focus-within{
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
     outline: none;
 }

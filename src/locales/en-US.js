@@ -370,6 +370,9 @@ export default {
         InvalidDateInterval: {
             title: "Invalid date interval. Minimum date needs to be lower than maximum date"
         },
+        NotificationNotFound: {
+            title: "Selected notification not found"
+        },
         generic: {
             title: "An unexpected error occurred. Try again later"
         }

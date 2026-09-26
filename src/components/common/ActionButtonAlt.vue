@@ -57,9 +57,6 @@
     cursor: pointer;
     transition: 0.2s ease-out;
   }
-  .action-btn-alt:hover{
-    box-shadow: 0 0 5px 5px var(--alpha-black-05);
-  }
   .action-btn-alt .right-icon{
     color: var(--color-text-primary-muted);
   }

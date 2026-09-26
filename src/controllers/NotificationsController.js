@@ -15,7 +15,7 @@ export default class NotificationsController extends BaseController {
             if(!notifications){
                 return {
                     success: false,
-                    code: "NoNotificationsFound",
+                    code: "NotificationNotFound",
                     data: []
                 }
             }

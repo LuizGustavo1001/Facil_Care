@@ -6,7 +6,7 @@ export const currentLanguage = ref("ptBR")
 export function useLanguage() {
     const initLanguage = (nextLanguage = null) => {
 
-        // 1. Language already set
+        // 1. Next language already set
         if(nextLanguage && nextLanguage === currentLanguage.value){
             return
         }

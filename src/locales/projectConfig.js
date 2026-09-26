@@ -389,6 +389,10 @@ export const warningMessages = [
     {
         id: "InvalidDateInterval",
         type: "error"
+    },
+    {
+        id: "NotificationNotFound",
+        type: "warning"
     }
 ]
 

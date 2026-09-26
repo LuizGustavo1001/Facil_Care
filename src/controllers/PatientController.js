@@ -31,7 +31,7 @@ export default class PatientController extends BaseController {
         })
     }
 
-    /*
+    /**
      * Update patient data
      *
      * @param { Object } newData

@@ -4,7 +4,7 @@ const THEMES = ["light", "dark", "highContrast"]
 const THEME_PREFERENCE = [...THEMES, "system"]
 
 const currentTheme = ref("light") // current applied theme
-const currentPreference = ref("system") // user's selection
+const currentPreference = ref("system") // user's preference selection
 
 export function useTheme() {
     /**

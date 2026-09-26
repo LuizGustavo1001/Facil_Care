@@ -63,8 +63,8 @@ export function useUtils() {
     ]
 
     /**
-    *  @param { String } page - From lang or PAGES{}
-    **/
+     *  @param { String } page - From lang or PAGES{}
+     **/
     const getPageTitle = (page) => {
         const key = `pageTitle.${page}`
 

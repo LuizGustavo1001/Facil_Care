@@ -1,5 +1,9 @@
 <template>
-  <div class="overlay fixed"></div>
+  <div
+      v-if="isOverlayActive"
+      class="overlay fixed"
+      :class="isOverlayActive ? 'active' : ''"
+  />
 </template>
 
 <style scoped>
@@ -17,4 +21,8 @@
 }
 </style>
 
-<script setup></script>
+<script setup>
+  import { useOverlay } from "../composables/useOverlay.js"
+
+  const { isOverlayActive } = useOverlay()
+</script>

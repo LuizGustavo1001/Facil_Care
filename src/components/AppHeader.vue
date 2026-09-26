@@ -3,11 +3,21 @@
     <div class="flex align-center gap-05 flex-grow-1">
 
       <template v-if="leftBtnIcon === icons['menu-left']">
-        <IconBtnAlt id="sidebar-toggle-btn" :icon="leftBtnIcon" size="25px" @click.stop="$emit('sidebar-toggle')"/>
+        <IconBtnAlt
+            :ref="toggleBtnRef"
+            id="sidebar-toggle-btn"
+            :icon="leftBtnIcon"
+            size="25px"
+            @click.stop="$emit('sidebar-toggle')"
+        />
       </template>
 
       <template v-else>
-        <IconBtnAlt :icon="leftBtnIcon" size="25px" @click="$emit('return-page')"/>
+        <IconBtnAlt
+            :icon="leftBtnIcon"
+            size="25px"
+            @click="$emit('return-page')"
+        />
       </template>
 
       <p class="title flex-grow-1 truncate-single">
@@ -57,6 +67,7 @@
   import IconBtn from "./common/IconBtn.vue"
   import NotificationsMenu from "./NotificationsMenu.vue"
   import { ref } from "vue"
+  import { useSidebar } from "../composables/useSidebar.js"
 
   // PROPS
   const props = defineProps({
@@ -68,7 +79,8 @@
     hasNotifications: {
       type: Boolean,
       default: true
-    }
+    },
+    toggleBtnRef: Object
   })
 
   // REF PROPERTIES

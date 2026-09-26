@@ -1,30 +1,36 @@
-import { ref, onMounted, onUnmounted } from "vue"
+import { ref } from "vue"
+import { useOverlay } from "./useOverlay.js"
+import { useClickOutside } from "./useClickOutside.js"
 
-const overlayIsActive = ref(false)
-const sidebarIsActive = ref(false)
+export function useSidebar() {
+    const isSidebarActive = ref(false)
+    const sidebarRef = ref(null)
+    const toggleBtnRef = ref(null)
 
-export function useSidebar(){
-    const handleSidebarToggle = () => {
-        sidebarIsActive.value = !sidebarIsActive.value
-        overlayIsActive.value = sidebarIsActive.value
-    }
+    const { showOverlay, hideOverlay } = useOverlay()
 
-    const handleClickOutside = (event) => {
-        const clickedInsideSidebar = event.target.closest('#sidebar')
-
-        // Avoid function when clicking within the sidebar
-        if (sidebarIsActive.value && !clickedInsideSidebar) {
-            handleSidebarToggle()
+    const openSidebar = () => {
+        if(!isSidebarActive.value){
+            isSidebarActive.value = true
+            showOverlay()
         }
     }
 
-    onMounted(() => {
-        window.addEventListener("click", handleClickOutside)
+    const closeSidebar = () => {
+        if(isSidebarActive.value){
+            isSidebarActive.value = false
+            hideOverlay()
+        }
+    }
+
+    const toggleSidebar = () => {
+        isSidebarActive.value ? closeSidebar() : openSidebar()
+    }
+
+    // Handle click outside sidebar
+    useClickOutside(sidebarRef, () => {
+        if(isSidebarActive.value) closeSidebar() // sidebar is active
     })
 
-    onUnmounted(() => {
-        window.removeEventListener("click", handleClickOutside)
-    })
-
-    return{ overlayIsActive, sidebarIsActive, handleSidebarToggle }
+    return { isSidebarActive, sidebarRef, toggleBtnRef, openSidebar, closeSidebar, toggleSidebar }
 }

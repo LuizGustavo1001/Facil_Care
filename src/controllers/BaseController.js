@@ -7,9 +7,6 @@ import { reactive } from "vue"
  **/
 export default class BaseController {
     constructor(){
-        this.state = reactive({
-            loading: false
-        })
     }
 
     /**
@@ -18,14 +15,10 @@ export default class BaseController {
      * @param { Function } operation - operation to be executed by database
      **/
     async execute(operation){
-        this.state.loading = true
-
         try{
             return await operation()
         }catch(error){
             return null
-        }finally{
-            this.state.loading = false
         }
     }
 }

@@ -1,5 +1,4 @@
 /* Superclass of patient records (FollowUps & VitalSigns) */
-
 export class PatientRecord {
     constructor(db, tableName, typeField) {
         this.table = db.table(tableName)

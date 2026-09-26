@@ -12,6 +12,12 @@ export default class Notification {
             .toArray()
     }
 
+    /**
+     * Mark a selected notification as "read"
+     *
+     * @param { String } id
+     * @param { boolean } status
+     **/
     async markAsRead(id, status = true){
         const notification = await this.table.get(id)
 
@@ -27,6 +33,9 @@ export default class Notification {
         return await this.getAll()
     }
 
+    /**
+     * Mark a every notification as "read"
+     **/
     async markAllAsRead(){
         const notifications = await this.getAll()
 
@@ -44,6 +53,9 @@ export default class Notification {
         return await this.getAll()
     }
 
+    /**
+     * Remove notifications sended 7 days ago or before
+     **/
     async removeOldNotifications() {
         const sevenDaysAgo = new Date()
 

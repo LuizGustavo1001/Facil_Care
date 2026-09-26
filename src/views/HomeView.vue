@@ -6,14 +6,18 @@
         :type="warning.type || undefined"
     />
 
-    <AppOverlay :class="{ active: overlayIsActive }" />
+    <AppOverlay />
 
     <AppSidebar
+        ref="sidebarRef"
         :patientData="patient"
-        :class="{ active: sidebarIsActive }"
+        :class="{ active: isSidebarActive }"
     />
 
-    <AppHeader v-if="!patientController.state.loading" @sidebar-toggle="handleSidebarToggle">
+    <AppHeader
+        toggleBtnRef="toggleBtnRef"
+        @sidebar-toggle="toggleSidebar"
+    >
       {{ $t('greetings.hello') }}, <strong>{{ patient.name }}</strong>!
     </AppHeader>
 
@@ -47,24 +51,20 @@
   import { onMounted, ref } from "vue"
 
   import { homeView } from "../locales/projectConfig.js"
-  import { useSidebar } from "../composables/useSidebar.js"
   import { useWarning } from "../composables/useWarning.js"
+  import { useSidebar } from "../composables/useSidebar.js"
 
   import AppHeader from "../components/AppHeader.vue"
   import AppSidebar from "../components/AppSidebar.vue"
   import AppOverlay from "../components/AppOverlay.vue"
   import AppFooter from "../components/AppFooter.vue"
   import SnackBar from "../components/common/SnackBar.vue"
-
-  import PatientController from "../controllers/PatientController.js"
   import ActionButtonAlt from "../components/common/ActionButtonAlt.vue"
 
+  import PatientController from "../controllers/PatientController.js"
+
   // COMPOSABLES
-  const {
-    overlayIsActive,
-    sidebarIsActive,
-    handleSidebarToggle
-  } = useSidebar()
+  const { isSidebarActive, sidebarRef, toggleBtnRef, toggleSidebar } = useSidebar()
   const { warning, getWarning } = useWarning()
 
   // CONTROLLERS
