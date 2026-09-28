@@ -43,7 +43,9 @@ export default {
         terms: "Terms of Service",
         notifications: "Notifications",
         notFound: 'Page not Found',
-        erase: "Erase Data"
+        erase: "Erase Data",
+        import: "Import Data",
+        export: "Export Data"
     },
     utils: {
         deleteAccount: "Erase Data",
@@ -241,10 +243,67 @@ export default {
             }
         },
         import: {
-            subtitle: ""
+            sections: {
+                importing: {
+                    title: "Connecting to Emitter",
+                    actions: [
+                        "Locating emitter device",
+                        "Receiving and applying patient data on database",
+                        "Patient data imported with success",
+                        "Back to home page",
+                        "Try via local file"
+                    ]
+                },
+                localFile: {
+                    title: "Import Data via Local File",
+                    subtitle: "Select a previously exported backup file to retore patient information",
+                    actions: [
+                        "Importing Data",
+                        "Select JSON file"
+                    ]
+                }
+            }
         },
         export: {
-            subtitle: "Scan the QR code bellow to import data from {name}"
+            subtitle: "Select one of the options down bellow to export patient data",
+            sections: {
+                tabSelector: {
+                    qrCode: {
+                        title: "Via QR Code"
+                    },
+                    json: {
+                        title: "Backup File"
+                    }
+                },
+                cardQR: {
+                    title: "Sharing via QR Code (P2P)",
+                    regularSubtitles: [
+                        "Generate a QR Code to transfer patient data directly to another device",
+                    ],
+                    destructiveSubtitles: [
+                        "Obs: You needs a network connection to generate QR Code"
+                    ],
+                    actions: [
+                        "Generate Tranfer QR Code",
+                        "Creating QR Code",
+                        "Awaiting other device read",
+                        "Cancel QR Code",
+                        "Conexão Estabelecida! Enviando dados Connection Established",
+                        "Data Transfer Completed Successfully.",
+                        "New Transfer"
+                    ]
+                },
+                cardJSON:{
+                    title: "Local Backup (.json)",
+                    regularSubtitles: [
+                        "Download a raw copy (file) of the patient data",
+                    ],
+                    actions: [
+                        "Exporting",
+                        "SSON Download JSON File"
+                    ]
+                }
+            }
         },
         userManual: {
 
@@ -372,6 +431,39 @@ export default {
         },
         NotificationNotFound: {
             title: "Selected notification not found"
+        },
+        ExportFailed: {
+            title: "Error trying to export patient data"
+        },
+        ImportFailed: {
+            title: "Error trying to import patient data"
+        },
+        P2PExportFailed: {
+            title: "Error trying export patient data via QR Code"
+        },
+        P2PConnectionInterrupted: {
+            title: "Connection between emitter and receiver interrupted befere conclusion"
+        },
+        P2PImportFailed: {
+            title: "Error trying to import patient data via QR Code"
+        },
+        P2PReceiveFailed: {
+            title: "Error receiving patient data via QR Code"
+        },
+        HostNotFound: {
+            title: "Data emitter not found. Try again later "
+        },
+        OfflineDevice: {
+            title: "Your device is offline. Try again when online"
+        },
+        QRCodeGenFailed: {
+            title: "Error generating QR Code"
+        },
+        JSONImportSuccess: {
+            title: "Data imported with success"
+        },
+        exportJSONSuccess: {
+            title: "Data exported with success"
         },
         generic: {
             title: "An unexpected error occurred. Try again later"

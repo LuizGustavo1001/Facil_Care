@@ -393,6 +393,50 @@ export const warningMessages = [
     {
         id: "NotificationNotFound",
         type: "warning"
+    },
+    {
+        id: "ExportFailed",
+        type: "error"
+    },
+    {
+        id: "ImportFailed",
+        type: "error"
+    },
+    {
+        id: "P2PExportFailed",
+        type: "error"
+    },
+    {
+        id: "P2PConnectionInterrupted",
+        type: "warning"
+    },
+    {
+        id: "P2PImportFailed",
+        type: "error"
+    },
+    {
+        id: "P2PReceiveFailed",
+        type: "error"
+    },
+    {
+        id: "HostNotFound",
+        type: "error"
+    },
+    {
+        id: "OfflineDevice",
+        type: "warning"
+    },
+    {
+        id: "JSONImportSuccess",
+        type: "success"
+    },
+    {
+        id: "exportJSONSuccess",
+        type: "success"
+    },
+    {
+        id: "QRCodeGenFailed",
+        type: "error"
     }
 ]
 

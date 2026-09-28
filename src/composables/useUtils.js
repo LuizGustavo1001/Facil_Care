@@ -29,7 +29,7 @@ export function useUtils() {
         BLOOD_GLUCOSE: "bloodGlucose",
         HEART_RATE: "heartRate",
         NOTIFICATIONS: "notifications",
-        ERASE: "erase"
+        ERASE: "erase",
     }
 
     const MANAGE_PAGES = [

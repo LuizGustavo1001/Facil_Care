@@ -59,11 +59,19 @@ const routes = [
       }
     },
     {
-        path: '/backup/:backupId',
-        name: 'backup',
-        component: () => import('/src/views/BackupView.vue'),
+        path: "/backup/import",
+        name: 'import-data',
+        component: () => import('/src/views/ImportView.vue'),
         meta: {
-            title: "backup"
+            title: "import"
+        }
+    },
+    {
+        path: "/backup/export",
+        name: 'export-data',
+        component: () => import('/src/views/ExportView.vue'),
+        meta: {
+            title: "export"
         }
     },
     {

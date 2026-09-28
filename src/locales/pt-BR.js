@@ -43,7 +43,9 @@ export default {
         terms: "Termos de Usuário",
         notifications: "Notificações",
         notFound: 'Página não encontrada',
-        erase: "Apagar Dados"
+        erase: "Apagar Dados",
+        import: "Importar Dados",
+        export: "Exportar Dados"
     },
     utils: {
         deleteAccount: "Apagar Dados",
@@ -241,10 +243,67 @@ export default {
             }
         },
         import: {
-            subtitle: ""
+            sections: {
+                importing: {
+                    title: "Conectando ao Emissor",
+                    actions: [
+                        "Localizando dispositivo emissor",
+                        "Recebendo e aplicando os dados no banco de dados local",
+                        "Dados do paciente restaurados com sucesso",
+                        "Voltar à página inicial",
+                        "Tentar via arquivo local"
+                    ]
+                },
+                localFile: {
+                    title: "Importar Dados via Arquivo Local",
+                    subtitle: "Selecione um arquivo de backup previamente exportado para restaurar as informações do paciente",
+                    actions: [
+                        "Restaurando Dados",
+                        "Selecionar Arquivo JSON"
+                    ]
+                }
+            }
         },
         export: {
-            subtitle: "Escaneie o código QR abaixo para importar dados de {name}"
+            subtitle: "Selecione uma das opções abaixo para exportar dados do paciente",
+            sections: {
+                tabSelector: {
+                    qrCode: {
+                        title: "Via QR Code"
+                    },
+                    json: {
+                        title: "Arquivo de Backup"
+                    }
+                },
+                cardQR: {
+                    title: "Compartilhamento via QR Code (P2P)",
+                    regularSubtitles: [
+                        "Gere um QR Code para transferir os dados do paciente diretamente para outro dispositivo",
+                    ],
+                    destructiveSubtitles: [
+                        "Observação: É necessário conexão com a internet para gerar o QR Code"
+                    ],
+                    actions: [
+                        "Gerar QR Code de Transferência",
+                        "Criando QR Code",
+                        "Aguardando leitura de outro dispositivo",
+                        "Cancelar QR Code",
+                        "Conexão Estabelecida! Enviando dados",
+                        "Transferência dos dados concluída com sucesso",
+                        "Nova Tranferência"
+                    ]
+                },
+                cardJSON:{
+                    title: "Backup Local (.json)",
+                    regularSubtitles: [
+                        "Baixe uma cópia bruta (arquivo) dos dados do paciente",
+                    ],
+                    actions: [
+                        "Exportando",
+                        "Baixar Arquivo JSON"
+                    ]
+                }
+            }
         },
         userManual: {
 
@@ -372,6 +431,39 @@ export default {
         },
         NotificationNotFound: {
             title: "Notificação selecionado não encontrada"
+        },
+        ExportFailed: {
+            title: "Erro ao tentar exportar dados do paciente"
+        },
+        ImportFailed: {
+            title: "Erro ao tentar importar dados do paciente"
+        },
+        P2PExportFailed: {
+            title: "Erro ao exportar dados do paciente via QR Code"
+        },
+        P2PConnectionInterrupted: {
+            title: "A conexão foi interrompida antes da conclusão"
+        },
+        P2PImportFailed: {
+            title: "Erro ao importar dados do paciente via QR Code"
+        },
+        P2PReceiveFailed: {
+            title: "Erro ao receber dados do paciente via QR Code"
+        },
+        HostNotFound: {
+            title: "Emissor de dados não encontrado. Tente novamente mais tarde"
+        },
+        OfflineDevice: {
+            title: "Seu dispositivo está não está conectado à uma rede. Tente novamente quando estiver online"
+        },
+        QRCodeGenFailed: {
+            title: "Erro ao gerar o QR Code"
+        },
+        JSONImportSuccess: {
+            title: "Dados importados com sucesso"
+        },
+        exportJSONSuccess: {
+            title: "Dados exportados com sucesso"
         },
         generic: {
             title: "Um erro inesperado aconteceu. Tente novamente mais tarde"

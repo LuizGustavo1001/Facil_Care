@@ -81,7 +81,7 @@
       type: Boolean,
       default: true
     },
-    toggleBtnRef: Object
+    toggleBtnRef: String
   })
 
   // REF PROPERTIES

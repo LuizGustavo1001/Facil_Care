@@ -20,7 +20,7 @@ export function useWarning() {
         const translationKey = `warningMessages.${code}.title`
 
         warning.message = te(translationKey) ? t(translationKey) : t(`warningMessages.generic.title`)
-        warning.type = warningConfig.type ?? ""
+        warning.type = warningConfig ? warningConfig?.type : ""
     }
 
     const clearWarning = () => {
