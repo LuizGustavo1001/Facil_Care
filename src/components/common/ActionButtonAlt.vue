@@ -44,19 +44,17 @@
 
 <style scoped>
   .action-btn-alt{
-    border: 1px solid transparent;
-
-    padding:  var(--spacing-2xs) var(--spacing-xs) var(--spacing-2xs) var(--spacing-2xs);
+    padding: var(--spacing-2xs) var(--spacing-xs) var(--spacing-2xs) var(--spacing-2xs);
     border-radius: var(--radius-lg);
 
+    border: 2px solid transparent;
     background: var(--color-bg-subtle);
 
     text-align: start;
-
-    font-family: inherit;
     cursor: pointer;
     transition: 0.2s ease-out;
   }
+
   .action-btn-alt .right-icon{
     color: var(--color-text-primary-muted);
   }

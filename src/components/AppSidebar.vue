@@ -6,7 +6,7 @@
           size="35px"
       />
 
-      <h1 class="flex-grow-1 truncate-single">Facil Care</h1>
+      <h1 class="flex-grow-1 truncate-single">FacilCare</h1>
     </div>
 
     <div class="horizontal-line"></div>
@@ -22,12 +22,12 @@
             class="sidebar-list-item flex flex-column gap-05"
         >
           <h2 class="text-muted">{{ $t(`sidebar.sections.${sec.id}.title`) }}</h2>
-          <nav>
+          <nav class="flex flex-column gap-05">
             <router-link
                 v-for="item in sec.items"
                 :to="item.route"
                 :key="item.id"
-                class="sidebar-item flex align-center gap-05"
+                class="sidebar-item flex align-center gap-05 active-border"
             >
               <Icon
                   v-if="item.icon"
@@ -58,7 +58,7 @@
         v-if="patientData"
         class="patient-info flex gap-05 align-center"
     >
-      <Icon :icon="icons['user-smile-fill']" size="30px"></Icon>
+      <Icon :icon="icons['user-smile-fill']" size="30px" padding="2xs"></Icon>
 
       <div class="flex flex-column">
         <h1>{{ patientData.name }}</h1>
@@ -71,7 +71,7 @@
 <style scoped>
   #sidebar{
     z-index: 10;
-    background: var(--color-bg-subtle);
+    background: var(--color-bg-primary);
 
     padding: var(--spacing-md);
     margin-inline: 0.5em;
@@ -89,10 +89,6 @@
   }
   #sidebar.active{
     transform: translateX(0);
-  }
-
-  body.dark #sidebar{
-    background: var(--color-bg-primary);
   }
 
   .brand-info h1{
@@ -123,10 +119,16 @@
   }
 
   .patient-info{
-    padding: var(--spacing-sm);
-    border: 2px solid var(--color-border-default);
-    border-radius: var(--radius-md);
+    padding: var(--spacing-xs);
+    border-radius: var(--radius-2xl);
+    background: var(--color-bg-subtle);
   }
+
+  .patient-info .icon{
+    background: var(--color-bg-primary);
+    border-radius: var(--radius-full);
+  }
+
   .patient-info h1{
     font-size: var(--text-body-lg);
   }

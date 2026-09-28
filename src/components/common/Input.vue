@@ -1,5 +1,5 @@
 <template>
-  <div class="input-wrapper flex flex-column" style="gap: var(--spacing-3xs)">
+  <div class="input-wrapper flex flex-column gap-05">
     <label
         v-if="label"
         :for="computedId"

@@ -119,7 +119,7 @@ const router = createRouter({
 // update document title
 router.afterEach((to) => {
     const title = to.meta.title
-    document.title = `${i18n.global.t(`meta.${title}`)} | Facil Care`
+    document.title = `${i18n.global.t(`meta.${title}`)} | FacilCare`
 })
 
 export default router

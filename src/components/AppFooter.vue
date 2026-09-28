@@ -26,7 +26,7 @@
 
     padding: var(--spacing-sm);
     background: var(--color-bg-primary);
-    box-shadow: 0 0 7px 5px var(--alpha-black-05);
+    box-shadow: 0 0 3px 3px var(--color-shadow-subtle);
 
     border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
   }

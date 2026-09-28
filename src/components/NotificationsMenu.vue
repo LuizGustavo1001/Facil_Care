@@ -45,9 +45,9 @@
     max-width: 80dvw;
     max-height: 420px;
 
-    background: var(--color-bg-primary);
+    background: var(--color-bg-subtle);
     border-radius: var(--radius-md);
-    box-shadow: 0 0 10px 5px var(--color-shadow-subtle);
+    box-shadow: 0 0 4px 2px var(--color-shadow-subtle);
 
     padding: var(--spacing-md);
     z-index: 10;
@@ -80,7 +80,7 @@
     transition: 0.2s ease-out;
   }
   .notification:hover{
-    background: var(--color-bg-hover);
+    background: var(--color-bg-primary);
   }
 
   .notification .title{
@@ -111,7 +111,6 @@
     cursor: pointer;
 
     max-width: 100px;
-    font-family: inherit;
     color: inherit;
   }
 </style>

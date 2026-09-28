@@ -6,7 +6,7 @@
       :href="!isButton ? (to || undefined) : undefined"
       :target="!isButton ? target : undefined"
       :rel="!isButton && target === '_blank' ? 'noopener noreferrer' : undefined"
-      class="icon-btn"
+      class="icon-btn active-border"
       :class="variantClass"
       :style="paddingStyle"
   >

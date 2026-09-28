@@ -132,6 +132,7 @@
     /* Border Color */
     --color-border-default: var(--gray-300);
     --color-border-brand: var(--blue-500);
+    --color-border-brand-alt: var(--blue-400);
 
     /* Font Size */
     --text-caption: var(--font-size-100);
@@ -187,6 +188,7 @@ body.dark {
     /* Border Color */
     --color-border-default: var(--gray-700);
     --color-border-brand: var(--blue-500);
+    --color-border-brand-alt: var(--blue-400);
 
     /* Shadow */
     --color-shadow-subtle: var(--alpha-black-20);
@@ -254,6 +256,10 @@ main{
 
 ul{
     list-style: none;
+}
+
+button, input, select, textarea{
+    font-family: inherit;
 }
 
 .app-container{
@@ -377,8 +383,6 @@ ul{
 
     background: transparent;
 
-    font-family: inherit;
-
     transition: all 0.2s ease;
 }
 .default-input-attr:focus{
@@ -393,9 +397,12 @@ ul{
     background: var(--color-border-default);
 }
 
+.active-border{
+    outline-offset: 4px;
+    outline: transparent solid 3px;
+}
 .active-border:active, .active-border:focus-within{
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
-    outline: none;
+    outline-color: var(--color-border-brand-alt);
 }
 
 .view{

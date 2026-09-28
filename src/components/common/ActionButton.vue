@@ -48,8 +48,6 @@
     border-radius: var(--radius-md);
     border: none;
 
-    font-family: inherit;
-
     cursor: pointer;
     transition: 0.2s ease-out;
   }

@@ -3,19 +3,20 @@
     <div class="flex align-center gap-05 flex-grow-1">
 
       <template v-if="leftBtnIcon === icons['menu-left']">
-        <IconBtnAlt
+        <IconBtn
             :ref="toggleBtnRef"
-            id="sidebar-toggle-btn"
             :icon="leftBtnIcon"
             size="25px"
+            variant="subtle"
             @click.stop="$emit('sidebar-toggle')"
         />
       </template>
 
       <template v-else>
-        <IconBtnAlt
+        <IconBtn
             :icon="leftBtnIcon"
             size="25px"
+            variant="subtle"
             @click="$emit('return-page')"
         />
       </template>
@@ -50,7 +51,7 @@
     background: var(--color-bg-primary);
 
     border-radius: 0 0 var(--radius-xl) var(--radius-xl);
-    box-shadow: 0 0 7px 5px var(--color-shadow-subtle);
+    box-shadow: 0 0 3px 3px var(--color-shadow-subtle);
 
     z-index: 1;
   }

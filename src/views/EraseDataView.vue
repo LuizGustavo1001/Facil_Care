@@ -5,6 +5,12 @@
         :leftBtnIcon="icons['chevron-left']"
         @return-page="handleReturn"
     />
+
+    <main>
+      <section></section>
+    </main>
+
+    <AppFooter page="eraseData" />
   </div>
 </template>
 
@@ -16,6 +22,7 @@
   import { useUtils } from "../composables/useUtils.js"
 
   import AppHeader from "../components/AppHeader.vue"
+  import AppFooter from "../components/AppFooter.vue"
 
   // COMPOSABLES
   const { handleReturn } = useNavigation()
