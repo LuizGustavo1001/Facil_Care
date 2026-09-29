@@ -68,7 +68,7 @@ export function useUtils() {
     const getPageTitle = (page) => {
         const key = `pageTitle.${page}`
 
-        return te(key) ? t(key) : ""
+        return te(key) ? t(key) : false
     }
 
     const pageExists = (page) => {

@@ -1,11 +1,12 @@
 <template>
-  <div class="view">
+  <div class="view regular">
     <template v-if="pageExists(currentType)">
 
       <SnackBar
-          v-if="warning.message !== ''"
+          v-if="isWarningActive"
           :message="warning.message"
           :type="warning.type || undefined"
+          @click="clearWarning"
       />
 
       <AppHeader
@@ -14,11 +15,11 @@
           @return-page="handleReturn"
       />
 
-      <main>
-        <section>
+      <main class="main regular gap-2">
+        <section class="main-section regular gap-1">
           <ul
               v-if="formattedData.length > 0"
-              class="list flex flex-column gap-1 overflow-hidden"
+              class="list overflow-hidden"
           >
             <li
                 v-for="item in formattedData"
@@ -32,15 +33,11 @@
                   variant="subtle"
                   padding="lg"
                   class="width-full"
-                  style="border-radius: var(--radius-sm)"
               />
             </li>
           </ul>
 
-          <div v-else>
-            <p>{{ $t(`warningMessages.NoMonitoring.title`) }}...</p>
-          </div>
-
+          <NotFoundCard v-else class="main-section center"/>
         </section>
       </main>
 
@@ -76,11 +73,12 @@
 
   import VitalSignsController from "../controllers/VitalSignsController.js"
   import FollowUpsController from "../controllers/FollowUpsController.js"
-  import {useWarning} from "../composables/useWarning.js";
+  import { useWarning } from "../composables/useWarning.js"
+  import NotFoundCard from "../components/common/NotFoundCard.vue";
 
   // COMPOSABLES
   const route = useRoute()
-  const { getWarning, warning } = useWarning()
+  const { getWarning, warning, isWarningActive, clearWarning } = useWarning()
   const { handleReturn } = useNavigation()
   const { getFormattedDate } = useAge()
   const { getPageTitle, PAGES, MONITORING_VITAL_SIGNS_PAGES, MONITORING_FOLLOW_UPS_PAGES } = useUtils()
@@ -130,9 +128,9 @@
         break
     }
 
-    if(result.success){
+    if (result.success) {
       monitoringData.value = result.data
-    }else{
+    } else {
       getWarning(result.code)
     }
 

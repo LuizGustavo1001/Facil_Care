@@ -1,13 +1,13 @@
 <template>
-  <div class="view">
+  <div class="view regular">
     <AppHeader
         :title="getPageTitle(PAGES['USER_MANUAL'])"
         :leftBtnIcon="icons['chevron-left']"
         @return-page="handleReturn"
     />
 
-    <main>
-      <section></section>
+    <main class="main regular gap-1">
+      <section class="main-section regular gap-05"></section>
     </main>
 
     <AppFooter page="manual" />

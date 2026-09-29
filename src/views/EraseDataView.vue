@@ -1,13 +1,14 @@
 <template>
-  <div class="view">
+  <div class="view regular">
     <AppHeader
         :title="getPageTitle(PAGES['ERASE'])"
         :leftBtnIcon="icons['chevron-left']"
         @return-page="handleReturn"
     />
 
-    <main>
-      <section></section>
+    <main class="main regular">
+      <section class="main-section center">
+      </section>
     </main>
 
     <AppFooter page="eraseData" />

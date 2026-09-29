@@ -1,9 +1,10 @@
 <template>
-  <div class="view">
+  <div class="view regular">
     <SnackBar
-        v-if="warning.message !== ''"
+        v-if="isWarningActive"
         :message="warning.message"
         :type="warning.type || undefined"
+        @click="clearWarning"
     />
 
     <AppHeader
@@ -12,8 +13,8 @@
         @return-page="handleReturn"
     />
 
-    <main>
-      <section class="import-container">
+    <main class="main regular">
+      <section class="import-container main-section center">
         <!-- Import via P2P -->
         <div v-if="route.query.peerId" class="card">
           <h2>{{ $t(`views.import.sections.importing.title`) }}...</h2>
@@ -56,32 +57,47 @@
         </div>
 
         <!-- Import via JSON local file -->
-        <div v-else class="card">
-          <div class="title flex flex-column gap-05">
-            <h2>{{ $t(`views.import.sections.localFile.title`) }}</h2>
-            <p>{{ $t(`views.import.sections.localFile.subtitle`) }}</p>
-          </div>
+        <div v-else class="card justify-center">
+          <template v-if="importDone">
+            <div class="success-import flex flex-column align-center gap-1">
+              <Icon :icon="icons['check-circle-line']" size="50px" padding="sm"/>
+              <p>Dados do paciente importados com sucesso!</p>
+              <ActionButton
+                tag="router"
+                to="/"
+                title="Voltar à página inicial"
+                padding="md"
+              />
+            </div>
+          </template>
 
-          <input
-              ref="fileInput"
-              type="file"
-              accept=".json,application/json"
-              style="display: none"
-              @change="handleFileSelect"
-          />
+          <template v-else>
+            <div class="title flex flex-column gap-05">
+              <h2>{{ $t(`views.import.sections.localFile.title`) }}</h2>
+              <p>{{ $t(`views.import.sections.localFile.subtitle`) }}</p>
+            </div>
 
-          <ActionButton
-            tag="button"
-            :title="isImporting
+            <input
+                ref="fileInput"
+                type="file"
+                accept=".json,application/json"
+                style="display: none"
+                @change="handleFileSelect"
+            />
+
+            <ActionButton
+                tag="button"
+                :title="isImporting
               ? $t(`views.import.sections.localFile.actions[0]`)
               : $t(`views.import.sections.localFile.actions[1]`)"
-            :leftIcon="isImporting ? '' : icons['click-line']"
-            :aria-disabled="isImporting"
-            padding="md"
-            @click="triggerFileInput"
-          />
+                :leftIcon="isImporting ? '' : icons['click-line']"
+                :aria-disabled="isImporting"
+                padding="md"
+                @click="triggerFileInput"
+            />
 
-          <p v-if="backupError" class="error-message"> {{ backupError }} </p>
+            <p v-if="backupError" class="error-message"> {{ backupError }} </p>
+          </template>
         </div>
       </section>
     </main>
@@ -108,6 +124,15 @@
     align-items: center;
     gap: 0.5em;
   }
+
+  .success-import p {
+    font-size: var(--text-heading-md);
+    font-weight: var(--bold-weight);
+  }
+  .success-import .icon-wrapper{
+    background: var(--green-400);
+    border-radius: var(--radius-xl);
+  }
 </style>
 
 <script setup>
@@ -131,12 +156,13 @@
   const route = useRoute()
   const { getPageTitle, PAGES } = useUtils()
   const { handleReturn } = useNavigation()
-  const { warning, getWarning } = useWarning()
+  const { warning, getWarning, isWarningActive, clearWarning } = useWarning()
   const { isImporting, backupError, importFromJSON } = useDexieBackup()
   const { peerStatus, peerError, connectToHostAndImport } = usePeerSync()
 
   // VARIABLES
   const fileInput = ref(null)
+  const importDone = ref(false)
 
   // FUNCTIONS
   /**
@@ -147,7 +173,7 @@
 
     if(!file) return
 
-    await importFromJSON(file)
+    importDone.value = await importFromJSON(file)
     getWarning('JSONImportSuccess')
   }
 

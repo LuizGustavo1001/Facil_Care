@@ -1,16 +1,16 @@
 <template>
-  <div class="view">
+  <div class="view regular">
     <AppHeader
         :title="getPageTitle(PAGES['PREFERENCES'])"
         :leftBtnIcon="icons['chevron-left']"
         @return-page="handleReturn"
     />
 
-    <main>
+    <main class="main regular gap-2">
       <section
           v-for="section in preferencesView.sections"
           :key="section.id"
-          class="flex flex-column gap-1"
+          class="main-section regular gap-15"
       >
         <h2 class="section-title text-muted">{{ getSectionTitle(section) }}</h2>
 

@@ -1,9 +1,10 @@
 <template>
-  <div class="view">
+  <div class="view regular">
     <SnackBar
-        v-if="warning.message !== ''"
+        v-if="isWarningActive"
         :message="warning.message"
         :type="warning.type || undefined"
+        @click="clearWarning"
     />
 
     <AppHeader
@@ -12,45 +13,45 @@
         @return-page="handleReturn"
     />
 
-    <main class="flex flex-column flex-grow-1">
-      <section class="export-container flex flex-column align-center gap-1 flex-grow-1">
-        <p class="text-muted">{{ $t(`views.export.subtitle`) }}: </p>
-
-        <nav class="tab-selector align-center">
-          <ActionButtonAlt
-            :class="{ active: activeTab === 'qr' }"
-            tag="button"
-            :leftIcon="icons['qr-code-line']"
-            color="blue"
-            :title="$t(`views.export.sections.tabSelector.qrCode.title`)"
-            @click="activeTab = 'qr'"
-          />
-
-          <ActionButtonAlt
-            :class="{ active: activeTab === 'json' }"
-            tag="button"
-            :leftIcon="icons['file-line']"
-            color="yellow"
-            :title="$t(`views.export.sections.tabSelector.json.title`)"
-            @click="activeTab = 'json'"
-          />
-        </nav>
-
+    <main class="main regular">
+      <section class="export-container main-section center">
         <!-- 1. QR Code (P2P) -->
         <div v-if="activeTab === 'qr'" class="card">
           <div class="title flex flex-column gap-05">
             <h2>{{ $t(`views.export.sections.cardQR.title`) }}</h2>
 
             <span class="description flex flex-column">
-              <span v-for="(desc, index) in $tm('views.export.sections.cardQR.regularSubtitles')" :key="index" class="text-muted">
-                {{ desc }}.
-              </span>
-
-              <span v-for="(desc, index) in $tm('views.export.sections.cardQR.destructiveSubtitles')" :key="index" class="text-destructive">
-                {{ desc }}.
-              </span>
+            <span v-for="(desc, index) in $tm('views.export.sections.cardQR.regularSubtitles')" :key="index"
+                  class="text-muted">
+              {{ desc }}.
             </span>
+
+            <span v-for="(desc, index) in $tm('views.export.sections.cardQR.destructiveSubtitles')" :key="index"
+                  class="text-destructive">
+              {{ desc }}.
+            </span>
+          </span>
           </div>
+
+          <nav class="tab-selector align-center">
+            <ActionButtonAlt
+                :class="{ active: activeTab === 'qr' }"
+                tag="button"
+                :leftIcon="icons['qr-code-line']"
+                color="blue"
+                :title="$t(`views.export.sections.tabSelector.qrCode.title`)"
+                @click="activeTab = 'qr'"
+            />
+
+            <ActionButtonAlt
+                :class="{ active: activeTab === 'json' }"
+                tag="button"
+                :leftIcon="icons['file-line']"
+                color="yellow"
+                :title="$t(`views.export.sections.tabSelector.json.title`)"
+                @click="activeTab = 'json'"
+            />
+          </nav>
 
           <!-- Generate Button/Restart -->
           <div v-if="peerStatus === 'idle'" class="actions">
@@ -65,7 +66,8 @@
 
           <div class="flex-grow-1">
             <!-- Status: Waiting Conection -->
-            <div v-if="peerStatus === 'waiting' || isGenerating" class="qr-wrapper flex flex-column gap-1 align-center">
+            <div v-if="peerStatus === 'waiting' || isGenerating"
+                 class="qr-wrapper flex flex-column gap-1 align-center">
               <div v-if="isGenerating" class="loading"> {{ $t('views.export.sections.cardQR.actions[1]') }}...</div>
               <template v-else-if="qrDataURL">
                 <img :src="qrDataURL" alt="QR Code" class="qr-image">
@@ -113,17 +115,18 @@
             <h2>{{ $t(`views.export.sections.cardJSON.title`) }}</h2>
 
             <span class="title-description">
-              <span v-for="(desc, index) in $tm('views.export.sections.cardJSON.regularSubtitles')" :key="index" class="text-muted">
-                {{ desc }}.
-              </span>
+            <span v-for="(desc, index) in $tm('views.export.sections.cardJSON.regularSubtitles')" :key="index"
+                  class="text-muted">
+              {{ desc }}.
             </span>
+          </span>
           </div>
 
           <ActionButton
               tag="button"
               :title="isExporting
-                ? $t('views.export.sections.cardJSON.actions[0]')
-                : $t('views.export.sections.cardJSON.actions[1]')"
+              ? $t('views.export.sections.cardJSON.actions[0]')
+              : $t('views.export.sections.cardJSON.actions[1]')"
               :leftIcon="isExporting ? '' : icons['download']"
               padding="md"
               :aria-disabled="isExporting"
@@ -159,7 +162,6 @@
     flex-direction: column;
     align-items: center;
     gap: 1em;
-    flex-grow: 1;
   }
 
   .status-wrapper{
@@ -202,7 +204,7 @@
   // COMPOSABLES
   const { getPageTitle, PAGES } = useUtils()
   const { handleReturn } = useNavigation()
-  const { warning, getWarning } = useWarning()
+  const { getWarning, warning, clearWarning, isWarningActive } = useWarning()
   const { isExporting, backupError, exportToJSON } = useDexieBackup()
   const { isGenerating, qrDataURL, qrCodeError, generateQRCode, clearQRCode } = useQRCode()
   const { peerStatus, peerError, startHostSession, closeSession } = usePeerSync()

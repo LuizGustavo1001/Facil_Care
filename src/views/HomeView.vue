@@ -1,9 +1,10 @@
 <template>
-  <div class="view">
+  <div class="view regular">
     <SnackBar
-        v-if="warning.message !== ''"
+        v-if="isWarningActive"
         :message="warning.message"
         :type="warning.type || undefined"
+        @click="clearWarning"
     />
 
     <AppOverlay />
@@ -21,8 +22,8 @@
       {{ $t('greetings.hello') }}, <strong>{{ patient.name }}</strong>!
     </AppHeader>
 
-    <main class="flex flex-column gap-15 relative flex-grow-1">
-      <section class="flex flex-column gap-1">
+    <main class="main regular gap-1">
+      <section class="main-section regular gap-15">
         <p class="text-muted">{{ $t("views.home.subtitle") }}:</p>
 
         <nav class="home-nav flex flex-column gap-1">
@@ -65,7 +66,7 @@
 
   // COMPOSABLES
   const { isSidebarActive, sidebarRef, toggleBtnRef, toggleSidebar } = useSidebar()
-  const { warning, getWarning } = useWarning()
+  const { warning, getWarning, isWarningActive, clearWarning } = useWarning()
 
   // CONTROLLERS
   const patientController = new PatientController()

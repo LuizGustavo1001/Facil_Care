@@ -7,7 +7,7 @@
       :target="!isButton ? target : undefined"
       :rel="!isButton && target === '_blank' ? 'noopener noreferrer' : undefined"
       class="action-btn-alt flex justify-between gap-1 active-border"
-      :class="colorVariant"
+      :class="[colorVariant, variantClass]"
   >
     <span class="flex gap-05 align-center">
         <span v-if="leftIcon" class="left-icon-wrapper">
@@ -44,11 +44,10 @@
 
 <style scoped>
   .action-btn-alt{
-    padding: var(--spacing-2xs) var(--spacing-xs) var(--spacing-2xs) var(--spacing-2xs);
-    border-radius: var(--radius-lg);
+    padding: var(--spacing-2xs) var(--spacing-sm) var(--spacing-2xs) var(--spacing-2xs);
+    border-radius: var(--radius-2xl);
 
     border: 2px solid transparent;
-    background: var(--color-bg-subtle);
 
     text-align: start;
     cursor: pointer;
@@ -61,7 +60,7 @@
 
   .action-btn-alt .left-icon-wrapper{
     padding: 1.25rem 0.75rem;
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-2xl);
 
     display: inline-flex;
     align-items: center;
@@ -77,6 +76,16 @@
   .btn-content .btn-content-description{
     font-size: var(--text-body-lg);
     font-weight: var(--bold-weight);
+  }
+
+  /* VARIANTS */
+  /* 1. Subtle */
+  .action-btn-alt.subtle{
+    background: var(--color-bg-subtle);
+  }
+  /* 2. Primary */
+  .action-btn-alt.primary{
+    background: var(--color-bg-primary);
   }
 
   /* COLOR VARIANTS */
@@ -143,6 +152,8 @@
   import Icon from "./Icon.vue"
 
   // STATIC VARIABLES
+  const VARIANTS = ["subtle", "primary"]
+  const DEFAULT_VARIANT = "subtle"
   const COLORS_LIST = ["blue", "orange", "red", "green", "purple", "yellow"]
   const DEFAULT_COLOR = "blue"
 
@@ -176,6 +187,11 @@
       type: String,
       default: 'external'
     },
+    variant: {
+      type: String,
+      default: "subtle",
+      validator: (value) => ["subtle", "primary"].includes(value)
+    },
     color: {
       type: String,
       default: 'blue',
@@ -186,6 +202,11 @@
   })
 
   // COMPUTED PROPERTIES
+  // avoid invalid variant classes
+  const variantClass = computed(() => {
+    return VARIANTS.includes(props.variant) ? props.variant : DEFAULT_VARIANT
+  })
+
   const isButton = computed(() => props.tag === 'button')
 
   const isRouterLink = computed(() => props.tag === "router")

@@ -1,5 +1,5 @@
 <template>
-  <div class="view">
+  <div class="view regular">
     <template v-if="pageExists">
       <AppHeader
           :title="getPageTitle(itemType)"
@@ -7,8 +7,8 @@
           @return-page="handleReturn"
       />
 
-      <main>
-        <section class="flex flex-column gap-1">
+      <main class="main regular">
+        <section class="main-section regular gap-15">
           <p class="text-muted">{{ t(`views.${itemType}.subtitle`) }}:</p>
 
           <ul class="flex flex-column gap-1">

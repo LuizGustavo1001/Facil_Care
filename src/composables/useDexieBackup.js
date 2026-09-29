@@ -47,7 +47,7 @@ export function useDexieBackup() {
      * @param { File } file Import data
      **/
     const importFromJSON = async (file) => {
-        if(!file) return
+        if(!file) return false
 
         isImporting.value = true
         backupError.value = null
@@ -62,6 +62,8 @@ export function useDexieBackup() {
         }finally{
             isImporting.value = false
         }
+
+        return true
     }
 
     return { isExporting, isImporting, backupError, exportToJSON, importFromJSON }

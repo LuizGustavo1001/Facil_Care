@@ -1,11 +1,15 @@
 <template>
-  <div class="view">
+  <div class="view regular">
     <AppHeader
         :title="getPageTitle(PAGES['TERMS'])"
         :leftBtnIcon="icons['chevron-left']"
         @return-page="handleReturn"
     />
   </div>
+
+  <main class="main regular gap-1">
+    <section class="main-section regular gap-1"></section>
+  </main>
 
   <AppFooter page="terms" />
 </template>

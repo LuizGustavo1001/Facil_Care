@@ -45,15 +45,11 @@
   .action-btn{
     text-align: start;
 
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-2xl);
     border: none;
 
     cursor: pointer;
     transition: 0.2s ease-out;
-  }
-
-  .action-btn:active{
-    transform: scale(0.98);
   }
 
   .btn-content .btn-content-title{
@@ -110,6 +106,15 @@
   .action-btn.highlight .btn-content-description{
     color: var(--color-text-inverse-muted);
   }
+
+  /* 5. Primary */
+  .action-btn.primary{
+    background: var(--color-bg-primary);
+    color: inherit;
+  }
+  .action-btn.primary:hover{
+    background: var(--color-bg-hover);
+  }
 </style>
 
 <script setup>
@@ -119,7 +124,7 @@
   import Icon from "./Icon.vue"
 
   // STATIC VARIABLES
-  const VARIANTS = ["highlight", "subtle", "destructive", "transparent"]
+  const VARIANTS = ["highlight", "subtle", "destructive", "transparent", "primary"]
   const DEFAULT_VARIANT = "highlight"
 
   // PROPS
@@ -160,7 +165,7 @@
     variant: {
       type: String,
       default: "highlight",
-      validator: (value) => ["highlight", "subtle", "destructive", "transparent"].includes(value)
+      validator: (value) => ["highlight", "subtle", "destructive", "transparent", "primary"].includes(value)
     },
     title: String,
     description: String

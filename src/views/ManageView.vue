@@ -1,10 +1,11 @@
 <template>
-  <div class="view">
+  <div class="view regular">
     <template v-if="pageExists">
       <SnackBar
-          v-if="warning.message !== ''"
+          v-if="isWarningActive"
           :message="warning.message"
           :type="warning.type || undefined"
+          @click="clearWarning"
       />
 
       <AppHeader
@@ -13,8 +14,8 @@
           @return-page="handleReturn"
       />
 
-      <main>
-        <section class="flex flex-column gap-1">
+      <main class="main regular gap-2">
+        <section class="main-section regular gap-1">
           <h2 class="section-title text-muted">{{ getSectionTitle(itemId) }}</h2>
 
           <ul
@@ -81,7 +82,7 @@
   const { t, te } = useI18n()
   const { handleReturn } = useNavigation()
   const { getPageTitle, MANAGE_PAGES } = useUtils()
-  const { warning, getWarning } = useWarning()
+  const { warning, getWarning, clearWarning, isWarningActive } = useWarning()
 
   // COMPUTED PROPERTIES
   // Retrieve page data

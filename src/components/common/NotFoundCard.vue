@@ -12,6 +12,7 @@
   .icon, p{
     color: var(--color-text-primary-muted);
   }
+
   p{
     font-size: var(--text-heading-lg);
     font-weight: var(--bolder-weight);

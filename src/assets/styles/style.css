@@ -76,7 +76,8 @@
     --radius-md: 8px;
     --radius-lg: 12px;
     --radius-xl: 16px;
-    --radius-2xl: 32px;
+    --radius-2xl: 24px;
+    --radius-3xl: 32px;
     --radius-full: 1000px;
 
     /* Spacing Scale */
@@ -264,11 +265,44 @@ button, input, select, textarea{
     font-family: inherit;
 }
 
+
+
 .app-container{
     flex-grow: 1;
 
     display: flex;
     flex-direction: column;
+}
+
+.view.regular{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.main.regular{
+    display: flex;
+    flex-direction: column;
+
+    position: relative;
+
+    flex-grow: 1;
+}
+
+.main-section.regular{
+    display: flex;
+    flex-direction: column;
+
+    flex-grow: 1;
+}
+
+.main-section.center{
+    display: flex;
+    flex-direction: column;
+
+    flex-grow: 1;
+    justify-content: center;
+    align-content: center;
 }
 
 .absolute{
@@ -324,6 +358,9 @@ button, input, select, textarea{
 }
 .gap-15{
     gap: 1.5em;
+}
+.gap-2{
+    gap: 2em;
 }
 
 .truncate-single{
@@ -405,13 +442,6 @@ button, input, select, textarea{
 }
 .active-border:active, .active-border:focus-within{
     outline-color: var(--color-border-brand-alt);
-}
-
-.view{
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    flex-grow: 1;
 }
 
 .spinner {

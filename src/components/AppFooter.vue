@@ -32,8 +32,8 @@
   }
   .footer .brand{
     text-align: center;
-    font-size: var(--text-body-md);
-    font-weight: var(--bold-weight);
+    font-size: var(--text-body-sm);
+    font-weight: var(--bolder-weight);
   }
 </style>
 

@@ -2,7 +2,6 @@
   <div
       class="snackbar flex gap1 justify-between cursor-pointer active-border fixed"
       :class="props.type"
-      @click="$emit('close')"
   >
     <span class="flex gap-05 align-center flex-grow-1">
       <Icon
@@ -75,9 +74,6 @@
   import { icons } from "../../assets/icons/icons.js"
   import Icon from "./Icon.vue"
 
-  // STATIC VARIABLES
-  const INTERVAL = 5000
-
   // PROPS
   const props = defineProps({
     message: String,
@@ -86,14 +82,4 @@
       default: 'success'
     }
   })
-
-  // EMITS
-  // close snackbar event
-  const emit = defineEmits(["close"])
-
-  // INTERVAL
-  // interval to auto close snackbar
-  setInterval(() => {
-    emit("close")
-  }, INTERVAL)
 </script>

@@ -1,9 +1,10 @@
 <template>
-  <div class="view">
+  <div class="view regular">
     <SnackBar
-        v-if="warning.message !== ''"
+        v-if="isWarningActive"
         :message="warning.message"
         :type="warning.type || undefined"
+        @click="clearWarning"
     />
 
     <AppHeader
@@ -12,8 +13,8 @@
         @return-page="handleReturn"
     />
 
-    <main>
-      <section class="flex flex-column gap-1">
+    <main class="main regular gap-1">
+      <section class="main-section regular gap-15">
         <p class="text-muted">Preencha os campos abaixo para registrar a administração de um medicamento:</p>
 
         <ul class="form flex flex-column gap-1">
@@ -43,5 +44,5 @@
 
   // COMPOSABLES
   const { handleReturn } = useNavigation()
-  const { warning, getWarning } = useWarning()
+  const { warning, getWarning, isWarningActive, clearWarning } = useWarning()
 </script>

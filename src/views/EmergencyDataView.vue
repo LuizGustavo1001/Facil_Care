@@ -1,9 +1,10 @@
 <template>
-  <div class="view">
+  <div class="view regular">
     <SnackBar
-        v-if="warning.message !== ''"
+        v-if="isWarningActive"
         :message="warning.message"
         :type="warning.type || undefined"
+        @click="clearWarning"
     />
 
     <AppHeader
@@ -12,11 +13,11 @@
         @return-page="handleReturn"
     />
 
-    <main class="flex flex-column gap-15 relative flex-grow-1">
+    <main class="main regular gap-2">
       <section
           v-for="content in dynamicSections"
           :key="content.id"
-          class="flex flex-column gap-05"
+          class="main-section regular gap-1"
       >
         <div class="section-title">
           <h2>{{ getSectionTitle(content) }}</h2>
@@ -28,7 +29,7 @@
           </p>
         </div>
 
-        <ul class="flex flex-column gap-05">
+        <ul class="item-list flex flex-column gap-1">
           <li
             v-if="content.buttons.length > 0"
             v-for="btn in content.buttons"
@@ -37,6 +38,7 @@
             <component
                 :is="buttonComponent(content)"
                 v-bind="getButtonProps(content, btn)"
+                variant="primary"
                 @click="handleButtonAction(content, btn)"
                 class="width-full"
             >
@@ -52,7 +54,14 @@
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+  .item-list{
+    background: var(--color-bg-subtle);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-2xl);
+  }
+
+</style>
 
 <script setup>
   import { computed, onMounted, ref } from "vue"
@@ -81,7 +90,7 @@
   const { handleReturn } = useNavigation()
   const { handlePopup } = usePopup()
   const { getPageTitle, PAGES } = useUtils()
-  const { getWarning, warning } = useWarning()
+  const { getWarning, warning, clearWarning, isWarningActive } = useWarning()
   const { getFormattedDate } = useAge()
 
   // COMPUTED PROPERTIES
@@ -215,7 +224,6 @@
     return { // section.component === "default"
       title: getButtonTitle(section, button),
       description: getButtonSubtitle(section, button),
-      variant: "subtle",
       padding: "lg"
     }
   }

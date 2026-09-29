@@ -20,7 +20,7 @@
 
     height: fit-content;
 
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-lg);
     border: none;
 
     cursor: pointer;
@@ -54,7 +54,7 @@
   .icon-btn.border{
     background: transparent;
     color: var(--color-text-primary-muted);
-    border: 1px solid var(--color-border-default);
+    border: 2px solid var(--color-border-default);
   }
   .icon-btn.border:hover{
     background: var(--color-bg-hover);
@@ -74,7 +74,7 @@
     background: var(--color-bg-subtle);
     color: var(--color-text-primary-muted);
 
-    border: 1px solid transparent;
+    border: 2px solid transparent;
   }
   .icon-btn.subtle:hover{
     border-color: var(--color-border-default);
