@@ -14,61 +14,60 @@
     />
 
     <main class="main regular">
-      <section class="export-container main-section center">
+      <section class="export-container main-section center gap-2">
+        <nav class="tab-selector align-center">
+          <ActionButtonAlt
+              tag="button"
+              color="blue"
+              :leftIcon="icons['qr-code-line']"
+              :title="$t(`views.export.sections.tabSelector.qrCode.title`)"
+              :class="{ active: activeTab === 'qr' }"
+              @click="activeTab = 'qr'"
+          />
+
+          <ActionButtonAlt
+              tag="button"
+              color="yellow"
+              :leftIcon="icons['file-line']"
+              :title="$t(`views.export.sections.tabSelector.json.title`)"
+              :class="{ active: activeTab === 'json' }"
+              @click="activeTab = 'json'"
+          />
+        </nav>
+
         <!-- 1. QR Code (P2P) -->
         <div v-if="activeTab === 'qr'" class="card">
           <div class="title flex flex-column gap-05">
             <h2>{{ $t(`views.export.sections.cardQR.title`) }}</h2>
 
             <span class="description flex flex-column">
-            <span v-for="(desc, index) in $tm('views.export.sections.cardQR.regularSubtitles')" :key="index"
-                  class="text-muted">
+            <span v-for="(desc, index) in $tm('views.export.sections.cardQR.regularSubtitles')" :key="index" class="text-muted">
               {{ desc }}.
             </span>
 
-            <span v-for="(desc, index) in $tm('views.export.sections.cardQR.destructiveSubtitles')" :key="index"
-                  class="text-destructive">
+            <span v-for="(desc, index) in $tm('views.export.sections.cardQR.destructiveSubtitles')" :key="index" class="text-destructive">
               {{ desc }}.
             </span>
           </span>
           </div>
 
-          <nav class="tab-selector align-center">
-            <ActionButtonAlt
-                :class="{ active: activeTab === 'qr' }"
-                tag="button"
-                :leftIcon="icons['qr-code-line']"
-                color="blue"
-                :title="$t(`views.export.sections.tabSelector.qrCode.title`)"
-                @click="activeTab = 'qr'"
-            />
-
-            <ActionButtonAlt
-                :class="{ active: activeTab === 'json' }"
-                tag="button"
-                :leftIcon="icons['file-line']"
-                color="yellow"
-                :title="$t(`views.export.sections.tabSelector.json.title`)"
-                @click="activeTab = 'json'"
-            />
-          </nav>
-
           <!-- Generate Button/Restart -->
           <div v-if="peerStatus === 'idle'" class="actions">
             <ActionButton
                 tag="button"
-                :title="$t('views.export.sections.cardQR.actions[0]')"
                 variant="highlight"
-                padding="md"
+                padding="lg"
+                :leftIcon="icons['qr-code-fill']"
+                :title="$t('views.export.sections.cardQR.actions[0]')"
                 @click="handleStartP2PSession"
             />
           </div>
 
           <div class="flex-grow-1">
             <!-- Status: Waiting Conection -->
-            <div v-if="peerStatus === 'waiting' || isGenerating"
-                 class="qr-wrapper flex flex-column gap-1 align-center">
+            <div v-if="peerStatus === 'waiting' || isGenerating" class="qr-wrapper flex flex-column gap-1 align-center">
               <div v-if="isGenerating" class="loading"> {{ $t('views.export.sections.cardQR.actions[1]') }}...</div>
+
               <template v-else-if="qrDataURL">
                 <img :src="qrDataURL" alt="QR Code" class="qr-image">
                 <p class="status-badge waiting">{{ $t('views.export.sections.cardQR.actions[2]') }}...</p>
@@ -76,9 +75,10 @@
 
               <ActionButton
                   tag="button"
-                  :title="$t('views.export.sections.cardQR.actions[3]')"
+                  padding="lg"
                   variant="subtle"
-                  padding="md"
+                  :leftIcon="icons['indeterminate-circle-fill']"
+                  :title="$t('views.export.sections.cardQR.actions[3]')"
                   @click="handleCancelP2P"
               />
             </div>
@@ -95,9 +95,9 @@
 
               <ActionButton
                   tag="button"
-                  :title="$t('views.export.sections.cardQR.actions[6]')"
                   variant="subtle"
-                  padding="md"
+                  padding="lg"
+                  :title="$t('views.export.sections.cardQR.actions[6]')"
                   @click="handleStartP2PSession()"
               />
             </div>
@@ -112,11 +112,10 @@
         <!-- 2. JSON File (Offline) -->
         <div v-if="activeTab === 'json'" class="card">
           <div class="title flex flex-column gap-05">
-            <h2>{{ $t(`views.export.sections.cardJSON.title`) }}</h2>
+            <h2>{{ $t(`views.export.sections.cardJSON.title`) }}.</h2>
 
             <span class="title-description">
-            <span v-for="(desc, index) in $tm('views.export.sections.cardJSON.regularSubtitles')" :key="index"
-                  class="text-muted">
+            <span v-for="(desc, index) in $tm('views.export.sections.cardJSON.regularSubtitles')" :key="index" class="text-muted">
               {{ desc }}.
             </span>
           </span>
@@ -124,11 +123,11 @@
 
           <ActionButton
               tag="button"
+              padding="lg"
               :title="isExporting
               ? $t('views.export.sections.cardJSON.actions[0]')
               : $t('views.export.sections.cardJSON.actions[1]')"
               :leftIcon="isExporting ? '' : icons['download']"
-              padding="md"
               :aria-disabled="isExporting"
               @click="handleDownloadJSON"
           />
@@ -152,7 +151,7 @@
 
     box-shadow: 0 0 2px 2px var(--color-shadow-subtle);
     padding: var(--spacing-sm);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-2xl);
 
     max-width: 600px;
   }
@@ -176,23 +175,35 @@
   }
 
   .card .title h2{
-    font-size: var(--text-heading-xl);
+    font-size: var(--text-heading-2xl);
   }
   .card .title .description span{
     font-size: var(--text-body-lg);
   }
 
+  .status-badge{
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-2xl);
+    font-weight: var(--bolder-weight);
+  }
+
+  .status-badge.waiting{
+    background: var(--color-bg-yellow);
+    color: var(--color-text-yellow);
+  }
+  .status-badge.transferring{
+    background: var(--color-bg-blue);
+    color: var(--color-text-blue);
+  }
+  .status-badge.success{
+    background: var(--color-bg-green);
+    color: var(--color-text-green);
+  }
 </style>
 
 <script setup>
   import { ref, watch } from "vue"
   import { icons } from "../assets/icons/icons.js"
-
-  import SnackBar from "../components/common/SnackBar.vue"
-  import AppHeader from "../components/AppHeader.vue"
-  import AppFooter from "../components/AppFooter.vue"
-  import ActionButtonAlt from "../components/common/ActionButtonAlt.vue"
-  import ActionButton from "../components/common/ActionButton.vue"
 
   import { useUtils } from "../composables/useUtils.js"
   import { useNavigation } from "../composables/useNavigation.js"
@@ -200,6 +211,12 @@
   import { useDexieBackup } from "../composables/useDexieBackup.js"
   import { useQRCode } from "../composables/useQRCode.js"
   import { usePeerSync } from "../composables/usePeerSync.js"
+
+  import SnackBar from "../components/common/SnackBar.vue"
+  import AppHeader from "../components/AppHeader.vue"
+  import AppFooter from "../components/AppFooter.vue"
+  import ActionButtonAlt from "../components/common/ActionButtonAlt.vue"
+  import ActionButton from "../components/common/ActionButton.vue"
 
   // COMPOSABLES
   const { getPageTitle, PAGES } = useUtils()

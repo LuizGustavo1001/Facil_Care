@@ -16,8 +16,8 @@ db.on("populate", (transaction) => {
     transaction.table('patients').bulkAdd([
         {
             _id: 'pat_1001',
-            name: 'Antônio Silva',
-            address: 'R. ABC, 41 - Bairro, Cidade',
+            name: 'Patient',
+            address: 'S. ABC, 41',
             birthDate: '1953-03-15',
             bloodType: 'O-',
             allergies: ['Alergia Grave a Penicilina'],

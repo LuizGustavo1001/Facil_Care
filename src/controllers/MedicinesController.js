@@ -9,7 +9,7 @@ export default class MedicinesController extends BaseController {
     }
 
     /**
-     * Returns all medicines registered
+     * Returns all medicines registered.
      **/
     async getAll(){
         return await this.execute(async () => {

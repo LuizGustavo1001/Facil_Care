@@ -75,6 +75,10 @@ export default {
         pageFallback: {
             title: "Page not found",
             button: "Click to go to the homepage",
+        },
+        notFoundCard: {
+            item: "No item found",
+            notification: "No new notification found"
         }
     },
     views: {
@@ -289,7 +293,7 @@ export default {
                         "Awaiting other device read",
                         "Cancel QR Code",
                         "Conexão Estabelecida! Enviando dados Connection Established",
-                        "Data Transfer Completed Successfully.",
+                        "Data Transfer Completed Successfully",
                         "New Transfer"
                     ]
                 },
@@ -300,7 +304,6 @@ export default {
                     ],
                     actions: [
                         "Exporting",
-                        "SSON Download JSON File"
                         "Download JSON File"
                     ]
                 }
@@ -431,14 +434,14 @@ export default {
         NoRecords: {
             title: "No follow-ups founded"
         },
-        NoRecordsByType: {
-            title: "No follow-ups founded with selected type"
+        NoRecordsByField: {
+            title: "No follow-ups founded with selected field"
         },
         NoRecordsByDate: {
             title: "No follow-ups founded with selected dates"
         },
-        NoRecordsByTypeAndDate: {
-            title: "No follow-ups founded with selected type and dates"
+        NoRecordsByFieldAndDate: {
+            title: "No follow-ups founded with selected field and date interval"
         },
         NoMonitoring: {
             title: "No monitoring founded"

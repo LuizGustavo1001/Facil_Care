@@ -13,7 +13,7 @@ export default class PatientRecordController extends BaseController {
     }
 
     /**
-     * Returns all registered data
+     * Returns all data from the patient records subclass.
      **/
     async getAll() {
         return await this.execute(async () => {
@@ -36,18 +36,18 @@ export default class PatientRecordController extends BaseController {
     }
 
     /**
-     * Returns by type
+     * Returns data from the patient records subclass based on the selected subclass field.
      *
-     * @param { String } type
+     * @param { String } field
      **/
-    async getByType(type) {
+    async getByField(field) {
         return await this.execute(async () => {
-            const records = await this.model.getByType(type)
+            const records = await this.model.getByField(field)
 
             if(records.length <= 0){
                 return {
                     success: false,
-                    code: "NoRecordsByType",
+                    code: "NoRecordsByField",
                     data: []
                 }
             }
@@ -61,7 +61,7 @@ export default class PatientRecordController extends BaseController {
     }
 
     /**
-     * Returns within the interval [minDate, maxDate]
+     * Returns data from the patient records subclass within the interval of `dateTime` [`minDate`, `maxDate`].
      *
      * @param { Date } minDate
      * @param { Date } maxDate
@@ -95,13 +95,15 @@ export default class PatientRecordController extends BaseController {
     }
 
     /**
-     * Returns based in type and interval [minDate, maxDate]
+     * Returns data from the patient records subclass:
+     * - within the interval of `dateTime` [`minDate`, `maxDate`].
+     * - Based on the selected subclass field.
      *
-     * @param { String } type
+     * @param { String } field
      * @param { Date } minDate
      * @param { Date } maxDate
      **/
-    async getByTypeAndDate(type, minDate, maxDate = new Date()){
+    async getByFieldAndDate(field, minDate, maxDate = new Date()){
         if(minDate > maxDate){
             return {
                 success: false,
@@ -111,12 +113,12 @@ export default class PatientRecordController extends BaseController {
         }
 
         return await this.execute(async () => {
-            const records = await this.model.getByTypeAndDate(type, minDate, maxDate)
+            const records = await this.model.getByFieldAndDate(field, minDate, maxDate)
 
             if(records.length <= 0){
                 return {
                     success: false,
-                    code: "NoRecordsByTypeAndDate",
+                    code: "NoRecordsByFieldAndDate",
                     data: []
                 }
             }

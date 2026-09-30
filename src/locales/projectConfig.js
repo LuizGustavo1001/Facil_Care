@@ -375,7 +375,7 @@ export const warningMessages = [
         type: "warning"
     },
     {
-        id: "NoRecordsByType",
+        id: "NoRecordsByField",
         type: "warning"
     },
     {
@@ -383,7 +383,7 @@ export const warningMessages = [
         type: "warning"
     },
     {
-        id: "NoRecordsByTypeAndDate",
+        id: "NoRecordsByFieldAndDate",
         type: "warning"
     },
     {

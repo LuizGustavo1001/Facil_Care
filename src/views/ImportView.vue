@@ -14,91 +14,93 @@
     />
 
     <main class="main regular">
-      <section class="import-container main-section center">
-        <!-- Import via P2P -->
-        <div v-if="route.query.peerId" class="card">
-          <h2>{{ $t(`views.import.sections.importing.title`) }}...</h2>
+      <!-- 1. Import via P2P -->
+      <section v-if="route.query.peerId" class="main-section center card">
+        <h2 v-if="peerStatus !== 'error'">{{ $t(`views.import.sections.importing.title`) }}...</h2>
 
-          <!-- Status: Connecting -->
-          <div v-if="peerStatus === 'connecting'" class="status-box">
-            <div class="spinner"></div>
-            <p>{{ $t(`views.import.sections.importing.actions[0]`) }}...</p>
-          </div>
-
-          <!-- Status: Tranferring -->
-          <div v-if="peerStatus === 'transferring'" class="status-box">
-            <div class="spinner"></div>
-            <p>{{ $t(`views.import.sections.importing.actions[1]`) }}...</p>
-          </div>
-
-          <!-- Status: Done -->
-          <div v-if="peerStatus === 'done'" class="status-box success">
-            <Icon :icon="icons['check-circle-line']"/>
-            <p>{{ $t(`views.import.sections.importing.actions[2]`) }}!</p>
-
-            <ActionButton
-              tag="router"
-              to="/"
-              :title="$t(`views.import.sections.importing.actions[3]`)"
-              padding="md"
-            />
-          </div>
-
-          <!-- Status: Error -->
-          <div v-else-if="peerStatus === 'done'" class="card">
-            <p class="error-message"> {{ peerError }} </p>
-            <ActionButton
-              tag="router"
-              to="/"
-              :title="$t(`views.import.sections.importing.actions[3]`)"
-              padding="md"
-            />
-          </div>
+        <!-- Status: Connecting -->
+        <div v-if="peerStatus === 'connecting'" class="status-box">
+          <div class="spinner"></div>
+          <p>{{ $t(`views.import.sections.importing.actions[0]`) }}...</p>
         </div>
 
-        <!-- Import via JSON local file -->
-        <div v-else class="card justify-center">
-          <template v-if="importDone">
-            <div class="success-import flex flex-column align-center gap-1">
-              <Icon :icon="icons['check-circle-line']" size="50px" padding="sm"/>
-              <p>Dados do paciente importados com sucesso!</p>
-              <ActionButton
-                tag="router"
-                to="/"
-                title="Voltar à página inicial"
-                padding="md"
-              />
-            </div>
-          </template>
+        <!-- Status: Tranferring -->
+        <div v-if="peerStatus === 'transferring'" class="status-box">
+          <div class="spinner"></div>
+          <p>{{ $t(`views.import.sections.importing.actions[1]`) }}...</p>
+        </div>
 
-          <template v-else>
-            <div class="title flex flex-column gap-05">
-              <h2>{{ $t(`views.import.sections.localFile.title`) }}</h2>
-              <p>{{ $t(`views.import.sections.localFile.subtitle`) }}</p>
-            </div>
+        <!-- Status: Done -->
+        <div v-if="peerStatus === 'done'" class="status-box success-import">
+          <Icon :icon="icons['check-circle-line']" size="50px" />
 
-            <input
-                ref="fileInput"
-                type="file"
-                accept=".json,application/json"
-                style="display: none"
-                @change="handleFileSelect"
-            />
+          <p>{{ $t(`views.import.sections.importing.actions[2]`) }}!</p>
+
+          <ActionButton
+              tag="button"
+              padding="lg"
+              :title="$t(`views.import.sections.importing.actions[3]`)"
+              @click="handleReturn()"
+          />
+        </div>
+
+        <!-- Status: Error -->
+        <div v-else-if="peerStatus === 'error'" class="card">
+          <p class="error-message"> {{ peerError }} </p>
+
+          <ActionButton
+              tag="button"
+              padding="lg"
+              :title="$t(`views.import.sections.importing.actions[3]`)"
+              @click="handleReturn()"
+          />
+        </div>
+      </section>
+
+      <!-- 2. Import via local file (JSON) -->
+      <section v-else class="main-section center card">
+        <template v-if="importDone">
+          <div class="success-import flex flex-column align-center gap-1">
+            <Icon :icon="icons['check-circle-line']" size="50px" padding="sm"/>
+
+            <p>Dados do paciente importados com sucesso!</p>
 
             <ActionButton
                 tag="button"
-                :title="isImporting
+                padding="lg"
+                :title="$t(`views.import.sections.importing.actions[3]`)"
+                @click="handleReturn()"
+            />
+          </div>
+        </template>
+
+        <template v-else>
+          <div class="title flex flex-column gap-05">
+            <h2>{{ $t(`views.import.sections.localFile.title`) }}</h2>
+            <p>{{ $t(`views.import.sections.localFile.subtitle`) }}</p>
+          </div>
+
+          <input
+              ref="fileInput"
+              type="file"
+              accept=".json,application/json"
+              style="display: none"
+              @change="handleFileSelect"
+          />
+
+          <ActionButton
+              tag="button"
+              padding="lg"
+              :title="isImporting
               ? $t(`views.import.sections.localFile.actions[0]`)
               : $t(`views.import.sections.localFile.actions[1]`)"
-                :leftIcon="isImporting ? '' : icons['click-line']"
-                :aria-disabled="isImporting"
-                padding="md"
-                @click="triggerFileInput"
-            />
+              :leftIcon="isImporting ? '' : icons['click-line']"
+              :aria-disabled="isImporting"
+              @click="triggerFileInput"
+          />
 
-            <p v-if="backupError" class="error-message"> {{ backupError }} </p>
-          </template>
-        </div>
+          <p v-if="backupError" class="error-message"> {{ backupError }} </p>
+        </template>
       </section>
     </main>
 

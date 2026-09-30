@@ -1,16 +1,10 @@
 /* Operations statements */
-import { reactive } from "vue"
 
-/**
- * Base Controller: Controller superclass to:
- * - loading: If operation still running
- **/
 export default class BaseController {
-    constructor(){
-    }
+    constructor(){}
 
     /**
-     * Execute an operation while controlling its state
+     * Execute an operation while controlling it's state
      *
      * @param { Function } operation - operation to be executed by database
      **/

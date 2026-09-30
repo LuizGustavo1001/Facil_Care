@@ -32,7 +32,7 @@
       </li>
     </ul>
 
-    <div v-else class="empty-state">Nenhuma notificação encontrada...</div>
+    <div v-else class="empty-state"><NotFoundCard type="notification" size="small"/></div>
   </div>
 </template>
 
@@ -71,7 +71,7 @@
     font-family: inherit;
     color: inherit;
 
-    background: transparent;
+    background: var(--color-bg-primary);
     border: none;
     padding: var(--spacing-xs);
     border-radius: var(--radius-md);
@@ -80,7 +80,7 @@
     transition: 0.2s ease-out;
   }
   .notification:hover{
-    background: var(--color-bg-primary);
+    background: var(--color-bg-hover);
   }
 
   .notification .title{
@@ -103,7 +103,7 @@
   }
 
   .mark-as-read{
-    background: var(--color-bg-subtle);
+    background: var(--color-bg-primary);
     border: none;
     padding: var(--spacing-2xs);
     border-radius: var(--radius-sm);
@@ -118,6 +118,7 @@
 <script setup>
   import { computed, onMounted, ref } from "vue"
   import NotificationsController from "../controllers/NotificationsController.js"
+  import NotFoundCard from "./common/NotFoundCard.vue";
 
   // CONTROLLERS
   const notificationController = new NotificationsController()

@@ -121,10 +121,10 @@
 
     switch(currentType.value){
       case PAGES['FOLLOW_UPS']:
-        result = await followUpsController.getByType(currentItem.value)
+        result = await followUpsController.getByField(currentItem.value)
         break
       case PAGES['VITAL_SIGN']:
-        result = await vitalSignsController.getByType(currentItem.value)
+        result = await vitalSignsController.getByField(currentItem.value)
         break
     }
 

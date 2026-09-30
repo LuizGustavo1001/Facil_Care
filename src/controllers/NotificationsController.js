@@ -8,6 +8,9 @@ export default class NotificationsController extends BaseController {
         this.model = new Notification(db)
     }
 
+    /**
+     * Returns all notifications.
+     **/
     async getAll(){
         return await this.execute(async () => {
             const notifications = await this.model.getAll()
@@ -28,6 +31,11 @@ export default class NotificationsController extends BaseController {
         })
     }
 
+    /**
+     * Mark a notification as **read**.
+     *
+     * @param { string } id - Notification `_id`
+     **/
     async markAsRead(id){
         return await this.execute(async () => {
             const notifications = await this.model.markAsRead(id)
@@ -48,6 +56,9 @@ export default class NotificationsController extends BaseController {
         })
     }
 
+    /**
+     * Mark every notification at database as **read**.
+     **/
     async markAllAsRead(){
         return await this.execute(async () => {
             const notifications = await this.model.markAllAsRead()
@@ -68,6 +79,9 @@ export default class NotificationsController extends BaseController {
         })
     }
 
+    /**
+     * Remove old notifications *(30+ days old)*.
+     **/
     async removeOldNotifications() {
         return await this.execute(async () => {
             await this.model.removeOldNotifications()

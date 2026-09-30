@@ -3,9 +3,6 @@ export default class Patient {
         this.table = db.table('patients')
     }
 
-    /**
-     * Returns patient data
-     **/
     async getPatient(){
         return await this.table
             .toCollection()
@@ -13,10 +10,6 @@ export default class Patient {
     }
 
     /**
-     * Update patient data
-     * - Keys sended within newData will override the old ones
-     * - Ommited keys will remain as before
-     *
      * @param { Object } newData
      **/
     async updatePatient(newData){

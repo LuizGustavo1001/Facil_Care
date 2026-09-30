@@ -75,6 +75,10 @@ export default {
         pageFallback: {
             title: "Página não encontrada",
             button: "Clique aqui para voltar para a página inicial"
+        },
+        notFoundCard: {
+            item: "Nenhum item encontrado",
+            notification: "Nenhuma nova notificação encontrada"
         }
     },
     views: {
@@ -305,6 +309,22 @@ export default {
                 }
             }
         },
+        eraseData: {
+            sections: {
+                erase: {
+                    title: "Apagar Dados do Paciente",
+                    regularSubtitles: [
+                        "Ao clicar no botão abaixo TODOS os dados do paciente serão redefinidos para o padrão"
+                    ],
+                    destructiveSubtitles: [
+                        "Tenha certeza de exportar os dados do paciente caso queira salvá-los"
+                    ],
+                    buttons: [
+                        "Redefinir dados do Paciente"
+                    ]
+                }
+            }
+        },
         userManual: {
 
         },
@@ -414,14 +434,14 @@ export default {
         NoRecords: {
             title: "Nenhum acompanhamento encontrado"
         },
-        NoRecordsByType: {
-            title: "Nenhum acompanhamento encontrado com base no tipo selecionado"
+        NoRecordsByField: {
+            title: "Nenhum acompanhamento encontrado com base no campo selecionado"
         },
         NoRecordsByDate: {
             title: "Nenhum acompanhamento encontrado com base nas datas selecionadas"
         },
-        NoRecordsByTypeAndDate: {
-            title: "Nenhum acompanhamento encontrado com base nas datas e tipo selecionados"
+        NoRecordsByFieldAndDate: {
+            title: "Nenhum acompanhamento encontrado com base no intervalo de datas e no campo selecionado"
         },
         NoMonitoring: {
             title: "Nenhum acompanhamento encontrado"
@@ -464,6 +484,9 @@ export default {
         },
         exportJSONSuccess: {
             title: "Dados exportados com sucesso"
+        },
+        SystemDataReset: {
+            title: "Dados do paciente redefinidos com sucesso"
         },
         generic: {
             title: "Um erro inesperado aconteceu. Tente novamente mais tarde"

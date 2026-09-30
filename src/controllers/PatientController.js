@@ -9,7 +9,7 @@ export default class PatientController extends BaseController {
     }
 
     /*
-     * Returns patient data
+     * Returns patient data.
      **/
     async getPatient() {
         return await this.execute(async () => {
@@ -32,9 +32,10 @@ export default class PatientController extends BaseController {
     }
 
     /**
-     * Update patient data
+     * Updates patient data merging fields.
+     * Retains the record's original `_id` and overwrite the sended keys.
      *
-     * @param { Object } newData
+     * @param { Object } newData - Containing the attributes to be overwritten or updated
      **/
     async updatePatient(newData) {
         return await this.execute(async () => {

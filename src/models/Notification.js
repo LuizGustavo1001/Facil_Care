@@ -3,9 +3,6 @@ export default class Notification {
         this.table = db.table('notifications')
     }
 
-    /**
-     * Returns all recorded notifications
-     **/
     async getAll(){
         return await this.table
             .toCollection()
@@ -13,8 +10,6 @@ export default class Notification {
     }
 
     /**
-     * Mark a selected notification as "read"
-     *
      * @param { String } id
      * @param { boolean } status
      **/
@@ -33,9 +28,6 @@ export default class Notification {
         return await this.getAll()
     }
 
-    /**
-     * Mark a every notification as "read"
-     **/
     async markAllAsRead(){
         const notifications = await this.getAll()
 
@@ -53,14 +45,11 @@ export default class Notification {
         return await this.getAll()
     }
 
-    /**
-     * Remove notifications sended 7 days ago or before
-     **/
     async removeOldNotifications() {
         const sevenDaysAgo = new Date()
 
         // Calculate 7 days ago date
-        sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7)
+        sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 30)
 
         // Delete old notifications
         await this.table.where('dateTime').below(sevenDaysAgo).delete()
