@@ -70,6 +70,7 @@
     --font-size-600: 1.125rem;   /* 18px */
     --font-size-700: 1.25rem;    /* 20px */
     --font-size-800: 1.5rem;     /* 24px */
+    --font-size-900: 1.75rem;   /* 28px */
 
     /* Border Radius */
     --radius-sm: 4px;
@@ -138,13 +139,14 @@
 
     /* Font Size */
     --text-caption: var(--font-size-100);
-    --text-body-sm: var(--font-size-200);
-    --text-body-md: var(--font-size-300);
-    --text-body-lg: var(--font-size-400);
+    --text-body-sm: var(--font-size-300);
+    --text-body-md: var(--font-size-400);
+    --text-body-lg: var(--font-size-500);
     --text-heading-sm: var(--font-size-500);
     --text-heading-md: var(--font-size-600);
     --text-heading-lg: var(--font-size-700);
     --text-heading-xl: var(--font-size-800);
+    --text-heading-2xl: var(--font-size-900);
 
     /* Shadow */
     --color-shadow-subtle: var(--alpha-black-05);
@@ -361,6 +363,10 @@ button, input, select, textarea{
 }
 .gap-2{
     gap: 2em;
+}
+
+.text-center{
+    text-align: center;
 }
 
 .truncate-single{

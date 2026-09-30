@@ -301,6 +301,23 @@ export default {
                     actions: [
                         "Exporting",
                         "SSON Download JSON File"
+                        "Download JSON File"
+                    ]
+                }
+            }
+        },
+        eraseData: {
+            sections: {
+                erase: {
+                    title: "Erase Patient Data",
+                    regularSubtitles: [
+                        "By clicking the button below, ALL patient data will be reset to the default"
+                    ],
+                    destructiveSubtitles: [
+                        "Make sure to export the patient data if you want to save it"
+                    ],
+                    buttons: [
+                        "Reset Patient Data"
                     ]
                 }
             }
@@ -464,6 +481,9 @@ export default {
         },
         exportJSONSuccess: {
             title: "Data exported with success"
+        },
+        SystemDataReset: {
+            title: "Patient data successfully reset"
         },
         generic: {
             title: "An unexpected error occurred. Try again later"

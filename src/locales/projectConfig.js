@@ -437,6 +437,10 @@ export const warningMessages = [
     {
         id: "QRCodeGenFailed",
         type: "error"
+    },
+    {
+        id: "SystemDataReset",
+        type: "success"
     }
 ]
 
