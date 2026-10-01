@@ -8,9 +8,16 @@ export function useWarning() {
 
     const warning = reactive({
         message: "",
-        type: "",
+        type: ""
     })
 
+    /**
+     * Defines the warning content based in:
+     * - Warning message from translate files
+     * - Warning type (ex: "error", "success" or "warning")
+     *
+     * @param { String } code - Desired warning code
+     **/
     const showWarning = (code) => {
         clearWarning()
 

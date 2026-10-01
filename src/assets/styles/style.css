@@ -28,6 +28,7 @@
     --red-700: #7e2a2a;
     --red-500: #bf616a;
     --red-400: #c18181;
+    --red-300: #e7a5a5;
     --red-100: #ffdcdc;
 
     --orange-700: #9a553f;
@@ -126,6 +127,7 @@
     --color-bg-brand-hover: var(--blue-600);
 
     --color-bg-red: var(--red-100);
+    --color-bg-red-hover: var(--red-300);
     --color-bg-yellow: var(--yellow-100);
     --color-bg-green: var(--green-100);
     --color-bg-orange: var(--orange-100);

@@ -45,11 +45,11 @@
 
   import ActionButton from "./common/ActionButton.vue"
 
-  //PROPS
+  // PROPS
   const props = defineProps({
     page: {
       type: String,
-      default: "home",
+      default: "home"
     }
   })
 

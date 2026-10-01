@@ -424,6 +424,103 @@ export default {
         title: "Notifications",
         markAsRead: "Mark all as read"
     },
+    popupTemplates: {
+        name: {
+            header: {
+                title: "Update Patient Name"
+            },
+            main: {
+                inputs: {
+                    usr_1: {
+                        label: "Patient Name"
+                    }
+                }
+            },
+            footer: {
+                buttons: {
+                    submit: {
+                        label: "Update Data"
+                    }
+                }
+            }
+        },
+        birthDate: {
+            header: {
+                title: "Update Birth Date"
+            },
+            main: {
+                inputs: {
+                    bday: {
+                        label: "Birth Date"
+                    }
+                }
+            },
+            footer: {
+                buttons: {
+                    submit: {
+                        label: "Update Data"
+                    }
+                }
+            }
+        },
+        bloodType: {
+            header: {
+                title: "Update Blood Type",
+            },
+            main: {
+                inputs: {
+                    bloodType: {
+                        label: "Blood Type"
+                    }
+                }
+            },
+            footer: {
+                buttons: {
+                    submit: {
+                        label: "Update Data"
+                    }
+                }
+            }
+        },
+        weight: {
+            header: {
+                title: "Update Patient Weight"
+            },
+            main: {
+                inputs: {
+                    weight: {
+                        label: "Patient Weight"
+                    }
+                }
+            },
+            footer: {
+                buttons: {
+                    submit: {
+                        label: "Update Data"
+                    }
+                }
+            }
+        },
+        address: {
+            header: {
+                title: "Update Patient Address"
+            },
+            main: {
+                inputs: {
+                    address: {
+                        label: "Address"
+                    }
+                }
+            },
+            footer: {
+                buttons: {
+                    submit: {
+                        label: "Update Data"
+                    }
+                }
+            }
+        }
+    },
     warningMessages: {
         PatientNotFound: {
             title: "Patient not found"

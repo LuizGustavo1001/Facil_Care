@@ -47,7 +47,7 @@
     padding: var(--spacing-2xs) var(--spacing-sm) var(--spacing-2xs) var(--spacing-2xs);
     border-radius: var(--radius-2xl);
 
-    border: 2px solid transparent;
+    border: 3px solid transparent;
 
     text-align: start;
     cursor: pointer;

@@ -4,8 +4,17 @@ const LANGUAGES = ["ptBR", "enUS"]
 export const currentLanguage = ref("ptBR")
 
 export function useLanguage() {
-    const initLanguage = (nextLanguage = null) => {
 
+    /**
+     * Initializes or updates the application's language.
+     * The language selection follows a hierarchy:
+     * - Explicity provided language
+     * - Saved language in `localStorage`
+     * - System preference (or browser preference)
+     *
+     * @param { string | null } nextLanguage - The specific language code (ex: `ptBR` or `enUS`). Defaults to `null`.
+     **/
+    const initLanguage = (nextLanguage = null) => {
         // 1. Next language already set
         if(nextLanguage && nextLanguage === currentLanguage.value){
             return
@@ -28,6 +37,9 @@ export function useLanguage() {
         setSystemPreference()
     }
 
+    /**
+     * Set system preferences for language based in **navigator default language**
+     **/
     const setSystemPreference = () => {
         const defaultLanguage = navigator.language.startsWith("pt") ? "ptBR" : "enUS"
         if(currentLanguage.value !== defaultLanguage){
@@ -35,6 +47,11 @@ export function useLanguage() {
         }
     }
 
+    /**
+     * Updates the application's language
+     *
+     * @param { string } nextLanguage - Language to be applied
+     **/
     const setLanguage = (nextLanguage) => {
         if(!LANGUAGES.includes(nextLanguage)) return
 

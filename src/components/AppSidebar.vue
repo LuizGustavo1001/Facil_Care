@@ -28,6 +28,7 @@
                 :to="item.route"
                 :key="item.id"
                 class="sidebar-item flex align-center gap-05 active-border"
+                @click="resetOverlay"
             >
               <Icon
                   v-if="item.icon"
@@ -144,6 +145,8 @@
   import { useAge } from "../composables/useAge.js"
   import { useI18n } from "vue-i18n"
 
+  import { useOverlay } from "../composables/useOverlay.js"
+
   import ActionButton from "./common/ActionButton.vue"
   import Icon from "./common/Icon.vue"
 
@@ -154,6 +157,7 @@
 
   // COMPOSABLES
   const { t, te } = useI18n()
+  const { resetOverlay } = useOverlay()
 
   // COMPUTED PROPERTIES
   const age = computed(() => {

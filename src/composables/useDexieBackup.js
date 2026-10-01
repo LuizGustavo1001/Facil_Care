@@ -13,9 +13,11 @@ export function useDexieBackup() {
     const isImporting = ref(false)
     const backupError = ref(null)
 
-    /*
-     * Export Database via backup JSON file
-     */
+    /**
+     * Export Database via backup JSON file.
+     *
+     * @return { Promise<boolean> } `true` if the export was successfully done. Otherwise, returns `false`
+     **/
     const exportToJSON = async () => {
         isExporting.value = true
         backupError.value = null
@@ -43,8 +45,11 @@ export function useDexieBackup() {
     }
 
     /**
-     * Restore database via backup JSON file
+     * Restore database via backup JSON file.
+     *
      * @param { File } file Import data
+     *
+     * @return { Promise<boolean> } `true` if the database was successfuly retored via backup `JSON` file. Otherwise, returns `false`
      **/
     const importFromJSON = async (file) => {
         if(!file) return false

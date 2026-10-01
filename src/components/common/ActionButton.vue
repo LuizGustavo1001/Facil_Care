@@ -7,10 +7,10 @@
     :target="!isButton ? parsedTarget : undefined"
     :rel="!isButton && parsedTarget === '_blank' ? 'noopener noreferrer' : undefined"
     class="action-btn flex justify-between align-center gap-1 active-border"
-    :class="variantClass"
+    :class="[variantClass]"
     :style="paddingStyle"
   >
-    <span class="flex align-center gap-05">
+    <span class="flex align-center gap-05 width-full">
       <Icon
           v-if="leftIcon"
           :icon="leftIcon"
@@ -18,8 +18,8 @@
           class="left-icon"
       />
 
-      <span class="btn-content flex flex-column flex-grow-1">
-        <span class="btn-content-title truncate-multi">
+      <span class="btn-content flex flex-column flex-grow-1 flex flex-column">
+        <span class="btn-content-title truncate-multi width-full">
           <slot name="title">{{ title }}</slot>
         </span>
 
@@ -43,7 +43,7 @@
 
 <style scoped>
   .action-btn{
-    text-align: start;
+    text-align: v-bind(textAlign);
 
     border-radius: var(--radius-2xl);
     border: none;
@@ -88,7 +88,7 @@
     background: var(--color-bg-red);
   }
   .action-btn.destructive:hover{
-    background: var(--color-bg-red);
+    background: var(--color-bg-red-hover);
   }
   .action-btn.destructive .btn-content-description{
     color: var(--red-500);
@@ -167,6 +167,10 @@
       default: "highlight",
       validator: (value) => ["highlight", "subtle", "destructive", "transparent", "primary"].includes(value)
     },
+    alignCenter: {
+      type: Boolean,
+      default: false
+    },
     title: String,
     description: String
   })
@@ -194,4 +198,6 @@
   const parsedTarget = computed(() => props.target === "external" ? "_blank" : props.target)
 
   const paddingStyle = computed(() => `padding: var(--spacing-${props.padding})`)
+
+  const textAlign = computed(() => props.alignCenter ? 'center' : 'start' )
 </script>

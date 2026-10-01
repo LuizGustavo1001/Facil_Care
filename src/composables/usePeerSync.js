@@ -3,7 +3,9 @@ import { exportDB, importDB } from "dexie-export-import"
 import Peer from "peerjs"
 import db from "../database/db.js"
 
-// Multiples STUN servers (avoid failure)
+/**
+ * @param { Object } peerOptions - Stores multiples STUN servers (avoid P2P tranferring failure)
+ **/
 const peerOptions = {
     config: {
         iceServers: [
@@ -50,7 +52,7 @@ export function usePeerSync(){
     /**
      * Closes active P2P connection in memory
      *
-     * @param { boolean } keepStatus
+     * @param { boolean } keepStatus - `true` represents the state to keep the `peerStatus` (avoid problems when the P2P transferring is done). Otherwise, `false`
      **/
     const closeSession = (keepStatus = false) => {
         // 1. Closes current connection
@@ -131,9 +133,9 @@ export function usePeerSync(){
     }
 
     /**
-     * RECEIVER MODE (CLIENT): Connect to host via hostPeerId and await payload
+     * RECEIVER MODE (CLIENT): Connects to host via hostPeerId and await payload
      *
-     * @param { string } hostPeerId Emitter ID from URL (?peerId=<xxx>)
+     * @param { string } hostPeerId Emitter ID from URL *(?peerId=<xxx>)*
      **/
     const connectToHostAndImport = (hostPeerId) => {
         return new Promise((resolve, reject) => {
@@ -193,7 +195,7 @@ export function usePeerSync(){
         })
     }
 
-    // Destruct all active connections
+    // Destroys all active connections
     onUnmounted(() => {
         closeSession()
     })

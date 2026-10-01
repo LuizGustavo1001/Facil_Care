@@ -1,11 +1,11 @@
 import { computed, ref } from "vue"
 
-// Overlay closes when there's no component using him
+/**
+ * activeCount: Number of elements using the overlay component (Each component using overlay adds "1" to the count)
+ **/
+
 const activeCount = ref(0)
 
-/**
- * Each component using overlay adds 1 at the activeCount
- **/
 export function useOverlay() {
     const isOverlayActive = computed(() => activeCount.value > 0)
 

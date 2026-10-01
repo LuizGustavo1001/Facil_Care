@@ -1,10 +1,21 @@
 <template>
   <div class="view regular">
+
+    <AppOverlay />
+
     <SnackBar
         v-if="isWarningActive"
         :message="warning.message"
         :type="warning.type || undefined"
         @click="clearWarning"
+    />
+
+    <AppPopup
+        v-if="isPopupOpen"
+        ref="popupRef"
+        :template="popupTemplate"
+        :inputValue="popupValues"
+        @submitForm="handleSubmit"
     />
 
     <AppHeader
@@ -30,22 +41,17 @@
         </div>
 
         <ul class="item-list flex flex-column gap-1">
-          <li
-            v-if="content.buttons.length > 0"
-            v-for="btn in content.buttons"
-            :key="btn.id"
-          >
-            <component
-                :is="buttonComponent(content)"
-                v-bind="getButtonProps(content, btn)"
-                variant="primary"
-                @click="handleButtonAction(content, btn)"
-                class="width-full"
-            >
-            </component>
-          </li>
-
-          <li v-else>{{ t("views.emergencyData.fallback") }}</li>
+          <template v-if="content.buttons?.length">
+            <li v-for="btn in content.buttons" :key="btn.id">
+              <component
+                  :is="buttonComponent(content)"
+                  v-bind="getButtonProps(content, btn)"
+                  variant="primary"
+                  class="width-full"
+                  @click="handleButtonAction(content, btn, $event)"
+              />
+            </li>
+          </template>
         </ul>
       </section>
     </main>
@@ -60,7 +66,6 @@
     padding: var(--spacing-md);
     border-radius: var(--radius-2xl);
   }
-
 </style>
 
 <script setup>
@@ -68,19 +73,23 @@
   import { icons } from "../assets/icons/icons.js"
 
   import { emergencyDataView } from "../locales/projectConfig.js"
+  import { popupTemplates } from "../locales/projectConfig.js"
 
+  import { useI18n } from "vue-i18n"
   import { useNavigation } from "../composables/useNavigation.js"
   import { usePopup } from "../composables/usePopup.js"
   import { useUtils } from "../composables/useUtils.js"
-  import { useI18n } from "vue-i18n"
   import { useWarning } from "../composables/useWarning.js"
   import { useAge } from "../composables/useAge.js"
+  import { useForm } from "../composables/useForm.js"
 
   import AppHeader from "../components/AppHeader.vue"
   import AppFooter from "../components/AppFooter.vue"
   import ActionButton from "../components/common/ActionButton.vue"
   import ActionButtonAlt from "../components/common/ActionButtonAlt.vue"
   import SnackBar from "../components/common/SnackBar.vue"
+  import AppPopup from "../components/AppPopup.vue"
+  import AppOverlay from "../components/AppOverlay.vue"
 
   import PatientController from "../controllers/PatientController.js"
   import MedicinesController from "../controllers/MedicinesController.js"
@@ -88,10 +97,11 @@
   // COMPOSABLES
   const { t, te } = useI18n()
   const { handleReturn } = useNavigation()
-  const { handlePopup } = usePopup()
+  const { isPopupOpen, fillPopup, popupTemplate, closePopup, popupRef, triggerRef, popupValues, popupContext } = usePopup()
   const { getPageTitle, PAGES } = useUtils()
   const { getWarning, warning, clearWarning, isWarningActive } = useWarning()
   const { getFormattedDate } = useAge()
+  const { executeDBSubmit } = useForm()
 
   // COMPUTED PROPERTIES
   const patientController = new PatientController()
@@ -103,7 +113,7 @@
   // Dynamic map of emergency data sections, based at database and translate data (i18n)
   const dynamicSections = computed(() => {
     return emergencyDataView.sections.map((section) => {
-      let dbButtons = [] // stores all buttons from section
+      let dbButtons = [] // Stores all buttons from section
 
       section.buttons = section.buttons || []
 
@@ -191,10 +201,61 @@
     })
   })
 
-  const handleButtonAction = (section, button) => {
-    if(section.btnAction === "popup"){
-      handlePopup(button)
+  /**
+   * Popup:
+   * - Triggers the current event target (Prevents the popup from closing unexpectedly)
+   * - Defines the template data (`popupTemplate`) to be displayed in the popup
+   * - Defines the popup context (`sectionId` and `fieldId`) needed to access the corret database table and attribute. Example: `sectionId` = "patient" and `fieldId` = "birthDate"
+   *
+   * @param { Object } section
+   * @param { Object } button
+   * @param { Event } event
+   **/
+  const handleButtonAction = (section, button, event) => {
+    triggerRef.value = event.currentTarget
+
+    if(section.btnAction === "popup") {
+      const popupTemplate = popupTemplates.find(item => item.id === button.id) ?? null
+
+      let currentInputValues = getInputValue(section.id, popupTemplate)
+
+      const context = { sectionId: section.id, fieldId: button.id }
+
+      fillPopup({
+        popupTemplate
+        },
+        currentInputValues,
+        context
+      )
     }
+  }
+
+  /**
+   * Defines the input `value` based in the database data of the input.
+   *
+   * @param { String } sectionId
+   * @param { Object } template
+   *
+   * @return { Object } Object mapping input names to their database values.
+   **/
+  const getInputValue = (sectionId, template) => {
+    const values = {}
+
+    // 1. There's no template, form or inputs
+    if(!template || !template.main || !template.main.inputs){
+      return values
+    }
+
+    // 2. Iterating each input within the template
+    for(const input of template.main.inputs){
+      const fieldName = input.name
+
+      if(sectionId === "patient"){
+        values[fieldName] = patient.value[fieldName]
+      }
+    }
+
+    return values
   }
 
   const buttonComponent = (section) => {
@@ -232,7 +293,8 @@
     if(section.btnAction === "popup"){
       return {
         rightIcon: icons["pencil-line"],
-        tag: "button"
+        tag: "button",
+        ref: triggerRef
       }
     }
 
@@ -286,6 +348,25 @@
     return te(`views.emergencyData.sections.${section.id}.subtitle`)
         ? t(`views.emergencyData.sections.${section.id}.subtitle`)
         : ""
+  }
+
+  const handleSubmit = async (formData) => {
+    const context = popupContext.value
+    if(!context) return
+
+    let result = null
+
+    if(context.sectionId === "patient"){
+      result = await executeDBSubmit(() => patientController.updatePatient(formData))
+    }
+
+    if(result && result.success){
+      closePopup()
+      getWarning(result.code)
+      patient.value = result.data
+    }else if(result){
+      getWarning(result.code)
+    }
   }
 
   onMounted(async() => {

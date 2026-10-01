@@ -8,7 +8,13 @@ const currentPreference = ref("system") // user's preference selection
 
 export function useTheme() {
     /**
-     * @param { String } nextPreference
+     * Initializes or updates the application's theme.
+     * The theme selection follows a hierarchy:
+     * - Explicity provided theme
+     * - Saved theme in `localStorage`
+     * - System preference (or browser preference)
+     *
+     * @param { string | null } nextPreference - The specific theme code (ex: `dark`, `system`, `light` or `highContrast`). Defaults to `null`.
      **/
     const initToggleTheme = (nextPreference = null) => {
         let preference = null
@@ -53,8 +59,10 @@ export function useTheme() {
     }
 
     /**
-    * @param { String } nextTheme
-    **/
+     * Set the `body` element class representing the selected theme and update current apllied theme
+     *
+     * @param { String } nextTheme
+     **/
     const setBodyClass = (nextTheme) => {
         if(!THEMES.includes(nextTheme)) return
 
@@ -66,16 +74,23 @@ export function useTheme() {
         currentTheme.value = nextTheme
     }
 
-    // Save at LocalStorage
+    /**
+     * Set `localStorage` item that represents the current `theme`
+     *
+     * @param { String } nextTheme
+     **/
     const setLocalStorage = (nextTheme) => {
         localStorage.setItem("theme", nextTheme)
     }
 
+    /**
+     * Set system preference theme *(navigator preference)*
+     **/
     const setSystemPreference = () => {
         const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches
 
         setBodyClass(systemDark ? "dark" : "light")
     }
 
-    return { initToggleTheme, currentTheme , currentPreference }
+    return { initToggleTheme, currentTheme, currentPreference }
 }

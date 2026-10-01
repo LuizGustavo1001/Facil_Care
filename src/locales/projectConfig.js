@@ -162,7 +162,7 @@ export const emergencyDataView = {
                 {
                     id: "birthDate",
                     color: "green",
-                    icon: icons["cake-line"]
+                    icon: icons["cake-fill"]
                 },
                 {
                     id: "bloodType",
@@ -172,12 +172,12 @@ export const emergencyDataView = {
                 {
                     id: "weight",
                     color: "orange",
-                    icon: icons["weight-line"]
+                    icon: icons["weight-fill"]
                 },
                 {
                     id: "address",
                     color: "orange",
-                    icon: icons["pin-user-line"]
+                    icon: icons["pin-user-fill"]
                 }
             ]
         },
@@ -210,7 +210,7 @@ export const emergencyDataView = {
                 {
                     id: "medicines",
                     color: "green",
-                    icon: icons["medicine-bottle-line"],
+                    icon: icons["medicine-bottle-fill"],
                     link: "/manage/medicines"
                 }
             ]
@@ -444,6 +444,142 @@ export const warningMessages = [
     }
 ]
 
+export const popupTemplates = [
+    {
+        id: "name",
+        main: {
+            type: "form",
+            inputs: [
+                {
+                    id: "usr_1",
+                    tag: "input",
+                    name: "name",
+                    for: "name",
+                    inputType: "text",
+                    autoCapitalize: "words"
+                }
+            ],
+            buttons: [
+                {
+                    id: "submit"
+                }
+            ]
+        }
+    },
+    {
+        id: "birthDate",
+        main: {
+            type: "form",
+            inputs: [
+                {
+                    id: "bday",
+                    tag: "input",
+                    name: "birthDate",
+                    for: "birthDate",
+                    inputType: "date"
+                }
+            ],
+            buttons: [
+                {
+                    id: "submit"
+                }
+            ]
+        }
+    },
+    {
+        id: "bloodType",
+        main: {
+            type: "form",
+            inputs: [
+                {
+                    id: "bloodType",
+                    tag: "select",
+                    name: "bloodType",
+                    for: "bloodType",
+                    options: [
+                        {
+                            placeholder: "O-",
+                            value: "O-"
+                        },
+                        {
+                            placeholder: "O+",
+                            value: "O+"
+                        },
+                        {
+                            placeholder: "A+",
+                            value: "A+"
+                        },
+                        {
+                            placeholder: "A-",
+                            value: "A-"
+                        },
+                        {
+                            placeholder: "B-",
+                            value: "B-"
+                        },
+                        {
+                            placeholder: "AB+",
+                            value: "AB+"
+                        },
+                        {
+                            placeholder: "AB-",
+                            value: "AB-"
+                        }
+                    ]
+                }
+            ],
+            buttons: [
+                {
+                    id: "submit"
+                }
+            ]
+        }
+    },
+    {
+        id: "weight",
+        main: {
+            type: "form",
+            inputs: [
+                {
+                    id: "weight",
+                    tag: "input",
+                    name: "weight",
+                    for: "weight",
+                    inputType: "number",
+                    autoCapitalize: "words",
+                    step: "0.1",
+                    min: 0
+                }
+            ],
+            buttons: [
+                {
+                    id: "submit"
+                }
+            ]
+        }
+    },
+    {
+        id: "address",
+        main: {
+            type: "form",
+            inputs: [
+                {
+                    id: "address",
+                    tag: "input",
+                    inputType: "text",
+                    name: "address",
+                    for: "address",
+                    autoCapitalize: "sentences"
+                }
+            ],
+            buttons: [
+                {
+                    id: "submit"
+                }
+            ]
+        }
+    }
+]
 
 export const footers = [
     {

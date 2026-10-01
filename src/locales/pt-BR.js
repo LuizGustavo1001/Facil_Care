@@ -424,6 +424,103 @@ export default {
         title: "Notificações",
         markAsRead: "Marque todas como lidas"
     },
+    popupTemplates: {
+        name: {
+            header: {
+                title: "Alterar Nome do Paciente"
+            },
+            main: {
+                inputs: {
+                    usr_1: {
+                        label: "Nome de Paciente"
+                    }
+                }
+            },
+            footer: {
+                buttons: {
+                    submit: {
+                        label: "Atualizar Dados"
+                    }
+                }
+            }
+        },
+        birthDate: {
+            header: {
+                title: "Alterar Data de Nascimento"
+            },
+            main: {
+                inputs: {
+                    bday: {
+                        label: "Data de Nascimento"
+                    }
+                }
+            },
+            footer: {
+                buttons: {
+                    submit: {
+                        label: "Atualizar Dados"
+                    }
+                }
+            }
+        },
+        bloodType: {
+            header: {
+                title: "Atualizar Tipo Sanguíneo"
+            },
+            main: {
+                inputs: {
+                    bloodType: {
+                        label: "Tipo Sanguíneo"
+                    }
+                }
+            },
+            footer: {
+                buttons: {
+                    submit: {
+                        label: "Atualizar Dados"
+                    }
+                }
+            }
+        },
+        weight: {
+            header: {
+                title: "Atualizar Peso do Paciente"
+            },
+            main: {
+                inputs: {
+                    weight: {
+                        label: "Peso do Paciente"
+                    }
+                }
+            },
+            footer: {
+                buttons: {
+                    submit: {
+                        label: "Atualizar Dados"
+                    }
+                }
+            }
+        },
+        address: {
+            header: {
+                title: "Atualizar Endereço do Paciente"
+            },
+            main: {
+                inputs: {
+                    address: {
+                        label: "Endereço"
+                    }
+                }
+            },
+            footer: {
+                buttons: {
+                    submit: {
+                        label: "Atualizar Dados"
+                    }
+                }
+            }
+        }
+    },
     warningMessages: {
         PatientNotFound: {
             title: "Paciente não encontrado"
