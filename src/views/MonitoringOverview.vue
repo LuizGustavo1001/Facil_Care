@@ -19,7 +19,7 @@
         <section class="main-section regular gap-1">
           <ul
               v-if="formattedData.length > 0"
-              class="list overflow-hidden"
+              class="list"
           >
             <li
                 v-for="item in formattedData"
@@ -50,11 +50,7 @@
   </div>
 </template>
 
-<style scoped>
-  .list{
-    border-radius: var(--radius-lg);
-  }
-</style>
+<style scoped></style>
 
 <script setup>
   import { computed, onMounted, ref } from "vue"
@@ -62,25 +58,25 @@
 
   import { useRoute } from "vue-router"
   import { useNavigation } from "../composables/useNavigation.js"
-  import { useAge } from "../composables/useAge.js"
+  import { useDate } from "../composables/useDate.js"
   import { useUtils } from "../composables/useUtils.js"
+  import { useWarning } from "../composables/useWarning.js"
 
   import AppHeader from "../components/AppHeader.vue"
   import AppFallback from "./AppFallback.vue"
   import SnackBar from "../components/common/SnackBar.vue"
   import AppFooter from "../components/AppFooter.vue"
   import ActionButton from "../components/common/ActionButton.vue"
+  import NotFoundCard from "../components/common/NotFoundCard.vue"
 
   import VitalSignsController from "../controllers/VitalSignsController.js"
   import FollowUpsController from "../controllers/FollowUpsController.js"
-  import { useWarning } from "../composables/useWarning.js"
-  import NotFoundCard from "../components/common/NotFoundCard.vue";
 
   // COMPOSABLES
   const route = useRoute()
   const { getWarning, warning, isWarningActive, clearWarning } = useWarning()
   const { handleReturn } = useNavigation()
-  const { getFormattedDate } = useAge()
+  const { getFormattedDate } = useDate()
   const { getPageTitle, PAGES, MONITORING_VITAL_SIGNS_PAGES, MONITORING_FOLLOW_UPS_PAGES } = useUtils()
 
   // COMPUTED PROPERTIES

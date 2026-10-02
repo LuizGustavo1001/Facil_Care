@@ -1,10 +1,8 @@
-import BaseController from "./BaseController.js"
 import Patient from "../models/Patient.js"
 import db from "../database/db.js"
 
-export default class PatientController extends BaseController {
+export default class PatientController {
     constructor() {
-        super()
         this.model = new Patient(db)
     }
 
@@ -12,7 +10,8 @@ export default class PatientController extends BaseController {
      * Returns patient data.
      **/
     async getPatient() {
-        return await this.execute(async () => {
+
+        try{
             const patient = await this.model.getPatient()
 
             if(!patient){
@@ -28,7 +27,14 @@ export default class PatientController extends BaseController {
                 code: null,
                 data: patient
             }
-        })
+        }catch(error){
+            console.log("DB error: ", error)
+            return {
+                success: false,
+                code: "DatabaseError",
+                data: []
+            }
+        }
     }
 
     /**
@@ -38,7 +44,7 @@ export default class PatientController extends BaseController {
      * @param { Object } newData - Containing the attributes to be overwritten or updated
      **/
     async updatePatient(newData) {
-        return await this.execute(async () => {
+        try{
             const patient = await this.model.updatePatient(newData)
 
             if(!patient){
@@ -54,6 +60,13 @@ export default class PatientController extends BaseController {
                 code: "PatientUpdated",
                 data: patient
             }
-        })
+        }catch(error){
+            console.log("DB error: ", error)
+            return {
+                success: false,
+                code: "DatabaseError",
+                data: []
+            }
+        }
     }
 }

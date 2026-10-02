@@ -1,10 +1,8 @@
-import BaseController from "../controllers/BaseController.js"
 import Notification from "../models/Notification.js"
 import db from "../database/db.js"
 
-export default class NotificationsController extends BaseController {
+export default class NotificationsController {
     constructor() {
-        super()
         this.model = new Notification(db)
     }
 
@@ -12,7 +10,7 @@ export default class NotificationsController extends BaseController {
      * Returns all notifications.
      **/
     async getAll(){
-        return await this.execute(async () => {
+        try{
             const notifications = await this.model.getAll()
 
             if(!notifications){
@@ -28,17 +26,24 @@ export default class NotificationsController extends BaseController {
                 code: null,
                 data: notifications
             }
-        })
+        }catch(error){
+            console.log("DB error: ", error)
+            return {
+                success: false,
+                code: "DatabaseError",
+                data: []
+            }
+        }
     }
 
     /**
-     * Mark a notification as **read**.
+     * Marks a notification as **read**.
      *
      * @param { string } id - Notification `_id`
      **/
     async markAsRead(id){
-        return await this.execute(async () => {
-            const notifications = await this.model.markAsRead(id)
+        try{
+            const notifications = await this.model.markAllAsRead(id)
 
             if(!notifications){
                 return {
@@ -53,14 +58,21 @@ export default class NotificationsController extends BaseController {
                 code: null,
                 data: notifications
             }
-        })
+        }catch(error){
+            console.log("DB error: ", error)
+            return {
+                success: false,
+                code: "DatabaseError",
+                data: []
+            }
+        }
     }
 
     /**
-     * Mark every notification at database as **read**.
+     * Marks every notification at database as **read**.
      **/
     async markAllAsRead(){
-        return await this.execute(async () => {
+        try{
             const notifications = await this.model.markAllAsRead()
 
             if(!notifications){
@@ -76,15 +88,24 @@ export default class NotificationsController extends BaseController {
                 code: null,
                 data: notifications
             }
-        })
+        }catch(error){
+            console.log("DB error: ", error)
+            return {
+                success: false,
+                code: "DatabaseError",
+                data: []
+            }
+        }
     }
 
     /**
-     * Remove old notifications *(30+ days old)*.
+     * Removes old notifications *(30+ days old)*.
      **/
     async removeOldNotifications() {
-        return await this.execute(async () => {
+        try{
             await this.model.removeOldNotifications()
-        })
+        }catch(error){
+            console.log("DB error: ", error)
+        }
     }
 }

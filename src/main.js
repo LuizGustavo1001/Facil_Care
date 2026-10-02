@@ -6,6 +6,10 @@ import { i18n } from "./locales/i18n.js"
 
 import './assets/styles/style.css'
 
+import { registerSW } from "virtual:pwa-register"
+
+registerSW({ immediate: true })
+
 const app = createApp(App)
 
 app.use(i18n)

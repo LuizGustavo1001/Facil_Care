@@ -125,8 +125,8 @@
               tag="button"
               padding="lg"
               :title="isExporting
-              ? $t('views.export.sections.cardJSON.actions[0]')
-              : $t('views.export.sections.cardJSON.actions[1]')"
+                ? $t('views.export.sections.cardJSON.actions[0]')
+                : $t('views.export.sections.cardJSON.actions[1]')"
               :leftIcon="isExporting ? '' : icons['download']"
               :aria-disabled="isExporting"
               @click="handleDownloadJSON"

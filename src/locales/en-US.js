@@ -1,7 +1,4 @@
 export default {
-    greetings: {
-        hello: "Hello",
-    },
     pageTitle: {
         vitalSigns: "Vital Signs",
         followUps: "Physiological and Behavioral Monitoring",
@@ -48,7 +45,9 @@ export default {
         export: "Export Data"
     },
     utils: {
+        hello: "Hello",
         deleteAccount: "Erase Data",
+        homePage: "Back to home page",
         years: "years",
         themes: {
             light: {
@@ -321,7 +320,9 @@ export default {
                     ],
                     buttons: [
                         "Reset Patient Data"
-                    ]
+                    ],
+                    confirmDelete: "Are you sure you want to reset patient data to the default",
+                    successDelete: "Patient data reset to the default with success"
                 }
             }
         },
@@ -427,16 +428,14 @@ export default {
     popupTemplates: {
         name: {
             header: {
-                title: "Update Patient Name"
+                title: "Update Patient's Name"
             },
             main: {
                 inputs: {
                     usr_1: {
-                        label: "Patient Name"
+                        label: "Patient's Name"
                     }
-                }
-            },
-            footer: {
+                },
                 buttons: {
                     submit: {
                         label: "Update Data"
@@ -453,9 +452,7 @@ export default {
                     bday: {
                         label: "Birth Date"
                     }
-                }
-            },
-            footer: {
+                },
                 buttons: {
                     submit: {
                         label: "Update Data"
@@ -470,11 +467,39 @@ export default {
             main: {
                 inputs: {
                     bloodType: {
-                        label: "Blood Type"
+                        label: "Blood Type",
+                        options: [
+                            {
+                                placeholder: "O-",
+                                value: "O-"
+                            },
+                            {
+                                placeholder: "O+",
+                                value: "O+"
+                            },
+                            {
+                                placeholder: "A+",
+                                value: "A+"
+                            },
+                            {
+                                placeholder: "A-",
+                                value: "A-"
+                            },
+                            {
+                                placeholder: "B-",
+                                value: "B-"
+                            },
+                            {
+                                placeholder: "AB+",
+                                value: "AB+"
+                            },
+                            {
+                                placeholder: "AB-",
+                                value: "AB-"
+                            }
+                        ]
                     }
-                }
-            },
-            footer: {
+                },
                 buttons: {
                     submit: {
                         label: "Update Data"
@@ -484,16 +509,14 @@ export default {
         },
         weight: {
             header: {
-                title: "Update Patient Weight"
+                title: "Update Patient's Weight"
             },
             main: {
                 inputs: {
                     weight: {
-                        label: "Patient Weight"
+                        label: "Patient's Weight"
                     }
-                }
-            },
-            footer: {
+                },
                 buttons: {
                     submit: {
                         label: "Update Data"
@@ -503,16 +526,113 @@ export default {
         },
         address: {
             header: {
-                title: "Update Patient Address"
+                title: "Update Patient's Address"
             },
             main: {
                 inputs: {
                     address: {
                         label: "Address"
                     }
+                },
+                buttons: {
+                    submit: {
+                        label: "Update Data"
+                    }
                 }
+            }
+        },
+        medicines: {
+            header: {
+                title: "Update Medicine's Data"
             },
-            footer: {
+            main: {
+                inputs: {
+                    name: {
+                        label: "Medicine's Name"
+                    },
+                    routeAdmin: {
+                        label: "Administration Route",
+                        options: [
+                            {
+                                placeholder: "Oral",
+                                value: "Oral"
+                            },
+                            {
+                                placeholder: "Cutaneous",
+                                value: "Cutaneous"
+                            }
+                        ]
+                    },
+                    dosage: {
+                        label: "Dosage"
+                    },
+                    observations: {
+                        label: "Observations"
+                    }
+                },
+                buttons: {
+                    submit: {
+                        label: "Update Data"
+                    }
+                }
+            }
+        },
+        caregivers: {
+            header: {
+                title: "Update Caregiver's Data"
+            },
+            main: {
+                inputs: {
+                    name: {
+                        label: "Caregiver's Name"
+                    },
+                    startDate: {
+                        label: "Care Start Date"
+                    },
+                    phone: {
+                        label: "Contact Number"
+                    }
+                },
+                buttons: {
+                    submit: {
+                        label: "Update Data"
+                    }
+                }
+            }
+        },
+        doctors: {
+            header: {
+                title: "Update Doctor's Data"
+            },
+            main: {
+                inputs: {
+                    name: {
+                        label: "Doctor's Name"
+                    },
+                    speciality: {
+                        label: "Speciality"
+                    },
+                    phone: {
+                        label: "Contact Number"
+                    }
+                },
+                buttons: {
+                    submit: {
+                        label: "Update Data"
+                    }
+                }
+            }
+        },
+        allergies: {
+            header: {
+                title: "Update Allergy's Data"
+            },
+            main: {
+                inputs: {
+                    name: {
+                        label: "Allergy's Name"
+                    }
+                },
                 buttons: {
                     submit: {
                         label: "Update Data"
@@ -526,19 +646,25 @@ export default {
             title: "Patient not found"
         },
         PatientUpdated: {
-            title: "Patient data updated with success"
+            title: "Patient's data updated with success"
+        },
+        MedicineNotFound: {
+            title: "Medicine not found"
+        },
+        MedicineUpdated: {
+            title: "Medicine's data updated with success"
         },
         NoRecords: {
-            title: "No follow-ups founded"
+            title: "No data founded"
         },
         NoRecordsByField: {
-            title: "No follow-ups founded with selected field"
+            title: "No data founded with selected field"
         },
         NoRecordsByDate: {
-            title: "No follow-ups founded with selected dates"
+            title: "No data founded with selected dates"
         },
         NoRecordsByFieldAndDate: {
-            title: "No follow-ups founded with selected field and date interval"
+            title: "No data founded with selected field and date interval"
         },
         NoMonitoring: {
             title: "No monitoring founded"

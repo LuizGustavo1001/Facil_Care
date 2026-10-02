@@ -1,23 +1,23 @@
 <template>
-  <div class="popup fixed flex flex-column gap-1" role="dialog" aria-modal="true">
+  <div class="popup fixed flex flex-column gap-1 overflow-auto" role="dialog" aria-modal="true">
 
     <!-- Popup Header -->
     <header
-        v-if="$te(`popupTemplates.${props.template.id}.header.title`) || $slots.header"
+        v-if="$te(`popupTemplates.${templateId}.header.title`) || $slots.header"
         class="popup-header"
     >
       <slot name="header">
-        <h2> {{ $t(`popupTemplates.${props.template.id}.header.title`) }} </h2>
+        <h2> {{ $t(`popupTemplates.${templateId}.header.title`) }} </h2>
       </slot>
     </header>
 
     <!-- Popup Main -->
-    <div v-if="$slots.main || template.main" class="popup-main flex flex-column gap-1">
+    <div v-if="$slots.main || template?.main" class="popup-main flex flex-column gap-1">
 
       <!-- 1. Form Main -->
       <template v-if="template.main.type === 'form'">
         <form class="main-form flex flex-column gap-1" @submit.prevent="handleSubmit">
-          <div class="form-inputs flex flex-column gap-5">
+          <div class="form-inputs flex flex-column gap-05">
             <component
                 v-for="input in template.main.inputs"
                 :key="input.id || input.name"
@@ -38,7 +38,6 @@
           </div>
         </form>
       </template>
-
       <!-- 2. Text Main -->
       <template v-else>
         <div class="main-text">
@@ -67,6 +66,7 @@
 
     width: 400px;
     max-width: 90dvw;
+    max-height: 90dvh;
 
     padding: var(--spacing-md);
     border-radius: var(--radius-xl);
@@ -76,6 +76,8 @@
 </style>
 
 <script setup>
+  import { computed } from "vue"
+
   import SelectInput from "./common/SelectInput.vue"
   import Input from "./common/Input.vue"
   import Textarea from "./common/TextArea.vue"
@@ -84,9 +86,11 @@
   import { useI18n } from "vue-i18n"
   import { useForm } from "../composables/useForm.js"
 
+  // COMPOSABLES
   const { extractFormData, isSubmitting } = useForm()
-  const { t, te } = useI18n()
+  const { t, te, tm } = useI18n()
 
+  // PROPS
   const props = defineProps({
     template: {
       type: Object
@@ -96,8 +100,13 @@
     }
   })
 
+  // EMITS
   const emit = defineEmits(['submitForm'])
 
+  // COMPUTED PROPERTIES
+  const templateId = computed(() => props.template?.id ? props.template.id : null)
+
+  // FUNCTIONS
   /* Delegate database update to the views */
   const handleSubmit = (event) => {
     const data = extractFormData(event)
@@ -139,7 +148,7 @@
           label: te(labelKey) ? t(labelKey) : "",
           for: input.for,
           name: input.name,
-          options: input.options,
+          options: getSelectOptions(input),
           modelValue: currentValue
         }
       case "textarea":
@@ -152,8 +161,14 @@
     }
   }
 
+  // Returns "select input" options based in translate data
+  const getSelectOptions = (input) => {
+    return tm(`popupTemplates.${props.template.id}.main.inputs.${input.id}.options`) ?? null
+  }
+
+  // Form button props
   const getBtnProps = (btn) => {
-    const key = `popupTemplates.${props.template.id}.footer.buttons.${btn.id}.label`
+    const key = `popupTemplates.${props.template.id}.main.buttons.${btn.id}.label`
 
     return {
       title: te(key) ? t(key) : "",

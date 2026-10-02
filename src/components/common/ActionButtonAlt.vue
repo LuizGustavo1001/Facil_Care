@@ -142,7 +142,6 @@
   .action-btn-alt.purple:hover{
     border-color: var(--color-bg-purple);
   }
-
 </style>
 
 <script setup>

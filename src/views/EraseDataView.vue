@@ -43,12 +43,12 @@
       <section v-else class="success-reset main-section center text-center align-center gap-15">
         <Icon :icon="icons['check-circle-line']" size="50px" padding="sm"/>
 
-        <p>Dados do paciente redefinidos com sucesso!</p>
+        <p>{{ t(`views.eraseData.sections.erase.successDelete`) }}!</p>
 
         <ActionButton
             tag="button"
             @click="handleReturn()"
-            :title="$t(`views.import.sections.importing.actions[3]`)"
+            :title="$t(`utils.homePage`)"
             padding="lg"
         />
       </section>
@@ -83,6 +83,7 @@
   import { useNavigation } from "../composables/useNavigation.js"
   import { useUtils } from "../composables/useUtils.js"
   import { useWarning } from "../composables/useWarning.js"
+  import { useI18n } from "vue-i18n"
 
   import AppHeader from "../components/AppHeader.vue"
   import AppFooter from "../components/AppFooter.vue"
@@ -93,6 +94,7 @@
   import DatabaseController from "../controllers/DatabaseController.js"
 
   // COMPOSABLES
+  const { t } = useI18n()
   const { handleReturn } = useNavigation()
   const { getPageTitle, PAGES } = useUtils()
   const { getWarning, isWarningActive, warning, clearWarning } = useWarning()
@@ -105,6 +107,9 @@
 
   // FUNCTIONS
   const handleDeleteData = async () => {
+    const confirmDelete = confirm(t(`views.eraseData.sections.erase.confirmDelete`) + "?")
+    if(!confirmDelete) return
+
     const result = await databaseController.resetAllData()
 
     if(result.success){

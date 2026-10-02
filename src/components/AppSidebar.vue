@@ -142,9 +142,9 @@
   import { computed } from "vue"
   import { sidebar } from "../locales/projectConfig.js"
   import { icons } from "../assets/icons/icons.js"
-  import { useAge } from "../composables/useAge.js"
-  import { useI18n } from "vue-i18n"
 
+  import { useDate } from "../composables/useDate.js"
+  import { useI18n } from "vue-i18n"
   import { useOverlay } from "../composables/useOverlay.js"
 
   import ActionButton from "./common/ActionButton.vue"
@@ -161,7 +161,7 @@
 
   // COMPUTED PROPERTIES
   const age = computed(() => {
-    const { getAge } = useAge()
+    const { getAge } = useDate()
     return getAge(new Date(props.patientData.birthDate))
   })
 

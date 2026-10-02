@@ -5,7 +5,6 @@ export class PatientRecord {
         this.typeField = typeField
     }
 
-
     async getAll(){
         return await this.table
             .toCollection()

@@ -259,6 +259,7 @@ a{
 main{
     padding: var(--spacing-lg) var(--spacing-sm);
     margin-bottom: 100px;
+
 }
 
 ul{
@@ -269,7 +270,11 @@ button, input, select, textarea{
     font-family: inherit;
 }
 
-
+main {
+    max-width: 1500px;
+    margin-inline: auto;
+    width: 100%;
+}
 
 .app-container{
     flex-grow: 1;

@@ -34,6 +34,7 @@
 
 <script setup>
   import { icons } from "../assets/icons/icons.js"
+
   import { useNavigation } from "../composables/useNavigation.js"
   import { useWarning } from "../composables/useWarning.js"
 

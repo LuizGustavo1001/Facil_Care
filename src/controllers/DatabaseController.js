@@ -1,10 +1,8 @@
-import BaseController from "./BaseController.js"
 import Database from "../models/Database.js"
 import db from "../database/db.js"
 
-export default class DatabaseController extends BaseController {
+export default class DatabaseController {
     constructor() {
-        super()
         this.model = new Database(db)
     }
 
@@ -12,7 +10,7 @@ export default class DatabaseController extends BaseController {
      * Reset every data in the local database to `default`.
      **/
     async resetAllData(){
-        return await this.execute(async () => {
+        try{
             await this.model.resetAllData()
 
             return {
@@ -20,6 +18,13 @@ export default class DatabaseController extends BaseController {
                 code: "SystemDataReset",
                 data: null
             }
-        })
+        }catch(error){
+            console.log("DB error: ", error)
+            return {
+                success: false,
+                code: "DatabaseError",
+                data: []
+            }
+        }
     }
 }

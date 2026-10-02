@@ -3,7 +3,7 @@ import { Dexie } from 'dexie'
 const db = new Dexie('facilCareDB')
 
 db.version(1).stores({
-    patients: '_id, name',
+    patient: '_id, name',
     vitalSigns: '_id, dateTime, vitalSign, caregiverId, [vitalSign+dateTime]',
     followUps: '_id, dateTime, followUp, caregiverId, [followUp+dateTime]',
     medicines: '_id, active',
@@ -13,15 +13,29 @@ db.version(1).stores({
 
 // Populate Event
 db.on("populate", (transaction) => {
-    transaction.table('patients').bulkAdd([
+    transaction.table('patient').bulkAdd([
         {
             _id: 'pat_1001',
             name: 'Patient',
             address: 'S. ABC, 41',
             birthDate: '1953-03-15',
             bloodType: 'O-',
-            allergies: ['Alergia Grave a Penicilina'],
-            healthPlans: ['Unimed Familiar', 'Plano Municipal SUS'],
+            allergies: [
+                {
+                    allergyId: 'alg_101',
+                    name: "Alergia Grave a Penicilina123"
+                }
+            ],
+            healthPlans: [
+                {
+                    planId: 'plan_403',
+                    name: "Unimed Familiar"
+                },
+                {
+                    planId: 'plan_404',
+                    name: "Plano Municipal SUS"
+                }
+            ],
             doctors: [
                 {
                     doctorId: 'doc_501',

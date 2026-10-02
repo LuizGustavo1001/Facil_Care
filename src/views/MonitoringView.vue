@@ -43,11 +43,12 @@
 
 <script setup>
   import { computed } from "vue"
+  import { icons } from "../assets/icons/icons.js"
+
   import { useRoute } from "vue-router"
   import { useI18n } from "vue-i18n"
   import { useNavigation } from "../composables/useNavigation.js"
   import { useUtils } from "../composables/useUtils.js"
-  import { icons } from "../assets/icons/icons.js"
 
   import AppHeader from "../components/AppHeader.vue"
   import ActionButtonAlt from "../components/common/ActionButtonAlt.vue"

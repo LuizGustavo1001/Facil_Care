@@ -1,6 +1,6 @@
 <template>
   <div
-      class="snackbar flex gap1 justify-between cursor-pointer active-border fixed"
+      class="snackbar flex gap-1 align-center justify-between cursor-pointer active-border fixed"
       :class="props.type"
   >
     <span class="flex gap-05 align-center flex-grow-1">
@@ -38,10 +38,6 @@
   }
   .snackbar:active{
     transform: scale(0.98) translateX(-50%);
-  }
-
-  .snackbar .right-icon{
-    align-self: start;
   }
 
   /* VARIANTS */

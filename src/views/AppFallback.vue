@@ -17,6 +17,7 @@
 
 <script setup>
   import { useI18n } from "vue-i18n"
+
   import ActionButton from "../components/common/ActionButton.vue"
   import AppFooter from "../components/AppFooter.vue"
 

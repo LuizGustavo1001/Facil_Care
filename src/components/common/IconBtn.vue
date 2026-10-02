@@ -79,23 +79,32 @@
   .icon-btn.subtle:hover{
     border-color: var(--color-border-default);
   }
+
+  /* 6. Destructive */
+  .icon-btn.destructive{
+    background: var(--color-bg-red);
+    color: var(--color-text-red);
+  }
+  .icon-btn.destructive:hover{
+    background: var(--color-bg-red-hover);
+  }
 </style>
 
 <script setup>
   import { computed } from "vue"
+  import { RouterLink } from "vue-router"
 
   import Icon from "./Icon.vue"
-  import {RouterLink} from "vue-router";
 
   // STATIC VARIABLES
-  const VARIANTS = ["brand", "border", "bg-clr", "transparent", "subtle"]
+  const VARIANTS = ["brand", "border", "bg-clr", "transparent", "subtle", "destructive"];
   const DEFAULT_VARIANT = "brand"
 
   // PROPS
   const props = defineProps({
     tag: {
       type: String,
-      default: 'button',
+      default: 'button'
     },
     icon: {
       type: String,
@@ -121,7 +130,7 @@
     variant: {
       type: String,
       default: 'brand',
-      validator: (value) => ["brand", "border", "bg-clr", "transparent", "subtle"].includes(value)
+      validator: (value) => ["brand", "border", "bg-clr", "transparent", "subtle", "destructive"].includes(value)
     }
   })
 

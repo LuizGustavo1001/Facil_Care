@@ -1,6 +1,5 @@
 <template>
   <div class="view regular">
-
     <AppOverlay />
 
     <SnackBar
@@ -80,7 +79,7 @@
   import { usePopup } from "../composables/usePopup.js"
   import { useUtils } from "../composables/useUtils.js"
   import { useWarning } from "../composables/useWarning.js"
-  import { useAge } from "../composables/useAge.js"
+  import { useDate } from "../composables/useDate.js"
   import { useForm } from "../composables/useForm.js"
 
   import AppHeader from "../components/AppHeader.vue"
@@ -95,13 +94,13 @@
   import MedicinesController from "../controllers/MedicinesController.js"
 
   // COMPOSABLES
-  const { t, te } = useI18n()
+  const { t, te, tm } = useI18n()
   const { handleReturn } = useNavigation()
   const { isPopupOpen, fillPopup, popupTemplate, closePopup, popupRef, triggerRef, popupValues, popupContext } = usePopup()
   const { getPageTitle, PAGES } = useUtils()
   const { getWarning, warning, clearWarning, isWarningActive } = useWarning()
-  const { getFormattedDate } = useAge()
-  const { executeDBSubmit } = useForm()
+  const { getFormattedDate } = useDate()
+  const { executeDBSubmit, getInputValue } = useForm()
 
   // COMPUTED PROPERTIES
   const patientController = new PatientController()
@@ -149,22 +148,24 @@
           break
 
         case "allergies":
-          if (Array.isArray(patient.value.allergies)) {
-            dbButtons = patient.value.allergies.map((allergy, index) => ({
-              id: index,
-              title: allergy
+          if(Array.isArray(patient.value.allergies)){
+            dbButtons = patient.value.allergies.map((allergy) => ({
+              id: allergy.id,
+              title: allergy.name
             }))
           }
+
           dbButtons = [...dbButtons, ...(section.buttons)]
           break
 
         case "healthPlans":
           if(Array.isArray(patient.value.healthPlans)){
-            dbButtons = patient.value.healthPlans.map((plan, index) => ({
-              id: index,
-              title: plan
+            dbButtons = patient.value.healthPlans.map((plan) => ({
+              id: plan.id,
+              title: plan.name
             }))
           }
+
           dbButtons = [...dbButtons, ...(section.buttons)]
           break
 
@@ -217,45 +218,15 @@
     if(section.btnAction === "popup") {
       const popupTemplate = popupTemplates.find(item => item.id === button.id) ?? null
 
-      let currentInputValues = getInputValue(section.id, popupTemplate)
+      let currentInputValues = null
+      if(section.id === "patient") {
+        currentInputValues = getInputValue(patient.value, popupTemplate)
+      }
 
       const context = { sectionId: section.id, fieldId: button.id }
 
-      fillPopup({
-        popupTemplate
-        },
-        currentInputValues,
-        context
-      )
+      fillPopup(popupTemplate, currentInputValues, context)
     }
-  }
-
-  /**
-   * Defines the input `value` based in the database data of the input.
-   *
-   * @param { String } sectionId
-   * @param { Object } template
-   *
-   * @return { Object } Object mapping input names to their database values.
-   **/
-  const getInputValue = (sectionId, template) => {
-    const values = {}
-
-    // 1. There's no template, form or inputs
-    if(!template || !template.main || !template.main.inputs){
-      return values
-    }
-
-    // 2. Iterating each input within the template
-    for(const input of template.main.inputs){
-      const fieldName = input.name
-
-      if(sectionId === "patient"){
-        values[fieldName] = patient.value[fieldName]
-      }
-    }
-
-    return values
   }
 
   const buttonComponent = (section) => {

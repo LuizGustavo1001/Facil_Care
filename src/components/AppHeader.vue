@@ -62,13 +62,12 @@
 </style>
 
 <script setup>
+  import { ref } from "vue"
+
   import { icons } from "../assets/icons/icons.js"
 
-  import IconBtnAlt from "./common/IconBtnAlt.vue"
   import IconBtn from "./common/IconBtn.vue"
   import NotificationsMenu from "./NotificationsMenu.vue"
-  import { ref } from "vue"
-  import { useSidebar } from "../composables/useSidebar.js"
 
   // PROPS
   const props = defineProps({

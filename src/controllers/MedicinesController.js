@@ -1,10 +1,8 @@
-import BaseController from "./BaseController.js"
 import Medicine from "../models/Medicine.js"
 import db from "../database/db.js"
 
-export default class MedicinesController extends BaseController {
+export default class MedicinesController {
     constructor() {
-        super()
         this.model = new Medicine(db)
     }
 
@@ -12,7 +10,7 @@ export default class MedicinesController extends BaseController {
      * Returns all medicines registered.
      **/
     async getAll(){
-        return await this.execute(async () => {
+        try{
             const medicines = await this.model.getAll()
 
             if(!medicines){
@@ -28,6 +26,47 @@ export default class MedicinesController extends BaseController {
                 code: null,
                 data: medicines
             }
-        })
+        }catch(error){
+            console.log("DB error: ", error)
+            return {
+                success: false,
+                code: "DatabaseError",
+                data: []
+            }
+        }
+    }
+
+    /**
+     * Updates medicine's data merging fields.
+     * Retains the record's original `_id` and overwrite the sended keys.
+     *
+     * @param { Object } newData - Containing the attributes to be overwritten or updated
+     * @param { String } medicineId - Id of the medicine to be updated
+     **/
+    async updateMedicineData(newData, medicineId) {
+        try{
+            const medicines = await this.model.updateMedicine(newData, medicineId)
+
+            if(!medicines){
+                return {
+                    success: false,
+                    code: "MedicineNotFound",
+                    data: []
+                }
+            }
+
+            return {
+                success: true,
+                code: "MedicineUpdated",
+                data: medicines
+            }
+        }catch(error){
+            console.log("DB error: ", error)
+            return {
+                success: false,
+                code: "DatabaseError",
+                data: []
+            }
+        }
     }
 }

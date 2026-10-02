@@ -117,8 +117,9 @@
 
 <script setup>
   import { computed, onMounted, ref } from "vue"
+
   import NotificationsController from "../controllers/NotificationsController.js"
-  import NotFoundCard from "./common/NotFoundCard.vue";
+  import NotFoundCard from "./common/NotFoundCard.vue"
 
   // CONTROLLERS
   const notificationController = new NotificationsController()

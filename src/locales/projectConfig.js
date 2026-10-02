@@ -176,7 +176,7 @@ export const emergencyDataView = {
                 },
                 {
                     id: "address",
-                    color: "orange",
+                    color: "blue",
                     icon: icons["pin-user-fill"]
                 }
             ]
@@ -498,32 +498,28 @@ export const popupTemplates = [
                     for: "bloodType",
                     options: [
                         {
-                            placeholder: "O-",
-                            value: "O-"
+                            id: "o_negative"
                         },
                         {
-                            placeholder: "O+",
-                            value: "O+"
+                            id: "o_positive"
                         },
                         {
-                            placeholder: "A+",
-                            value: "A+"
+                            id: "a_negative"
                         },
                         {
-                            placeholder: "A-",
-                            value: "A-"
+                            id: "a_positive"
                         },
                         {
-                            placeholder: "B-",
-                            value: "B-"
+                            id: "b_negative"
                         },
                         {
-                            placeholder: "AB+",
-                            value: "AB+"
+                            id: "b_positive"
                         },
                         {
-                            placeholder: "AB-",
-                            value: "AB-"
+                            id: "ab_negative"
+                        },
+                        {
+                            id: "ab_positive"
                         }
                     ]
                 }
@@ -569,6 +565,145 @@ export const popupTemplates = [
                     inputType: "text",
                     name: "address",
                     for: "address",
+                    autoCapitalize: "sentences"
+                }
+            ],
+            buttons: [
+                {
+                    id: "submit"
+                }
+            ]
+        }
+    },
+    {
+        id: "medicines",
+        main: {
+            type: "form",
+            inputs: [
+                {
+                    id: "name",
+                    tag: "input",
+                    inputType: "text",
+                    name: "name",
+                    for: "name",
+                    autoCapitalize: "words"
+                },
+                {
+                    id: "routeAdmin",
+                    tag: "select",
+                    name: "routeAdmin",
+                    for: "routeAdmin",
+                    options: [
+                        {
+                            id: "oral"
+                        },
+                        {
+                            id: "cutaneous"
+                        }
+                    ]
+                },
+                {
+                    id: "dosage",
+                    tag: "text",
+                    name: "dosage",
+                    for: "dosage",
+                },
+                {
+                    id: "observations",
+                    tag: "textarea",
+                    name: "observations",
+                    for: "observations"
+                }
+            ],
+            buttons: [
+                {
+                    id: "submit"
+                }
+            ]
+        }
+    },
+    {
+        id: "caregivers",
+        main: {
+            type: "form",
+            inputs: [
+                {
+                    id: "name",
+                    tag: "input",
+                    inputType: "text",
+                    name: "name",
+                    for: "name",
+                    autoCapitalize: "words"
+                },
+                {
+                    id: "startDate",
+                    tag: "input",
+                    inputType: "date",
+                    name: "startDate",
+                    for: "startDate"
+                },
+                {
+                    id: "phone",
+                    tag: "input",
+                    inputType: "tel",
+                    name: "phone",
+                    for: "phone"
+                }
+            ],
+            buttons: [
+                {
+                    id: "submit"
+                }
+            ]
+        }
+    },
+    {
+        id: "doctors",
+        main: {
+            type: "form",
+            inputs: [
+                {
+                    id: "name",
+                    tag: "input",
+                    inputType: "text",
+                    name: "name",
+                    for: "name",
+                    autoCapitalize: "words"
+                },
+                {
+                    id: "speciality",
+                    tag: "input",
+                    inputType: "text",
+                    name: "speciality",
+                    for: "speciality",
+                    autoCapitalize: "sentences"
+                },
+                {
+                    id: "phone",
+                    tag: "input",
+                    inputType: "tel",
+                    name: "phone",
+                    for: "phone"
+                }
+            ],
+            buttons: [
+                {
+                    id: "submit"
+                }
+            ]
+        }
+    },
+    {
+        id: "allergies",
+        main: {
+            type: "form",
+            inputs: [
+                {
+                    id: "name",
+                    tag: "input",
+                    inputType: "text",
+                    name: "name",
+                    for: "name",
                     autoCapitalize: "sentences"
                 }
             ],

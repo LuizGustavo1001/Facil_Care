@@ -41,12 +41,13 @@
 
 <script setup>
   import { icons } from "../assets/icons/icons.js"
+  import { preferencesView } from "../locales/projectConfig.js"
+
   import { useNavigation } from "../composables/useNavigation.js"
   import { useLanguage } from "../composables/useLanguage.js"
   import { useTheme } from "../composables/useTheme.js"
   import { useI18n } from "vue-i18n"
   import { useUtils } from "../composables/useUtils.js"
-  import { preferencesView } from "../locales/projectConfig.js"
 
   import AppHeader from "../components/AppHeader.vue"
   import AppFooter from "../components/AppFooter.vue"

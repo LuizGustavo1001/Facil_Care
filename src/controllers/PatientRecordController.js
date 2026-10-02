@@ -1,10 +1,7 @@
-import BaseController from "./BaseController.js"
 import db from "../database/db.js"
 
-export default class PatientRecordController extends BaseController {
+export default class PatientRecordController {
     constructor(Model) {
-        super()
-
         if(!Model){
             throw new Error("Model class must be provided to PatientRecordController")
         }
@@ -16,7 +13,7 @@ export default class PatientRecordController extends BaseController {
      * Returns all data from the patient records subclass.
      **/
     async getAll() {
-        return await this.execute(async () => {
+        try{
             const records = await this.model.getAll()
 
             if(records.length <= 0){
@@ -32,7 +29,14 @@ export default class PatientRecordController extends BaseController {
                 code: null,
                 data: records
             }
-        })
+        }catch(error){
+            console.log("DB error: ", error)
+            return {
+                success: false,
+                code: "DatabaseError",
+                data: []
+            }
+        }
     }
 
     /**
@@ -41,7 +45,7 @@ export default class PatientRecordController extends BaseController {
      * @param { String } field
      **/
     async getByField(field) {
-        return await this.execute(async () => {
+        try{
             const records = await this.model.getByField(field)
 
             if(records.length <= 0){
@@ -57,7 +61,14 @@ export default class PatientRecordController extends BaseController {
                 code: null,
                 data: records
             }
-        })
+        }catch(error){
+            console.log("DB error: ", error)
+            return {
+                success: false,
+                code: "DatabaseError",
+                data: []
+            }
+        }
     }
 
     /**
@@ -75,7 +86,7 @@ export default class PatientRecordController extends BaseController {
             }
         }
 
-        return await this.execute(async () => {
+        try{
             const records = await this.model.getByDate(minDate, maxDate)
 
             if(records.length <= 0){
@@ -91,7 +102,14 @@ export default class PatientRecordController extends BaseController {
                 code: null,
                 data: records
             }
-        })
+        }catch(error){
+            console.log("DB error: ", error)
+            return {
+                success: false,
+                code: "DatabaseError",
+                data: []
+            }
+        }
     }
 
     /**
@@ -112,7 +130,7 @@ export default class PatientRecordController extends BaseController {
             }
         }
 
-        return await this.execute(async () => {
+        try{
             const records = await this.model.getByFieldAndDate(field, minDate, maxDate)
 
             if(records.length <= 0){
@@ -128,6 +146,13 @@ export default class PatientRecordController extends BaseController {
                 code: null,
                 data: records
             }
-        })
+        }catch(error){
+            console.log("DB error: ", error)
+            return {
+                success: false,
+                code: "DatabaseError",
+                data: []
+            }
+        }
     }
 }

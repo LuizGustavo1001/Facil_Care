@@ -19,7 +19,7 @@
         toggleBtnRef="toggleBtnRef"
         @sidebar-toggle="toggleSidebar"
     >
-      {{ $t('greetings.hello') }}, <strong>{{ patient.name }}</strong>!
+      {{ $t('utils.hello') }}, <strong>{{ patient.name }}</strong>!
     </AppHeader>
 
     <main class="main regular gap-1">
@@ -34,6 +34,7 @@
             :to="btn.route"
             :leftIcon="btn.icon"
             leftIconSize="30px"
+            :rightIcon="icons['chevron-right']"
             :color="btn.color"
             :title="$t(`views.home.buttons.${btn.id}.title`)"
             :description="$t(`views.home.buttons.${btn.id}.description`)"
@@ -52,6 +53,8 @@
   import { onMounted, ref } from "vue"
 
   import { homeView } from "../locales/projectConfig.js"
+  import { icons } from "../assets/icons/icons.js"
+
   import { useWarning } from "../composables/useWarning.js"
   import { useSidebar } from "../composables/useSidebar.js"
 
@@ -78,7 +81,7 @@
 
     // Update frontend patient data
     if(result.success){
-      Object.assign(patient.value, result.data)
+      patient.value = result.data
     }else{
       getWarning(result.code)
     }

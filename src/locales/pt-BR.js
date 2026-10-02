@@ -1,7 +1,4 @@
 export default {
-    greetings: {
-        hello: "Olá",
-    },
     pageTitle: {
         vitalSigns: "Sinais Vitais",
         followUps: "Acompanhamento Fisiológico e Comportamental",
@@ -48,7 +45,9 @@ export default {
         export: "Exportar Dados"
     },
     utils: {
+        hello: "Olá",
         deleteAccount: "Apagar Dados",
+        homePage: "Voltar à página inicial",
         years: "anos",
         themes: {
             light: {
@@ -321,7 +320,9 @@ export default {
                     ],
                     buttons: [
                         "Redefinir dados do Paciente"
-                    ]
+                    ],
+                    confirmDelete: "Tem certeza que deseja redefinir os dados do paciente para o padrão",
+                    successDelete: "Dados do paciente redefinidos com sucesso"
                 }
             }
         },
@@ -434,9 +435,7 @@ export default {
                     usr_1: {
                         label: "Nome de Paciente"
                     }
-                }
-            },
-            footer: {
+                },
                 buttons: {
                     submit: {
                         label: "Atualizar Dados"
@@ -453,9 +452,7 @@ export default {
                     bday: {
                         label: "Data de Nascimento"
                     }
-                }
-            },
-            footer: {
+                },
                 buttons: {
                     submit: {
                         label: "Atualizar Dados"
@@ -470,11 +467,39 @@ export default {
             main: {
                 inputs: {
                     bloodType: {
-                        label: "Tipo Sanguíneo"
+                        label: "Tipo Sanguíneo",
+                        options: [
+                            {
+                                placeholder: "O-",
+                                value: "O-"
+                            },
+                            {
+                                placeholder: "O+",
+                                value: "O+"
+                            },
+                            {
+                                placeholder: "A+",
+                                value: "A+"
+                            },
+                            {
+                                placeholder: "A-",
+                                value: "A-"
+                            },
+                            {
+                                placeholder: "B-",
+                                value: "B-"
+                            },
+                            {
+                                placeholder: "AB+",
+                                value: "AB+"
+                            },
+                            {
+                                placeholder: "AB-",
+                                value: "AB-"
+                            }
+                        ]
                     }
-                }
-            },
-            footer: {
+                },
                 buttons: {
                     submit: {
                         label: "Atualizar Dados"
@@ -491,9 +516,7 @@ export default {
                     weight: {
                         label: "Peso do Paciente"
                     }
-                }
-            },
-            footer: {
+                },
                 buttons: {
                     submit: {
                         label: "Atualizar Dados"
@@ -510,9 +533,106 @@ export default {
                     address: {
                         label: "Endereço"
                     }
+                },
+                buttons: {
+                    submit: {
+                        label: "Atualizar Dados"
+                    }
                 }
+            }
+        },
+        medicines: {
+            header: {
+                title: "Atualizar dados de Medicamento"
             },
-            footer: {
+            main: {
+                inputs: {
+                    name: {
+                        label: "Nome do Medicamento"
+                    },
+                    routeAdmin: {
+                        label: "Rota de Administração",
+                        options: [
+                            {
+                                placeholder: "Oral",
+                                value: "Oral"
+                            },
+                            {
+                                placeholder: "Cutânea",
+                                value: "Cutânea"
+                            }
+                        ]
+                    },
+                    dosage: {
+                        label: "Dosagem"
+                    },
+                    observations: {
+                        label: "Observações"
+                    }
+                },
+                buttons: {
+                    submit: {
+                        label: "Atualizar Dados"
+                    }
+                }
+            }
+        },
+        caregivers: {
+            header: {
+                title: "Atualizar Dados de Cuidador"
+            },
+            main: {
+                inputs: {
+                    name: {
+                        label: "Nome do Cuidador"
+                    },
+                    startDate: {
+                        label: "Data de Início dos Cuidados"
+                    },
+                    phone: {
+                        label: "Telefone de Contato"
+                    }
+                },
+                buttons: {
+                    submit: {
+                        label: "Atualizar Dados"
+                    }
+                }
+            }
+        },
+        doctors: {
+            header: {
+                title: "Atualizar Dados de Médico"
+            },
+            main: {
+                inputs: {
+                    name: {
+                        label: "Nome do Médico"
+                    },
+                    speciality: {
+                        label: "Especialidade"
+                    },
+                    phone: {
+                        label: "Telefone de Contato"
+                    }
+                },
+                buttons: {
+                    submit: {
+                        label: "Atualizar Dados"
+                    }
+                }
+            }
+        },
+        allergies: {
+            header: {
+                title: "Atualizar Alergia"
+            },
+            main: {
+                inputs: {
+                    name: {
+                        label: "Nome da Alergia"
+                    }
+                },
                 buttons: {
                     submit: {
                         label: "Atualizar Dados"
@@ -529,19 +649,19 @@ export default {
             title: "Dados do paciente atualizados com sucesso"
         },
         NoRecords: {
-            title: "Nenhum acompanhamento encontrado"
+            title: "Nenhum item encontrado"
         },
         NoRecordsByField: {
-            title: "Nenhum acompanhamento encontrado com base no campo selecionado"
+            title: "Nenhum item encontrado com base no campo selecionado"
         },
         NoRecordsByDate: {
-            title: "Nenhum acompanhamento encontrado com base nas datas selecionadas"
+            title: "Nenhum item encontrado com base nas datas selecionadas"
         },
         NoRecordsByFieldAndDate: {
-            title: "Nenhum acompanhamento encontrado com base no intervalo de datas e no campo selecionado"
+            title: "Nenhum item encontrado com base no intervalo de datas e no campo selecionado"
         },
         NoMonitoring: {
-            title: "Nenhum acompanhamento encontrado"
+            title: "Nenhum item encontrado"
         },
         InvalidDateInterval: {
             title: "Intervalo de data inválido. Data mínima deve ser menor que a data máxima"

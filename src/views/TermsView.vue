@@ -18,6 +18,7 @@
 
 <script setup>
   import { icons } from "../assets/icons/icons.js"
+
   import { useNavigation } from "../composables/useNavigation.js"
   import { useUtils } from "../composables/useUtils.js"
 

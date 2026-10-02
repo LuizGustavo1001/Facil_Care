@@ -39,9 +39,9 @@ export function usePopup() {
         isPopupOpen.value ? closePopup() : openPopup()
     }
 
-    const fillPopup = (template, value, context = null) => {
+    const fillPopup = (template, value = null, context = null) => {
         clearPopup()
-        popupTemplate.value = template.popupTemplate
+        popupTemplate.value = template
         popupValues.value = value
         popupContext.value = context
         openPopup()

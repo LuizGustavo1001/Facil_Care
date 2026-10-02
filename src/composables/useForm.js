@@ -10,6 +10,41 @@ export function useForm(){
     const formWarning = ref(null)
 
     /**
+     * Defines the input `value` based in the database data of the input.
+     *
+     * @param { Object | Array } dataSource - Database data source (ex: patient.value, patient.value.emergencyContacts)
+     * @param { String } idKey - Specifies the id format (ex: _id, id or doctorId)
+     * @param { Object } template - Selected popup template
+     **/
+    const getInputValue = (dataSource, template, idKey = "_id") => {
+        if(!template || !template.main || !template.main.inputs || !dataSource) return Array.isArray(dataSource) ? [] : {}
+
+        // Helper to extract values from a object
+        const extractFields = (dataObj) => {
+            const values = {}
+
+            if(dataObj[idKey] !== undefined) {
+                values[idKey] = dataObj[idKey]
+            }
+
+            for(const input of template.main.inputs){
+                const fieldName = input.name
+                values[fieldName] = dataObj[fieldName]
+            }
+
+            return values
+        }
+
+        // Handle Array data source
+        if(Array.isArray(dataSource)) {
+            return dataSource.map(item => extractFields(item))
+        }
+
+        // Handle Object data source
+        return extractFields(dataSource)
+    }
+
+    /**
     * Extracts form data from a **`submit` event**
      *
      * @param { event } event - Event triggered data *(submit event)*
@@ -42,5 +77,5 @@ export function useForm(){
         return result
     }
 
-    return { extractFormData, executeDBSubmit, isSubmitting, formWarning}
+    return { extractFormData, executeDBSubmit, isSubmitting, formWarning, getInputValue}
 }

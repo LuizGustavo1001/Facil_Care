@@ -29,7 +29,7 @@
 
 .outline-layer{
   padding: 4px;
-  box-shadow: inset 0px 0px 10px var(--color-shadow-strong);
+  box-shadow: inset 0 0 10px var(--color-shadow-strong);
 }
 
 .outline-layer:active .inline-layer{
@@ -39,14 +39,13 @@
 
 <script setup>
   import { computed } from "vue"
-
   import Icon from "./Icon.vue"
 
   // PROPS
   const props = defineProps({
     tag: {
       type: String,
-      default: 'button',
+      default: 'button'
     },
     icon: {
       type: String,

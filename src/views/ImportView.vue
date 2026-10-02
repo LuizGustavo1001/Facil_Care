@@ -39,7 +39,7 @@
           <ActionButton
               tag="button"
               padding="lg"
-              :title="$t(`views.import.sections.importing.actions[3]`)"
+              :title="$t(`utils.homePage`)"
               @click="handleReturn()"
           />
         </div>
@@ -51,7 +51,7 @@
           <ActionButton
               tag="button"
               padding="lg"
-              :title="$t(`views.import.sections.importing.actions[3]`)"
+              :title="$t(`utils.homePage`)"
               @click="handleReturn()"
           />
         </div>
@@ -68,7 +68,7 @@
             <ActionButton
                 tag="button"
                 padding="lg"
-                :title="$t(`views.import.sections.importing.actions[3]`)"
+                :title="$t(`utils.homePage`)"
                 @click="handleReturn()"
             />
           </div>
@@ -139,7 +139,6 @@
 
 <script setup>
   import { onMounted, ref, watch } from "vue"
-  import { useRoute } from "vue-router"
   import { icons } from "../assets/icons/icons.js"
 
   import SnackBar from "../components/common/SnackBar.vue"
@@ -148,6 +147,7 @@
   import Icon from "../components/common/Icon.vue"
   import ActionButton from "../components/common/ActionButton.vue"
 
+  import { useRoute } from "vue-router"
   import { useUtils } from "../composables/useUtils.js"
   import { useNavigation } from "../composables/useNavigation.js"
   import { useWarning } from "../composables/useWarning.js"
@@ -167,9 +167,7 @@
   const importDone = ref(false)
 
   // FUNCTIONS
-  /**
-   * Manual Import (.json file via input)
-   **/
+  // Manual Import (.json file via input)
   const handleFileSelect = async (event) => {
     const file = event.target.files?.[0]
 

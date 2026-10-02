@@ -1,6 +1,6 @@
 export default class Patient {
     constructor(db){
-        this.table = db.table('patients')
+        this.table = db.table('patient')
     }
 
     async getPatient(){
@@ -27,5 +27,9 @@ export default class Patient {
         })
 
         return await this.getPatient()
+    }
+
+    async remove(id){
+
     }
 }
