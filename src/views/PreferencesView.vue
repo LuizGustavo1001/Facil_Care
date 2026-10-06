@@ -49,9 +49,9 @@
   import { useI18n } from "vue-i18n"
   import { useUtils } from "../composables/useUtils.js"
 
-  import AppHeader from "../components/AppHeader.vue"
-  import AppFooter from "../components/AppFooter.vue"
-  import SelectInput from "../components/common/SelectInput.vue"
+  import AppHeader from "../components/layout/AppHeader.vue"
+  import AppFooter from "../components/layout/AppFooter.vue"
+  import SelectInput from "../components/forms/SelectInput.vue"
 
   // COMPOSABLES
   const { handleReturn } = useNavigation()

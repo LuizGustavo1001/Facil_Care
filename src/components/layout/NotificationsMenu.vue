@@ -1,39 +1,42 @@
 <template>
-  <!-- Notifications Menu -->
-  <div class="notifications-menu absolute overflow-auto flex flex-column gap-1">
-    <div class="notifications-header flex align-center justify-between">
-      <h1>{{ $t("notifications.title") }}</h1>
+  <transition name="fade" mode="out-in">
+    <div v-if="isOpen" class="notifications-menu absolute overflow-auto flex flex-column gap-1">
+      <div class="notifications-header flex align-center justify-between">
+        <h1>{{ $t("notifications.title") }}</h1>
 
-      <button class="mark-as-read" @click="handleMarkAllAsRead">
-        <span>{{ $t("notifications.markAsRead") }}</span>
-      </button>
-    </div>
+        <button class="mark-as-read" @click="handleMarkAllAsRead">
+          <span>{{ $t("notifications.markAsRead") }}</span>
+        </button>
+      </div>
 
-    <!-- Notifications List -->
-    <ul v-if="hasNotifications" class="notifications-list flex flex-column gap-1">
-      <li
-        v-for="notification in notifications"
-        :key="notification._id"
-      >
-        <button
-            class="notification flex align-center gap-05"
-            @click="handleNotificationStatus(notification)"
+      <!-- Notifications List -->
+      <ul v-if="hasNotifications" class="notifications-list flex flex-column gap-1">
+        <li
+            v-for="notification in notifications"
+            :key="notification._id"
         >
+          <button
+              class="notification flex align-center gap-05"
+              @click="handleNotificationStatus(notification)"
+          >
           <span
-            v-if="!notification.read"
-            class="vertical-line"
+              v-if="!notification.read"
+              class="vertical-line"
           />
 
-          <span class="flex flex-column">
+            <span class="flex flex-column">
             <span class="title truncate-single">{{ notification.title }}</span>
             <span class="description text-muted">{{ notification.description }}</span>
           </span>
-        </button>
-      </li>
-    </ul>
+          </button>
+        </li>
+      </ul>
 
-    <div v-else class="empty-state"><NotFoundCard type="notification" size="small"/></div>
-  </div>
+      <div v-else class="empty-state">
+        <NotFoundCard type="notification" size="small"/>
+      </div>
+    </div>
+  </transition>
 </template>
 
 <style scoped>
@@ -74,7 +77,7 @@
     background: var(--color-bg-primary);
     border: none;
     padding: var(--spacing-xs);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-xs);
 
     cursor: pointer;
     transition: 0.2s ease-out;
@@ -106,7 +109,7 @@
     background: var(--color-bg-primary);
     border: none;
     padding: var(--spacing-2xs);
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-xs);
     font-weight: var(--bold-weight);
     cursor: pointer;
 
@@ -118,8 +121,15 @@
 <script setup>
   import { computed, onMounted, ref } from "vue"
 
-  import NotificationsController from "../controllers/NotificationsController.js"
-  import NotFoundCard from "./common/NotFoundCard.vue"
+  import NotificationsController from "../../controllers/NotificationsController.js"
+  import NotFoundCard from "../feedback/NotFoundCard.vue"
+
+  const props = defineProps({
+    isOpen: {
+      type: Boolean,
+      required: true
+    }
+  })
 
   // CONTROLLERS
   const notificationController = new NotificationsController()

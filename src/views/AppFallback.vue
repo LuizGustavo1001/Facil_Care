@@ -18,8 +18,8 @@
 <script setup>
   import { useI18n } from "vue-i18n"
 
-  import ActionButton from "../components/common/ActionButton.vue"
-  import AppFooter from "../components/AppFooter.vue"
+  import ActionButton from "../components/buttons/ActionButton.vue"
+  import AppFooter from "../components/layout/AppFooter.vue"
 
   // COMPOSABLES
   const { t } = useI18n()

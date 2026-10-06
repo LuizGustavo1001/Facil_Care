@@ -11,9 +11,11 @@ Para isso, utiliza-se o banco de dados interno aos navegadores (`IndexedDB` + wr
 
 > 🎨 Projeto Figma: [Clique Aqui](https://www.figma.com/design/Hz5x5uWg9bis53saHyB4vJ/Cuidados-Di%C3%A1rios?node-id=0-1&p=f&t=72omA2iRuWiTJfML-0)
 
+> 🌐 Página Web: [Clique Aqui](https://facilcare.vercel.app/)
+
 Funcionalidades
 ---
-Sistema com foco em **facilitar a rotina de cuidadores**, permitindo:
+Sistema com foco em **facilitar a rotina de cuidadores**, permitindo: 
 
 ## Gestão de Perfil e Emergência `**`
 - **Ficha médica básica:**

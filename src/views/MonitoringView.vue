@@ -2,18 +2,18 @@
   <div class="view regular">
     <template v-if="pageExists">
       <AppHeader
-          :title="getPageTitle(itemType)"
+          :title="getPageTitle(currentCategory)"
           :leftBtnIcon="icons['chevron-left']"
           @return-page="handleReturn"
       />
 
       <main class="main regular">
         <section class="main-section regular gap-15">
-          <p class="text-muted">{{ t(`views.${itemType}.subtitle`) }}:</p>
+          <p class="text-muted">{{ t(`views.${currentCategory}.subtitle`) }}:</p>
 
           <ul class="flex flex-column gap-1">
             <li
-                v-for="item in currentItem.items"
+                v-for="item in currentTemplate.items"
                 :key="item.id"
             >
               <ActionButtonAlt
@@ -30,7 +30,7 @@
         </section>
       </main>
 
-      <AppFooter :page="String(itemType)" />
+      <AppFooter :page="String(currentCategory)" />
     </template>
 
     <template v-else>
@@ -50,10 +50,10 @@
   import { useNavigation } from "../composables/useNavigation.js"
   import { useUtils } from "../composables/useUtils.js"
 
-  import AppHeader from "../components/AppHeader.vue"
-  import ActionButtonAlt from "../components/common/ActionButtonAlt.vue"
+  import AppHeader from "../components/layout/AppHeader.vue"
+  import ActionButtonAlt from "../components/buttons/ActionButtonAlt.vue"
   import AppFallback from "./AppFallback.vue"
-  import AppFooter from "../components/AppFooter.vue"
+  import AppFooter from "../components/layout/AppFooter.vue"
 
   import * as projectConfig from "../locales/projectConfig.js"
 
@@ -65,16 +65,16 @@
 
   // COMPUTED PROPERTIES
   // Retrieve page data
-  const itemType = computed(() => route.params.type)
+  const currentCategory = computed(() => route.params.category)
 
-  const currentItem = computed(() => {
-    const id = itemType.value + 'View'
+  const currentTemplate = computed(() => {
+    const id = currentCategory.value + 'View'
     return projectConfig[id] || null
   })
 
   // Verify if monitoring page exists
   const pageExists = computed(() => {
-    const rawId = itemType.value
+    const rawId = currentCategory.value
 
     if(!rawId) return null
 
@@ -84,6 +84,6 @@
   // FUNCTIONS
   // Returns button label
   const getItemTitle = (id) => {
-    return t(`views.${itemType.value}.items.${id}.title`)
+    return t(`views.${currentCategory.value}.items.${id}.title`)
   }
 </script>

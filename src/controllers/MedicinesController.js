@@ -7,7 +7,7 @@ export default class MedicinesController {
     }
 
     /**
-     * Returns all medicines registered.
+     * Returns all medicines registered in the database.
      **/
     async getAll(){
         try{
@@ -37,8 +37,41 @@ export default class MedicinesController {
     }
 
     /**
-     * Updates medicine's data merging fields.
-     * Retains the record's original `_id` and overwrite the sended keys.
+     * Returns the new medicine collection after removing an medicine by the `id`
+     *
+     * @param { String } id - Selected medicine `id`
+     **/
+    async removeById(id){
+        try {
+            const removed = await this.model.removeById(id)
+
+            if(!removed){
+                return {
+                    success: false,
+                    code: "NoMedicinesFound",
+                    data: []
+                }
+            }
+
+            const medicines = await this.model.getAll()
+
+            return {
+                success: true,
+                code: "MedicineDeleted",
+                data: medicines
+            }
+        }catch(error){
+            console.log("DB error: ", error)
+            return {
+                success: false,
+                code: "DatabaseError",
+                data: []
+            }
+        }
+    }
+
+    /**
+     * Returns the new medicine collection after updating.
      *
      * @param { Object } newData - Containing the attributes to be overwritten or updated
      * @param { String } medicineId - Id of the medicine to be updated

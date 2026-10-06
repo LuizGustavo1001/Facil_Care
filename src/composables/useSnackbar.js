@@ -2,7 +2,7 @@ import { useI18n } from "vue-i18n"
 import { warningMessages } from "../locales/projectConfig.js"
 import { reactive, ref } from "vue"
 
-export function useWarning() {
+export function useSnackbar() {
     const isWarningActive = ref(false)
     const { t, te } = useI18n()
 

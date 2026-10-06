@@ -1,10 +1,21 @@
 <template>
   <div class="view regular">
-    <SnackBar
-        v-if="isWarningActive"
+    <Snackbar
+        :isActive="isWarningActive"
         :message="warning.message"
         :type="warning.type || undefined"
         @click="clearWarning"
+    />
+
+    <AppOverlay />
+
+    <ConfirmPopup
+        :isOpen="isConfirmOpen"
+        :popupRef="confirmPopup.popupRef"
+        :title="confirmTitle"
+        :message="confirmMessage"
+        @cancel="confirmPopup.close"
+        @confirm="confirmPopup.handleConfirm"
     />
 
     <AppHeader
@@ -15,7 +26,7 @@
     />
 
     <main class="main regular">
-      <section v-if="!isReset" class="main-section center text-center align-center gap-15">
+      <section v-if="!gotReset" class="main-section center text-center align-center gap-15">
         <div class="title flex flex-column gap-1">
           <h1>{{ $t(`views.eraseData.sections.erase.title`) }}</h1>
           <div class="description">
@@ -36,7 +47,7 @@
             :title="$t('views.eraseData.sections.erase.buttons[0]')"
             padding="lg"
             variant="destructive"
-            @click="handleDeleteData"
+            @click.stop="handleClick"
         />
       </section>
 
@@ -48,7 +59,7 @@
         <ActionButton
             tag="button"
             @click="handleReturn()"
-            :title="$t(`utils.homePage`)"
+            :title="t(`utils.homePage`)"
             padding="lg"
         />
       </section>
@@ -77,44 +88,59 @@
 </style>
 
 <script setup>
-  import { ref } from "vue"
+  import { computed, ref } from "vue"
   import { icons } from "../assets/icons/icons.js"
 
   import { useNavigation } from "../composables/useNavigation.js"
   import { useUtils } from "../composables/useUtils.js"
-  import { useWarning } from "../composables/useWarning.js"
+  import { useSnackbar } from "../composables/useSnackbar.js"
   import { useI18n } from "vue-i18n"
+  import { useConfirmPopup } from "../composables/useConfirmPopup.js"
 
-  import AppHeader from "../components/AppHeader.vue"
-  import AppFooter from "../components/AppFooter.vue"
-  import ActionButton from "../components/common/ActionButton.vue"
-  import Icon from "../components/common/Icon.vue"
-  import SnackBar from "../components/common/SnackBar.vue"
+  import AppHeader from "../components/layout/AppHeader.vue"
+  import AppFooter from "../components/layout/AppFooter.vue"
+  import ActionButton from "../components/buttons/ActionButton.vue"
+  import Icon from "../components/icons/Icon.vue"
+  import Snackbar from "../components/feedback/Snackbar.vue"
+  import ConfirmPopup from "../components/layout/popup/ConfirmPopup.vue"
+  import AppOverlay from "../components/layout/AppOverlay.vue"
 
   import DatabaseController from "../controllers/DatabaseController.js"
 
   // COMPOSABLES
+  const confirmPopup = useConfirmPopup()
   const { t } = useI18n()
   const { handleReturn } = useNavigation()
   const { getPageTitle, PAGES } = useUtils()
-  const { getWarning, isWarningActive, warning, clearWarning } = useWarning()
+  const { getWarning, isWarningActive, warning, clearWarning } = useSnackbar()
 
   // VARIABLES
-  const isReset = ref(false)
+  const gotReset = ref(false)
+
+  // COMPUTED PROPERTIES
+  const isConfirmOpen = computed(() => confirmPopup.isOpen.value)
+  const confirmTitle = computed(() => confirmPopup.title.value)
+  const confirmMessage = computed(() => confirmPopup.message.value)
 
   // CONTROLLERS
   const databaseController = new DatabaseController()
 
   // FUNCTIONS
-  const handleDeleteData = async () => {
-    const confirmDelete = confirm(t(`views.eraseData.sections.erase.confirmDelete`) + "?")
-    if(!confirmDelete) return
+  const handleClick = async () => {
+    const titleSlot = t(`utils.data`)
 
+    const title = t(`confirmPopupTemplates.resetData.title`) + "?"
+
+    confirmPopup.open(title, null, () => resetData())
+  }
+
+  const resetData = async () => {
     const result = await databaseController.resetAllData()
 
     if(result.success){
-      isReset.value = true
+      gotReset.value = true
       getWarning(result.code)
     }
   }
+
 </script>

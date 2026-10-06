@@ -4,8 +4,8 @@ const db = new Dexie('facilCareDB')
 
 db.version(1).stores({
     patient: '_id, name',
-    vitalSigns: '_id, dateTime, vitalSign, caregiverId, [vitalSign+dateTime]',
-    followUps: '_id, dateTime, followUp, caregiverId, [followUp+dateTime]',
+    vitalSigns: '_id, dateTime, record, caregiverId, [record+dateTime]',
+    followUps: '_id, dateTime, record, caregiverId, [record+dateTime]',
     medicines: '_id, active',
     medicineRegistries: '_id, medicationId, dateTime, caregiverId',
     notifications: '_id, red, dateTime, read'
@@ -23,7 +23,7 @@ db.on("populate", (transaction) => {
             allergies: [
                 {
                     allergyId: 'alg_101',
-                    name: "Alergia Grave a Penicilina123"
+                    name: "Alergia Grave a Penicilina"
                 }
             ],
             healthPlans: [
@@ -66,7 +66,7 @@ db.on("populate", (transaction) => {
         {
             _id: 'vs_2001',
             dateTime: new Date(),
-            vitalSign: 'bloodPressure',
+            record: 'bloodPressure',
             value: '120/80',
             unit: 'mmHg',
             caregiverId: 'cg_301',
@@ -79,8 +79,16 @@ db.on("populate", (transaction) => {
         {
             _id: 'fu_1001',
             dateTime: new Date(),
-            followUp: 'mood',
+            record: 'mood',
             value: 'Paciente calmo e colaborativo',
+            caregiverId: 'cg_301',
+            caregiverName: 'Marina Souza',
+        },
+        {
+            _id: 'fu_1004',
+            dateTime: new Date(),
+            record: 'mood',
+            value: 'Paciente calmo e colaborativosdada',
             caregiverId: 'cg_301',
             caregiverName: 'Marina Souza',
         },

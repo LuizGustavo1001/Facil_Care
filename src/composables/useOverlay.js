@@ -1,27 +1,29 @@
 import { computed, ref } from "vue"
 
 /**
- * activeCount: Number of elements using the overlay component (Each component using overlay adds "1" to the count)
- **/
-
+ * Number of active components using the overlay.
+ *
+ * Each component that shows the overlay increments the count,
+ * and decrements it when the overlay is no longer needed.
+ */
 const activeCount = ref(0)
 
 export function useOverlay() {
-    const isOverlayActive = computed(() => activeCount.value > 0)
+    const isActive = computed(() => activeCount.value > 0)
 
-    const showOverlay = () => {
+    const show = () => {
         activeCount.value++
     }
 
-    const hideOverlay = () => {
-        if(activeCount.value >= 1){
+    const hide = () => {
+        if(activeCount.value > 0){
             activeCount.value--
         }
     }
 
-    const resetOverlay = () => {
+    const reset = () => {
         activeCount.value = 0
     }
 
-    return { isOverlayActive, showOverlay, hideOverlay, resetOverlay }
+    return { isActive, show, hide, reset }
 }

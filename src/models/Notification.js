@@ -10,8 +10,10 @@ export default class Notification {
     }
 
     /**
-     * @param { String } id
-     * @param { boolean } status
+     * Marks an notification as "read" by the notification `id` in the database.
+     *
+     * @param { String } id - Notification id
+     * @param { boolean } status - `true` = read, and `false` = nonread
      **/
     async markAsRead(id, status = true){
         const notification = await this.table.get(id)
@@ -28,6 +30,9 @@ export default class Notification {
         return await this.getAll()
     }
 
+    /*
+     * Marks all notifications in the collection as "read" in the database.
+     **/
     async markAllAsRead(){
         const notifications = await this.getAll()
 
@@ -45,6 +50,9 @@ export default class Notification {
         return await this.getAll()
     }
 
+    /*
+     * Deletes notifications with 30+ days old from the database.
+     **/
     async removeOldNotifications() {
         const sevenDaysAgo = new Date()
 

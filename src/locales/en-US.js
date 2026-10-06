@@ -27,6 +27,7 @@ export default {
         notifications: "Notifications",
         erase: "Erase Data"
     },
+
     meta: {
         home: "Home",
         monitoring: "Monitoring",
@@ -44,8 +45,11 @@ export default {
         import: "Import Data",
         export: "Export Data"
     },
+
     utils: {
         hello: "Hello",
+        confirm: "Confirm",
+        cancel: "Cancel",
         deleteAccount: "Erase Data",
         homePage: "Back to home page",
         years: "years",
@@ -78,8 +82,12 @@ export default {
         notFoundCard: {
             item: "No item found",
             notification: "No new notification found"
-        }
+        },
+        vitalSign: "Vital Sign",
+        followUp: "Follow Up",
+        delete: "Delete"
     },
+
     views: {
         home: {
             subtitle: "Select one of the options bellow to view the desired information",
@@ -172,7 +180,7 @@ export default {
                             title: "Blood Type",
                         },
                         weight: {
-                            title: "Weight"
+                            title: "Weight (Kg)"
                         },
                         address: {
                             title: "Address"
@@ -316,7 +324,7 @@ export default {
                         "By clicking the button below, ALL patient data will be reset to the default"
                     ],
                     destructiveSubtitles: [
-                        "Make sure to export the patient data if you want to save it"
+                        "Make sure to export the patient data if you want to save them"
                     ],
                     buttons: [
                         "Reset Patient Data"
@@ -333,6 +341,7 @@ export default {
 
         }
     },
+
     sidebar: {
         sections: {
             general: {
@@ -370,6 +379,7 @@ export default {
             }
         }
     },
+
     footer: {
         home: {
             buttons: {
@@ -421,11 +431,13 @@ export default {
             }
         }
     },
+
     notifications: {
         title: "Notifications",
         markAsRead: "Mark all as read"
     },
-    popupTemplates: {
+
+    formPopupTemplates: {
         name: {
             header: {
                 title: "Update Patient's Name"
@@ -641,6 +653,16 @@ export default {
             }
         }
     },
+
+    confirmPopupTemplates: {
+        deleteConfirm: {
+            title: "Are you sure that you want to remove the selected {item}"
+        },
+        resetData: {
+            title: "Are you sure that you want to reset patient's data to default"
+        }
+    },
+
     warningMessages: {
         PatientNotFound: {
             title: "Patient not found"
@@ -653,6 +675,12 @@ export default {
         },
         MedicineUpdated: {
             title: "Medicine's data updated with success"
+        },
+        RecordUpdated: {
+            title: "Monitoring's data updated with success"
+        },
+        RecordNotFound: {
+            title: "Record not found"
         },
         NoRecords: {
             title: "No data founded"
@@ -710,6 +738,12 @@ export default {
         },
         SystemDataReset: {
             title: "Patient data successfully reset"
+        },
+        MedicineDeleted: {
+            title: "Medicine has been removed with success"
+        },
+        RecordRemoved: {
+            title: "Selected registry has been removed with success"
         },
         generic: {
             title: "An unexpected error occurred. Try again later"

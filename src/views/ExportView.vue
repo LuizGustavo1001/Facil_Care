@@ -1,7 +1,7 @@
 <template>
   <div class="view regular">
-    <SnackBar
-        v-if="isWarningActive"
+    <Snackbar
+        :isActive="isWarningActive"
         :message="warning.message"
         :type="warning.type || undefined"
         @click="clearWarning"
@@ -207,21 +207,21 @@
 
   import { useUtils } from "../composables/useUtils.js"
   import { useNavigation } from "../composables/useNavigation.js"
-  import { useWarning } from "../composables/useWarning.js"
+  import { useSnackbar } from "../composables/useSnackbar.js"
   import { useDexieBackup } from "../composables/useDexieBackup.js"
   import { useQRCode } from "../composables/useQRCode.js"
   import { usePeerSync } from "../composables/usePeerSync.js"
 
-  import SnackBar from "../components/common/SnackBar.vue"
-  import AppHeader from "../components/AppHeader.vue"
-  import AppFooter from "../components/AppFooter.vue"
-  import ActionButtonAlt from "../components/common/ActionButtonAlt.vue"
-  import ActionButton from "../components/common/ActionButton.vue"
+  import Snackbar from "../components/feedback/Snackbar.vue"
+  import AppHeader from "../components/layout/AppHeader.vue"
+  import AppFooter from "../components/layout/AppFooter.vue"
+  import ActionButtonAlt from "../components/buttons/ActionButtonAlt.vue"
+  import ActionButton from "../components/buttons/ActionButton.vue"
 
   // COMPOSABLES
   const { getPageTitle, PAGES } = useUtils()
   const { handleReturn } = useNavigation()
-  const { getWarning, warning, clearWarning, isWarningActive } = useWarning()
+  const { getWarning, warning, clearWarning, isWarningActive } = useSnackbar()
   const { isExporting, backupError, exportToJSON } = useDexieBackup()
   const { isGenerating, qrDataURL, qrCodeError, generateQRCode, clearQRCode } = useQRCode()
   const { peerStatus, peerError, startHostSession, closeSession } = usePeerSync()

@@ -11,7 +11,7 @@ const routes = [
       }
     },
     {
-        path: '/monitoring/:type',
+        path: '/monitoring/:category',
         name: 'monitoring',
         component: () => import('/src/views/MonitoringView.vue'),
         meta: {
@@ -19,7 +19,7 @@ const routes = [
         }
     },
     {
-        path: '/monitoring/:type/:itemId',
+        path: '/monitoring/:category/:type',
         name: 'monitoring-overview',
         component: () => import('/src/views/MonitoringOverview.vue'),
         meta: {
@@ -27,7 +27,7 @@ const routes = [
         }
     },
     {
-        path: '/manage/:itemId',
+        path: '/manage/:category',
         name: 'manage-overview',
         component: () => import('/src/views/ManageView.vue'),
         meta: {
@@ -51,7 +51,7 @@ const routes = [
         }
     },
     {
-      path: '/register/:itemId',
+      path: '/register/:category',
       name: 'register',
       component: () => import('/src/views/RegisterView.vue'),
       meta: {

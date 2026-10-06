@@ -25,7 +25,7 @@
 
   import { useI18n } from "vue-i18n"
 
-  import Icon from "./Icon.vue"
+  import Icon from "../icons/Icon.vue"
 
   // COMPOSABLES
   const { t, te } = useI18n()

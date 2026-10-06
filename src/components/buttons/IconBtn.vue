@@ -20,7 +20,7 @@
 
     height: fit-content;
 
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-md);
     border: none;
 
     cursor: pointer;
@@ -94,7 +94,7 @@
   import { computed } from "vue"
   import { RouterLink } from "vue-router"
 
-  import Icon from "./Icon.vue"
+  import Icon from "../icons/Icon.vue"
 
   // STATIC VARIABLES
   const VARIANTS = ["brand", "border", "bg-clr", "transparent", "subtle", "destructive"];

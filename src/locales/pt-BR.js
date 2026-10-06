@@ -27,6 +27,7 @@ export default {
         notifications: "Notificações",
         erase: "Apagar Dados"
     },
+
     meta: {
         home: "Início",
         monitoring: "Monitoramento",
@@ -44,8 +45,11 @@ export default {
         import: "Importar Dados",
         export: "Exportar Dados"
     },
+
     utils: {
         hello: "Olá",
+        confirm: "Confirmar",
+        cancel: "Cancelar",
         deleteAccount: "Apagar Dados",
         homePage: "Voltar à página inicial",
         years: "anos",
@@ -78,8 +82,12 @@ export default {
         notFoundCard: {
             item: "Nenhum item encontrado",
             notification: "Nenhuma nova notificação encontrada"
-        }
+        },
+        vitalSign: "Sinal Vital",
+        followUp: "Acompanhamento",
+        data: "Deletar"
     },
+
     views: {
         home: {
             subtitle: "Selecione uma das opções abaixo para visualizar as informações desejadas",
@@ -333,6 +341,7 @@ export default {
 
         }
     },
+
     sidebar: {
         sections: {
             general: {
@@ -370,6 +379,7 @@ export default {
             }
         }
     },
+
     footer: {
         home: {
             buttons: {
@@ -421,11 +431,13 @@ export default {
             }
         }
     },
+
     notifications: {
         title: "Notificações",
         markAsRead: "Marque todas como lidas"
     },
-    popupTemplates: {
+
+    formPopupTemplates: {
         name: {
             header: {
                 title: "Alterar Nome do Paciente"
@@ -639,14 +651,36 @@ export default {
                     }
                 }
             }
+        },
+    },
+
+    confirmPopupTemplates: {
+        deleteConfirm: {
+            title: "Tem certeza que deseja remover o {item} selecionado"
+        },
+        resetData: {
+            title: "Tem certeza que deseja redefinir os dados do paciente"
         }
     },
+
     warningMessages: {
         PatientNotFound: {
             title: "Paciente não encontrado"
         },
         PatientUpdated: {
             title: "Dados do paciente atualizados com sucesso"
+        },
+        MedicineNotFound: {
+            title: "Medicamento não encontrado"
+        },
+        MedicineUpdated: {
+            title: "Dados do medicamento atualizados com sucesso"
+        },
+        RecordUpdated: {
+            title: "Dados do monitoramento atualizados com sucesso"
+        },
+        RecordNotFound: {
+            title: "Monitoramento não encontrado"
         },
         NoRecords: {
             title: "Nenhum item encontrado"
@@ -704,6 +738,12 @@ export default {
         },
         SystemDataReset: {
             title: "Dados do paciente redefinidos com sucesso"
+        },
+        MedicineDeleted: {
+          title: "Medicamento removido com sucesso"
+        },
+        RecordRemoved: {
+            title: "Registro selecionado foi removido com sucesso"
         },
         generic: {
             title: "Um erro inesperado aconteceu. Tente novamente mais tarde"

@@ -11,12 +11,23 @@ export class PatientRecord {
             .toArray()
     }
 
+    async getById(id){
+        try{
+            return await this.table
+                .where("_id")
+                .equals(id)
+                .first()
+        }catch(err){
+            console.log("Database Error: ", err)
+        }
+    }
+
     /**
      * @param { String } field
      **/
     async getByField(field){
         return await this.table
-            .where(this.typeField)
+            .where("record")
             .equals(field)
             .toArray()
     }
@@ -39,7 +50,7 @@ export class PatientRecord {
      **/
     async getByFieldAndDate(field, minDate, maxDate = new Date()){
         return await this.table
-            .where(`[${this.typeField}+dateTime]`)
+            .where(`[record+dateTime]`)
             .between(
                 [field, minDate],
                 [field, maxDate],
@@ -47,5 +58,47 @@ export class PatientRecord {
                 true
             )
             .toArray()
+    }
+
+    /**
+     * Updates patient collection merging fields.
+     * Retains the record's original `_id` and overwrite the sended keys.
+     *
+     * @param { Object } newData
+     * @param { String } recordId
+     **/
+    async updateRecord(newData, recordId){
+        try {
+            const record = await this.getById(recordId)
+
+            if(!record){
+                return false
+            }
+
+            // update using the original _id
+            await this.table.put({
+                ...record,
+                ...newData,
+                _id: recordId
+            })
+
+            return true
+        }catch(error) {
+            console.log("Database Error: ", error)
+            throw error
+        }
+    }
+
+    async removeById(id){
+        try{
+            const deleted = await this.table
+                .where("_id")
+                .equals(id)
+                .delete()
+
+            return deleted > 0
+        }catch(err){
+            console.log("Database Error: ", err)
+        }
     }
 }

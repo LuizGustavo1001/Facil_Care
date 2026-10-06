@@ -10,13 +10,15 @@ export default class Patient {
     }
 
     /**
+     * Updates patient data collection
+     *
      * @param { Object } newData
      **/
     async updatePatient(newData){
         const dbPatient = await this.getPatient()
 
         if(!dbPatient){
-            return []
+            return false
         }
 
         // update using the original _id (patientId)
@@ -26,10 +28,26 @@ export default class Patient {
             _id: dbPatient._id
         })
 
-        return await this.getPatient()
+        return true
     }
 
-    async remove(id){
+    /**
+     * Removes an `item` from a `patient subCategory` by updating the `item collection`
+     *
+     * @param { Object } newData - Sub-category new data object
+     **/
+    async removeFromSubCategory(newData){
+        const dbPatient = await this.getPatient()
 
+        if(!dbPatient){
+            return false
+        }
+
+        const updated = await this.table.update(
+            dbPatient._id,
+            newData
+        )
+
+        return updated > 0
     }
 }

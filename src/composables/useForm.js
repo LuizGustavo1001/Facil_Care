@@ -1,12 +1,7 @@
 import { ref } from "vue"
 
-/**
- * isSubmitting: Represents the form state
- * formWarning: Represents the warning sended when database query finishes / fails
- **/
-
 export function useForm(){
-    const isSubmitting = ref(false) // loading
+    const isSubmitting = ref(false)
     const formWarning = ref(null)
 
     /**
@@ -51,7 +46,7 @@ export function useForm(){
      *
      * @return { Object } - Object representing the form data *(ex: { patientName: "name" })*
     **/
-    const extractFormData = (event) => {
+    const extractData = (event) => {
         const formData = new FormData(event.target)
         return Object.fromEntries(formData.entries())
     }
@@ -77,5 +72,5 @@ export function useForm(){
         return result
     }
 
-    return { extractFormData, executeDBSubmit, isSubmitting, formWarning, getInputValue}
+    return { extractData, executeDBSubmit, isSubmitting, formWarning, getInputValue}
 }

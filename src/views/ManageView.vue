@@ -3,36 +3,42 @@
     <template v-if="pageExists">
       <AppOverlay />
 
-      <SnackBar
-          v-if="isWarningActive"
+      <Snackbar
+          :isActive="isWarningActive"
           :message="warning.message"
           :type="warning.type || undefined"
           @click="clearWarning"
       />
 
-      <AppPopup
-          v-if="isPopupOpen"
-          ref="popupRef"
-          :template="popupTemplate"
-          :inputValue="popupValues"
+      <FormPopup
+          :isOpen="isFormOpen"
+          :popupRef="formPopup.popupRef"
+          :template="formTemplate"
+          :inputValue="formValues"
           @submitForm="handleSubmit"
       />
 
+      <ConfirmPopup
+          :isOpen="isConfirmOpen"
+          :popupRef="confirmPopup.popupRef"
+          :title="confirmTitle"
+          :message="confirmMessage"
+          @cancel="confirmPopup.close"
+          @confirm="confirmPopup.handleConfirm"
+      />
+
       <AppHeader
-          :title="getPageTitle(itemId)"
+          :title="getPageTitle(currentCategory)"
           :leftBtnIcon="icons['chevron-left']"
           @return-page="handleReturn"
       />
 
       <main class="main regular gap-2">
-        <section class="main-section regular gap-1">
-          <h2 class="section-title text-muted">{{ getSectionTitle(itemId) }}</h2>
+        <section v-if="formattedData.length > 0" class="main-section regular gap-1">
+          <h2 class="section-title text-muted">{{ getSectionTitle(currentCategory) }}</h2>
 
-          <ul
-              v-if="formattedData.length > 0"
-              class="list flex flex-column gap-1"
-          >
-            <li v-for="item in formattedData" :key="item.id" class="flex align-center gap-1">
+          <ul class="list flex flex-column gap-1">
+            <li v-for="item in formattedData" :key="item.id" class="flex align-center gap-05">
               <ActionButton
                   tag="button"
                   :rightIcon="icons['pencil-line']"
@@ -41,25 +47,22 @@
                   variant="subtle"
                   padding="lg"
                   class="width-full"
-                  @click="handleButtonAction(item, $event)"
-                  style="border-radius: var(--radius-sm)"
+                  @click.stop="handleButtonAction(item, $event)"
               />
 
               <IconBtn
                   :icon="icons['delete-bin-line']"
                   variant="destructive"
-                  @click="handleDelete(itemId, item)"
+                  @click.stop="handleDelete(item)"
               />
             </li>
           </ul>
-
-          <div v-else>
-            <p><NotFoundCard type="item" size="large"/></p>
-          </div>
         </section>
+
+        <NotFoundCard v-else class="main-section center"/>
       </main>
 
-      <AppFooter :page="String(itemId)" />
+      <AppFooter :page="String(currentCategory)" />
     </template>
 
     <template v-else>
@@ -73,43 +76,55 @@
 <script setup>
   import { computed, onMounted, ref, watch } from "vue"
   import { icons } from "../assets/icons/icons.js"
-  import { popupTemplates } from "../locales/projectConfig.js"
+  import { formPopupTemplates } from "../locales/projectConfig.js"
 
   import { useRoute } from "vue-router"
   import { useNavigation } from "../composables/useNavigation.js"
   import { useUtils } from "../composables/useUtils.js"
   import { useI18n } from "vue-i18n"
-  import { useWarning } from "../composables/useWarning.js"
-  import { usePopup } from "../composables/usePopup.js"
+  import { useSnackbar } from "../composables/useSnackbar.js"
   import { useForm } from "../composables/useForm.js"
   import { useDate } from "../composables/useDate.js"
+  import { useConfirmPopup } from "../composables/useConfirmPopup.js"
+  import { useFormPopup } from "../composables/useFormPopup.js"
 
-  import AppHeader from "../components/AppHeader.vue"
-  import ActionButton from "../components/common/ActionButton.vue"
+  import AppHeader from "../components/layout/AppHeader.vue"
+  import ActionButton from "../components/buttons/ActionButton.vue"
   import AppFallback from "./AppFallback.vue"
-  import AppFooter from "../components/AppFooter.vue"
-  import SnackBar from "../components/common/SnackBar.vue"
-  import AppPopup from "../components/AppPopup.vue"
-  import AppOverlay from "../components/AppOverlay.vue"
-  import NotFoundCard from "../components/common/NotFoundCard.vue"
-  import IconBtn from "../components/common/IconBtn.vue"
+  import AppFooter from "../components/layout/AppFooter.vue"
+  import Snackbar from "../components/feedback/Snackbar.vue"
+  import AppOverlay from "../components/layout/AppOverlay.vue"
+  import NotFoundCard from "../components/feedback/NotFoundCard.vue"
+  import IconBtn from "../components/buttons/IconBtn.vue"
+  import FormPopup from "../components/layout/popup/FormPopup.vue"
+  import ConfirmPopup from "../components/layout/popup/ConfirmPopup.vue"
 
   import PatientController from "../controllers/PatientController.js"
   import MedicinesController from "../controllers/MedicinesController.js"
 
   // COMPOSABLES
   const route = useRoute()
+  const form = useForm()
   const { t, te } = useI18n()
   const { handleReturn } = useNavigation()
   const { getPageTitle, MANAGE_PAGES } = useUtils()
-  const { warning, getWarning, clearWarning, isWarningActive } = useWarning()
-  const { isPopupOpen, fillPopup, popupTemplate, closePopup, popupRef, triggerRef, popupValues, popupContext } = usePopup()
-  const { getInputValue, executeDBSubmit } = useForm()
+  const { warning, getWarning, clearWarning, isWarningActive } = useSnackbar()
   const { getFormattedDate } = useDate()
 
+  const confirmPopup = useConfirmPopup()
+  const formPopup = useFormPopup()
+
   // COMPUTED PROPERTIES
+  const isFormOpen = computed(() => formPopup.isOpen.value)
+  const formTemplate = computed(() => formPopup.template.value)
+  const formValues = computed(() => formPopup.values.value)
+
+  const isConfirmOpen = computed(() => confirmPopup.isOpen.value)
+  const confirmTitle = computed(() => confirmPopup.title.value)
+  const confirmMessage = computed(() => confirmPopup.message.value)
+
   // Retrieve page data
-  const itemId = computed(() => route.params.itemId)
+  const currentCategory = computed(() => route.params.category)
 
   // CONTROLLERS
   const patientController = new PatientController()
@@ -121,7 +136,7 @@
 
   // Verify if selected manage page exists
   const pageExists = computed(() => {
-    const rawId = itemId.value
+    const rawId = currentCategory.value
 
     if(!rawId) return null
 
@@ -138,7 +153,7 @@
       medicines: medicines.value
     }
 
-    switch(itemId.value){
+    switch(currentCategory.value){
       case "caregivers":
         for(const caregiver of data.caregivers ?? []){
           formattedData.value.push({
@@ -189,41 +204,83 @@
     return parts.filter(Boolean).join(" • ")
   }
 
-  const getSectionTitle = (itemId) => {
-    return te(`views.${itemId}.sections.registers.title`) ? t(`views.${itemId}.sections.registers.title`) : ""
+  const getSectionTitle = (currentCategory) => {
+    return te(`views.${currentCategory}.sections.registers.title`) ? t(`views.${currentCategory}.sections.registers.title`) : ""
   }
 
-  const handleDelete = async (sectionId, data) => {
-    const confirmDelete = confirm("Tem certeza que deseja remover este item?")
-    if (!confirmDelete) return
+  const handleDelete = (item) => {
+    const title = t(`confirmPopupTemplates.deleteConfirm.title`, { item: item.title }) + "?"
+    confirmPopup.open(title, null, () => handleDeleteConfirmed(item))
+  }
+
+  const handleDeleteConfirmed = async (item) => {
+    let result = null
+
+    if(currentCategory.value === "medicines"){
+      result = await medicineController.removeById(item.id)
+    }else{
+      let idKey = null
+
+      switch (currentCategory.value) {
+        case "caregivers":
+          idKey = "caregiverId"
+              break
+        case "doctors":
+          idKey = "doctorId"
+              break
+        case "allergies":
+          idKey = "allergyId"
+              break
+      }
+
+      const currentArray = patient.value[currentCategory.value] || []
+
+      const updatedArray = currentArray.filter(currentItem => currentItem[idKey] !== item.id)
+
+      // Remapping the updated subcategory of patient
+      const newData = {
+        [currentCategory.value]: updatedArray
+      }
+
+      result = await patientController.removeFromSubCategory(newData)
+    }
+
+    if(result && result.success){
+      await updateData(currentCategory.value, result.data)
+
+      getWarning(result.code)
+    }else if(result){
+      getWarning(result.code)
+    }
   }
 
   // Handle form submit
   const handleSubmit = async (formData) => {
-    const context = popupContext.value
+    const context = formPopup.context.value
     if (!context) return
 
     let result = null
-    const { sectionId, itemId, idKey } = context
+    const { sectionId, currentCategory, idKey } = context
 
     if(sectionId === "medicines"){
-      result = await executeDBSubmit(() => medicineController.updateMedicineData(formData, itemId))
+      result = await form.executeDBSubmit(() => medicineController.updateMedicineData(formData, currentCategory))
     }else{ // Data within patient data
       const currentArray = patient.value[sectionId] || []
 
-      const updatedArray = currentArray.map(item => item[idKey] === itemId ? { ...item, ...formData } : item)
+      const updatedArray = currentArray.map(item => item[idKey] === currentCategory ? { ...item, ...formData } : item)
 
       const newData = {
         [sectionId]: updatedArray
       }
 
-      result = await executeDBSubmit(() => patientController.updatePatient(newData))
+      result = await form.executeDBSubmit(() => patientController.updatePatient(newData))
     }
 
     if(result && result.success){
-      closePopup()
-      getWarning(result.code)
       await updateData(sectionId, result.data)
+
+      getWarning(result.code)
+      formPopup.close()
     }else if(result){
       getWarning(result.code)
     }
@@ -247,38 +304,38 @@
    * @param { Event } event
    **/
   const handleButtonAction = (button, event) => {
-    triggerRef.value = event.currentTarget
+    formPopup.triggerRef.value = event.currentTarget
 
-    const popupTemplate = popupTemplates.find(item => item.id === itemId.value) ?? null
+    const popupTemplate = formPopupTemplates.find(item => item.id === currentCategory.value) ?? null
 
     let dataSource = null
     let idKey = "_id"
 
-    if(itemId.value === "medicines") {
+    if(currentCategory.value === "medicines") {
       dataSource = medicines.value
       idKey = "_id"
-    }else if(itemId.value === "caregivers"){
+    }else if(currentCategory.value === "caregivers"){
       dataSource = patient.value?.caregivers
       idKey = "caregiverId"
-    }else if(itemId.value === "doctors"){
+    }else if(currentCategory.value === "doctors"){
       dataSource = patient.value?.doctors
       idKey = "doctorId"
-    }else if(itemId.value === "allergies"){
+    }else if(currentCategory.value === "allergies"){
       dataSource = patient.value?.allergies
       idKey = "allergyId"
     }
 
-    const currentInputValues = getInputValue(dataSource, popupTemplate, idKey)
+    const currentInputValues = form.getInputValue(dataSource, popupTemplate, idKey)
     const currentData = currentInputValues[0] || {}
 
-    const context = { sectionId: itemId.value, fieldId: button.id, itemId: currentData[idKey], idKey: idKey }
+    const context = { sectionId: currentCategory.value, fieldId: button.id, currentCategory: currentData[idKey], idKey: idKey }
 
-    fillPopup(popupTemplate, currentInputValues[0], context)
+    formPopup.open(popupTemplate, currentData, context)
   }
 
   // WATCHES
   // If updates -> refill section
-  watch([patient, medicines, itemId], () => {
+  watch([patient, medicines, currentCategory], () => {
     fillSection()
   }, { deep: true })
 

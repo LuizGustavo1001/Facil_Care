@@ -155,4 +155,71 @@ export default class PatientRecordController {
             }
         }
     }
+
+    /**
+     * Updates patient's record data merging fields.
+     * Retains the record's original `_id` and overwrite the sended keys.
+     *
+     * @param { Object } newData - Containing the attributes to be overwritten or updated
+     * @param { String } recordId - Id of the record to be updated
+     * @param { String } type - Selected collection's item to be returned
+     **/
+    async updatePatientRecord(newData, recordId, type) {
+        try{
+            const updated = await this.model.updateRecord(newData, recordId)
+
+            if(!updated){
+                return {
+                    success: false,
+                    code: "RecordNotFound",
+                    data: []
+                }
+            }
+
+            const records = await this.model.getByField(type)
+
+            return {
+                success: true,
+                code: "RecordUpdated",
+                data: records
+            }
+        }catch(error){
+            console.log("DB error: ", error)
+            return {
+                success: false,
+                code: "DatabaseError",
+                data: []
+            }
+        }
+    }
+
+
+    async removeRecordById(id, type){
+        try {
+            const removed = await this.model.removeById(id)
+
+            if(!removed){
+                return {
+                    success: false,
+                    code: "RecordNotFound",
+                    data: []
+                }
+            }
+
+            const records = await this.model.getByField(type)
+
+            return {
+                success: true,
+                code: "RecordRemoved",
+                data: records
+            }
+        }catch(error){
+            console.log("DB error: ", error)
+            return {
+                success: false,
+                code: "DatabaseError",
+                data: []
+            }
+        }
+    }
 }

@@ -1,8 +1,10 @@
 <template>
-  <div
-      class="snackbar flex gap-1 align-center justify-between cursor-pointer active-border fixed"
-      :class="props.type"
-  >
+  <transition name="fade-bounce" mode="out-in">
+    <div
+        v-if="isActive"
+        class="snackbar flex gap-1 align-center justify-between cursor-pointer active-border fixed"
+        :class="props.type"
+    >
     <span class="flex gap-05 align-center flex-grow-1">
       <Icon
           :icon="icons['warning-circle-fill']"
@@ -14,8 +16,9 @@
       </span>
     </span>
 
-    <Icon :icon="icons.close" class="right-icon" />
-  </div>
+      <Icon :icon="icons.close" class="right-icon"/>
+    </div>
+  </transition>
 </template>
 
 <style scoped>
@@ -32,12 +35,7 @@
     border-radius: var(--radius-md);
     font-size: var(--text-body-lg);
 
-    animation: fade-in 0.5s ease-out forwards;
-
     z-index: 10;
-  }
-  .snackbar:active{
-    transform: scale(0.98) translateX(-50%);
   }
 
   /* VARIANTS */
@@ -68,7 +66,7 @@
 
 <script setup>
   import { icons } from "../../assets/icons/icons.js"
-  import Icon from "./Icon.vue"
+  import Icon from "../icons/Icon.vue"
 
   // PROPS
   const props = defineProps({
@@ -76,6 +74,10 @@
     type: {
       type: String,
       default: 'success'
+    },
+    isActive: {
+      type: Boolean,
+      required: true
     }
   })
 </script>

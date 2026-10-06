@@ -36,7 +36,7 @@
           @click="toggleNotifications"
       />
       <NotificationsMenu
-        v-if="isNotificationsOpen"
+        :isOpen="isNotificationsOpen"
         @close="isNotificationsOpen = false"
       />
     </div>
@@ -50,7 +50,7 @@
     padding: var(--spacing-md);
     background: var(--color-bg-primary);
 
-    border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
     box-shadow: 0 0 3px 3px var(--color-shadow-subtle);
 
     z-index: 1;
@@ -64,9 +64,9 @@
 <script setup>
   import { ref } from "vue"
 
-  import { icons } from "../assets/icons/icons.js"
+  import { icons } from "../../assets/icons/icons.js"
 
-  import IconBtn from "./common/IconBtn.vue"
+  import IconBtn from "../buttons/IconBtn.vue"
   import NotificationsMenu from "./NotificationsMenu.vue"
 
   // PROPS

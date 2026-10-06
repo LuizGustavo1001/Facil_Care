@@ -1,38 +1,47 @@
 <template>
   <div class="view regular">
-    <template v-if="pageExists(currentType)">
+    <template v-if="pageExists(currentCategory)">
+      <AppOverlay />
 
-      <SnackBar
-          v-if="isWarningActive"
+      <ConfirmPopup
+          :isOpen="isConfirmOpen"
+          :popupRef="confirmPopup.popupRef"
+          :title="confirmTitle"
+          :message="confirmMessage"
+          @cancel="confirmPopup.close"
+          @confirm="confirmPopup.handleConfirm"
+      />
+
+      <Snackbar
+          :isActive="isWarningActive"
           :message="warning.message"
           :type="warning.type || undefined"
           @click="clearWarning"
       />
 
       <AppHeader
-          :title="getPageTitle(currentItem)"
+          :title="getPageTitle(currentType)"
           :leftBtnIcon="icons['chevron-left']"
           @return-page="handleReturn"
       />
 
       <main class="main regular gap-2">
         <section class="main-section regular gap-1">
-          <ul
-              v-if="formattedData.length > 0"
-              class="list"
-          >
-            <li
-                v-for="item in formattedData"
-                :key="item._id"
-            >
+          <ul v-if="formattedData.length > 0" class="list flex flex-column gap-1">
+            <li v-for="item in formattedData" :key="item._id" class="flex align-center gap-05">
               <ActionButton
                   tag="button"
-                  :rightIcon="icons['pencil-line']"
                   :title="item.value"
                   :description="item.description"
                   variant="subtle"
                   padding="lg"
                   class="width-full"
+              />
+
+              <IconBtn
+                  :icon="icons['delete-bin-line']"
+                  variant="destructive"
+                  @click.stop="handleDelete(item)"
               />
             </li>
           </ul>
@@ -41,7 +50,7 @@
         </section>
       </main>
 
-      <AppFooter :page="currentItem" />
+      <AppFooter :page="currentType" />
     </template>
 
     <template v-else>
@@ -57,54 +66,119 @@
   import { icons } from "../assets/icons/icons.js"
 
   import { useRoute } from "vue-router"
+  import { useI18n } from "vue-i18n"
+
   import { useNavigation } from "../composables/useNavigation.js"
   import { useDate } from "../composables/useDate.js"
   import { useUtils } from "../composables/useUtils.js"
-  import { useWarning } from "../composables/useWarning.js"
+  import { useSnackbar } from "../composables/useSnackbar.js"
+  import { useConfirmPopup } from "../composables/useConfirmPopup.js"
 
-  import AppHeader from "../components/AppHeader.vue"
+  import AppHeader from "../components/layout/AppHeader.vue"
   import AppFallback from "./AppFallback.vue"
-  import SnackBar from "../components/common/SnackBar.vue"
-  import AppFooter from "../components/AppFooter.vue"
-  import ActionButton from "../components/common/ActionButton.vue"
-  import NotFoundCard from "../components/common/NotFoundCard.vue"
+  import Snackbar from "../components/feedback/Snackbar.vue"
+  import AppFooter from "../components/layout/AppFooter.vue"
+  import ActionButton from "../components/buttons/ActionButton.vue"
+  import NotFoundCard from "../components/feedback/NotFoundCard.vue"
+  import IconBtn from "../components/buttons/IconBtn.vue"
+  import ConfirmPopup from "../components/layout/popup/ConfirmPopup.vue"
+  import AppOverlay from "../components/layout/AppOverlay.vue"
 
   import VitalSignsController from "../controllers/VitalSignsController.js"
   import FollowUpsController from "../controllers/FollowUpsController.js"
 
   // COMPOSABLES
   const route = useRoute()
-  const { getWarning, warning, isWarningActive, clearWarning } = useWarning()
+  const confirmPopup = useConfirmPopup()
+  const { t } = useI18n()
+  const { getWarning, warning, isWarningActive, clearWarning } = useSnackbar()
   const { handleReturn } = useNavigation()
   const { getFormattedDate } = useDate()
   const { getPageTitle, PAGES, MONITORING_VITAL_SIGNS_PAGES, MONITORING_FOLLOW_UPS_PAGES } = useUtils()
 
   // COMPUTED PROPERTIES
-  // Returns selected monitoring type
-  const currentType = computed(() => {
-    return route.params.type || null
+  const isConfirmOpen = computed(() => confirmPopup.isOpen.value)
+  const confirmTitle = computed(() => confirmPopup.title.value)
+  const confirmMessage = computed(() => confirmPopup.message.value)
+
+  // Returns selected monitoring type (Vital Sign or Follow Up)
+  const currentCategory = computed(() => {
+    return route.params.category || null
   })
 
   // Returns selected monitoring type item
-  const currentItem = computed(() => {
-    return route.params.itemId || null
+  const currentType = computed(() => {
+    return route.params.type || null
   })
 
   // FUNCTIONS
   // Verify if selected monitoring overview page exists
   const pageExists = () => {
-    if(currentType.value === PAGES['FOLLOW_UPS']){
-      return MONITORING_FOLLOW_UPS_PAGES.includes(currentItem.value)
+    if(currentCategory.value === PAGES['FOLLOW_UPS']){
+      return MONITORING_FOLLOW_UPS_PAGES.includes(currentType.value)
     }
 
-    if(currentType.value === PAGES['VITAL_SIGN']){
-      return MONITORING_VITAL_SIGNS_PAGES.includes(currentItem.value)
+    if(currentCategory.value === PAGES['VITAL_SIGN']){
+      return MONITORING_VITAL_SIGNS_PAGES.includes(currentType.value)
     }
 
     return false
   }
 
-  // Controllers
+  const handleDelete = async (item) => {
+    const titleSlot = computed(() => {
+      return currentCategory.value === "vitalSigns" ? t(`utils.vitalSign`) : t(`utils.followUp`)
+    })
+
+    const title = t(`confirmPopupTemplates.deleteConfirm.title`, { item: titleSlot.value.toLowerCase() }) + "?"
+    confirmPopup.open(title, null, () => handleDeleteConfirmed(item))
+  }
+
+  const handleDeleteConfirmed = async (item) => {
+    let result = null
+
+    if(currentCategory.value === "vitalSigns"){
+      result = await vitalSignsController.removeRecordById(item.id, currentType.value)
+    }else if(currentCategory.value === "followUps"){
+      result = await followUpsController.removeRecordById(item.id, currentType.value)
+    }
+
+    if(result && result.success){
+      monitoringData.value = result.data
+
+      // Formatting result
+      setFormattedData(result.data)
+
+      getWarning(result.code)
+    }else if(result){
+      getWarning(result.code)
+    }
+  }
+
+  /**
+   * Formats the database data into information to be displayed on the screen
+   *
+   * @param { Object | Array } result - Database query result
+   **/
+  const setFormattedData = (result) => {
+    formattedData.value = []
+
+    for(const item of result){
+      const formattedDate = item.dateTime ? getFormattedDate(new Date(item.dateTime)) : null
+      const descriptionParts = [item.caregiverName, formattedDate].filter(Boolean)
+      const unitText = item.unit ? item.unit : ''
+
+      formattedData.value.push({
+        id: item._id,
+        value: `${item.value}${unitText ? ` ${unitText}` : ''}`.trim(),
+        description: descriptionParts.join(' • '),
+        observation: item.observation || '',
+        type: item.record
+      })
+    }
+  }
+
+  // CONTROLLERS
   const vitalSignsController = new VitalSignsController()
   const followUpsController = new FollowUpsController()
 
@@ -115,12 +189,12 @@
   onMounted(async () => {
     let result = []
 
-    switch(currentType.value){
+    switch(currentCategory.value){
       case PAGES['FOLLOW_UPS']:
-        result = await followUpsController.getByField(currentItem.value)
+        result = await followUpsController.getByField(currentType.value)
         break
       case PAGES['VITAL_SIGN']:
-        result = await vitalSignsController.getByField(currentItem.value)
+        result = await vitalSignsController.getByField(currentType.value)
         break
     }
 
@@ -131,17 +205,6 @@
     }
 
     // Formatting result
-    for(const item of result.data){
-      const formattedDate = item.dateTime ? getFormattedDate(new Date(item.dateTime)) : null
-      const descriptionParts = [item.caregiverName, formattedDate].filter(Boolean)
-      const unitText = item.unit ? item.unit : ''
-
-      formattedData.value.push({
-        id: item.id,
-        value: `${item.value}${unitText ? ` ${unitText}` : ''}`.trim(),
-        description: descriptionParts.join(' • '),
-        observation: item.observation || ''
-      })
-    }
+    setFormattedData(result.data)
   })
 </script>

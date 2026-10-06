@@ -7,19 +7,19 @@ export function useSidebar() {
     const sidebarRef = ref(null)
     const toggleBtnRef = ref(null)
 
-    const { showOverlay, hideOverlay } = useOverlay()
+    const overlay = useOverlay()
 
     const openSidebar = () => {
         if(!isSidebarActive.value){
             isSidebarActive.value = true
-            showOverlay()
+            overlay.show()
         }
     }
 
     const closeSidebar = () => {
         if(isSidebarActive.value){
             isSidebarActive.value = false
-            hideOverlay()
+            overlay.hide()
         }
     }
 

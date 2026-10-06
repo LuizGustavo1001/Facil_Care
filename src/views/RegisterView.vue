@@ -1,7 +1,7 @@
 <template>
   <div class="view regular">
-    <SnackBar
-        v-if="isWarningActive"
+    <Snackbar
+        :isActive="isWarningActive"
         :message="warning.message"
         :type="warning.type || undefined"
         @click="clearWarning"
@@ -36,14 +36,14 @@
   import { icons } from "../assets/icons/icons.js"
 
   import { useNavigation } from "../composables/useNavigation.js"
-  import { useWarning } from "../composables/useWarning.js"
+  import { useSnackbar } from "../composables/useSnackbar.js"
 
-  import AppHeader from "../components/AppHeader.vue"
-  import Input from "../components/common/Input.vue"
-  import AppFooter from "../components/AppFooter.vue"
-  import SnackBar from "../components/common/SnackBar.vue"
+  import AppHeader from "../components/layout/AppHeader.vue"
+  import Input from "../components/forms/Input.vue"
+  import AppFooter from "../components/layout/AppFooter.vue"
+  import Snackbar from "../components/feedback/Snackbar.vue"
 
   // COMPOSABLES
   const { handleReturn } = useNavigation()
-  const { warning, getWarning, isWarningActive, clearWarning } = useWarning()
+  const { warning, getWarning, isWarningActive, clearWarning } = useSnackbar()
 </script>

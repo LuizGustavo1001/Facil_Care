@@ -151,6 +151,7 @@ export const emergencyDataView = {
     sections: [
         {
             id: "patient",
+            icon: icons['user-fill'],
             component: "alt",
             btnAction: "popup",
             buttons: [
@@ -183,21 +184,25 @@ export const emergencyDataView = {
         },
         {
             id: "emergencyContacts",
+            icon: icons['contacts-fill'],
             component: "default",
             btnAction: "default"
         },
         {
             id: "allergies",
+            icon: icons['virus-fill'],
             component: "default",
             btnAction: "default"
         },
         {
             id: "healthPlans",
+            icon: icons['first-aid-fill'],
             component: "default",
             btnAction: "default"
         },
         {
             id: "others",
+            icon: icons['book-read-fill'],
             component: "alt",
             btnAction: "internalLink",
             buttons: [
@@ -364,11 +369,31 @@ export const registerView = {
 export const warningMessages = [
     {
         id: "PatientNotFound",
-        type: "error"
+        type: "warning"
     },
     {
         id: "PatientUpdated",
         type: "success"
+    },
+    {
+        id: "MedicineUpdated",
+        type: "success"
+    },
+    {
+        id: "MedicineNotFound",
+        type: "warning"
+    },
+    {
+        id: "RecordUpdated",
+        type: "success"
+    },
+    {
+        id: "RecordDeleted",
+        type: "success"
+    },
+    {
+        id: "RecordNotFound",
+        type: "warning"
     },
     {
         id: "NoRecords",
@@ -439,16 +464,23 @@ export const warningMessages = [
         type: "error"
     },
     {
+        id: "MedicineDeleted",
+        type: "success"
+    },
+    {
+        id: "RecordRemoved",
+        type: "success"
+    },
+    {
         id: "SystemDataReset",
         type: "success"
     }
 ]
 
-export const popupTemplates = [
+export const formPopupTemplates = [
     {
         id: "name",
         main: {
-            type: "form",
             inputs: [
                 {
                     id: "usr_1",
@@ -469,7 +501,6 @@ export const popupTemplates = [
     {
         id: "birthDate",
         main: {
-            type: "form",
             inputs: [
                 {
                     id: "bday",
@@ -489,7 +520,6 @@ export const popupTemplates = [
     {
         id: "bloodType",
         main: {
-            type: "form",
             inputs: [
                 {
                     id: "bloodType",
@@ -534,7 +564,6 @@ export const popupTemplates = [
     {
         id: "weight",
         main: {
-            type: "form",
             inputs: [
                 {
                     id: "weight",
@@ -557,7 +586,6 @@ export const popupTemplates = [
     {
         id: "address",
         main: {
-            type: "form",
             inputs: [
                 {
                     id: "address",
@@ -578,7 +606,6 @@ export const popupTemplates = [
     {
         id: "medicines",
         main: {
-            type: "form",
             inputs: [
                 {
                     id: "name",
@@ -625,7 +652,6 @@ export const popupTemplates = [
     {
         id: "caregivers",
         main: {
-            type: "form",
             inputs: [
                 {
                     id: "name",
@@ -660,7 +686,6 @@ export const popupTemplates = [
     {
         id: "doctors",
         main: {
-            type: "form",
             inputs: [
                 {
                     id: "name",
@@ -696,7 +721,6 @@ export const popupTemplates = [
     {
         id: "allergies",
         main: {
-            type: "form",
             inputs: [
                 {
                     id: "name",

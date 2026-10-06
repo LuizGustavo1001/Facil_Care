@@ -28,7 +28,7 @@
                 :to="item.route"
                 :key="item.id"
                 class="sidebar-item flex align-center gap-05 active-border"
-                @click="resetOverlay"
+                @click="overlay.reset()"
             >
               <Icon
                   v-if="item.icon"
@@ -52,6 +52,7 @@
           :title="$t(`utils.deleteAccount`)"
           padding="sm"
           class="btn"
+          @click="overlay.reset()"
       />
     </div>
 
@@ -78,7 +79,7 @@
     margin-inline: 0.5em;
     top: 0.5em;
 
-    border-radius: var(--radius-xl);
+    border-radius: var(--radius-lg);
     border: 1px solid var(--color-border-default);
 
     height: calc(100dvh - 1em);
@@ -104,7 +105,7 @@
   .sidebar-item{
     padding: var(--spacing-sm);
     color: inherit;
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-sm);
     transition: 0.2s all;
   }
   .sidebar-item:hover{
@@ -121,8 +122,10 @@
 
   .patient-info{
     padding: var(--spacing-xs);
-    border-radius: var(--radius-2xl);
+    border-radius: var(--radius-lg);
     background: var(--color-bg-subtle);
+
+    box-shadow: 0 0 2px 1px var(--color-shadow-subtle);
   }
 
   .patient-info .icon{
@@ -140,15 +143,15 @@
 
 <script setup>
   import { computed } from "vue"
-  import { sidebar } from "../locales/projectConfig.js"
-  import { icons } from "../assets/icons/icons.js"
+  import { sidebar } from "../../locales/projectConfig.js"
+  import { icons } from "../../assets/icons/icons.js"
 
-  import { useDate } from "../composables/useDate.js"
+  import { useDate } from "../../composables/useDate.js"
   import { useI18n } from "vue-i18n"
-  import { useOverlay } from "../composables/useOverlay.js"
+  import { useOverlay } from "../../composables/useOverlay.js"
 
-  import ActionButton from "./common/ActionButton.vue"
-  import Icon from "./common/Icon.vue"
+  import ActionButton from "../buttons/ActionButton.vue"
+  import Icon from "../icons/Icon.vue"
 
   // PROPS
   const props = defineProps({
@@ -157,7 +160,7 @@
 
   // COMPOSABLES
   const { t, te } = useI18n()
-  const { resetOverlay } = useOverlay()
+  const overlay = useOverlay()
 
   // COMPUTED PROPERTIES
   const age = computed(() => {

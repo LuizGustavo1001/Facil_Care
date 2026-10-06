@@ -2,18 +2,18 @@
   <div class="view regular">
     <AppOverlay />
 
-    <SnackBar
-        v-if="isWarningActive"
+    <Snackbar
+        :isActive="isWarningActive"
         :message="warning.message"
         :type="warning.type || undefined"
         @click="clearWarning"
     />
 
-    <AppPopup
-        v-if="isPopupOpen"
-        ref="popupRef"
-        :template="popupTemplate"
-        :inputValue="popupValues"
+    <FormPopup
+        :isOpen="isFormOpen"
+        :popupRef="formPopup.popupRef"
+        :template="formTemplate"
+        :inputValue="formValues"
         @submitForm="handleSubmit"
     />
 
@@ -30,7 +30,11 @@
           class="main-section regular gap-1"
       >
         <div class="section-title">
-          <h2>{{ getSectionTitle(content) }}</h2>
+          <div class="flex gap-05 align-center">
+            <Icon :icon="content.icon" size="25px" class="text-muted"/>
+            <h2>{{ getSectionTitle(content) }}</h2>
+          </div>
+
           <p
               v-if="getSectionTitle(content)"
               class="text-muted"
@@ -63,7 +67,7 @@
   .item-list{
     background: var(--color-bg-subtle);
     padding: var(--spacing-md);
-    border-radius: var(--radius-2xl);
+    border-radius: var(--radius-lg);
   }
 </style>
 
@@ -72,37 +76,43 @@
   import { icons } from "../assets/icons/icons.js"
 
   import { emergencyDataView } from "../locales/projectConfig.js"
-  import { popupTemplates } from "../locales/projectConfig.js"
+  import { formPopupTemplates } from "../locales/projectConfig.js"
 
   import { useI18n } from "vue-i18n"
   import { useNavigation } from "../composables/useNavigation.js"
-  import { usePopup } from "../composables/usePopup.js"
   import { useUtils } from "../composables/useUtils.js"
-  import { useWarning } from "../composables/useWarning.js"
+  import { useSnackbar } from "../composables/useSnackbar.js"
   import { useDate } from "../composables/useDate.js"
   import { useForm } from "../composables/useForm.js"
+  import { useFormPopup } from "../composables/useFormPopup.js"
 
-  import AppHeader from "../components/AppHeader.vue"
-  import AppFooter from "../components/AppFooter.vue"
-  import ActionButton from "../components/common/ActionButton.vue"
-  import ActionButtonAlt from "../components/common/ActionButtonAlt.vue"
-  import SnackBar from "../components/common/SnackBar.vue"
-  import AppPopup from "../components/AppPopup.vue"
-  import AppOverlay from "../components/AppOverlay.vue"
+  import AppHeader from "../components/layout/AppHeader.vue"
+  import AppFooter from "../components/layout/AppFooter.vue"
+  import ActionButton from "../components/buttons/ActionButton.vue"
+  import ActionButtonAlt from "../components/buttons/ActionButtonAlt.vue"
+  import Snackbar from "../components/feedback/Snackbar.vue"
+  import AppOverlay from "../components/layout/AppOverlay.vue"
+  import FormPopup from "../components/layout/popup/FormPopup.vue"
+  import Icon from "../components/icons/Icon.vue"
 
   import PatientController from "../controllers/PatientController.js"
   import MedicinesController from "../controllers/MedicinesController.js"
 
   // COMPOSABLES
-  const { t, te, tm } = useI18n()
+  const { t, te } = useI18n()
   const { handleReturn } = useNavigation()
-  const { isPopupOpen, fillPopup, popupTemplate, closePopup, popupRef, triggerRef, popupValues, popupContext } = usePopup()
   const { getPageTitle, PAGES } = useUtils()
-  const { getWarning, warning, clearWarning, isWarningActive } = useWarning()
+  const { getWarning, warning, clearWarning, isWarningActive } = useSnackbar()
   const { getFormattedDate } = useDate()
-  const { executeDBSubmit, getInputValue } = useForm()
+  const form = useForm()
+  const formPopup = useFormPopup()
 
   // COMPUTED PROPERTIES
+  const isFormOpen = computed(() => formPopup.isOpen.value)
+  const formTemplate = computed(() => formPopup.template.value)
+  const formValues = computed(() => formPopup.values.value)
+
+  // CONTROLLERS
   const patientController = new PatientController()
   const medicineController = new MedicinesController()
   const patient = ref({})
@@ -213,19 +223,19 @@
    * @param { Event } event
    **/
   const handleButtonAction = (section, button, event) => {
-    triggerRef.value = event.currentTarget
+    formPopup.triggerRef.value = event.currentTarget
 
     if(section.btnAction === "popup") {
-      const popupTemplate = popupTemplates.find(item => item.id === button.id) ?? null
+      const popupTemplate = formPopupTemplates.find(item => item.id === button.id) ?? null
 
       let currentInputValues = null
       if(section.id === "patient") {
-        currentInputValues = getInputValue(patient.value, popupTemplate)
+        currentInputValues = form.getInputValue(patient.value, popupTemplate)
       }
 
       const context = { sectionId: section.id, fieldId: button.id }
 
-      fillPopup(popupTemplate, currentInputValues, context)
+      formPopup.open(popupTemplate, currentInputValues, context)
     }
   }
 
@@ -265,7 +275,7 @@
       return {
         rightIcon: icons["pencil-line"],
         tag: "button",
-        ref: triggerRef
+        ref: formPopup.triggerRef
       }
     }
 
@@ -322,19 +332,19 @@
   }
 
   const handleSubmit = async (formData) => {
-    const context = popupContext.value
+    const context = formPopup.context.value
     if(!context) return
 
     let result = null
 
     if(context.sectionId === "patient"){
-      result = await executeDBSubmit(() => patientController.updatePatient(formData))
+      result = await form.executeDBSubmit(() => patientController.updatePatient(formData))
     }
 
     if(result && result.success){
-      closePopup()
-      getWarning(result.code)
       patient.value = result.data
+      formPopup.close()
+      getWarning(result.code)
     }else if(result){
       getWarning(result.code)
     }

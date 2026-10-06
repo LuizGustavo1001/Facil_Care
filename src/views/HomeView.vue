@@ -1,7 +1,7 @@
 <template>
   <div class="view regular">
-    <SnackBar
-        v-if="isWarningActive"
+    <Snackbar
+        :isActive="isWarningActive"
         :message="warning.message"
         :type="warning.type || undefined"
         @click="clearWarning"
@@ -55,21 +55,21 @@
   import { homeView } from "../locales/projectConfig.js"
   import { icons } from "../assets/icons/icons.js"
 
-  import { useWarning } from "../composables/useWarning.js"
+  import { useSnackbar } from "../composables/useSnackbar.js"
   import { useSidebar } from "../composables/useSidebar.js"
 
-  import AppHeader from "../components/AppHeader.vue"
-  import AppSidebar from "../components/AppSidebar.vue"
-  import AppOverlay from "../components/AppOverlay.vue"
-  import AppFooter from "../components/AppFooter.vue"
-  import SnackBar from "../components/common/SnackBar.vue"
-  import ActionButtonAlt from "../components/common/ActionButtonAlt.vue"
+  import AppHeader from "../components/layout/AppHeader.vue"
+  import AppSidebar from "../components/layout/AppSidebar.vue"
+  import AppOverlay from "../components/layout/AppOverlay.vue"
+  import AppFooter from "../components/layout/AppFooter.vue"
+  import Snackbar from "../components/feedback/Snackbar.vue"
+  import ActionButtonAlt from "../components/buttons/ActionButtonAlt.vue"
 
   import PatientController from "../controllers/PatientController.js"
 
   // COMPOSABLES
   const { isSidebarActive, sidebarRef, toggleBtnRef, toggleSidebar } = useSidebar()
-  const { warning, getWarning, isWarningActive, clearWarning } = useWarning()
+  const { warning, getWarning, isWarningActive, clearWarning } = useSnackbar()
 
   // CONTROLLERS
   const patientController = new PatientController()

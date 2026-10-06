@@ -69,7 +69,7 @@ export default class NotificationsController {
     }
 
     /**
-     * Marks every notification at database as **read**.
+     * Marks every notification as **read**.
      **/
     async markAllAsRead(){
         try{

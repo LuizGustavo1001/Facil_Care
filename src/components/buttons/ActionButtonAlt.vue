@@ -45,13 +45,15 @@
 <style scoped>
   .action-btn-alt{
     padding: var(--spacing-2xs) var(--spacing-sm) var(--spacing-2xs) var(--spacing-2xs);
-    border-radius: var(--radius-2xl);
+    border-radius: var(--radius-lg);
 
     border: 3px solid transparent;
 
     text-align: start;
     cursor: pointer;
     transition: 0.2s ease-out;
+
+    box-shadow: 0 0 2px 1px var(--color-shadow-subtle);
   }
 
   .action-btn-alt .right-icon{
@@ -60,7 +62,7 @@
 
   .action-btn-alt .left-icon-wrapper{
     padding: 1.25rem 0.75rem;
-    border-radius: var(--radius-2xl);
+    border-radius: var(--radius-md);
 
     display: inline-flex;
     align-items: center;
@@ -75,7 +77,7 @@
 
   .btn-content .btn-content-description{
     font-size: var(--text-body-lg);
-    font-weight: var(--bold-weight);
+    font-weight: var(--medium-weight);
   }
 
   /* VARIANTS */
@@ -148,7 +150,7 @@
   import { computed } from "vue"
   import { RouterLink } from "vue-router"
 
-  import Icon from "./Icon.vue"
+  import Icon from "../icons/Icon.vue"
 
   // STATIC VARIABLES
   const VARIANTS = ["subtle", "primary"]

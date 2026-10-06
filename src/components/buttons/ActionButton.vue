@@ -18,7 +18,7 @@
           class="left-icon"
       />
 
-      <span class="btn-content flex flex-column flex-grow-1 flex flex-column">
+      <span class="btn-content flex flex-column flex-grow-1 gap-03">
         <span class="btn-content-title truncate-multi width-full">
           <slot name="title">{{ title }}</slot>
         </span>
@@ -45,7 +45,7 @@
   .action-btn{
     text-align: v-bind(textAlign);
 
-    border-radius: var(--radius-2xl);
+    border-radius: var(--radius-lg);
     border: none;
 
     cursor: pointer;
@@ -58,7 +58,7 @@
   }
 
   .btn-content .btn-content-description{
-    font-weight: var(--bold-weight);
+    font-weight: var(--medium-weight);
     font-size: var(--text-body-lg);
   }
 
@@ -121,7 +121,7 @@
   import { computed } from "vue"
   import { RouterLink } from "vue-router"
 
-  import Icon from "./Icon.vue"
+  import Icon from "../icons/Icon.vue"
 
   // STATIC VARIABLES
   const VARIANTS = ["highlight", "subtle", "destructive", "transparent", "primary"]

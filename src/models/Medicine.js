@@ -14,13 +14,29 @@ export default class Medicine {
             return await this.table
                 .where("_id")
                 .equals(id)
-                .toArray()
+                .first()
+        }catch(err){
+            console.log("Database Error: ", err)
+        }
+    }
+
+    async removeById(id){
+        try{
+            const deleted = await this.table
+                .where("_id")
+                .equals(id)
+                .delete()
+
+            return deleted > 0
         }catch(err){
             console.log("Database Error: ", err)
         }
     }
 
     /**
+     * Updates medicine collection merging fields.
+     * Retains the record's original `_id` and overwrite the sended keys.
+     *
      * @param { Object } newData
      * @param { String } medicineId
      **/

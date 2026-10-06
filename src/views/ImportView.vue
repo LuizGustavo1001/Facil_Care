@@ -1,7 +1,7 @@
 <template>
   <div class="view regular">
-    <SnackBar
-        v-if="isWarningActive"
+    <Snackbar
+        :isActive="isWarningActive"
         :message="warning.message"
         :type="warning.type || undefined"
         @click="clearWarning"
@@ -141,16 +141,16 @@
   import { onMounted, ref, watch } from "vue"
   import { icons } from "../assets/icons/icons.js"
 
-  import SnackBar from "../components/common/SnackBar.vue"
-  import AppHeader from "../components/AppHeader.vue"
-  import AppFooter from "../components/AppFooter.vue"
-  import Icon from "../components/common/Icon.vue"
-  import ActionButton from "../components/common/ActionButton.vue"
+  import Snackbar from "../components/feedback/Snackbar.vue"
+  import AppHeader from "../components/layout/AppHeader.vue"
+  import AppFooter from "../components/layout/AppFooter.vue"
+  import Icon from "../components/icons/Icon.vue"
+  import ActionButton from "../components/buttons/ActionButton.vue"
 
   import { useRoute } from "vue-router"
   import { useUtils } from "../composables/useUtils.js"
   import { useNavigation } from "../composables/useNavigation.js"
-  import { useWarning } from "../composables/useWarning.js"
+  import { useSnackbar } from "../composables/useSnackbar.js"
   import { useDexieBackup } from "../composables/useDexieBackup.js"
   import { usePeerSync } from "../composables/usePeerSync.js"
 
@@ -158,7 +158,7 @@
   const route = useRoute()
   const { getPageTitle, PAGES } = useUtils()
   const { handleReturn } = useNavigation()
-  const { warning, getWarning, isWarningActive, clearWarning } = useWarning()
+  const { warning, getWarning, isWarningActive, clearWarning } = useSnackbar()
   const { isImporting, backupError, importFromJSON } = useDexieBackup()
   const { peerStatus, peerError, connectToHostAndImport } = usePeerSync()
 
