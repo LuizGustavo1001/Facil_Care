@@ -1,16 +1,16 @@
 <template>
   <div class="view regular">
     <Snackbar
-        :isActive="isWarningActive"
-        :message="warning.message"
-        :type="warning.type || undefined"
-        @click="clearWarning"
+        :isActive="isSnakcbarOpen"
+        :message="snackbar.data.message"
+        :type="snackbar.data.type || undefined"
+        @click="snackbar.open"
     />
 
     <AppHeader
         title="Registrar Administração"
         :leftBtnIcon="icons['chevron-left']"
-        @return-page="handleReturn"
+        @return-page="navigation.handleReturn"
     />
 
     <main class="main regular gap-1">
@@ -33,6 +33,7 @@
 <style scoped></style>
 
 <script setup>
+  import { computed } from "vue"
   import { icons } from "../assets/icons/icons.js"
 
   import { useNavigation } from "../composables/useNavigation.js"
@@ -44,6 +45,9 @@
   import Snackbar from "../components/feedback/Snackbar.vue"
 
   // COMPOSABLES
-  const { handleReturn } = useNavigation()
-  const { warning, getWarning, isWarningActive, clearWarning } = useSnackbar()
+  const navigation = useNavigation()
+  const snackbar = useSnackbar()
+
+  // COMPUTED PROPERTIES
+  const isSnakcbarOpen = computed(() => snackbar.isActive.value)
 </script>

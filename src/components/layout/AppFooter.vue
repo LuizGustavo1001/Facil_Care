@@ -8,7 +8,7 @@
             :leftIcon="btn.leftIcon"
             padding="md"
             :rightIcon="btn.rightIcon || icons['chevron-right']"
-            :title="$t(`footer.${props.page}.buttons.${btn.id}.title`)"
+            :title="t(`footer.${props.page}.buttons.${btn.id}.title`)"
             style="border-radius: var(--radius-2xl)"
         />
       </template>
@@ -42,7 +42,12 @@
   import { icons } from "../../assets/icons/icons.js"
   import { footers } from "../../locales/projectConfig.js"
 
+  import { useI18n } from "vue-i18n"
+
   import ActionButton from "../buttons/ActionButton.vue"
+
+  // COMPOSABLES
+  const { t } = useI18n()
 
   // PROPS
   const props = defineProps({

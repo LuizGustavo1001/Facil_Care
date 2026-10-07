@@ -3,10 +3,10 @@ import { warningMessages } from "../locales/projectConfig.js"
 import { reactive, ref } from "vue"
 
 export function useSnackbar() {
-    const isWarningActive = ref(false)
+    const isActive = ref(false)
     const { t, te } = useI18n()
 
-    const warning = reactive({
+    const data = reactive({
         message: "",
         type: ""
     })
@@ -18,28 +18,26 @@ export function useSnackbar() {
      *
      * @param { String } code - Desired warning code
      **/
-    const showWarning = (code) => {
-        clearWarning()
+    const open = (code) => {
+        clear()
 
-        const warningConfig = warningMessages.find(
-            warning => warning.id === code
-        )
+        const warningTemplate = warningMessages[code]
 
         const translationKey = `warningMessages.${code}.title`
 
-        warning.message = te(translationKey)
+        data.message = te(translationKey)
             ? t(translationKey)
             : t("warningMessages.generic.title")
 
-        warning.type = warningConfig?.type || ""
-        isWarningActive.value = true
+        data.type = warningTemplate || ""
+        isActive.value = true
     }
 
-    const clearWarning = () => {
-        isWarningActive.value = false
-        warning.message = ""
-        warning.type = ""
+    const clear = () => {
+        isActive.value = false
+        data.message = ""
+        data.type = ""
     }
 
-    return { warning, getWarning: showWarning, isWarningActive, clearWarning }
+    return { data, open, isActive, clear }
 }

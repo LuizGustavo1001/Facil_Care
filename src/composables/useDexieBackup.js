@@ -11,7 +11,7 @@ import db from "../database/db.js"
 export function useDexieBackup() {
     const isExporting = ref(false)
     const isImporting = ref(false)
-    const backupError = ref(null)
+    const error = ref(null)
 
     /**
      * Export Database via backup JSON file.
@@ -20,7 +20,7 @@ export function useDexieBackup() {
      **/
     const exportToJSON = async () => {
         isExporting.value = true
-        backupError.value = null
+        error.value = null
 
         try{
             const blob = await exportDB(db, { prettyJson: true })
@@ -34,7 +34,7 @@ export function useDexieBackup() {
 
             URL.revokeObjectURL(url)
         }catch(err){
-            backupError.value = "ExportFailed"
+            error.value = "ExportFailed"
             console.error('[useDexieBackup]: ', err)
             return false
         }finally{
@@ -55,13 +55,13 @@ export function useDexieBackup() {
         if(!file) return false
 
         isImporting.value = true
-        backupError.value = null
+        error.value = null
 
         try{
             // Clears all tables before import database
             await importDB(file, { clearTablesBeforeImport: true })
         }catch(err){
-            backupError.value = "ImportFailed"
+            error.value = "ImportFailed"
             console.error('[useDexieBackup]: ', err)
             throw err
         }finally{
@@ -71,5 +71,5 @@ export function useDexieBackup() {
         return true
     }
 
-    return { isExporting, isImporting, backupError, exportToJSON, importFromJSON }
+    return { isExporting, isImporting, error, exportToJSON, importFromJSON }
 }

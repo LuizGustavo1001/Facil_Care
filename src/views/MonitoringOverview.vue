@@ -13,30 +13,27 @@
       />
 
       <Snackbar
-          :isActive="isWarningActive"
-          :message="warning.message"
-          :type="warning.type || undefined"
-          @click="clearWarning"
+          :isActive="isSnackbarOpen"
+          :message="snackbar.data.message"
+          :type="snackbar.data.type || undefined"
+          @click="snackbar.clear"
       />
 
       <AppHeader
-          :title="getPageTitle(currentType)"
+          :title="utils.getPageTitle(currentType)"
           :leftBtnIcon="icons['chevron-left']"
-          @return-page="handleReturn"
+          @return-page="navigation.handleReturn"
       />
 
       <main class="main regular gap-2">
         <section class="main-section regular gap-1">
           <ul v-if="formattedData.length > 0" class="list flex flex-column gap-1">
             <li v-for="item in formattedData" :key="item._id" class="flex align-center gap-05">
-              <ActionButton
-                  tag="button"
-                  :title="item.value"
-                  :description="item.description"
-                  variant="subtle"
-                  padding="lg"
-                  class="width-full"
-              />
+
+              <div class="item-info flex flex-column gap-03 flex-grow-1">
+                <h2>{{ item.value }}</h2>
+                <p class="text-muted">{{ item.description }}</p>
+              </div>
 
               <IconBtn
                   :icon="icons['delete-bin-line']"
@@ -59,11 +56,29 @@
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+  .item-info{
+    padding: var(--spacing-lg);
+    background: var(--color-bg-subtle);
+
+    border-radius: var(--radius-lg);
+  }
+
+  .item-info h2{
+    font-size: var(--text-heading-md);
+    font-weight: var(--bold-weight);
+  }
+  .item-info p{
+    font-size: var(--text-body-md);
+    font-weight: var(--medium-weight);
+  }
+</style>
 
 <script setup>
   import { computed, onMounted, ref } from "vue"
   import { icons } from "../assets/icons/icons.js"
+
+  import { PAGES, VITAL_SIGNS_PAGES, FOLLOW_UPS_PAGES } from "../locales/projectConfig.js"
 
   import { useRoute } from "vue-router"
   import { useI18n } from "vue-i18n"
@@ -78,7 +93,6 @@
   import AppFallback from "./AppFallback.vue"
   import Snackbar from "../components/feedback/Snackbar.vue"
   import AppFooter from "../components/layout/AppFooter.vue"
-  import ActionButton from "../components/buttons/ActionButton.vue"
   import NotFoundCard from "../components/feedback/NotFoundCard.vue"
   import IconBtn from "../components/buttons/IconBtn.vue"
   import ConfirmPopup from "../components/layout/popup/ConfirmPopup.vue"
@@ -88,15 +102,17 @@
   import FollowUpsController from "../controllers/FollowUpsController.js"
 
   // COMPOSABLES
+  const { t } = useI18n()
   const route = useRoute()
   const confirmPopup = useConfirmPopup()
-  const { t } = useI18n()
-  const { getWarning, warning, isWarningActive, clearWarning } = useSnackbar()
-  const { handleReturn } = useNavigation()
-  const { getFormattedDate } = useDate()
-  const { getPageTitle, PAGES, MONITORING_VITAL_SIGNS_PAGES, MONITORING_FOLLOW_UPS_PAGES } = useUtils()
+  const snackbar = useSnackbar()
+  const navigation = useNavigation()
+  const date = useDate()
+  const utils = useUtils()
 
   // COMPUTED PROPERTIES
+  const isSnackbarOpen = computed(() => snackbar.isActive.value)
+
   const isConfirmOpen = computed(() => confirmPopup.isOpen.value)
   const confirmTitle = computed(() => confirmPopup.title.value)
   const confirmMessage = computed(() => confirmPopup.message.value)
@@ -115,11 +131,11 @@
   // Verify if selected monitoring overview page exists
   const pageExists = () => {
     if(currentCategory.value === PAGES['FOLLOW_UPS']){
-      return MONITORING_FOLLOW_UPS_PAGES.includes(currentType.value)
+      return FOLLOW_UPS_PAGES.includes(currentType.value)
     }
 
     if(currentCategory.value === PAGES['VITAL_SIGN']){
-      return MONITORING_VITAL_SIGNS_PAGES.includes(currentType.value)
+      return VITAL_SIGNS_PAGES.includes(currentType.value)
     }
 
     return false
@@ -149,9 +165,9 @@
       // Formatting result
       setFormattedData(result.data)
 
-      getWarning(result.code)
+      snackbar.open(result.code)
     }else if(result){
-      getWarning(result.code)
+      snackbar.open(result.code)
     }
   }
 
@@ -164,7 +180,7 @@
     formattedData.value = []
 
     for(const item of result){
-      const formattedDate = item.dateTime ? getFormattedDate(new Date(item.dateTime)) : null
+      const formattedDate = item.dateTime ? date.getFormatted(new Date(item.dateTime)) : null
       const descriptionParts = [item.caregiverName, formattedDate].filter(Boolean)
       const unitText = item.unit ? item.unit : ''
 
@@ -201,7 +217,7 @@
     if (result.success) {
       monitoringData.value = result.data
     } else {
-      getWarning(result.code)
+      snackbar.open(result.code)
     }
 
     // Formatting result

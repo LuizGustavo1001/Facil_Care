@@ -1,10 +1,18 @@
 import { ref } from "vue"
 
-const THEMES = ["light", "dark", "highContrast"]
-const THEME_PREFERENCE = [...THEMES, "system"]
+export const THEMES = {
+    LIGHT: "light",
+    DARK: "dark",
+    HIGH_CONTRAST: "highContrast"
+}
 
-const currentTheme = ref("light") // current applied theme
-const currentPreference = ref("system") // user's preference selection
+export const THEME_PREFERENCES = {
+    ...THEMES,
+    SYSTEM: "system"
+}
+
+const currentTheme = ref(THEMES.LIGHT) // current applied theme
+const currentPreference = ref(THEME_PREFERENCES.SYSTEM) // user's preference selection
 
 export function useTheme() {
     /**
@@ -20,19 +28,19 @@ export function useTheme() {
         let preference = null
 
         // 1. Specific preference required
-        if(nextPreference && THEME_PREFERENCE.includes(nextPreference)){
+        if(nextPreference &&  Object.values(THEME_PREFERENCES).includes(nextPreference)) {
             preference = nextPreference
         }
 
         // 2. Try get preference from localStorage
         const savedPreference = localStorage.getItem("theme")
-        if(!preference && savedPreference && THEME_PREFERENCE.includes(savedPreference)){
+        if(!preference && savedPreference && Object.values(THEME_PREFERENCES).includes(savedPreference)){
             preference = savedPreference
         }
 
         // 3. No local storage item -> set browser default
         if(!preference){
-            preference = "system"
+            preference = THEME_PREFERENCES.SYSTEM
         }
 
         toggleTheme(preference)
@@ -42,6 +50,8 @@ export function useTheme() {
      * @param { String } nextPreference
      **/
     const toggleTheme = (nextPreference = null) => {
+        if(!nextPreference || !Object.values(THEME_PREFERENCES).includes(nextPreference)) return
+
         // Update user's preference
         currentPreference.value = nextPreference
 
@@ -49,7 +59,7 @@ export function useTheme() {
         setLocalStorage(nextPreference)
 
         // System preference
-        if(nextPreference === "system"){
+        if(nextPreference === THEME_PREFERENCES.SYSTEM){
             setSystemPreference()
             return
         }
@@ -64,10 +74,10 @@ export function useTheme() {
      * @param { String } nextTheme
      **/
     const setBodyClass = (nextTheme) => {
-        if(!THEMES.includes(nextTheme)) return
+        if(!Object.values(THEMES).includes(nextTheme) ) return
 
         // Remove all theme classes from body and add current one
-        document.body.classList.remove(...THEMES)
+        document.body.classList.remove(...Object.values(THEMES))
         document.body.classList.add(nextTheme)
 
         // Update current applied theme
@@ -89,7 +99,10 @@ export function useTheme() {
     const setSystemPreference = () => {
         const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches
 
-        setBodyClass(systemDark ? "dark" : "light")
+        setBodyClass(systemDark
+            ? THEMES.DARK
+            : THEMES.LIGHT
+        )
     }
 
     return { initToggleTheme, currentTheme, currentPreference }

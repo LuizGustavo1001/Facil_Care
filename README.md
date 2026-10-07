@@ -87,7 +87,7 @@ Recursos Futuros
 2. **Controle Automático de Estoque**: Baixa automática de quantidade disponível de remédios ao confirmar a dose, com alertas visuais para reposição
 3. **Síntese de Voz (Web Speech API)**: Leitura dos lembretes e horários de remédios em voz alta para apoiar pessoas com limitações visuais
 4. **Relatórios em PDF**: Geração local de relatórios médicos formatados com gráficos usando a biblioteca `jsPDF`
-
+5. **Adicionar Múltiplos Horários (Medicamentos)**: Gerenciar os horários dos medicamentos, enviando notificações quando estiver próximo do tempo de consumi-lo
 Afins
 ---
 - `*` Para gerar o QR Code de Backup do paciente será necessário **conexão com a internet**`*`, tendo em vista a limitação de caracteres que o código pode apresentar

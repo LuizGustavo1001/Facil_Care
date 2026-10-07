@@ -2,23 +2,28 @@ export default {
     pageTitle: {
         vitalSigns: "Sinais Vitais",
         followUps: "Acompanhamento Fisiológico e Comportamental",
+
         emergencyData: "Dados de Emergência",
+
         medicines: "Medicamentos",
         allergies: "Alergias",
         doctors: "Médicos",
         caregivers: "Cuidadores",
         healthPlans: "Planos de Saúde",
         emergencyContacts: "Contatos de Emergência",
-        preferences: "Preferências",
+
         import: "Importar Dados",
         export: "Exportar Dados",
+
         userManual: "Manual do Usuário",
         terms: "Termos de Responsabilidade",
+
         bodyTemperature: "Temperatura Corporal",
         bloodPressure: "Pressão Arterial",
         oxygenSaturation: "Saturação de Oxigênio",
         bloodGlucose: "Glicemia",
         heartRate: "Batimentos Cardíacos",
+
         mood: "Humor",
         painLevel: "Nível de Dor",
         sleep: "Qualidade do Sono",
@@ -26,15 +31,18 @@ export default {
         mealAcceptance: "Aceitação de Refeições",
         weight: "Peso Corporal",
         necessities: "Controle de Evacuação e Diurese",
+
         notifications: "Notificações",
-        erase: "Apagar Dados"
+        eraseData: "Apagar Dados",
+        registries: "Registros",
+        preferences: "Preferências",
     },
 
     meta: {
         home: "Início",
         monitoring: "Monitoramento",
         monitoringOverview: "Monitoramento",
-        manageOverview: "Gerenciamento",
+        manage: "Gerenciamento",
         emergencyData: "Dados de Emergência",
         preferences: "Preferências",
         register: "Registrar",
@@ -43,7 +51,7 @@ export default {
         terms: "Termos de Usuário",
         notifications: "Notificações",
         notFound: 'Página não encontrada',
-        erase: "Apagar Dados",
+        eraseData: "Apagar Dados",
         import: "Importar Dados",
         export: "Exportar Dados"
     },
@@ -115,6 +123,7 @@ export default {
     views: {
         home: {
             subtitle: "Selecione uma das opções abaixo para visualizar as informações desejadas",
+
             buttons: {
                 vitalSigns: {
                     title: "Registros de Sinais Vitais",
@@ -150,52 +159,59 @@ export default {
                 }
             }
         },
-        vitalSigns: {
-            subtitle: "Selecione uma das opções abaixo para visualizar cada tópico individualmente",
-            items: {
-                bodyTemperature: {
-                    title: "Temperatura Corporal"
-                },
-                bloodPressure: {
-                    title: "Pressão Arterial"
-                },
-                oxygenSaturation: {
-                    title: "Saturação de Oxigênio"
-                },
-                bloodGlucose: {
-                    title: "Glicemia"
-                },
-                heartRate: {
-                    title: "Batimentos Cardíacos"
+
+        monitoring: {
+            vitalSigns: {
+                subtitle: "Selecione uma das opções abaixo para visualizar cada tópico individualmente",
+
+                items: {
+                    bodyTemperature: {
+                        title: "Temperatura Corporal"
+                    },
+                    bloodPressure: {
+                        title: "Pressão Arterial"
+                    },
+                    oxygenSaturation: {
+                        title: "Saturação de Oxigênio"
+                    },
+                    bloodGlucose: {
+                        title: "Glicemia"
+                    },
+                    heartRate: {
+                        title: "Batimentos Cardíacos"
+                    }
+                }
+            },
+
+            followUps: {
+                subtitle: "Selecione uma das opções abaixo para visualizar cada tópico individualmente",
+
+                items: {
+                    mood: {
+                        title: "Humor"
+                    },
+                    painLevel: {
+                        title: "Nível de dor"
+                    },
+                    sleepQuality: {
+                        title: "Qualidade do Sono"
+                    },
+                    waterIntake: {
+                        title: "Ingestão de Água"
+                    },
+                    mealAcceptance: {
+                        title: "Aceitação de Refeições"
+                    },
+                    weight: {
+                        title: "Peso"
+                    },
+                    necessities: {
+                        title: "Controle de Evacuação e Diurese"
+                    }
                 }
             }
         },
-        followUps: {
-            subtitle: "Selecione uma das opções abaixo para visualizar cada tópico individualmente",
-            items: {
-                mood: {
-                    title: "Humor"
-                },
-                painLevel: {
-                    title: "Nível de dor"
-                },
-                sleepQuality: {
-                    title: "Qualidade do Sono"
-                },
-                waterIntake: {
-                    title: "Ingestão de Água"
-                },
-                mealAcceptance: {
-                    title: "Aceitação de Refeições"
-                },
-                weight: {
-                    title: "Peso"
-                },
-                necessities: {
-                    title: "Controle de Evacuação e Diurese"
-                }
-            }
-        },
+
         emergencyData: {
             sections: {
                 patient: {
@@ -219,15 +235,19 @@ export default {
                         }
                     }
                 },
+
                 emergencyContacts: {
                     title: "Contatos de Emergência"
                 },
+
                 allergies: {
                     title: "Alergias Conhecidas"
                 },
+
                 healthPlans: {
                     title: "Planos de Saúde"
                 },
+
                 others: {
                     title: "Outros",
                     buttons: {
@@ -240,8 +260,10 @@ export default {
                     }
                 }
             },
+
             fallback: "Nenhuma informação encontrada para categoria selecionada"
         },
+
         medicines: {
             sections: {
                 registers: {
@@ -249,6 +271,7 @@ export default {
                 }
             }
         },
+
         allergies: {
             sections: {
                 registers: {
@@ -256,6 +279,15 @@ export default {
                 }
             }
         },
+
+        registries: {
+            sections: {
+                medicines: {
+                    title: "Histórico de Medicamentos Administrados"
+                }
+            }
+        },
+
         doctors: {
             sections: {
                 registers: {
@@ -263,6 +295,7 @@ export default {
                 }
             }
         },
+
         caregivers: {
             sections: {
                 registers: {
@@ -270,6 +303,7 @@ export default {
                 }
             }
         },
+
         healthPlans: {
             sections: {
                 registers: {
@@ -277,6 +311,7 @@ export default {
                 }
             }
         },
+
         emergencyContacts: {
             sections: {
                 registers: {
@@ -284,6 +319,7 @@ export default {
                 }
             }
         },
+
         preferences: {
             sections: {
                 general: {
@@ -299,6 +335,7 @@ export default {
                 }
             }
         },
+
         import: {
             sections: {
                 importing: {
@@ -311,6 +348,7 @@ export default {
                         "Tentar via arquivo local"
                     ]
                 },
+
                 localFile: {
                     title: "Importar Dados via Arquivo Local",
                     subtitle: "Selecione um arquivo de backup previamente exportado para restaurar as informações do paciente",
@@ -321,8 +359,10 @@ export default {
                 }
             }
         },
+
         export: {
             subtitle: "Selecione uma das opções abaixo para exportar dados do paciente",
+
             sections: {
                 tabSelector: {
                     qrCode: {
@@ -347,7 +387,7 @@ export default {
                         "Cancelar QR Code",
                         "Conexão Estabelecida! Enviando dados",
                         "Transferência dos dados concluída com sucesso",
-                        "Nova Tranferência"
+                        "Nova Tranferência",
                     ]
                 },
                 cardJSON:{
@@ -362,10 +402,12 @@ export default {
                 }
             }
         },
+
         eraseData: {
             sections: {
                 erase: {
                     title: "Apagar Dados do Paciente",
+
                     regularSubtitles: [
                         "Ao clicar no botão abaixo TODOS os dados do paciente serão redefinidos para o padrão"
                     ],
@@ -380,9 +422,11 @@ export default {
                 }
             }
         },
+
         userManual: {
 
         },
+
         terms: {
 
         }
@@ -401,7 +445,8 @@ export default {
                     }
                 }
             },
-            import: {
+
+            backup: {
                 title: "Gerenciar Dados",
                 items: {
                     export: {
@@ -412,6 +457,7 @@ export default {
                     }
                 }
             },
+
             others: {
                 title: "Outros",
                 items: {
@@ -434,6 +480,7 @@ export default {
                 }
             }
         },
+
         vitalSigns: {
             buttons: {
                 primary: {
@@ -441,6 +488,7 @@ export default {
                 }
             }
         },
+
         followUps: {
             buttons: {
                 primary: {
@@ -448,6 +496,7 @@ export default {
                 }
             }
         },
+
         medicines: {
             buttons: {
                 primary: {
@@ -455,6 +504,7 @@ export default {
                 }
             }
         },
+
         allergies: {
             buttons: {
                 primary: {
@@ -462,6 +512,7 @@ export default {
                 }
             }
         },
+
         doctors: {
             buttons: {
                 primary: {
@@ -469,6 +520,7 @@ export default {
                 }
             }
         },
+
         caregivers: {
             buttons: {
                 primary: {
@@ -476,6 +528,7 @@ export default {
                 }
             }
         },
+
         healthPlans: {
             buttons: {
                 primary: {
@@ -483,6 +536,7 @@ export default {
                 }
             }
         },
+
         emergencyContacts: {
             buttons: {
                 primary: {

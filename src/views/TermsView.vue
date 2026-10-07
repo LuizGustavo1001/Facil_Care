@@ -1,9 +1,9 @@
 <template>
   <div class="view regular">
     <AppHeader
-        :title="getPageTitle(PAGES['TERMS'])"
+        :title="utils.getPageTitle(PAGES['TERMS'])"
         :leftBtnIcon="icons['chevron-left']"
-        @return-page="handleReturn"
+        @return-page="navigation.handleReturn"
     />
   </div>
 
@@ -19,6 +19,8 @@
 <script setup>
   import { icons } from "../assets/icons/icons.js"
 
+  import { PAGES } from "../locales/projectConfig.js"
+
   import { useNavigation } from "../composables/useNavigation.js"
   import { useUtils } from "../composables/useUtils.js"
 
@@ -26,6 +28,6 @@
   import AppFooter from "../components/layout/AppFooter.vue"
 
   // COMPOSABLES
-  const { handleReturn } = useNavigation()
-  const { getPageTitle, PAGES } = useUtils()
+  const navigation = useNavigation()
+  const utils = useUtils()
 </script>

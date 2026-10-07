@@ -3,10 +3,10 @@
     <AppOverlay />
 
     <Snackbar
-        :isActive="isWarningActive"
-        :message="warning.message"
-        :type="warning.type || undefined"
-        @click="clearWarning"
+        :isActive="isSnackbarOpen"
+        :message="snackbar.data.message"
+        :type="snackbar.data.type || undefined"
+        @click="snackbar.clear"
     />
 
     <FormPopup
@@ -18,9 +18,9 @@
     />
 
     <AppHeader
-        :title="getPageTitle(PAGES['EMERGENCY_DATA'])"
+        :title="utils.getPageTitle(PAGES['EMERGENCY_DATA'])"
         :leftBtnIcon="icons['chevron-left']"
-        @return-page="handleReturn"
+        @return-page="navigation.handleReturn"
     />
 
     <main class="main regular gap-2">
@@ -75,8 +75,7 @@
   import { computed, onMounted, ref } from "vue"
   import { icons } from "../assets/icons/icons.js"
 
-  import { emergencyDataView } from "../locales/projectConfig.js"
-  import { formPopupTemplates } from "../locales/projectConfig.js"
+  import { emergencyDataView , formPopupTemplates, PAGES } from "../locales/projectConfig.js"
 
   import { useI18n } from "vue-i18n"
   import { useNavigation } from "../composables/useNavigation.js"
@@ -100,14 +99,16 @@
 
   // COMPOSABLES
   const { t, te } = useI18n()
-  const { handleReturn } = useNavigation()
-  const { getPageTitle, PAGES } = useUtils()
-  const { getWarning, warning, clearWarning, isWarningActive } = useSnackbar()
-  const { getFormattedDate } = useDate()
+  const navigation = useNavigation()
+  const utils = useUtils()
+  const snackbar = useSnackbar()
+  const date = useDate()
   const form = useForm()
   const formPopup = useFormPopup()
 
   // COMPUTED PROPERTIES
+  const isSnackbarOpen = computed(() => snackbar.isActive.value)
+
   const isFormOpen = computed(() => formPopup.isOpen.value)
   const formTemplate = computed(() => formPopup.template.value)
   const formValues = computed(() => formPopup.values.value)
@@ -133,7 +134,7 @@
             let dbValue = patient.value[button.id]
 
             if(button.id === 'birthDate'){
-              dbValue = getFormattedDate(patient.value[button.id], false)
+              dbValue = date.getFormatted(patient.value[button.id], false)
             }
 
             if(button.id === 'bloodType'){
@@ -229,7 +230,7 @@
   const handleButtonAction = (section, button, event) => {
     formPopup.triggerRef.value = event.currentTarget
 
-    if(section.btnAction === "popup") {
+    if(section.action === "popup") {
       const popupTemplate = formPopupTemplates.find(item => item.id === button.id) ?? null
 
       let currentInputValues = null
@@ -263,7 +264,7 @@
         color: button.color,
         title: getButtonTitle(section, button),
         description: getButtonSubtitle(section, button),
-        to: button.link || undefined
+        to: button.route || undefined
       }
     }
 
@@ -275,7 +276,7 @@
   }
 
   const getButtonPropsAction = (section) => {
-    if(section.btnAction === "popup"){
+    if(section.action === "popup"){
       return {
         rightIcon: icons["pencil-line"],
         tag: "button",
@@ -283,21 +284,21 @@
       }
     }
 
-    if(section.btnAction === "externalLink"){
+    if(section.action === "externalLink"){
       return {
         rightIcon: icons["external-link"],
         target: "_blank"
       }
     }
 
-    if(section.btnAction === "internalLink"){
+    if(section.action === "internalLink"){
       return {
         tag: "router",
         rightIcon: icons["chevron-right"]
       }
     }
 
-    // section.btnAction === "default" or nothing
+    // section.action === "default" or nothing
     return {
       tag: "button"
     }
@@ -354,9 +355,9 @@
     if(result && result.success){
       patient.value = result.data
       formPopup.close()
-      getWarning(result.code)
+      snackbar.open(result.code)
     }else if(result){
-      getWarning(result.code)
+      snackbar.open(result.code)
     }
   }
 
@@ -368,14 +369,14 @@
     if(patientData.success){
       patient.value = patientData.data
     }else if(!patientData.success){
-      getWarning(patientData.code)
+      snackbar.open(patientData.code)
     }
 
     // Update frontend medicines data
     if(medicineData.success){
       medicines.value = medicineData.data
     }else if(!medicineData.success){
-      getWarning(medicineData.code)
+      snackbar.open(medicineData.code)
     }
   })
 </script>

@@ -1,16 +1,16 @@
 <template>
   <div class="view regular">
     <Snackbar
-        :isActive="isWarningActive"
-        :message="warning.message"
-        :type="warning.type || undefined"
-        @click="clearWarning"
+        :isActive="isSnackbarOpen"
+        :message="snackbar.data.message"
+        :type="snackbar.data.type || undefined"
+        @click="snackbar.clear"
     />
 
     <AppHeader
-        :title="getPageTitle(PAGES['EXPORT'])"
+        :title="utils.getPageTitle(PAGES['EXPORT'])"
         :leftBtnIcon="icons['chevron-left']"
-        @return-page="handleReturn"
+        @return-page="navigation.handleReturn"
     />
 
     <main class="main regular">
@@ -20,7 +20,7 @@
               tag="button"
               color="blue"
               :leftIcon="icons['qr-code-line']"
-              :title="$t(`views.export.sections.tabSelector.qrCode.title`)"
+              :title="t(`views.export.sections.tabSelector.qrCode.title`)"
               :class="{ active: activeTab === 'qr' }"
               @click="activeTab = 'qr'"
           />
@@ -29,7 +29,7 @@
               tag="button"
               color="yellow"
               :leftIcon="icons['file-line']"
-              :title="$t(`views.export.sections.tabSelector.json.title`)"
+              :title="t(`views.export.sections.tabSelector.json.title`)"
               :class="{ active: activeTab === 'json' }"
               @click="activeTab = 'json'"
           />
@@ -38,14 +38,14 @@
         <!-- 1. QR Code (P2P) -->
         <div v-if="activeTab === 'qr'" class="card">
           <div class="title flex flex-column gap-05">
-            <h2>{{ $t(`views.export.sections.cardQR.title`) }}</h2>
+            <h2>{{ t(`views.export.sections.cardQR.title`) }}</h2>
 
             <span class="description flex flex-column">
-            <span v-for="(desc, index) in $tm('views.export.sections.cardQR.regularSubtitles')" :key="index" class="text-muted">
+            <span v-for="(desc, index) in tm('views.export.sections.cardQR.regularSubtitles')" :key="index" class="text-muted">
               {{ desc }}.
             </span>
 
-            <span v-for="(desc, index) in $tm('views.export.sections.cardQR.destructiveSubtitles')" :key="index" class="text-destructive">
+            <span v-for="(desc, index) in tm('views.export.sections.cardQR.destructiveSubtitles')" :key="index" class="text-destructive">
               {{ desc }}.
             </span>
           </span>
@@ -58,19 +58,19 @@
                 variant="highlight"
                 padding="lg"
                 :leftIcon="icons['qr-code-fill']"
-                :title="$t('views.export.sections.cardQR.actions[0]')"
+                :title="t('views.export.sections.cardQR.actions[0]')"
                 @click="handleStartP2PSession"
             />
           </div>
 
           <div class="flex-grow-1">
             <!-- Status: Waiting Conection -->
-            <div v-if="peerStatus === 'waiting' || isGenerating" class="qr-wrapper flex flex-column gap-1 align-center">
-              <div v-if="isGenerating" class="loading"> {{ $t('views.export.sections.cardQR.actions[1]') }}...</div>
+            <div v-if="peerStatus === 'waiting' || isQRCodeGenerating" class="qr-wrapper flex flex-column gap-1 align-center">
+              <div v-if="isQRCodeGenerating" class="loading"> {{ t('views.export.sections.cardQR.actions[1]') }}...</div>
 
-              <template v-else-if="qrDataURL">
-                <img :src="qrDataURL" alt="QR Code" class="qr-image">
-                <p class="status-badge waiting">{{ $t('views.export.sections.cardQR.actions[2]') }}...</p>
+              <template v-else-if="qrCodeURL">
+                <img :src="qrCodeURL" alt="QR Code" class="qr-image">
+                <p class="status-badge waiting">{{ t('views.export.sections.cardQR.actions[2]') }}...</p>
               </template>
 
               <ActionButton
@@ -78,7 +78,7 @@
                   padding="lg"
                   variant="subtle"
                   :leftIcon="icons['indeterminate-circle-fill']"
-                  :title="$t('views.export.sections.cardQR.actions[3]')"
+                  :title="t('views.export.sections.cardQR.actions[3]')"
                   @click="handleCancelP2P"
               />
             </div>
@@ -86,18 +86,18 @@
             <!-- Status: Transferring -->
             <div v-if="peerStatus === 'transferring'" class="status-wrapper">
               <div class="spinner"></div>
-              <p class="status-badge transferring">{{ $t('views.export.sections.cardQR.actions[4]') }}...</p>
+              <p class="status-badge transferring">{{ t('views.export.sections.cardQR.actions[4]') }}...</p>
             </div>
 
             <!-- Status: Done -->
             <div v-if="peerStatus === 'done'" class="status-wrapper">
-              <p class="status-badge success">{{ $t('views.export.sections.cardQR.actions[5]') }}!</p>
+              <p class="status-badge success">{{ t('views.export.sections.cardQR.actions[5]') }}!</p>
 
               <ActionButton
                   tag="button"
                   variant="subtle"
                   padding="lg"
-                  :title="$t('views.export.sections.cardQR.actions[6]')"
+                  :title="t('views.export.sections.cardQR.actions[6]')"
                   @click="handleStartP2PSession()"
               />
             </div>
@@ -112,10 +112,10 @@
         <!-- 2. JSON File (Offline) -->
         <div v-if="activeTab === 'json'" class="card">
           <div class="title flex flex-column gap-05">
-            <h2>{{ $t(`views.export.sections.cardJSON.title`) }}.</h2>
+            <h2>{{ t(`views.export.sections.cardJSON.title`) }}.</h2>
 
             <span class="title-description">
-            <span v-for="(desc, index) in $tm('views.export.sections.cardJSON.regularSubtitles')" :key="index" class="text-muted">
+            <span v-for="(desc, index) in tm('views.export.sections.cardJSON.regularSubtitles')" :key="index" class="text-muted">
               {{ desc }}.
             </span>
           </span>
@@ -124,15 +124,17 @@
           <ActionButton
               tag="button"
               padding="lg"
-              :title="isExporting
-                ? $t('views.export.sections.cardJSON.actions[0]')
-                : $t('views.export.sections.cardJSON.actions[1]')"
-              :leftIcon="isExporting ? '' : icons['download']"
-              :aria-disabled="isExporting"
+              :title="isDexieExporting
+                ? t('views.export.sections.cardJSON.actions[0]')
+                : t('views.export.sections.cardJSON.actions[1]')"
+              :leftIcon="isDexieExporting
+                ? ''
+                : icons['download']"
+              :aria-disabled="isDexieExporting"
               @click="handleDownloadJSON"
           />
 
-          <p v-if="backupError" class="error-message"> {{ backupError }}.</p>
+          <p v-if="dexieError" class="error-message"> {{ dexieError }}.</p>
         </div>
       </section>
     </main>
@@ -202,9 +204,12 @@
 </style>
 
 <script setup>
-  import { ref, watch } from "vue"
+  import { computed, ref, watch } from "vue"
   import { icons } from "../assets/icons/icons.js"
 
+  import { PAGES } from "../locales/projectConfig.js"
+
+  import { useI18n } from "vue-i18n"
   import { useUtils } from "../composables/useUtils.js"
   import { useNavigation } from "../composables/useNavigation.js"
   import { useSnackbar } from "../composables/useSnackbar.js"
@@ -219,15 +224,26 @@
   import ActionButton from "../components/buttons/ActionButton.vue"
 
   // COMPOSABLES
-  const { getPageTitle, PAGES } = useUtils()
-  const { handleReturn } = useNavigation()
-  const { getWarning, warning, clearWarning, isWarningActive } = useSnackbar()
-  const { isExporting, backupError, exportToJSON } = useDexieBackup()
-  const { isGenerating, qrDataURL, qrCodeError, generateQRCode, clearQRCode } = useQRCode()
-  const { peerStatus, peerError, startHostSession, closeSession } = usePeerSync()
+  const { t, tm } = useI18n()
+  const utils = useUtils()
+  const navigation = useNavigation()
+  const snackbar = useSnackbar()
+  const qrCode = useQRCode()
+  const p2p = usePeerSync()
+  const dexieBackup = useDexieBackup()
 
   // VARIABLES
   const activeTab = ref('qr') // 'qr' or 'json'
+
+  // COMPUTED PROPERTIES
+  const isSnackbarOpen = computed(() => snackbar.isActive.value)
+  const isQRCodeGenerating = computed(() => qrCode.isGenerating.value)
+  const isDexieExporting = computed(() => dexieBackup.isExporting.value)
+  const peerStatus = computed(() => p2p.peerStatus.value)
+  const dexieError = computed(() => dexieBackup.error.value)
+  const qrCodeError = computed(() => qrCode.error.value)
+  const peerError = computed(() => p2p.peerError.value)
+  const qrCodeURL = computed(() => qrCode.URL.value)
 
   // FUNCTIONS
   /**
@@ -235,11 +251,11 @@
   **/
   const handleStartP2PSession = async () => {
     try{
-      clearQRCode()
-      const id = await startHostSession()
+      qrCode.clear()
+      const id = await p2p.startHostSession()
       const importURL = `${window.location.origin}/backup/import?peerId=${id}`
 
-      await generateQRCode(importURL)
+      await qrCode.generate(importURL)
     }catch(err){
       console.error('Error starting P2P:', err);
     }
@@ -249,25 +265,25 @@
    * Cancel active P2P session
    **/
   const handleCancelP2P = () => {
-    closeSession()
-    clearQRCode()
+    p2p.closeSession()
+    qrCode.clear()
   }
 
   /**
    * Manual JSON file download
    **/
   const handleDownloadJSON = async() => {
-    const exportSuccess = await exportToJSON()
+    const exportSuccess = await dexieBackup.exportToJSON()
 
     if(exportSuccess){
-      getWarning("exportJSONSuccess")
+      snackbar.open("exportJSONSuccess")
     }
   }
 
   // WATCHERS
-  watch([qrCodeError, peerError], ([newQrCodeError, newPeerError]) => {
-    if (newQrCodeError) getWarning(newQrCodeError)
+  watch([qrCode.error, p2p.peerError], ([newQrCodeError, newPeerError]) => {
+    if (newQrCodeError) snackbar.open(newQrCodeError)
 
-    if (newPeerError) getWarning(newPeerError)
+    if (newPeerError) snackbar.open(newPeerError)
   })
 </script>

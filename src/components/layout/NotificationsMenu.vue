@@ -2,10 +2,10 @@
   <transition name="fade" mode="out-in">
     <div v-if="isOpen" class="notifications-menu absolute overflow-auto flex flex-column gap-1">
       <div class="notifications-header flex align-center justify-between">
-        <h1>{{ $t("notifications.title") }}</h1>
+        <h1>{{ t("notifications.title") }}</h1>
 
         <button class="mark-as-read" @click="handleMarkAllAsRead">
-          <span>{{ $t("notifications.markAsRead") }}</span>
+          <span>{{ t("notifications.markAsRead") }}</span>
         </button>
       </div>
 
@@ -120,10 +120,15 @@
 
 <script setup>
   import { computed, onMounted, ref } from "vue"
+  import { useI18n } from "vue-i18n"
 
   import NotificationsController from "../../controllers/NotificationsController.js"
   import NotFoundCard from "../feedback/NotFoundCard.vue"
 
+  // COMPOSABLES
+  const { t } = useI18n()
+
+  // PROPS
   const props = defineProps({
     isOpen: {
       type: Boolean,

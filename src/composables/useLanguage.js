@@ -1,10 +1,13 @@
 import { ref } from "vue"
 
-const LANGUAGES = ["ptBR", "enUS"]
-export const currentLanguage = ref("ptBR")
+export const LANGUAGES = {
+    PT_BR: "ptBR",
+    EN_US: "enUS"
+}
+
+export const currentLanguage = ref(LANGUAGES.PT_BR)
 
 export function useLanguage() {
-
     /**
      * Initializes or updates the application's language.
      * The language selection follows a hierarchy:
@@ -41,7 +44,10 @@ export function useLanguage() {
      * Set system preferences for language based in **navigator default language**
      **/
     const setSystemPreference = () => {
-        const defaultLanguage = navigator.language.startsWith("pt") ? "ptBR" : "enUS"
+        const defaultLanguage = navigator.language.startsWith("pt")
+            ? LANGUAGES.PT_BR
+            : LANGUAGES.EN_US
+
         if(currentLanguage.value !== defaultLanguage){
             setLanguage(defaultLanguage)
         }
@@ -53,7 +59,7 @@ export function useLanguage() {
      * @param { string } nextLanguage - Language to be applied
      **/
     const setLanguage = (nextLanguage) => {
-        if(!LANGUAGES.includes(nextLanguage)) return
+        if(!Object.values(LANGUAGES).includes(nextLanguage)) return
 
         currentLanguage.value = nextLanguage
 

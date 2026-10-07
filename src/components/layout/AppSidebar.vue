@@ -17,11 +17,11 @@
     >
       <div class="flex-grow-1 flex flex-column gap-1">
         <section
-            v-for="sec in sidebar.section"
+            v-for="sec in sidebar.sections"
             :key="sec.id"
             class="sidebar-list-item flex flex-column gap-05"
         >
-          <h2 class="text-muted">{{ $t(`sidebar.sections.${sec.id}.title`) }}</h2>
+          <h2 class="text-muted">{{ t(`sidebar.sections.${sec.id}.title`) }}</h2>
           <nav class="flex flex-column gap-05">
             <router-link
                 v-for="item in sec.items"
@@ -49,7 +49,7 @@
           to="/erase"
           :leftIcon="icons['delete-bin-line']"
           variant="destructive"
-          :title="$t(`utils.deleteAccount`)"
+          :title="t(`utils.deleteAccount`)"
           padding="sm"
           class="btn"
           @click="overlay.reset()"
@@ -64,7 +64,7 @@
 
       <div class="flex flex-column">
         <h1>{{ patientData.name }}</h1>
-        <p>{{ age }} {{ $t("utils.years")}} • {{ patientData.bloodType }}</p>
+        <p>{{ age }} {{ t("utils.years")}} • {{ patientData.bloodType }}</p>
       </div>
     </div>
   </aside>
@@ -161,11 +161,11 @@
   // COMPOSABLES
   const { t, te } = useI18n()
   const overlay = useOverlay()
+  const date = useDate()
 
   // COMPUTED PROPERTIES
   const age = computed(() => {
-    const { getAge } = useDate()
-    return getAge(new Date(props.patientData.birthDate))
+    return date.getAge(new Date(props.patientData.birthDate))
   })
 
   // FUNCTIONS

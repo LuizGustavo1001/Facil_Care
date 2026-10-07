@@ -1,7 +1,7 @@
 <template>
   <transition name="fade" mode="out-in">
     <div
-        v-if="isActive"
+        v-if="isOverlayActive"
         class="overlay fixed"
     />
   </transition>
@@ -20,6 +20,8 @@
 
 <script setup>
   import { useOverlay } from "../../composables/useOverlay.js"
+  import { computed } from "vue"
 
-  const { isActive } = useOverlay()
+  const overlay = useOverlay()
+  const isOverlayActive = computed(() => overlay.isActive.value)
 </script>

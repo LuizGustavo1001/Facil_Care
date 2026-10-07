@@ -1,9 +1,9 @@
 <template>
   <div class="view regular">
     <AppHeader
-        :title="getPageTitle(PAGES['PREFERENCES'])"
+        :title="utils.getPageTitle(PAGES['PREFERENCES'])"
         :leftBtnIcon="icons['chevron-left']"
-        @return-page="handleReturn"
+        @return-page="navigation.handleReturn"
     />
 
     <main class="main regular gap-2">
@@ -41,7 +41,7 @@
 
 <script setup>
   import { icons } from "../assets/icons/icons.js"
-  import { preferencesView } from "../locales/projectConfig.js"
+  import { preferencesView, PAGES } from "../locales/projectConfig.js"
 
   import { useNavigation } from "../composables/useNavigation.js"
   import { useLanguage } from "../composables/useLanguage.js"
@@ -54,16 +54,16 @@
   import SelectInput from "../components/forms/SelectInput.vue"
 
   // COMPOSABLES
-  const { handleReturn } = useNavigation()
-  const { initLanguage } = useLanguage()
-  const { getPageTitle, PAGES } = useUtils()
-  const { initToggleTheme, currentPreference } = useTheme()
   const { t, te, locale } = useI18n()
+  const utils = useUtils()
+  const navigation = useNavigation()
+  const language = useLanguage()
+  const theme = useTheme()
 
   // FUNCTIONS
   const getCurrentEventValue = (item) => {
     if(item.event === "toggle-theme"){
-      return currentPreference.value
+      return theme.currentPreference.value
     }
     if(item.event === "toggle-language"){
       return locale.value
@@ -79,10 +79,10 @@
 
     switch(eventType){
       case "toggle-theme":
-        initToggleTheme(selectedValue)
+        theme.initToggleTheme(selectedValue)
         break
       case "toggle-language":
-        initLanguage(selectedValue)
+        language.initLanguage(selectedValue)
         break
     }
   }

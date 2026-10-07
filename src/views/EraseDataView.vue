@@ -1,10 +1,10 @@
 <template>
   <div class="view regular">
     <Snackbar
-        :isActive="isWarningActive"
-        :message="warning.message"
-        :type="warning.type || undefined"
-        @click="clearWarning"
+        :isActive="isSnackbarOpen"
+        :message="snackbar.data.message"
+        :type="snackbar.data.type || undefined"
+        @click="snackbar.clear"
     />
 
     <AppOverlay />
@@ -19,22 +19,22 @@
     />
 
     <AppHeader
-        :title="getPageTitle(PAGES['ERASE'])"
+        :title="utils.getPageTitle(PAGES['ERASE'])"
         :leftBtnIcon="icons['chevron-left']"
         :hasNotifications="false"
-        @return-page="handleReturn"
+        @return-page="navigation.handleReturn"
     />
 
     <main class="main regular">
       <section v-if="!gotReset" class="main-section center text-center align-center gap-15">
         <div class="title flex flex-column gap-1">
-          <h1>{{ $t(`views.eraseData.sections.erase.title`) }}</h1>
+          <h1>{{ t(`views.eraseData.sections.erase.title`) }}</h1>
           <div class="description">
-            <p v-for="(desc, index) in $tm('views.eraseData.sections.erase.regularSubtitles')" :key="index" class="text-muted">
+            <p v-for="(desc, index) in tm('views.eraseData.sections.erase.regularSubtitles')" :key="index" class="text-muted">
               {{ desc }}.
             </p>
 
-            <p v-for="(desc, index) in $tm('views.eraseData.sections.erase.destructiveSubtitles')" :key="index" class="text-destructive">
+            <p v-for="(desc, index) in tm('views.eraseData.sections.erase.destructiveSubtitles')" :key="index" class="text-destructive">
               {{ desc }}.
             </p>
           </div>
@@ -44,7 +44,7 @@
             tag="button"
             :leftIcon="icons['warning-circle-fill']"
             :rightIcon="icons['chevron-right']"
-            :title="$t('views.eraseData.sections.erase.buttons[0]')"
+            :title="t('views.eraseData.sections.erase.buttons[0]')"
             padding="lg"
             variant="destructive"
             @click.stop="handleClick"
@@ -58,7 +58,7 @@
 
         <ActionButton
             tag="button"
-            @click="handleReturn()"
+            @click="navigation.handleReturn"
             :title="t(`utils.homePage`)"
             padding="lg"
         />
@@ -91,6 +91,8 @@
   import { computed, ref } from "vue"
   import { icons } from "../assets/icons/icons.js"
 
+  import { PAGES } from "../locales/projectConfig.js"
+
   import { useNavigation } from "../composables/useNavigation.js"
   import { useUtils } from "../composables/useUtils.js"
   import { useSnackbar } from "../composables/useSnackbar.js"
@@ -108,16 +110,18 @@
   import DatabaseController from "../controllers/DatabaseController.js"
 
   // COMPOSABLES
+  const { t, tm } = useI18n()
   const confirmPopup = useConfirmPopup()
-  const { t } = useI18n()
-  const { handleReturn } = useNavigation()
-  const { getPageTitle, PAGES } = useUtils()
-  const { getWarning, isWarningActive, warning, clearWarning } = useSnackbar()
+  const navigation = useNavigation()
+  const utils = useUtils()
+  const snackbar = useSnackbar()
 
   // VARIABLES
   const gotReset = ref(false)
 
   // COMPUTED PROPERTIES
+  const isSnackbarOpen = computed(() => snackbar.isActive.value)
+
   const isConfirmOpen = computed(() => confirmPopup.isOpen.value)
   const confirmTitle = computed(() => confirmPopup.title.value)
   const confirmMessage = computed(() => confirmPopup.message.value)
@@ -127,8 +131,6 @@
 
   // FUNCTIONS
   const handleClick = async () => {
-    const titleSlot = t(`utils.data`)
-
     const title = t(`confirmPopupTemplates.resetData.title`) + "?"
 
     confirmPopup.open(title, null, () => resetData())
@@ -139,7 +141,7 @@
 
     if(result.success){
       gotReset.value = true
-      getWarning(result.code)
+      snackbar.open(result.code)
     }
   }
 

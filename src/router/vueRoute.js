@@ -31,7 +31,7 @@ const routes = [
         name: 'manage-overview',
         component: () => import('/src/views/ManageView.vue'),
         meta: {
-            title: 'manageOverview'
+            title: 'manage'
         }
     },
     {
@@ -95,7 +95,7 @@ const routes = [
         name: 'erase',
         component: () => import('/src/views/EraseDataView.vue'),
         meta: {
-            title: "erase"
+            title: "eraseData"
         }
     },
     {

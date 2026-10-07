@@ -132,10 +132,17 @@ db.on("populate", (transaction) => {
             _id: 'med_4001',
             name: 'Metformina 850mg',
             dosage: '1 comprimido',
-            routeAdmin: 'Via oral',
-            schedules: ['08:00', '20:00'],
+            routeAdmin: 'oral',
             observations: 'Tomar logo após as refeições',
             active: true
+        },
+        {
+            _id: 'med_4002',
+            name: "Dipirona Monosódica 1g",
+            dosage: '1 comprimido',
+            routeAdmin: "oral",
+            observations: '',
+            active: false
         }
     ])
 

@@ -30,10 +30,10 @@ export function useDate() {
      * @param { boolean } fullDate - Date format (Full or Short)
      *
      * @example
-     *  getFormattedDate("2026-09-19T14:24:36.172Z", true) -> "11h 24min - 19/09/2026"
-     *  getFormattedDate("2026-09-19T14:24:36.172Z", false) -> "19/09/2026"
+     *  getFormatted("2026-09-19T14:24:36.172Z", true) -> "11h 24min - 19/09/2026"
+     *  getFormatted("2026-09-19T14:24:36.172Z", false) -> "19/09/2026"
      **/
-    const getFormattedDate = (dateInput, fullDate = true) => {
+    const getFormatted = (dateInput, fullDate = true) => {
         const time = new Date(dateInput)
 
         const day = String(time.getDate()).padStart(2, '0')
@@ -52,5 +52,5 @@ export function useDate() {
             : `${dateFormatted}`
     }
 
-    return { getAge, getFormattedDate }
+    return { getAge, getFormatted }
 }

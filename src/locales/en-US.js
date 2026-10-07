@@ -2,23 +2,28 @@ export default {
     pageTitle: {
         vitalSigns: "Vital Signs",
         followUps: "Physiological and Behavioral Monitoring",
+
         emergencyData: "Emergency Data",
+
         medicines: "Medicines",
         allergies: "Allergies",
         doctors: "Doctors",
         caregivers: "Caregivers",
         healthPlans: "Planos de Saúde",
         emergencyContacts: "Contatos de Emergência",
-        preferences: "Preferences",
+
         import: "Import Data",
         export: "Export Data",
+
         userManual: "User's Manual",
         terms: "Terms of Service",
+
         bodyTemperature: "Body Temperature",
         bloodPressure: "Blood Pressure",
         oxygenSaturation: "Oxygen Saturation",
         bloodGlucose: "Glucose",
         heartRate: "Heart Rate",
+
         mood: "Mood",
         painLevel: "Pain Level",
         sleep: "Slee Quality",
@@ -26,15 +31,18 @@ export default {
         mealAcceptance: "Food Acceptance",
         weight: "Weight",
         necessities: "Monitoring of bowel and urine",
+
         notifications: "Notifications",
-        erase: "Erase Data"
+        eraseData: "Erase Data",
+        registries: "Registries",
+        preferences: "Preferences",
     },
 
     meta: {
         home: "Home",
         monitoring: "Monitoring",
         monitoringOverview: "Monitoring",
-        manageOverview: "Manage",
+        manage: "Manage",
         emergencyData: "Emergency Data",
         preferences: "Preferences",
         register: "Register",
@@ -115,6 +123,7 @@ export default {
     views: {
         home: {
             subtitle: "Select one of the options bellow to view the desired information",
+
             buttons: {
                 vitalSigns: {
                     title: "Vital Sign Records",
@@ -150,52 +159,59 @@ export default {
                 }
             }
         },
-        vitalSigns: {
-            subtitle: "Select one of the options bellow to view the desired information individualy",
-            items: {
-                bodyTemperature: {
-                    title: "Body Temperature",
-                },
-                bloodPressure: {
-                    title: "Blood Pressure"
-                },
-                oxygenSaturation: {
-                    title: "Oxygen Saturation"
-                },
-                bloodGlucose: {
-                    title: "Glucose"
-                },
-                heartRate: {
-                    title: "Heartbeat"
+
+        monitoring: {
+            vitalSigns: {
+                subtitle: "Select one of the options bellow to view the desired information individualy",
+
+                items: {
+                    bodyTemperature: {
+                        title: "Body Temperature",
+                    },
+                    bloodPressure: {
+                        title: "Blood Pressure"
+                    },
+                    oxygenSaturation: {
+                        title: "Oxygen Saturation"
+                    },
+                    bloodGlucose: {
+                        title: "Glucose"
+                    },
+                    heartRate: {
+                        title: "Heartbeat"
+                    }
+                }
+            },
+
+            followUps: {
+                subtitle: "Select one of the options bellow to view the desired information individualy",
+
+                items: {
+                    mood: {
+                        title: "Mood"
+                    },
+                    painLevel: {
+                        title: "Pain Level"
+                    },
+                    sleepQuality: {
+                        title: "Sleep Quality"
+                    },
+                    waterIntake: {
+                        title: "Water Ingestion"
+                    },
+                    mealAcceptance: {
+                        title: "Food Acceptance"
+                    },
+                    weight: {
+                        title: "Weight"
+                    },
+                    necessities: {
+                        title: "Bowel and Urine"
+                    }
                 }
             }
         },
-        followUps: {
-            subtitle: "Select one of the options bellow to view the desired information individualy",
-            items: {
-                mood: {
-                    title: "Mood"
-                },
-                painLevel: {
-                    title: "Pain Level"
-                },
-                sleepQuality: {
-                    title: "Sleep Quality"
-                },
-                waterIntake: {
-                    title: "Water Ingestion"
-                },
-                mealAcceptance: {
-                    title: "Food Acceptance"
-                },
-                weight: {
-                    title: "Weight"
-                },
-                necessities: {
-                    title: "Bowel and Urine"
-                }
-            }
-        },
+
         emergencyData: {
             sections: {
                 patient: {
@@ -219,15 +235,19 @@ export default {
                         }
                     }
                 },
+
                 emergencyContacts: {
                     title: "Emergency Contacts"
                 },
+
                 allergies: {
                     title: "Known Allergies"
                 },
+
                 healthPlans: {
                     title: "Health Ensure Plans"
                 },
+
                 others: {
                     title: "Others",
                     buttons: {
@@ -240,8 +260,10 @@ export default {
                     }
                 }
             },
+
             fallback: "No Information founded for this category"
         },
+
         medicines: {
             sections: {
                 registers: {
@@ -249,6 +271,7 @@ export default {
                 }
             }
         },
+
         allergies: {
             sections: {
                 registers: {
@@ -256,6 +279,15 @@ export default {
                 }
             }
         },
+
+        registries: {
+            sections: {
+                medicines: {
+                    title: "Histórico de Medicamentos Administrados"
+                }
+            }
+        },
+
         doctors: {
             sections: {
                 registers: {
@@ -263,6 +295,7 @@ export default {
                 }
             }
         },
+
         caregivers: {
             sections: {
                 registers: {
@@ -270,6 +303,7 @@ export default {
                 }
             }
         },
+
         healthPlans: {
             sections: {
                 registers: {
@@ -277,6 +311,7 @@ export default {
                 }
             }
         },
+
         emergencyContacts: {
             sections: {
                 registers: {
@@ -284,6 +319,7 @@ export default {
                 }
             }
         },
+
         preferences: {
             sections: {
                 general: {
@@ -299,6 +335,7 @@ export default {
                 }
             }
         },
+
         import: {
             sections: {
                 importing: {
@@ -311,6 +348,7 @@ export default {
                         "Try via local file"
                     ]
                 },
+
                 localFile: {
                     title: "Import Data via Local File",
                     subtitle: "Select a previously exported backup file to retore patient information",
@@ -321,8 +359,10 @@ export default {
                 }
             }
         },
+
         export: {
             subtitle: "Select one of the options down bellow to export patient data",
+
             sections: {
                 tabSelector: {
                     qrCode: {
@@ -362,10 +402,12 @@ export default {
                 }
             }
         },
+
         eraseData: {
             sections: {
                 erase: {
                     title: "Erase Patient Data",
+
                     regularSubtitles: [
                         "By clicking the button below, ALL patient data will be reset to the default"
                     ],
@@ -380,9 +422,11 @@ export default {
                 }
             }
         },
+
         userManual: {
 
         },
+
         terms: {
 
         }
@@ -401,6 +445,7 @@ export default {
                     }
                 }
             },
+
             import: {
                 title: "Manage Data",
                 items: {
@@ -412,6 +457,7 @@ export default {
                     }
                 }
             },
+
             others: {
                 title: "Others",
                 items: {
@@ -434,6 +480,7 @@ export default {
                 }
             }
         },
+
         vitalSigns: {
             buttons: {
                 primary: {
@@ -441,6 +488,7 @@ export default {
                 }
             }
         },
+
         followUps: {
             buttons: {
                 primary: {
@@ -448,6 +496,7 @@ export default {
                 }
             }
         },
+
         medicines: {
             buttons: {
                 primary: {
@@ -455,6 +504,7 @@ export default {
                 }
             }
         },
+
         allergies: {
             buttons: {
                 primary: {
@@ -462,6 +512,7 @@ export default {
                 }
             }
         },
+
         doctors: {
             buttons: {
                 primary: {
@@ -469,6 +520,7 @@ export default {
                 }
             }
         },
+
         caregivers: {
             buttons: {
                 primary: {
@@ -476,6 +528,7 @@ export default {
                 }
             }
         },
+
         healthPlans: {
             buttons: {
                 primary: {
@@ -483,6 +536,7 @@ export default {
                 }
             }
         },
+
         emergencyContacts: {
             buttons: {
                 primary: {

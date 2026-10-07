@@ -1,30 +1,30 @@
 <template>
   <div class="view regular">
     <Snackbar
-        :isActive="isWarningActive"
-        :message="warning.message"
-        :type="warning.type || undefined"
-        @click="clearWarning"
+        :isActive="isSnackbarOpen"
+        :message="snackbar.data.message"
+        :type="snackbar.data.type || undefined"
+        @click="snackbar.clear"
     />
 
     <AppOverlay />
 
     <AppSidebar
-        ref="sidebarRef"
+        :ref="sidebar.sidebarRef"
         :patientData="patient"
-        :class="{ active: isSidebarActive }"
+        :class="{ active: isSidebarOpen }"
     />
 
     <AppHeader
         toggleBtnRef="toggleBtnRef"
-        @sidebar-toggle="toggleSidebar"
+        @sidebar-toggle="sidebar.toggle"
     >
-      {{ $t('utils.hello') }}, <strong>{{ patient.name }}</strong>!
+      {{ t('utils.hello') }}, <strong>{{ patient.name }}</strong>!
     </AppHeader>
 
     <main class="main regular gap-1">
       <section class="main-section regular gap-15">
-        <p class="text-muted">{{ $t("views.home.subtitle") }}:</p>
+        <p class="text-muted">{{ t("views.home.subtitle") }}:</p>
 
         <nav class="home-nav flex flex-column gap-1">
           <ActionButtonAlt
@@ -36,8 +36,8 @@
             leftIconSize="30px"
             :rightIcon="icons['chevron-right']"
             :color="btn.color"
-            :title="$t(`views.home.buttons.${btn.id}.title`)"
-            :description="$t(`views.home.buttons.${btn.id}.description`)"
+            :title="t(`views.home.buttons.${btn.id}.title`)"
+            :description="t(`views.home.buttons.${btn.id}.description`)"
           />
         </nav>
       </section>
@@ -50,11 +50,12 @@
 <style scoped></style>
 
 <script setup>
-  import { onMounted, ref } from "vue"
+  import { computed, onMounted, ref } from "vue"
 
   import { homeView } from "../locales/projectConfig.js"
   import { icons } from "../assets/icons/icons.js"
 
+  import { useI18n } from "vue-i18n"
   import { useSnackbar } from "../composables/useSnackbar.js"
   import { useSidebar } from "../composables/useSidebar.js"
 
@@ -68,8 +69,13 @@
   import PatientController from "../controllers/PatientController.js"
 
   // COMPOSABLES
-  const { isSidebarActive, sidebarRef, toggleBtnRef, toggleSidebar } = useSidebar()
-  const { warning, getWarning, isWarningActive, clearWarning } = useSnackbar()
+  const { t } = useI18n()
+  const sidebar = useSidebar()
+  const snackbar = useSnackbar()
+
+  // COMPUTED PROPERTIES
+  const isSnackbarOpen = computed(() => snackbar.isActive.value)
+  const isSidebarOpen = computed(() => sidebar.isActive.value)
 
   // CONTROLLERS
   const patientController = new PatientController()
@@ -83,7 +89,7 @@
     if(result.success){
       patient.value = result.data
     }else{
-      getWarning(result.code)
+      snackbar.open(result.code)
     }
   })
 </script>

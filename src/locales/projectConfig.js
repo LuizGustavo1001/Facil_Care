@@ -1,28 +1,82 @@
 import { icons } from "../assets/icons/icons.js"
+import { THEME_PREFERENCES } from "../composables/useTheme.js"
+import { LANGUAGES } from "../composables/useLanguage.js"
 
-export const themes = [
-    {
-        id: "light"
-    },
-    {
-        id: "dark"
-    },
-    {
-        id: "system"
-    },
-    {
-        id: "highContrast"
-    }
+const THEME_OPTIONS = [
+    { id: THEME_PREFERENCES.LIGHT },
+    { id: THEME_PREFERENCES.DARK },
+    { id: THEME_PREFERENCES.HIGH_CONTRAST },
+    { id: THEME_PREFERENCES.SYSTEM }
 ]
 
-export const languages = [
-    {
-        id: "ptBR"
-    },
-    {
-        id: "enUS"
-    }
+const LANGUAGE_OPTIONS = [
+    { id: LANGUAGES.PT_BR },
+    { id: LANGUAGES.EN_US }
 ]
+
+export const PAGES = {
+    VITAL_SIGN: "vitalSigns",
+    FOLLOW_UPS: "followUps",
+    EMERGENCY_DATA: "emergencyData",
+    MEDICINES: "medicines",
+    ALLERGIES: "allergies",
+    DOCTORS: "doctors",
+    CAREGIVERS: "caregivers",
+    HEALTH_PLANS: "healthPlans",
+    EMERGENCY_CONTACTS: "emergencyContacts",
+    PREFERENCES: "preferences",
+    IMPORT: "import",
+    EXPORT: "export",
+    USER_MANUAL: "userManual",
+    TERMS: "terms",
+    MOOD: "mood",
+    PAIN_LEVEL: "painLevel",
+    SLEEP: "sleep",
+    WATER_INTAKE: "waterIntake",
+    MEAL_ACCEPTANCE: "mealAcceptance",
+    WEIGHT: "weight",
+    NECESSITIES: "necessities",
+    BODY_TEMPERATURE: "bodyTemperature",
+    BLOOD_PRESSURE: "bloodPressure",
+    OXYGEN_SATURATION: "oxygenSaturation",
+    BLOOD_GLUCOSE: "bloodGlucose",
+    HEART_RATE: "heartRate",
+    NOTIFICATIONS: "notifications",
+    ERASE: "eraseData",
+}
+
+export const MANAGE_PAGES = [
+    PAGES['ALLERGIES'],
+    PAGES['DOCTORS'],
+    PAGES['CAREGIVERS'],
+    PAGES['MEDICINES'],
+    PAGES['HEALTH_PLANS'],
+    PAGES['EMERGENCY_CONTACTS']
+]
+
+export const MONITORING_PAGES = [
+    PAGES['VITAL_SIGN'],
+    PAGES['FOLLOW_UPS']
+]
+
+export const VITAL_SIGNS_PAGES = [
+    PAGES['BODY_TEMPERATURE'],
+    PAGES['BLOOD_PRESSURE'],
+    PAGES['OXYGEN_SATURATION'],
+    PAGES['BLOOD_GLUCOSE'],
+    PAGES['HEART_RATE']
+]
+
+export const FOLLOW_UPS_PAGES = [
+    PAGES['MOOD'],
+    PAGES['PAIN_LEVEL'],
+    PAGES['SLEEP'],
+    PAGES['WATER_INTAKE'],
+    PAGES['MEAL_ACCEPTANCE'],
+    PAGES['WEIGHT'],
+    PAGES['NECESSITIES']
+]
+
 
 export const homeView = {
     buttons: [
@@ -87,22 +141,107 @@ export const preferencesView = {
                     name: "app-theme",
                     for: "app-theme",
                     event: "toggle-theme",
-                    options: themes
+                    options: THEME_OPTIONS
                 },
                 {
                     id: "languages",
                     name: "app-lang",
                     for: "app-lang",
                     event: "toggle-language",
-                    options: languages
+                    options: LANGUAGE_OPTIONS
                 }
             ]
         }
     ]
 }
 
+export const monitoringViews = {
+    vitalSigns: {
+        items: [
+            {
+                id: "bodyTemperature",
+                icon: icons["thermometer-line"],
+                color: "red",
+                link: "/monitoring/vitalSigns/bodyTemperature"
+            },
+            {
+                id: "bloodPressure",
+                icon: icons["blood-pressure-line"],
+                color: "orange",
+                link: "/monitoring/vitalSigns/bloodPressure"
+            },
+            {
+                id: "oxygenSaturation",
+                icon: icons["oxygen-line"],
+                color: "blue",
+                link: "/monitoring/vitalSigns/oxygenSaturation"
+            },
+            {
+                id: "bloodGlucose",
+                icon: icons["glucose-line"],
+                color: "red",
+                link: "/monitoring/vitalSigns/bloodGlucose"
+            },
+            {
+                id: "heartRate",
+                icon: icons["heart-pulse-line"],
+                color: "orange",
+                link: "/monitoring/vitalSigns/heartRate"
+            }
+        ]
+    },
+
+    followUps: {
+        items: [
+            {
+                id: "mood",
+                icon: icons["user-smile-line"],
+                color: "blue",
+                link: "/monitoring/followUps/mood"
+            },
+            {
+                id: "painLevel",
+                icon: icons["emotion-unhappy-line"],
+                color: "red",
+                link: "/monitoring/followUps/painLevel"
+            },
+            {
+                id: "sleepQuality",
+                icon: icons["zzz"],
+                color: "blue",
+                link: "/monitoring/followUps/sleep"
+            },
+            {
+                id: "waterIntake",
+                icon: icons["drop-fill"],
+                color: "blue",
+                link: "/monitoring/followUps/waterIntake"
+            },
+            {
+                id: "mealAcceptance",
+                icon: icons["restaurant"],
+                color: "orange",
+                link: "/monitoring/followUps/mealAcceptance"
+            },
+            {
+                id: "weight",
+                icon: icons["weight-line"],
+                color: "green",
+                link: "/monitoring/followUps/weight"
+            },
+            {
+                id: "necessities",
+                icon: icons["drop-line"],
+                color: "orange",
+                link: "/monitoring/followUps/necessities"
+            }
+        ]
+    }
+}
+
+
 export const sidebar = {
-    section: [
+    sections: [
         {
             id: "general",
             items: [
@@ -119,7 +258,7 @@ export const sidebar = {
             ]
         },
         {
-            id: "import",
+            id: "backup",
             items: [
                 {
                     id: "export",
@@ -151,21 +290,14 @@ export const sidebar = {
     ]
 }
 
-
-/**
- * btnAction: Button event when clicked
- *  - popup
- *  - externalLink
- *  - internalLink (route)
- *  - default (nothing)
- **/
 export const emergencyDataView = {
     sections: [
         {
             id: "patient",
             icon: icons['user-fill'],
             component: "alt",
-            btnAction: "popup",
+            action: "popup",
+
             buttons: [
                 {
                     id: "name",
@@ -194,125 +326,47 @@ export const emergencyDataView = {
                 }
             ]
         },
+
         {
             id: "emergencyContacts",
             icon: icons['contacts-fill'],
             component: "default",
-            btnAction: "default"
+            action: "none"
         },
+
         {
             id: "allergies",
             icon: icons['virus-fill'],
             component: "default",
-            btnAction: "default"
+            action: "none"
         },
+
         {
             id: "healthPlans",
             icon: icons['first-aid-fill'],
             component: "default",
-            btnAction: "default"
+            action: "none"
         },
+
         {
             id: "others",
             icon: icons['book-read-fill'],
             component: "alt",
-            btnAction: "internalLink",
+            action: "internalLink",
             buttons: [
                 {
                     id: "doctors",
                     color: "blue",
                     icon: icons["stethoscope-line"],
-                    link: "/manage/doctors"
+                    route: "/manage/doctors"
                 },
                 {
                     id: "medicines",
                     color: "green",
                     icon: icons["medicine-bottle-fill"],
-                    link: "/manage/medicines"
+                    route: "/manage/medicines"
                 }
             ]
-        }
-    ]
-}
-
-export const vitalSignsView = {
-    items: [
-        {
-            id: "bodyTemperature",
-            icon: icons["thermometer-line"],
-            color: "red",
-            link: "/monitoring/vitalSigns/bodyTemperature"
-        },
-        {
-            id: "bloodPressure",
-            icon: icons["blood-pressure-line"],
-            color: "orange",
-            link: "/monitoring/vitalSigns/bloodPressure"
-        },
-        {
-            id: "oxygenSaturation",
-            icon: icons["oxygen-line"],
-            color: "blue",
-            link: "/monitoring/vitalSigns/oxygenSaturation"
-        },
-        {
-            id: "bloodGlucose",
-            icon: icons["glucose-line"],
-            color: "red",
-            link: "/monitoring/vitalSigns/bloodGlucose"
-        },
-        {
-            id: "heartRate",
-            icon: icons["heart-pulse-line"],
-            color: "orange",
-            link: "/monitoring/vitalSigns/heartRate"
-        }
-    ]
-}
-
-export const followUpsView = {
-    items: [
-        {
-            id: "mood",
-            icon: icons["user-smile-line"],
-            color: "blue",
-            link: "/monitoring/followUps/mood"
-        },
-        {
-            id: "painLevel",
-            icon: icons["emotion-unhappy-line"],
-            color: "red",
-            link: "/monitoring/followUps/painLevel"
-        },
-        {
-            id: "sleepQuality",
-            icon: icons["zzz"],
-            color: "blue",
-            link: "/monitoring/followUps/sleep"
-        },
-        {
-            id: "waterIntake",
-            icon: icons["drop-fill"],
-            color: "blue",
-            link: "/monitoring/followUps/waterIntake"
-        },
-        {
-            id: "mealAcceptance",
-            icon: icons["restaurant"],
-            color: "orange",
-            link: "/monitoring/followUps/mealAcceptance"
-        },
-        {
-            id: "weight",
-            icon: icons["weight-line"],
-            color: "green",
-            link: "/monitoring/followUps/weight"
-        },
-        {
-            id: "necessities",
-            icon: icons["drop-line"],
-            color: "orange",
-            link: "/monitoring/followUps/necessities"
         }
     ]
 }
@@ -378,116 +432,42 @@ export const registerView = {
     ]
 }
 
-export const warningMessages = [
-    {
-        id: "PatientNotFound",
-        type: "warning"
-    },
-    {
-        id: "PatientUpdated",
-        type: "success"
-    },
-    {
-        id: "MedicineUpdated",
-        type: "success"
-    },
-    {
-        id: "MedicineNotFound",
-        type: "warning"
-    },
-    {
-        id: "RecordUpdated",
-        type: "success"
-    },
-    {
-        id: "RecordDeleted",
-        type: "success"
-    },
-    {
-        id: "RecordNotFound",
-        type: "warning"
-    },
-    {
-        id: "NoRecords",
-        type: "warning"
-    },
-    {
-        id: "NoRecordsByField",
-        type: "warning"
-    },
-    {
-        id: "NoRecordsByDate",
-        type: "warning"
-    },
-    {
-        id: "NoRecordsByFieldAndDate",
-        type: "warning"
-    },
-    {
-        id: "InvalidDateInterval",
-        type: "error"
-    },
-    {
-        id: "NotificationNotFound",
-        type: "warning"
-    },
-    {
-        id: "ExportFailed",
-        type: "error"
-    },
-    {
-        id: "ImportFailed",
-        type: "error"
-    },
-    {
-        id: "P2PExportFailed",
-        type: "error"
-    },
-    {
-        id: "P2PConnectionInterrupted",
-        type: "warning"
-    },
-    {
-        id: "P2PImportFailed",
-        type: "error"
-    },
-    {
-        id: "P2PReceiveFailed",
-        type: "error"
-    },
-    {
-        id: "HostNotFound",
-        type: "error"
-    },
-    {
-        id: "OfflineDevice",
-        type: "warning"
-    },
-    {
-        id: "JSONImportSuccess",
-        type: "success"
-    },
-    {
-        id: "exportJSONSuccess",
-        type: "success"
-    },
-    {
-        id: "QRCodeGenFailed",
-        type: "error"
-    },
-    {
-        id: "MedicineDeleted",
-        type: "success"
-    },
-    {
-        id: "RecordRemoved",
-        type: "success"
-    },
-    {
-        id: "SystemDataReset",
-        type: "success"
-    }
-]
+export const warningMessages = {
+    PatientNotFound: "warning",
+    PatientUpdated: "success",
+
+    MedicineUpdated: "success",
+    MedicineNotFound: "warning",
+
+    RecordUpdated: "success",
+    RecordDeleted: "success",
+    RecordNotFound: "warning",
+    NoRecordsByField: "error",
+    NoRecordsByDate: "error",
+    NoRecordsByFieldAndDate: "error",
+    RecordRemoved: "success",
+
+    InvalidDateInterval: "error",
+
+    NotificationNotFound: "error",
+
+    ExportFailed: "error",
+    ImportFailed: "error",
+    P2PExportFailed: "error",
+    P2PImportFailed: "error",
+    P2PConnectionInterrupted: "warning",
+    P2PReceiveFailed: "error",
+    JSONImportSuccess: "success",
+    exportJSONSuccess: "success",
+    QRCodeGenFailed: "error",
+
+    HostNotFound: "error",
+    OfflineDevice: "warning",
+
+    MedicineDeleted: "success",
+
+    SystemDataReset: "success"
+}
 
 export const formPopupTemplates = [
     {

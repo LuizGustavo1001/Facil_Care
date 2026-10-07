@@ -4,10 +4,10 @@
       <AppOverlay />
 
       <Snackbar
-          :isActive="isWarningActive"
-          :message="warning.message"
-          :type="warning.type || undefined"
-          @click="clearWarning"
+          :isActive="isSnackbarOpen"
+          :message="snackbar.data.message"
+          :type="snackbar.data.type || undefined"
+          @click="snackbar.clear"
       />
 
       <FormPopup
@@ -28,12 +28,21 @@
       />
 
       <AppHeader
-          :title="getPageTitle(currentCategory)"
+          :title="utils.getPageTitle(currentCategory)"
           :leftBtnIcon="icons['chevron-left']"
-          @return-page="handleReturn"
+          @return-page="navigation.handleReturn"
       />
 
       <main class="main regular gap-2">
+        <section v-if="currentCategory === 'medicines'">
+          <ActionButtonAlt
+            tag="router"
+            :to="`/manage/${currentCategory}/registries`"
+            title="Visualizar medicamentos administrados"
+            :leftIcon="icons['medicine-bottle-fill']"
+          />
+        </section>
+
         <section v-if="formattedData.length > 0" class="main-section regular gap-1">
           <h2 class="section-title text-muted">{{ getSectionTitle(currentCategory) }}</h2>
 
@@ -75,7 +84,7 @@
 <script setup>
   import { computed, onMounted, ref, watch } from "vue"
   import { icons } from "../assets/icons/icons.js"
-  import { formPopupTemplates } from "../locales/projectConfig.js"
+  import { formPopupTemplates, MANAGE_PAGES } from "../locales/projectConfig.js"
 
   import { useRoute } from "vue-router"
   import { useNavigation } from "../composables/useNavigation.js"
@@ -97,23 +106,25 @@
   import IconBtn from "../components/buttons/IconBtn.vue"
   import FormPopup from "../components/layout/popup/FormPopup.vue"
   import ConfirmPopup from "../components/layout/popup/ConfirmPopup.vue"
+  import ActionButtonAlt from "../components/buttons/ActionButtonAlt.vue"
 
   import PatientController from "../controllers/PatientController.js"
   import MedicinesController from "../controllers/MedicinesController.js"
 
   // COMPOSABLES
+  const { t, te } = useI18n()
   const route = useRoute()
   const form = useForm()
-  const { t, te } = useI18n()
-  const { handleReturn } = useNavigation()
-  const { getPageTitle, MANAGE_PAGES } = useUtils()
-  const { warning, getWarning, clearWarning, isWarningActive } = useSnackbar()
-  const { getFormattedDate } = useDate()
-
+  const navigation = useNavigation()
+  const utils = useUtils()
+  const snackbar = useSnackbar()
+  const date = useDate()
   const confirmPopup = useConfirmPopup()
   const formPopup = useFormPopup()
 
   // COMPUTED PROPERTIES
+  const isSnackbarOpen = computed(() => snackbar.isActive.value)
+
   const isFormOpen = computed(() => formPopup.isOpen.value)
   const formTemplate = computed(() => formPopup.template.value)
   const formValues = computed(() => formPopup.values.value)
@@ -160,7 +171,7 @@
             title: caregiver.name,
             description: getDescription([
               caregiver.phone,
-              getFormattedDate(caregiver.startDate, false)
+              date.getFormatted(caregiver.startDate, false)
             ])
           })
         }
@@ -189,10 +200,13 @@
         for(const medicine of data.medicines ?? []){
           formattedData.value.push({
             id: medicine._id,
-            title: medicine.name,
-            description: getDescription([
-              getTranslatedText(medicine.routeAdmin)
-            ])
+            title: medicine.name
+                + (
+                    medicine.routeAdmin
+                      ? ` (${ getTranslatedText(medicine.routeAdmin) })`
+                      : ""
+                ),
+            description: getDescription([medicine.observations])
           })
         }
         break
@@ -264,9 +278,9 @@
     if(result && result.success){
       await updateData(currentCategory.value, result.data)
 
-      getWarning(result.code)
+      snackbar.open(result.code)
     }else if(result){
-      getWarning(result.code)
+      snackbar.open(result.code)
     }
   }
 
@@ -289,10 +303,10 @@
     if(result && result.success){
       await updateData(sectionId, result.data)
 
-      getWarning(result.code)
+      snackbar.open(result.code)
       formPopup.close()
     }else if(result){
-      getWarning(result.code)
+      snackbar.open(result.code)
     }
   }
 
@@ -370,14 +384,14 @@
     if(patientResult.success){
       patient.value = patientResult.data
     }else{
-      getWarning(patientResult.code)
+      snackbar.open(patientResult.code)
     }
 
     const medicinesResult = await medicineController.getAll()
     if(medicinesResult.success){
       medicines.value = medicinesResult.data
     }else{
-      getWarning(medicinesResult.code)
+      snackbar.open(medicinesResult.code)
     }
   })
 </script>

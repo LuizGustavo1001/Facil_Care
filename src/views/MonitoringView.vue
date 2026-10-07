@@ -2,9 +2,9 @@
   <div class="view regular">
     <template v-if="pageExists">
       <AppHeader
-          :title="getPageTitle(currentCategory)"
+          :title="utils.getPageTitle(currentCategory)"
           :leftBtnIcon="icons['chevron-left']"
-          @return-page="handleReturn"
+          @return-page="navigation.handleReturn"
       />
 
       <main class="main regular">
@@ -45,6 +45,8 @@
   import { computed } from "vue"
   import { icons } from "../assets/icons/icons.js"
 
+  import { MONITORING_PAGES } from "../locales/projectConfig.js"
+
   import { useRoute } from "vue-router"
   import { useI18n } from "vue-i18n"
   import { useNavigation } from "../composables/useNavigation.js"
@@ -55,21 +57,22 @@
   import AppFallback from "./AppFallback.vue"
   import AppFooter from "../components/layout/AppFooter.vue"
 
-  import * as projectConfig from "../locales/projectConfig.js"
+  import { monitoringViews } from "../locales/projectConfig.js"
 
   // COMPOSABLES
-  const { handleReturn } = useNavigation()
-  const { getPageTitle, MONITORING_PAGES } = useUtils()
-  const route = useRoute()
   const { t } = useI18n()
+  const route = useRoute()
+  const navigation = useNavigation()
+  const utils = useUtils()
 
   // COMPUTED PROPERTIES
   // Retrieve page data
   const currentCategory = computed(() => route.params.category)
 
   const currentTemplate = computed(() => {
-    const id = currentCategory.value + 'View'
-    return projectConfig[id] || null
+    const id = currentCategory.value
+
+    return monitoringViews[id] || null
   })
 
   // Verify if monitoring page exists
@@ -84,6 +87,6 @@
   // FUNCTIONS
   // Returns button label
   const getItemTitle = (id) => {
-    return t(`views.${currentCategory.value}.items.${id}.title`)
+    return t(`views.monitoring.${currentCategory.value}.items.${id}.title`)
   }
 </script>

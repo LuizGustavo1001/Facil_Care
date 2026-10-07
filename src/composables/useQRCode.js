@@ -6,25 +6,25 @@ import QRCode from "qrcode"
 **/
 export function useQRCode() {
     const isGenerating = ref(false)
-    const qrDataURL = ref(null)
-    const qrCodeError = ref(null)
+    const URL = ref(null) // QR Code URL
+    const error = ref(null)
 
     /**
      * Generate QR Code throught text or URL
      * @param { string } text Content to be encoded
      * @param { Object } options Additional configs (qrcode library)
      **/
-    const generateQRCode = async (text, options = {}) => {
+    const generate = async (text, options = {}) => {
         if(!navigator.onLine){
-            qrCodeError.value = 'OfflineDevice'
+            error.value = 'OfflineDevice'
             return
         }
 
         isGenerating.value = true
-        qrCodeError.value = false
+        error.value = false
 
         try{
-            qrDataURL.value = await QRCode.toDataURL(text, {
+            URL.value = await QRCode.toDataURL(text, {
                 width: 320,
                 margin: 2,
                 color: {
@@ -33,9 +33,9 @@ export function useQRCode() {
                 },
                 ...options
             })
-            return qrDataURL.value
+            return URL.value
         }catch(err){
-            qrCodeError.value = "QRCodeGenFailed"
+            error.value = "QRCodeGenFailed"
             console.error('[useQRCode]: ', err)
         }finally {
             isGenerating.value = false
@@ -43,10 +43,10 @@ export function useQRCode() {
     }
 
     // Clears QR Code data
-    const clearQRCode = () => {
-        qrDataURL.value = null
-        qrCodeError.value = null
+    const clear = () => {
+        URL.value = null
+        error.value = null
     }
 
-    return { isGenerating, qrDataURL, clearQRCode, qrCodeError, generateQRCode }
+    return { isGenerating, URL, clear, error, generate }
 }
