@@ -11,6 +11,8 @@ export function useUtils() {
         ALLERGIES: "allergies",
         DOCTORS: "doctors",
         CAREGIVERS: "caregivers",
+        HEALTH_PLANS: "healthPlans",
+        EMERGENCY_CONTACTS: "emergencyContacts",
         PREFERENCES: "preferences",
         IMPORT: "import",
         EXPORT: "export",
@@ -36,7 +38,9 @@ export function useUtils() {
         PAGES['ALLERGIES'],
         PAGES['DOCTORS'],
         PAGES['CAREGIVERS'],
-        PAGES['MEDICINES']
+        PAGES['MEDICINES'],
+        PAGES['HEALTH_PLANS'],
+        PAGES['EMERGENCY_CONTACTS'],
     ]
 
     const MONITORING_PAGES = [

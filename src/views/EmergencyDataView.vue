@@ -136,6 +136,10 @@
               dbValue = getFormattedDate(patient.value[button.id], false)
             }
 
+            if(button.id === 'bloodType'){
+              dbValue = getTranslatedText(patient.value[button.id])
+            }
+
             return {
               ...button,
               subtitle: dbValue !== undefined && dbValue !== null
@@ -150,7 +154,7 @@
             dbButtons = patient.value.emergencyContacts.map((contact) => ({
               id: contact.id,
               title: contact.name,
-              subtitle: `${contact.kinship || ''} • ${contact.phone || ''}`
+              subtitle: `${getTranslatedText(contact.kinship)} • ${contact.phone || ''}`
             }))
           }
 
@@ -331,14 +335,20 @@
         : ""
   }
 
+  const getTranslatedText = (label) => {
+    return t(`utils.${label}`) ?? ""
+  }
+
   const handleSubmit = async (formData) => {
     const context = formPopup.context.value
     if(!context) return
 
     let result = null
 
+    const cleanData = JSON.parse(JSON.stringify(formData))
+
     if(context.sectionId === "patient"){
-      result = await form.executeDBSubmit(() => patientController.updatePatient(formData))
+      result = await form.executeDBSubmit(() => patientController.updatePatientRoot(cleanData))
     }
 
     if(result && result.success){

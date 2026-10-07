@@ -461,7 +461,7 @@ main {
 }
 
 .active-border{
-    outline-offset: 4px;
+    outline-offset: 3px;
     outline: transparent solid 3px;
 }
 .active-border:active, .active-border:focus-within{

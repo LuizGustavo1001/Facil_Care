@@ -48,7 +48,7 @@
   import SelectInput from "../../forms/SelectInput.vue"
 
   // COMPOSABLES
-  const { t, tm, te } = useI18n()
+  const { t, te } = useI18n()
   const form = useForm()
 
   //PROPS
@@ -78,7 +78,6 @@
   // Submits the form data to the parent
   const handleSubmit = (event) => {
     const data = form.extractData(event)
-
     emit("submitForm", data)
   }
 
@@ -144,7 +143,16 @@
 
   // Returns "select input" options based in translate data
   const getSelectOptions = (input) => {
-    return tm(`formPopupTemplates.${props.template.id}.main.inputs.${input.id}.options`) ?? null
+    let fd = []
+
+    for(const option of input.options){
+      fd.push({
+        placeholder: t(`formPopupTemplates.${props.template.id}.main.inputs.${input.id}.options.${option.id}.placeholder`),
+        value: option.value
+      })
+    }
+
+    return fd
   }
 
   // Form button props

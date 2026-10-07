@@ -61,6 +61,18 @@ export const homeView = {
             color: "purple",
             icon: icons["virus-fill"],
             route: "/manage/allergies"
+        },
+        {
+            id: "healthPlans",
+            color: "blue",
+            icon: icons["first-aid-fill"],
+            route: "/manage/healthPlans"
+        },
+        {
+            id: "emergencyContacts",
+            color: "green",
+            icon: icons['contacts-fill'],
+            route: "/manage/emergencyContacts"
         }
     ]
 }
@@ -528,28 +540,36 @@ export const formPopupTemplates = [
                     for: "bloodType",
                     options: [
                         {
-                            id: "o_negative"
+                            id: "o_negative",
+                            value: "o_negative",
                         },
                         {
-                            id: "o_positive"
+                            id: "o_positive",
+                            value: "o_positive",
                         },
                         {
-                            id: "a_negative"
+                            id: "a_negative",
+                            value: "a_negative",
                         },
                         {
-                            id: "a_positive"
+                            id: "a_positive",
+                            value: "a_positive",
                         },
                         {
-                            id: "b_negative"
+                            id: "b_negative",
+                            value: "b_negative"
                         },
                         {
-                            id: "b_positive"
+                            id: "b_positive",
+                            value: "b_positive",
                         },
                         {
-                            id: "ab_negative"
+                            id: "ab_negative",
+                            value: "ab_negative",
                         },
                         {
-                            id: "ab_positive"
+                            id: "ab_positive",
+                            value: "ab_positive",
                         }
                     ]
                 }
@@ -622,10 +642,12 @@ export const formPopupTemplates = [
                     for: "routeAdmin",
                     options: [
                         {
-                            id: "oral"
+                            id: "oral",
+                            value: "oral"
                         },
                         {
-                            id: "cutaneous"
+                            id: "cutaneous",
+                            value: "cutaneous"
                         }
                     ]
                 },
@@ -737,6 +759,113 @@ export const formPopupTemplates = [
                 }
             ]
         }
+    },
+    {
+        id: "healthPlans",
+        main: {
+            inputs: [
+                {
+                    id: "name",
+                    tag: "input",
+                    inputType: "text",
+                    name: "name",
+                    for: "name",
+                    autoCapitalize: "words"
+                }
+            ],
+            buttons: [
+                {
+                    id: "submit"
+                }
+            ]
+        }
+    },
+    {
+        id: "emergencyContacts",
+        main: {
+            inputs: [
+                {
+                    id: "name",
+                    tag: "input",
+                    inputType: "text",
+                    name: "name",
+                    for: "name",
+                    autoCapitalize: "words"
+                },
+                {
+                    id: "kinship",
+                    tag: "select",
+                    name: "kinship",
+                    for: "kinship",
+                    options: [
+                        {
+                            id: "father",
+                            value: "father"
+                        },
+                        {
+                          id: "mother",
+                          value: "mother"
+                        },
+                        {
+                            id: "husband",
+                            value: "husband"
+                        },
+                        {
+                            id: "wife",
+                            value: "wife"
+                        },
+                        {
+                            id: "son",
+                            value: "son"
+                        },
+                        {
+                            id: "daughter",
+                            value: "daughter"
+                        },
+                        {
+                            id: "uncle",
+                            value: "uncle"
+                        },
+                        {
+                            id: "auntie",
+                            value: "auntie"
+                        },
+                        {
+                            id: "grandfather",
+                            value: "grandfather"
+                        },
+                        {
+                            id: "grandmother",
+                            value: "grandmother"
+                        },
+                        {
+                            id: "cousin",
+                            value: "cousin"
+                        },
+                        {
+                            id: "friend",
+                            value: "friend"
+                        },
+                        {
+                            id: "other",
+                            value: "other"
+                        }
+                    ]
+                },
+                {
+                    id: "phone",
+                    tag: "input",
+                    inputType: "tel",
+                    name: "phone",
+                    for: "phone"
+                }
+            ],
+            buttons: [
+                {
+                    id: "submit"
+                }
+            ]
+        }
     }
 ]
 
@@ -777,7 +906,7 @@ export const footers = [
             {
                 id: "primary",
                 leftIcon: icons["capsule-fill"],
-                link: "register/medicines/"
+                link: "/register/medicines/"
             }
         ]
     },
@@ -787,7 +916,7 @@ export const footers = [
             {
                 id: "primary",
                 leftIcon: icons["virus-fill"],
-                link: "register/allergies"
+                link: "/register/allergies"
             }
         ]
     },
@@ -797,7 +926,7 @@ export const footers = [
             {
                 id: "primary",
                 leftIcon: icons["stethoscope-line"],
-                link: "register/doctors"
+                link: "/register/doctors"
             }
         ]
     },
@@ -807,7 +936,27 @@ export const footers = [
             {
                 id: "primary",
                 leftIcon: icons["user-fill"],
-                link: "register/caregivers"
+                link: "/register/caregivers"
+            }
+        ]
+    },
+    {
+        id: "healthPlans",
+        buttons: [
+            {
+                id: "primary",
+                leftIcon: icons['first-aid-fill'],
+                link: "/register/healtPlans"
+            }
+        ]
+    },
+    {
+        id: "emergencyContacts",
+        buttons: [
+            {
+                id: "primary",
+                leftIcon: icons['contacts-fill'],
+                link: "/register/emergencyContacts"
             }
         ]
     }

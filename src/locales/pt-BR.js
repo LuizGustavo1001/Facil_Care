@@ -7,6 +7,8 @@ export default {
         allergies: "Alergias",
         doctors: "Médicos",
         caregivers: "Cuidadores",
+        healthPlans: "Planos de Saúde",
+        emergencyContacts: "Contatos de Emergência",
         preferences: "Preferências",
         import: "Importar Dados",
         export: "Exportar Dados",
@@ -85,7 +87,29 @@ export default {
         },
         vitalSign: "Sinal Vital",
         followUp: "Acompanhamento",
-        data: "Deletar"
+        data: "Deletar",
+        o_negative: "O-",
+        o_positive: "O+",
+        a_negative: "A-",
+        a_positive: "A+",
+        b_negative: "B-",
+        b_positive: "B+",
+        ab_negative: "AB-",
+        ab_positive: "AB+",
+        son: "Filho",
+        daughter: "Filha",
+        father: "Pai",
+        mother: "Mãe",
+        uncle: "Tio",
+        auntie: "Tia",
+        grandmother: "Avó",
+        grandfather: "Avô",
+        husband: "Marido",
+        wife: "Esposa",
+        friend: "Amigo(a)",
+        other: "Outro(a)",
+        cutaneous: "Cutânea",
+        oral: "Oral"
     },
 
     views: {
@@ -94,15 +118,15 @@ export default {
             buttons: {
                 vitalSigns: {
                     title: "Registros de Sinais Vitais",
-                    description: "Gerenciar medições diárias"
+                    description: "Gerenciar medições diárias e visualizar estatísticas"
                 },
                 followUp: {
                     title: "Acompanhamento Fisiológico e Comportamental",
-                    description: "Gerenciar dados comportamentais e fisiológicos"
+                    description: "Gerenciar dados comportamentais e fisiológicos e visualizar estatísticas"
                 },
                 medicine: {
                     title: "Medicamentos",
-                    description: "Gerenciar medicamentos utilizados pelo paciente"
+                    description: "Visualizar medicamentos do dia e gerenciar cadastrados"
                 },
                 caregiver: {
                     title: "Cuidadores",
@@ -115,6 +139,14 @@ export default {
                 allergies: {
                     title: "Alergias",
                     description: "Gerenciar alergias do paciente"
+                },
+                healthPlans: {
+                    title: "Planos de Saúde",
+                    description: "Gerenciar planos de saúde que o paciente possui"
+                },
+                emergencyContacts: {
+                    title: "Contatos de Emergência",
+                    description: "Gerenciar contatos de emergência"
                 }
             }
         },
@@ -235,6 +267,20 @@ export default {
             sections: {
                 registers: {
                     title: "Cuidadores Cadastrados"
+                }
+            }
+        },
+        healthPlans: {
+            sections: {
+                registers: {
+                    title: "Planos de Saúde Cadastrados"
+                }
+            }
+        },
+        emergencyContacts: {
+            sections: {
+                registers: {
+                    title: "Contatos de Emergência Cadastrados"
                 }
             }
         },
@@ -429,6 +475,20 @@ export default {
                     title: "Registrar Novo Cuidador"
                 }
             }
+        },
+        healthPlans: {
+            buttons: {
+                primary: {
+                    title: "Registrar Novo Plano de Saúde"
+                }
+            }
+        },
+        emergencyContacts: {
+            buttons: {
+                primary: {
+                    title: "Registrar Novo Contato de Emergência"
+                }
+            }
         }
     },
 
@@ -480,36 +540,32 @@ export default {
                 inputs: {
                     bloodType: {
                         label: "Tipo Sanguíneo",
-                        options: [
-                            {
-                                placeholder: "O-",
-                                value: "O-"
+                        options: {
+                            o_negative: {
+                                placeholder: "O-"
                             },
-                            {
-                                placeholder: "O+",
-                                value: "O+"
+                            o_positive: {
+                                placeholder: "O+"
                             },
-                            {
-                                placeholder: "A+",
-                                value: "A+"
+                            a_negative: {
+                                placeholder: "A-"
                             },
-                            {
-                                placeholder: "A-",
-                                value: "A-"
+                            a_positive: {
+                                placeholder: "A+"
                             },
-                            {
-                                placeholder: "B-",
-                                value: "B-"
+                            b_negative: {
+                                placeholder: "B-"
                             },
-                            {
-                                placeholder: "AB+",
-                                value: "AB+"
+                            b_positive: {
+                                placeholder: "B+"
                             },
-                            {
-                                placeholder: "AB-",
-                                value: "AB-"
+                            ab_negative: {
+                                placeholder: "AB-"
+                            },
+                            ab_positive: {
+                                placeholder: "AB-"
                             }
-                        ]
+                        }
                     }
                 },
                 buttons: {
@@ -564,16 +620,14 @@ export default {
                     },
                     routeAdmin: {
                         label: "Rota de Administração",
-                        options: [
-                            {
-                                placeholder: "Oral",
-                                value: "Oral"
+                        options: {
+                            oral: {
+                                placeholder: "Oral"
                             },
-                            {
-                                placeholder: "Cutânea",
-                                value: "Cutânea"
+                            cutaneous: {
+                                placeholder: "Cutânea"
                             }
-                        ]
+                        }
                     },
                     dosage: {
                         label: "Dosagem"
@@ -652,6 +706,87 @@ export default {
                 }
             }
         },
+        healthPlans: {
+            header: {
+                title: "Atualizar Plano de Saúde"
+            },
+            main: {
+                inputs: {
+                    name: {
+                        label: "Nome do Plano"
+                    }
+                },
+                buttons: {
+                    submit: {
+                        label: "Atualizar Dados"
+                    }
+                }
+            }
+        },
+        emergencyContacts: {
+            header: {
+                title: "Atualizar Contato de Emergência"
+            },
+            main: {
+                inputs: {
+                    name: {
+                        label: "Nome da Pessoa"
+                    },
+                    kinship: {
+                        label: "Parentesco",
+                        options: {
+                            father: {
+                                placeholder: "Pai"
+                            },
+                            mother: {
+                                placeholder: "Mãe"
+                            },
+                            husband: {
+                                placeholder: "Marido"
+                            },
+                            wife: {
+                                placeholder: "Esposa"
+                            },
+                            son: {
+                                placeholder: "Filho"
+                            },
+                            daughter: {
+                                placeholder: "Filha"
+                            },
+                            uncle: {
+                                placeholder: "Tio"
+                            },
+                            auntie: {
+                                placeholder: "Tia"
+                            },
+                            grandfather: {
+                                placeholder: "Avô"
+                            },
+                            grandmother: {
+                                placeholder: "Avó"
+                            },
+                            cousin: {
+                                placeholder: "Primo(a)"
+                            },
+                            friend: {
+                                placeholder: "Amigo(a)"
+                            },
+                            other: {
+                                placeholder: "Outro"
+                            }
+                        }
+                    },
+                    phone: {
+                        label: "Telefone de Contato"
+                    }
+                },
+                buttons: {
+                    submit: {
+                        label: "Atualizar Dados"
+                    }
+                }
+            }
+        }
     },
 
     confirmPopupTemplates: {

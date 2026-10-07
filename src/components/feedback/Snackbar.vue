@@ -35,7 +35,7 @@
     border-radius: var(--radius-md);
     font-size: var(--text-body-lg);
 
-    z-index: 10;
+    z-index: 12;
   }
 
   /* VARIANTS */

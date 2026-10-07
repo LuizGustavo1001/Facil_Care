@@ -61,7 +61,6 @@
 
         <NotFoundCard v-else class="main-section center"/>
       </main>
-
       <AppFooter :page="String(currentCategory)" />
     </template>
 
@@ -192,7 +191,27 @@
             id: medicine._id,
             title: medicine.name,
             description: getDescription([
-                medicine.routeAdmin
+              getTranslatedText(medicine.routeAdmin)
+            ])
+          })
+        }
+        break
+      case "healthPlans":
+        for(const plan of data.healthPlans ?? []){
+          formattedData.value.push({
+            id: plan.planId,
+            title: plan.name
+          })
+        }
+        break
+      case "emergencyContacts":
+        for(const contact of data.emergencyContacts ?? []) {
+          formattedData.value.push({
+            id: contact.contactId,
+            title: contact.name,
+            description: getDescription([
+                getTranslatedText(contact.kinship),
+                contact.phone
             ])
           })
         }
@@ -231,18 +250,15 @@
         case "allergies":
           idKey = "allergyId"
               break
+        case "healthPlans":
+          idKey = "planId"
+              break
+        case "emergencyContacts":
+          idKey = "contactId"
+              break
       }
 
-      const currentArray = patient.value[currentCategory.value] || []
-
-      const updatedArray = currentArray.filter(currentItem => currentItem[idKey] !== item.id)
-
-      // Remapping the updated subcategory of patient
-      const newData = {
-        [currentCategory.value]: updatedArray
-      }
-
-      result = await patientController.removeFromSubCategory(newData)
+      result = await patientController.removePatientSectionItem(currentCategory.value, item.id, idKey)
     }
 
     if(result && result.success){
@@ -265,15 +281,9 @@
     if(sectionId === "medicines"){
       result = await form.executeDBSubmit(() => medicineController.updateMedicineData(formData, currentCategory))
     }else{ // Data within patient data
-      const currentArray = patient.value[sectionId] || []
+      const cleanData = JSON.parse(JSON.stringify(formData))
 
-      const updatedArray = currentArray.map(item => item[idKey] === currentCategory ? { ...item, ...formData } : item)
-
-      const newData = {
-        [sectionId]: updatedArray
-      }
-
-      result = await form.executeDBSubmit(() => patientController.updatePatient(newData))
+      result = await form.executeDBSubmit(() => patientController.updatePatientSectionItem(sectionId, currentCategory, idKey, cleanData))
     }
 
     if(result && result.success){
@@ -323,14 +333,28 @@
     }else if(currentCategory.value === "allergies"){
       dataSource = patient.value?.allergies
       idKey = "allergyId"
+    }else if(currentCategory.value === "healthPlans"){
+      dataSource = patient.value?.healthPlans
+      idKey = "planId"
+    }else if(currentCategory.value === "emergencyContacts"){
+      dataSource = patient.value?.emergencyContacts
+      idKey = "contactId"
+    }else{
+      dataSource = []
     }
 
-    const currentInputValues = form.getInputValue(dataSource, popupTemplate, idKey)
-    const currentData = currentInputValues[0] || {}
+    // defining the current item selected within the collection
+    const currentItem = dataSource.find(item => item[idKey] === button.id)
 
-    const context = { sectionId: currentCategory.value, fieldId: button.id, currentCategory: currentData[idKey], idKey: idKey }
+    const currentInputValues = form.getInputValue(currentItem, popupTemplate, idKey)
 
-    formPopup.open(popupTemplate, currentData, context)
+    const context = { sectionId: currentCategory.value, fieldId: button.id, currentCategory: currentInputValues[idKey], idKey: idKey }
+
+    formPopup.open(popupTemplate, currentInputValues, context)
+  }
+
+  const getTranslatedText = (label) => {
+    return t(`utils.${label}`) ?? ""
   }
 
   // WATCHES

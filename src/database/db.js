@@ -19,11 +19,15 @@ db.on("populate", (transaction) => {
             name: 'Patient',
             address: 'S. ABC, 41',
             birthDate: '1953-03-15',
-            bloodType: 'O-',
+            bloodType: 'o_negative',
             allergies: [
                 {
                     allergyId: 'alg_101',
                     name: "Alergia Grave a Penicilina"
+                },
+                {
+                    allergyId: 'alg_102',
+                    name: "Outra Alergia"
                 }
             ],
             healthPlans: [
@@ -50,13 +54,26 @@ db.on("populate", (transaction) => {
                     name: 'Marina Souza',
                     startDate: '2026-01-15',
                     phone: '(11) 98888-7777'
+                },
+                {
+                    caregiverId: 'cg_302',
+                    name: 'Cleiton Gomes',
+                    startDate: '2026-01-10',
+                    phone: '(11) 98888-6666'
                 }
             ],
             emergencyContacts: [
                 {
+                    contactId: "ctt_1001",
                     name: 'Roberto Silva',
-                    kinship: 'Filho',
-                    phone: '(11) 97777-6666'
+                    kinship: 'son',
+                    phone: '(11) 97777-5555'
+                },
+                {
+                    contactId: "ctt_1002",
+                    name: "Carla Abreu",
+                    kinship: 'auntie',
+                    phone: "(11) 97777-4444"
                 }
             ]
         }

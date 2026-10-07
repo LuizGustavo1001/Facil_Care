@@ -66,9 +66,16 @@
     if (Array.isArray(props.options)) {
       return props.options.map(opt => {
         if (typeof opt === 'object' && opt !== null) {
-          return { label: opt.label ?? opt.text ?? opt.value, value: opt.value }
+          return {
+            label: opt.placeholder,
+            value: opt.value
+          }
         }
-        return { label: opt, value: opt }
+
+        return {
+          label: opt,
+          value: opt
+        }
       })
     }
 
