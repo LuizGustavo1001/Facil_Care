@@ -20,7 +20,7 @@
           </div>
 
           <ul class="content flex flex-column gap-03 overflow-hidden">
-            <li v-for="(item, index) in tm(`views.${PAGES.TERMS}.sections.${sec.id}.contents`)" :key="index">
+            <li v-for="(item, index) in tm(`views.${PAGES.TERMS}.sections.${sec.id}.contents`)" :key="index" class="flex flex-column gap-03">
               <h2>{{ item.title }}</h2>
 
               <div class="flex flex-column gap-03">

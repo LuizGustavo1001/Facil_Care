@@ -444,8 +444,8 @@ export default {
                         {
                             title: "Aviso Médico",
                             regularSubtitles: [
-                                `Este aplicativo não substitui o parecer, diagnóstico, prescrição ou acompanhamento médico profissional. Em casos de emergência 
-                                de saúde, contate imediatamente os serviços de emergência ou o médico responsável registrado na ficha do paciente`
+                                `Este aplicativo não substitui o parecer, diagnóstico, prescrição ou acompanhamento médico profissional`,
+                                `Em casos de emergência de saúde, contate imediatamente os serviços de emergência ou o médico responsável registrado na ficha do paciente`
                             ]
                         }
                     ]

@@ -64,7 +64,7 @@
 
       <div class="flex flex-column">
         <h1>{{ patientData.name }}</h1>
-        <p>{{ age }} {{ t("utils.years")}} • {{ patientData.bloodType }}</p>
+        <p>{{ age }} {{ t("utils.years")}} • {{ getTranslatedText(patientData.bloodType) }}</p>
       </div>
     </div>
   </aside>
@@ -173,5 +173,9 @@
     const key = `sidebar.sections.${section.id}.items.${item.id}.title`
 
     return te(key) ? t(key) : ""
+  }
+
+  const getTranslatedText = (label) => {
+    return t(`utils.${label}`) ?? ""
   }
 </script>
