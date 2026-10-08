@@ -9,7 +9,7 @@
 
       <main class="main regular">
         <section class="main-section regular gap-15">
-          <p class="text-muted">{{ t(`views.${currentCategory}.subtitle`) }}:</p>
+          <p class="text-muted">{{ getPageSubtitle() }}:</p>
 
           <ul class="flex flex-column gap-1">
             <li
@@ -45,12 +45,11 @@
   import { computed } from "vue"
   import { icons } from "../assets/icons/icons.js"
 
-  import { MONITORING_PAGES } from "../locales/projectConfig.js"
-
   import { useRoute } from "vue-router"
   import { useI18n } from "vue-i18n"
   import { useNavigation } from "../composables/useNavigation.js"
   import { useUtils } from "../composables/useUtils.js"
+  import { MONITORING_PAGES } from "../composables/usePages.js"
 
   import AppHeader from "../components/layout/AppHeader.vue"
   import ActionButtonAlt from "../components/buttons/ActionButtonAlt.vue"
@@ -88,5 +87,9 @@
   // Returns button label
   const getItemTitle = (id) => {
     return t(`views.monitoring.${currentCategory.value}.items.${id}.title`)
+  }
+
+  const getPageSubtitle = () => {
+    return t(`views.monitoring.${currentCategory.value}.subtitle`)
   }
 </script>

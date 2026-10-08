@@ -1,6 +1,7 @@
 import { icons } from "../assets/icons/icons.js"
 import { THEME_PREFERENCES } from "../composables/useTheme.js"
 import { LANGUAGES } from "../composables/useLanguage.js"
+import { PAGES } from "../composables/usePages.js"
 
 const THEME_OPTIONS = [
     { id: THEME_PREFERENCES.LIGHT },
@@ -14,119 +15,55 @@ const LANGUAGE_OPTIONS = [
     { id: LANGUAGES.EN_US }
 ]
 
-export const PAGES = {
-    VITAL_SIGN: "vitalSigns",
-    FOLLOW_UPS: "followUps",
-    EMERGENCY_DATA: "emergencyData",
-    MEDICINES: "medicines",
-    ALLERGIES: "allergies",
-    DOCTORS: "doctors",
-    CAREGIVERS: "caregivers",
-    HEALTH_PLANS: "healthPlans",
-    EMERGENCY_CONTACTS: "emergencyContacts",
-    PREFERENCES: "preferences",
-    IMPORT: "import",
-    EXPORT: "export",
-    USER_MANUAL: "userManual",
-    TERMS: "terms",
-    MOOD: "mood",
-    PAIN_LEVEL: "painLevel",
-    SLEEP: "sleep",
-    WATER_INTAKE: "waterIntake",
-    MEAL_ACCEPTANCE: "mealAcceptance",
-    WEIGHT: "weight",
-    NECESSITIES: "necessities",
-    BODY_TEMPERATURE: "bodyTemperature",
-    BLOOD_PRESSURE: "bloodPressure",
-    OXYGEN_SATURATION: "oxygenSaturation",
-    BLOOD_GLUCOSE: "bloodGlucose",
-    HEART_RATE: "heartRate",
-    NOTIFICATIONS: "notifications",
-    ERASE: "eraseData",
-}
-
-export const MANAGE_PAGES = [
-    PAGES['ALLERGIES'],
-    PAGES['DOCTORS'],
-    PAGES['CAREGIVERS'],
-    PAGES['MEDICINES'],
-    PAGES['HEALTH_PLANS'],
-    PAGES['EMERGENCY_CONTACTS']
-]
-
-export const MONITORING_PAGES = [
-    PAGES['VITAL_SIGN'],
-    PAGES['FOLLOW_UPS']
-]
-
-export const VITAL_SIGNS_PAGES = [
-    PAGES['BODY_TEMPERATURE'],
-    PAGES['BLOOD_PRESSURE'],
-    PAGES['OXYGEN_SATURATION'],
-    PAGES['BLOOD_GLUCOSE'],
-    PAGES['HEART_RATE']
-]
-
-export const FOLLOW_UPS_PAGES = [
-    PAGES['MOOD'],
-    PAGES['PAIN_LEVEL'],
-    PAGES['SLEEP'],
-    PAGES['WATER_INTAKE'],
-    PAGES['MEAL_ACCEPTANCE'],
-    PAGES['WEIGHT'],
-    PAGES['NECESSITIES']
-]
-
-
 export const homeView = {
     buttons: [
         {
-            id: "vitalSigns",
+            id: PAGES['VITAL_SIGNS'],
             color: "red",
             icon: icons["heart-fill"],
-            route: "/monitoring/vitalSigns"
+            route: `/${PAGES['MONITORING']}/${PAGES['VITAL_SIGNS']}`,
         },
         {
-            id: "followUp",
+            id: PAGES['FOLLOW_UPS'],
             color: "yellow",
             icon: icons["mental-health-fill"],
-            route: "/monitoring/followUps"
+            route: `/${PAGES['MONITORING']}/${PAGES['FOLLOW_UPS']}`
         },
         {
-            id: "medicine",
+            id: PAGES['MEDICINES'],
             color: "green",
             icon: icons["capsule-fill"],
-            route: "/manage/medicines"
+            route: `/${PAGES['MANAGE']}/${PAGES['MEDICINES']}`
         },
         {
-            id: "caregiver",
+            id: PAGES['CAREGIVERS'],
             color: "orange",
             icon: icons["user-fill"],
-            route: "/manage/caregivers"
+            route: `/${PAGES['MANAGE']}/${PAGES['CAREGIVERS']}`
         },
         {
-            id: "doctors",
+            id: PAGES['DOCTORS'],
             color: "blue",
             icon: icons["stethoscope-line"],
-            route: "/manage/doctors"
+            route: `/${PAGES['MANAGE']}/${PAGES['DOCTORS']}`
         },
         {
-            id: "allergies",
+            id: PAGES['ALLERGIES'],
             color: "purple",
             icon: icons["virus-fill"],
-            route: "/manage/allergies"
+            route: `/${PAGES['MANAGE']}/${PAGES['ALLERGIES']}`
         },
         {
-            id: "healthPlans",
+            id: PAGES['HEALTH_PLANS'],
             color: "blue",
             icon: icons["first-aid-fill"],
-            route: "/manage/healthPlans"
+            route: `/${PAGES['MANAGE']}/${PAGES['HEALTH_PLANS']}`
         },
         {
-            id: "emergencyContacts",
+            id: PAGES['EMERGENCY_CONTACTS'],
             color: "green",
             icon: icons['contacts-fill'],
-            route: "/manage/emergencyContacts"
+            route: `/${PAGES['MANAGE']}/${PAGES['EMERGENCY_CONTACTS']}`
         }
     ]
 }
@@ -159,34 +96,34 @@ export const monitoringViews = {
     vitalSigns: {
         items: [
             {
-                id: "bodyTemperature",
+                id: PAGES['BODY_TEMPERATURE'],
                 icon: icons["thermometer-line"],
                 color: "red",
-                link: "/monitoring/vitalSigns/bodyTemperature"
+                link: `/${PAGES['MONITORING']}/${PAGES['VITAL_SIGNS']}/${PAGES['BODY_TEMPERATURE']}`
             },
             {
-                id: "bloodPressure",
+                id: PAGES['BLOOD_PRESSURE'],
                 icon: icons["blood-pressure-line"],
                 color: "orange",
-                link: "/monitoring/vitalSigns/bloodPressure"
+                link: `/${PAGES['MONITORING']}/${PAGES['VITAL_SIGNS']}/${PAGES['BLOOD_PRESSURE']}`
             },
             {
-                id: "oxygenSaturation",
+                id: PAGES['OXYGEN_SATURATION'],
                 icon: icons["oxygen-line"],
                 color: "blue",
-                link: "/monitoring/vitalSigns/oxygenSaturation"
+                link: `/${PAGES['MONITORING']}/${PAGES['VITAL_SIGNS']}/${PAGES['OXYGEN_SATURATION']}`
             },
             {
-                id: "bloodGlucose",
+                id: PAGES['BLOOD_GLUCOSE'],
                 icon: icons["glucose-line"],
                 color: "red",
-                link: "/monitoring/vitalSigns/bloodGlucose"
+                link: `/${PAGES['MONITORING']}/${PAGES['VITAL_SIGNS']}/${PAGES['BLOOD_GLUCOSE']}`
             },
             {
-                id: "heartRate",
+                id: PAGES['HEART_RATE'],
                 icon: icons["heart-pulse-line"],
                 color: "orange",
-                link: "/monitoring/vitalSigns/heartRate"
+                link: `/${PAGES['MONITORING']}/${PAGES['VITAL_SIGNS']}/${PAGES['HEART_RATE']}`
             }
         ]
     },
@@ -194,51 +131,50 @@ export const monitoringViews = {
     followUps: {
         items: [
             {
-                id: "mood",
+                id: PAGES['MOOD'],
                 icon: icons["user-smile-line"],
                 color: "blue",
-                link: "/monitoring/followUps/mood"
+                link: `/monitoring/${PAGES['FOLLOW_UPS']}/${PAGES['MOOD']}`
             },
             {
-                id: "painLevel",
+                id: PAGES['PAIN_LEVEL'],
                 icon: icons["emotion-unhappy-line"],
                 color: "red",
-                link: "/monitoring/followUps/painLevel"
+                link: `/${PAGES['MONITORING']}/${PAGES['FOLLOW_UPS']}/${PAGES['PAIN_LEVEL']}`
             },
             {
-                id: "sleepQuality",
+                id: PAGES['SLEEP'],
                 icon: icons["zzz"],
                 color: "blue",
-                link: "/monitoring/followUps/sleep"
+                link: `/${PAGES['MONITORING']}/${PAGES['FOLLOW_UPS']}/${PAGES['SLEEP']}`
             },
             {
-                id: "waterIntake",
+                id: PAGES['WATER_INTAKE'],
                 icon: icons["drop-fill"],
                 color: "blue",
-                link: "/monitoring/followUps/waterIntake"
+                link: `/${PAGES['MONITORING']}/${PAGES['FOLLOW_UPS']}/${PAGES['WATER_INTAKE']}`
             },
             {
-                id: "mealAcceptance",
+                id:PAGES['MEAL_ACCEPTANCE'],
                 icon: icons["restaurant"],
                 color: "orange",
-                link: "/monitoring/followUps/mealAcceptance"
+                link: `/${PAGES['MONITORING']}/${PAGES['FOLLOW_UPS']}/${PAGES['MEAL_ACCEPTANCE']}`
             },
             {
-                id: "weight",
+                id: PAGES['WEIGHT'],
                 icon: icons["weight-line"],
                 color: "green",
-                link: "/monitoring/followUps/weight"
+                link: `/${PAGES['MONITORING']}/${PAGES['FOLLOW_UPS']}/${PAGES['WEIGHT']}`
             },
             {
-                id: "necessities",
+                id: PAGES['NECESSITIES'],
                 icon: icons["drop-line"],
                 color: "orange",
-                link: "/monitoring/followUps/necessities"
+                link: `/${PAGES['MONITORING']}/${PAGES['FOLLOW_UPS']}/${PAGES['NECESSITIES']}`
             }
         ]
     }
 }
-
 
 export const sidebar = {
     sections: [
@@ -246,14 +182,14 @@ export const sidebar = {
             id: "general",
             items: [
                 {
-                    id: "emergency",
+                    id: PAGES['EMERGENCY_DATA'],
                     icon: icons["first-aid-line"],
-                    route: "/emergency"
+                    route: `/${PAGES['EMERGENCY_DATA']}`
                 },
                 {
-                    id: "preferences",
+                    id: PAGES['PREFERENCES'],
                     icon: icons["settings-line"],
-                    route: "/preferences"
+                    route: `/${PAGES['PREFERENCES']}`
                 }
             ]
         },
@@ -261,14 +197,14 @@ export const sidebar = {
             id: "backup",
             items: [
                 {
-                    id: "export",
+                    id: PAGES['EXPORT'],
                     icon: icons["qr-code-line"],
-                    route: "/backup/export"
+                    route: `/backup/${PAGES['EXPORT']}`
                 },
                 {
-                    id: "import",
+                    id: PAGES['IMPORT'],
                     icon: icons["qr-scan-line"],
-                    route: "/backup/import"
+                    route: `/backup/${PAGES['IMPORT']}`
                 }
             ]
         },
@@ -276,14 +212,14 @@ export const sidebar = {
             id: "others",
             items: [
                 {
-                    id: "manual",
+                    id: PAGES['USER_MANUAL'],
                     icon: icons["book-read-line"],
-                    route: "/manual"
+                    route: `/${PAGES['USER_MANUAL']}`
                 },
                 {
-                    id: "terms",
+                    id: PAGES['TERMS'],
                     icon: icons["shield-user-line"],
-                    route: "/terms"
+                    route: `/${PAGES['TERMS']}`
                 }
             ]
         }
@@ -328,21 +264,21 @@ export const emergencyDataView = {
         },
 
         {
-            id: "emergencyContacts",
+            id: PAGES['EMERGENCY_CONTACTS'],
             icon: icons['contacts-fill'],
             component: "default",
             action: "none"
         },
 
         {
-            id: "allergies",
+            id: PAGES['ALLERGIES'],
             icon: icons['virus-fill'],
             component: "default",
             action: "none"
         },
 
         {
-            id: "healthPlans",
+            id: PAGES['HEALTH_PLANS'],
             icon: icons['first-aid-fill'],
             component: "default",
             action: "none"
@@ -355,82 +291,23 @@ export const emergencyDataView = {
             action: "internalLink",
             buttons: [
                 {
-                    id: "doctors",
+                    id: PAGES['DOCTORS'],
                     color: "blue",
                     icon: icons["stethoscope-line"],
-                    route: "/manage/doctors"
+                    route: `/${PAGES.MANAGE}/${PAGES['DOCTORS']}`
                 },
                 {
-                    id: "medicines",
+                    id: PAGES['MEDICINES'],
                     color: "green",
                     icon: icons["medicine-bottle-fill"],
-                    route: "/manage/medicines"
+                    route: `/${PAGES.MANAGE}/${PAGES['MEDICINES']}`
                 }
             ]
         }
     ]
 }
 
-export const registerView = {
-    pages: [
-        {
-            id: "administeredMedication",
-            form: [
-                {
-                    id: "medicine",
-                    inputType: "select"
-                },
-                {
-                    id: "dosage",
-                    inputType: "text"
-                },
-                {
-                    id: "caregiver",
-                    inputType: "select"
-                },
-                {
-                    id: "observation",
-                    inputType: "textarea"
-                }
-            ]
-        },
-        {
-            id: "vitalSign",
-            form: [
-                {
-                    id: "vitalSign",
-                    inputType: "select"
-                },
-                {
-                    id: "measure",
-                    inputType: "text"
-                },
-                {
-                    id: "caregiver",
-                    inputType: "select"
-                },
-                {
-                    id: "observation",
-                    inputType: "textarea"
-                }
-            ]
-
-        },
-        {
-            id: "followUp",
-            form: [
-                {
-                    id: "topic",
-                    inputType: "select"
-                },
-                {
-                    id: "measure",
-                    inputType: "text"
-                }
-            ]
-        }
-    ]
-}
+export const registerView = {}
 
 export const warningMessages = {
     PatientNotFound: "warning",
@@ -467,6 +344,41 @@ export const warningMessages = {
     MedicineDeleted: "success",
 
     SystemDataReset: "success"
+}
+
+export const formTemplates = {
+    patient: {
+        id: "patient",
+    },
+    caregivers: {
+        id: "caregivers",
+    },
+    doctors: {
+        id: "doctors",
+    },
+    allergies: {
+        id: "allergies",
+    },
+    healthPlans: {
+        id: "healthPlans",
+    },
+    emergencyContacts: {
+        id: "emergencyContacts",
+    },
+
+    medicines: {
+        id: "medicines",
+    },
+    medicinesRegistries: {
+        id: "medicinesRegistries",
+    },
+
+    vitalSigns: {
+        id: "vitalSigns",
+    },
+    followUps: {
+        id: "followUps",
+    }
 }
 
 export const formPopupTemplates = [
@@ -846,7 +758,164 @@ export const formPopupTemplates = [
                 }
             ]
         }
-    }
+    },
+    {
+        id: "vitalSigns",
+        main: {
+            inputs: [
+                {
+                    id: "record",
+                    tag: "select",
+                    name: "record",
+                    for: "record",
+                    options: [
+                        {
+                            id: "bodyTemperature",
+                            value: "bodyTemperature"
+                        },
+                        {
+                            id: "bloodPressure",
+                            value: "bloodPressure"
+                        },
+                        {
+                            id: "oxygenSaturation",
+                            value: "oxygenSaturation"
+                        },
+                        {
+                            id: "glucose",
+                            value: "glucose"
+                        },
+                        {
+                            id: "heartRate",
+                            value: "heartRate"
+                        }
+                    ]
+                },
+                {
+                    id: "value",
+                    tag: "input",
+                    name: "value",
+                    for: "value",
+                    inputType: "text"
+                },
+                {
+                  id: "dateTime",
+                  tag: "input",
+                  inputType: "date",
+                  name: "dateTime",
+                  for: "dateTime"
+                },
+                {
+                    id: "caregiverName",
+                    tag: "select",
+                    name: "caregiverName",
+                    for: "caregiverName",
+                    options: [
+                        { // não informado (valor nulo no banco de dados)
+                          id: "none",
+                          value: "none"
+                        },
+                        // vem do banco de dados (coleção de caregivers dentro de patient)
+                    ]
+                },
+                {
+                    id: "observations",
+                    tag: "textarea",
+                    name: "observations",
+                    for: "observations",
+                    autoCapitalize: "sentences"
+                }
+            ],
+            buttons: [
+                {
+                    id: "submit"
+                }
+            ]
+        }
+    },
+    {
+        id: "followUps",
+        main: {
+            inputs: [
+                {
+                    id: "record",
+                    tag: "select",
+                    name: "record",
+                    for: "record",
+                    options: [
+                        {
+                            id: "mood",
+                            value: "mood"
+                        },
+                        {
+                            id: "painLevel",
+                            value: "painLevel"
+                        },
+                        {
+                            id: "sleepQuality",
+                            value: "sleepQuality"
+                        },
+                        {
+                            id: "waterIntake",
+                            value: "waterIntake"
+                        },
+                        {
+                            id: "mealAcceptance",
+                            value: "mealAcceptance"
+                        },
+                        {
+                            id: "weight",
+                            value: "weight"
+                        },
+                        {
+                            id: "necessities",
+                            value: "necessities"
+                        }
+                    ]
+                },
+                {
+                    id: "value",
+                    tag: "input",
+                    name: "value",
+                    for: "value",
+                    inputType: "text"
+                },
+                {
+                    id: "dateTime",
+                    tag: "input",
+                    inputType: "date",
+                    name: "dateTime",
+                    for: "dateTime"
+                },
+                {
+                    id: "caregiverName",
+                    tag: "select",
+                    name: "caregiverName",
+                    for: "caregiverName",
+                    options: [
+                        { // não informado (valor nulo no banco de dados)
+                            id: "none",
+                            value: "none"
+                        },
+                        // vem do banco de dados (coleção de caregivers dentro de patient)
+                    ]
+                },
+                {
+                    id: "observations",
+                    tag: "textarea",
+                    name: "observations",
+                    for: "observations",
+                    autoCapitalize: "sentences"
+                }
+            ],
+            buttons: [
+                {
+                    id: "submit"
+                }
+            ]
+        }
+    },
+
 ]
 
 export const footers = [
@@ -856,87 +925,87 @@ export const footers = [
             {
                 id: "primary",
                 leftIcon: icons["medicine-bottle-fill"],
-                link: "/register/administeredMedication"
+                link: `/form/register/${PAGES['MEDICINE_REGISTRIES']}`
             }
         ]
     },
     {
-        id: "vitalSigns",
+        id: PAGES['VITAL_SIGNS'],
         buttons: [
             {
                 id: "primary",
                 leftIcon: icons["heart-fill"],
-                link: "/register/vitalSigns"
+                link: `/form/register/${PAGES["VITAL_SIGNS"]}`
             }
         ]
     },
     {
-        id: "followUps",
+        id: PAGES['FOLLOW_UPS'],
         buttons: [
             {
                 id: "primary",
                 leftIcon: icons["mental-health-fill"],
-                link: "development"
+                link: `/form/register/${PAGES['FOLLOW_UPS']}`
             }
         ]
     },
     {
-        id: "medicines",
+        id: PAGES['MEDICINES'],
         buttons: [
             {
                 id: "primary",
                 leftIcon: icons["capsule-fill"],
-                link: "/register/medicines/"
+                link: `/form/register/${PAGES['MEDICINES']}`
             }
         ]
     },
     {
-        id: "allergies",
+        id: PAGES['ALLERGIES'],
         buttons: [
             {
                 id: "primary",
                 leftIcon: icons["virus-fill"],
-                link: "/register/allergies"
+                link: `/form/register/${PAGES['ALLERGIES']}`
             }
         ]
     },
     {
-        id: "doctors",
+        id: PAGES['DOCTORS'],
         buttons: [
             {
                 id: "primary",
                 leftIcon: icons["stethoscope-line"],
-                link: "/register/doctors"
+                link: `/form/register/${PAGES['DOCTOR']}`,
             }
         ]
     },
     {
-        id: "caregivers",
+        id: PAGES['CAREGIVERS'],
         buttons: [
             {
                 id: "primary",
                 leftIcon: icons["user-fill"],
-                link: "/register/caregivers"
+                link: `/form/register/${PAGES['CAREGIVERS']}`
             }
         ]
     },
     {
-        id: "healthPlans",
+        id: PAGES['HEALTH_PLANS'],
         buttons: [
             {
                 id: "primary",
                 leftIcon: icons['first-aid-fill'],
-                link: "/register/healtPlans"
+                link: `/form/register/${PAGES['HEALTH_PLANS']}`
             }
         ]
     },
     {
-        id: "emergencyContacts",
+        id: PAGES['EMERGENCY_CONTACTS'],
         buttons: [
             {
                 id: "primary",
                 leftIcon: icons['contacts-fill'],
-                link: "/register/emergencyContacts"
+                link: `/form/register/${PAGES['EMERGENCY_CONTACTS']}`
             }
         ]
     }

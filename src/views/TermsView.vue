@@ -5,13 +5,13 @@
         :leftBtnIcon="icons['chevron-left']"
         @return-page="navigation.handleReturn"
     />
+
+    <main class="main regular gap-1">
+      <section class="main-section regular gap-1"></section>
+    </main>
+
+    <AppFooter page="terms" />
   </div>
-
-  <main class="main regular gap-1">
-    <section class="main-section regular gap-1"></section>
-  </main>
-
-  <AppFooter page="terms" />
 </template>
 
 <style scoped></style>
@@ -19,7 +19,7 @@
 <script setup>
   import { icons } from "../assets/icons/icons.js"
 
-  import { PAGES } from "../locales/projectConfig.js"
+  import { PAGES } from "../composables/usePages.js"
 
   import { useNavigation } from "../composables/useNavigation.js"
   import { useUtils } from "../composables/useUtils.js"

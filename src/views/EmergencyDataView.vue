@@ -75,7 +75,8 @@
   import { computed, onMounted, ref } from "vue"
   import { icons } from "../assets/icons/icons.js"
 
-  import { emergencyDataView , formPopupTemplates, PAGES } from "../locales/projectConfig.js"
+  import { emergencyDataView , formPopupTemplates } from "../locales/projectConfig.js"
+  import { PAGES } from "../composables/usePages.js"
 
   import { useI18n } from "vue-i18n"
   import { useNavigation } from "../composables/useNavigation.js"

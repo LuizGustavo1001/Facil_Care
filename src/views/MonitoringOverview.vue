@@ -78,7 +78,7 @@
   import { computed, onMounted, ref } from "vue"
   import { icons } from "../assets/icons/icons.js"
 
-  import { PAGES, VITAL_SIGNS_PAGES, FOLLOW_UPS_PAGES } from "../locales/projectConfig.js"
+  import { PAGES, VITAL_SIGNS_PAGES, FOLLOW_UPS_PAGES } from "../composables/usePages.js"
 
   import { useRoute } from "vue-router"
   import { useI18n } from "vue-i18n"
@@ -134,7 +134,7 @@
       return FOLLOW_UPS_PAGES.includes(currentType.value)
     }
 
-    if(currentCategory.value === PAGES['VITAL_SIGN']){
+    if(currentCategory.value === PAGES['VITAL_SIGNS']){
       return VITAL_SIGNS_PAGES.includes(currentType.value)
     }
 
@@ -209,7 +209,7 @@
       case PAGES['FOLLOW_UPS']:
         result = await followUpsController.getByField(currentType.value)
         break
-      case PAGES['VITAL_SIGN']:
+      case PAGES['VITAL_SIGNS']:
         result = await vitalSignsController.getByField(currentType.value)
         break
     }

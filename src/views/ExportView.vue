@@ -207,7 +207,7 @@
   import { computed, ref, watch } from "vue"
   import { icons } from "../assets/icons/icons.js"
 
-  import { PAGES } from "../locales/projectConfig.js"
+  import { PAGES } from "../composables/usePages.js"
 
   import { useI18n } from "vue-i18n"
   import { useUtils } from "../composables/useUtils.js"

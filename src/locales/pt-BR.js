@@ -1,59 +1,60 @@
+import { PAGES } from "../composables/usePages.js"
+import { THEME_PREFERENCES as THEMES } from "../composables/useTheme.js"
+import { LANGUAGES } from "../composables/useLanguage.js"
+
 export default {
     pageTitle: {
-        vitalSigns: "Sinais Vitais",
-        followUps: "Acompanhamento Fisiológico e Comportamental",
+        [PAGES.VITAL_SIGNS]: "Sinais Vitais",
+        [PAGES.FOLLOW_UPS]: "Acompanhamento Fisiológico e Comportamental",
 
-        emergencyData: "Dados de Emergência",
+        [PAGES.EMERGENCY_DATA]: "Dados de Emergência",
 
-        medicines: "Medicamentos",
-        allergies: "Alergias",
-        doctors: "Médicos",
-        caregivers: "Cuidadores",
-        healthPlans: "Planos de Saúde",
-        emergencyContacts: "Contatos de Emergência",
+        [PAGES.MEDICINES]: "Medicamentos",
+        [PAGES.ALLERGIES]: "Alergias",
+        [PAGES.DOCTORS]: "Médicos",
+        [PAGES.CAREGIVERS]: "Cuidadores",
+        [PAGES.HEALTH_PLANS]: "Planos de Saúde",
+        [PAGES.EMERGENCY_CONTACTS]: "Contatos de Emergência",
 
-        import: "Importar Dados",
-        export: "Exportar Dados",
+        [PAGES.IMPORT]: "Importar Dados",
+        [PAGES.EXPORT]: "Exportar Dados",
 
-        userManual: "Manual do Usuário",
-        terms: "Termos de Responsabilidade",
+        [PAGES.USER_MANUAL]: "Manual do Usuário",
+        [PAGES.TERMS]: "Termos de Responsabilidade",
 
-        bodyTemperature: "Temperatura Corporal",
-        bloodPressure: "Pressão Arterial",
-        oxygenSaturation: "Saturação de Oxigênio",
-        bloodGlucose: "Glicemia",
-        heartRate: "Batimentos Cardíacos",
+        [PAGES.BODY_TEMPERATURE]: "Temperatura Corporal",
+        [PAGES.BLOOD_PRESSURE]: "Pressão Arterial",
+        [PAGES.OXYGEN_SATURATION]: "Saturação de Oxigênio",
+        [PAGES.BLOOD_GLUCOSE]: "Glicemia",
+        [PAGES.HEART_RATE]: "Batimentos Cardíacos",
 
-        mood: "Humor",
-        painLevel: "Nível de Dor",
-        sleep: "Qualidade do Sono",
-        waterIntake: "Ingestão de Água",
-        mealAcceptance: "Aceitação de Refeições",
-        weight: "Peso Corporal",
-        necessities: "Controle de Evacuação e Diurese",
+        [PAGES.MOOD]: "Humor",
+        [PAGES.PAIN_LEVEL]: "Nível de Dor",
+        [PAGES.SLEEP]: "Qualidade do Sono",
+        [PAGES.WATER_INTAKE]: "Ingestão de Água",
+        [PAGES.MEAL_ACCEPTANCE]: "Aceitação de Refeições",
+        [PAGES.WEIGHT]: "Peso Corporal",
+        [PAGES.NECESSITIES]: "Controle de Evacuação e Diurese",
 
-        notifications: "Notificações",
-        eraseData: "Apagar Dados",
+        [PAGES.NOTIFICATIONS]: "Notificações",
+        [PAGES.ERASE]: "Apagar Dados",
         registries: "Registros",
-        preferences: "Preferências",
+        [PAGES.PREFERENCES]: "Preferências",
     },
 
     meta: {
-        home: "Início",
-        monitoring: "Monitoramento",
-        monitoringOverview: "Monitoramento",
-        manage: "Gerenciamento",
-        emergencyData: "Dados de Emergência",
-        preferences: "Preferências",
+        [PAGES.HOME]: "Início",
+        [PAGES.MONITORING]: "Monitoramento",
+        [PAGES.MANAGE]: "Gerenciamento",
+        [PAGES.EMERGENCY_DATA]: "Dados de Emergência",
+        [PAGES.PREFERENCES]: "Preferências",
         register: "Registrar",
-        backup: "Backup",
-        manual: "Manual do Usuário",
-        terms: "Termos de Usuário",
-        notifications: "Notificações",
+        [PAGES.USER_MANUAL]: "Manual do Usuário",
+        [PAGES.TERMS]: "Termos de Usuário",
         notFound: 'Página não encontrada',
-        eraseData: "Apagar Dados",
-        import: "Importar Dados",
-        export: "Exportar Dados"
+        [PAGES.ERASE]: "Apagar Dados",
+        [PAGES.IMPORT]: "Importar Dados",
+        [PAGES.EXPORT]: "Exportar Dados"
     },
 
     utils: {
@@ -64,24 +65,24 @@ export default {
         homePage: "Voltar à página inicial",
         years: "anos",
         themes: {
-            light: {
+            [THEMES.LIGHT]: {
                 label: "Tema Claro"
             },
-            dark: {
+            [THEMES.DARK]: {
                 label: "Tema Escuro"
             },
-            system: {
+            [THEMES.SYSTEM]: {
                 label: "Seguir Sistema"
             },
-            highContrast: {
+            [THEMES.HIGH_CONTRAST]: {
                 label: "Alto Contraste"
             }
         },
         languages: {
-            ptBR: {
+            [LANGUAGES.PT_BR]: {
                 label: "Português Brasil"
             },
-            enUS: {
+            [LANGUAGES.EN_US]: {
                 label: "Inglês"
             }
         },
@@ -121,98 +122,98 @@ export default {
     },
 
     views: {
-        home: {
+        [PAGES.HOME]: {
             subtitle: "Selecione uma das opções abaixo para visualizar as informações desejadas",
 
             buttons: {
-                vitalSigns: {
+                [PAGES.VITAL_SIGNS]: {
                     title: "Registros de Sinais Vitais",
                     description: "Gerenciar medições diárias e visualizar estatísticas"
                 },
-                followUp: {
+                [PAGES.FOLLOW_UPS]: {
                     title: "Acompanhamento Fisiológico e Comportamental",
                     description: "Gerenciar dados comportamentais e fisiológicos e visualizar estatísticas"
                 },
-                medicine: {
+                [PAGES.MEDICINES]: {
                     title: "Medicamentos",
                     description: "Visualizar medicamentos do dia e gerenciar cadastrados"
                 },
-                caregiver: {
+                [PAGES.CAREGIVERS]: {
                     title: "Cuidadores",
                     description: "Gerenciar cuidadores do paciente"
                 },
-                doctors: {
+                [PAGES.DOCTORS]: {
                     title: "Médicos",
                     description: "Gerenciar médicos do paciente"
                 },
-                allergies: {
+                [PAGES.ALLERGIES]: {
                     title: "Alergias",
                     description: "Gerenciar alergias do paciente"
                 },
-                healthPlans: {
+                [PAGES.HEALTH_PLANS]: {
                     title: "Planos de Saúde",
                     description: "Gerenciar planos de saúde que o paciente possui"
                 },
-                emergencyContacts: {
+                [PAGES.EMERGENCY_CONTACTS]: {
                     title: "Contatos de Emergência",
                     description: "Gerenciar contatos de emergência"
                 }
             }
         },
 
-        monitoring: {
-            vitalSigns: {
+        [PAGES.MONITORING]: {
+            [PAGES.VITAL_SIGNS]: {
                 subtitle: "Selecione uma das opções abaixo para visualizar cada tópico individualmente",
 
                 items: {
-                    bodyTemperature: {
+                    [PAGES.BODY_TEMPERATURE]: {
                         title: "Temperatura Corporal"
                     },
-                    bloodPressure: {
+                    [PAGES.BLOOD_PRESSURE]: {
                         title: "Pressão Arterial"
                     },
-                    oxygenSaturation: {
+                    [PAGES.OXYGEN_SATURATION]: {
                         title: "Saturação de Oxigênio"
                     },
-                    bloodGlucose: {
+                    [PAGES.BLOOD_GLUCOSE]: {
                         title: "Glicemia"
                     },
-                    heartRate: {
+                    [PAGES.HEART_RATE]: {
                         title: "Batimentos Cardíacos"
                     }
                 }
             },
 
-            followUps: {
+            [PAGES.FOLLOW_UPS]: {
                 subtitle: "Selecione uma das opções abaixo para visualizar cada tópico individualmente",
 
                 items: {
-                    mood: {
+                    [PAGES.MOOD]: {
                         title: "Humor"
                     },
-                    painLevel: {
+                    [PAGES.PAIN_LEVEL]: {
                         title: "Nível de dor"
                     },
-                    sleepQuality: {
+                    [PAGES.SLEEP]: {
                         title: "Qualidade do Sono"
                     },
-                    waterIntake: {
+                    [PAGES.WATER_INTAKE]: {
                         title: "Ingestão de Água"
                     },
-                    mealAcceptance: {
+                    [PAGES.MEAL_ACCEPTANCE]: {
                         title: "Aceitação de Refeições"
                     },
-                    weight: {
+                    [PAGES.WEIGHT]: {
                         title: "Peso"
                     },
-                    necessities: {
+                    [PAGES.NECESSITIES]: {
                         title: "Controle de Evacuação e Diurese"
                     }
                 }
             }
         },
 
-        emergencyData: {
+        [PAGES.EMERGENCY_DATA]: {
             sections: {
                 patient: {
                     title: "Informações do Paciente",
@@ -236,25 +237,25 @@ export default {
                     }
                 },
 
-                emergencyContacts: {
+                [PAGES.EMERGENCY_CONTACTS]: {
                     title: "Contatos de Emergência"
                 },
 
-                allergies: {
+                [PAGES.ALLERGIES]: {
                     title: "Alergias Conhecidas"
                 },
 
-                healthPlans: {
+                [PAGES.HEALTH_PLANS]: {
                     title: "Planos de Saúde"
                 },
 
                 others: {
                     title: "Outros",
                     buttons: {
-                        doctors: {
+                        [PAGES.DOCTORS]: {
                             title: "Médicos Cadastrados"
                         },
-                        medicines: {
+                        [PAGES.MEDICINES]: {
                             title: "Medicamentos Cadastrados"
                         }
                     }
@@ -264,7 +265,7 @@ export default {
             fallback: "Nenhuma informação encontrada para categoria selecionada"
         },
 
-        medicines: {
+        [PAGES.MEDICINES]: {
             sections: {
                 registers: {
                     title: "Medicamentos Cadastrados"
@@ -272,7 +273,7 @@ export default {
             }
         },
 
-        allergies: {
+        [PAGES.ALLERGIES]: {
             sections: {
                 registers: {
                     title: "Alergias Cadastradas"
@@ -280,7 +281,7 @@ export default {
             }
         },
 
-        registries: {
+        [PAGES.MEDICINE_REGISTRIES]: {
             sections: {
                 medicines: {
                     title: "Histórico de Medicamentos Administrados"
@@ -288,7 +289,7 @@ export default {
             }
         },
 
-        doctors: {
+        [PAGES.DOCTORS]: {
             sections: {
                 registers: {
                     title: "Médicos Cadastrados"
@@ -296,7 +297,7 @@ export default {
             }
         },
 
-        caregivers: {
+        [PAGES.CAREGIVERS]: {
             sections: {
                 registers: {
                     title: "Cuidadores Cadastrados"
@@ -304,7 +305,7 @@ export default {
             }
         },
 
-        healthPlans: {
+        [PAGES.HEALTH_PLANS]: {
             sections: {
                 registers: {
                     title: "Planos de Saúde Cadastrados"
@@ -312,7 +313,7 @@ export default {
             }
         },
 
-        emergencyContacts: {
+        [PAGES.EMERGENCY_CONTACTS]: {
             sections: {
                 registers: {
                     title: "Contatos de Emergência Cadastrados"
@@ -320,7 +321,7 @@ export default {
             }
         },
 
-        preferences: {
+        [PAGES.PREFERENCES]: {
             sections: {
                 general: {
                     title: "Geral",
@@ -336,7 +337,7 @@ export default {
             }
         },
 
-        import: {
+        [PAGES.IMPORT]: {
             sections: {
                 importing: {
                     title: "Conectando ao Emissor",
@@ -360,7 +361,7 @@ export default {
             }
         },
 
-        export: {
+        [PAGES.EXPORT]: {
             subtitle: "Selecione uma das opções abaixo para exportar dados do paciente",
 
             sections: {
@@ -403,7 +404,7 @@ export default {
             }
         },
 
-        eraseData: {
+        [PAGES.ERASE]: {
             sections: {
                 erase: {
                     title: "Apagar Dados do Paciente",
@@ -423,11 +424,11 @@ export default {
             }
         },
 
-        userManual: {
+        [PAGES.USER_MANUAL]: {
 
         },
 
-        terms: {
+        [PAGES.TERMS]: {
 
         }
     },
@@ -437,10 +438,10 @@ export default {
             general: {
                 title: "Geral",
                 items: {
-                    emergency: {
+                    [PAGES.EMERGENCY_DATA]: {
                         title: "Dados de Emergência"
                     },
-                    preferences: {
+                    [PAGES.PREFERENCES]: {
                         title: "Preferências"
                     }
                 }
@@ -449,10 +450,10 @@ export default {
             backup: {
                 title: "Gerenciar Dados",
                 items: {
-                    export: {
+                    [PAGES.EXPORT]: {
                         title: "Exportar Dados"
                     },
-                    import: {
+                    [PAGES.IMPORT]: {
                         title: "Importar Dados"
                     }
                 }
@@ -461,10 +462,10 @@ export default {
             others: {
                 title: "Outros",
                 items: {
-                    manual: {
+                    [PAGES.USER_MANUAL]: {
                         title: "Manual do Usuário"
                     },
-                    terms: {
+                    [PAGES.TERMS]: {
                         title: "Termos de Responsabilidade"
                     }
                 }
@@ -473,7 +474,7 @@ export default {
     },
 
     footer: {
-        home: {
+        [PAGES.HOME]: {
             buttons: {
                 primary: {
                     title: "Administrar Medicamento"
@@ -481,7 +482,7 @@ export default {
             }
         },
 
-        vitalSigns: {
+        [PAGES.VITAL_SIGNS]: {
             buttons: {
                 primary: {
                     title: "Registrar Sinais Vitais"
@@ -489,7 +490,7 @@ export default {
             }
         },
 
-        followUps: {
+        [PAGES.FOLLOW_UPS]: {
             buttons: {
                 primary: {
                     title: "Registrar Estado Físico / Comportamental"
@@ -497,7 +498,7 @@ export default {
             }
         },
 
-        medicines: {
+        [PAGES.MEDICINES]: {
             buttons: {
                 primary: {
                     title: "Registrar Novo Medicamento"
@@ -505,7 +506,7 @@ export default {
             }
         },
 
-        allergies: {
+        [PAGES.ALLERGIES]: {
             buttons: {
                 primary: {
                     title: "Registrar Nova Alergia"
@@ -513,7 +514,7 @@ export default {
             }
         },
 
-        doctors: {
+        [PAGES.DOCTORS]: {
             buttons: {
                 primary: {
                     title: "Registrar Novo Médico"
@@ -521,7 +522,7 @@ export default {
             }
         },
 
-        caregivers: {
+        [PAGES.CAREGIVERS]: {
             buttons: {
                 primary: {
                     title: "Registrar Novo Cuidador"
@@ -529,7 +530,7 @@ export default {
             }
         },
 
-        healthPlans: {
+        [PAGES.HEALTH_PLANS]: {
             buttons: {
                 primary: {
                     title: "Registrar Novo Plano de Saúde"
@@ -537,7 +538,7 @@ export default {
             }
         },
 
-        emergencyContacts: {
+        [PAGES.EMERGENCY_CONTACTS]: {
             buttons: {
                 primary: {
                     title: "Registrar Novo Contato de Emergência"
@@ -546,7 +547,7 @@ export default {
         }
     },
 
-    notifications: {
+    [PAGES.NOTIFICATIONS]: {
         title: "Notificações",
         markAsRead: "Marque todas como lidas"
     },

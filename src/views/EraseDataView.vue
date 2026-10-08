@@ -91,7 +91,7 @@
   import { computed, ref } from "vue"
   import { icons } from "../assets/icons/icons.js"
 
-  import { PAGES } from "../locales/projectConfig.js"
+  import { PAGES } from "../composables/usePages.js"
 
   import { useNavigation } from "../composables/useNavigation.js"
   import { useUtils } from "../composables/useUtils.js"

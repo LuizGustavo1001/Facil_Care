@@ -84,7 +84,8 @@
 <script setup>
   import { computed, onMounted, ref, watch } from "vue"
   import { icons } from "../assets/icons/icons.js"
-  import { formPopupTemplates, MANAGE_PAGES } from "../locales/projectConfig.js"
+  import { formPopupTemplates } from "../locales/projectConfig.js"
+  import { MANAGE_PAGES } from "../composables/usePages.js"
 
   import { useRoute } from "vue-router"
   import { useNavigation } from "../composables/useNavigation.js"

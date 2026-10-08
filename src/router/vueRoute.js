@@ -35,7 +35,7 @@ const routes = [
         }
     },
     {
-        path: "/emergency",
+        path: "/emergencyData",
         name: "emergency-data",
         component: () => import('/src/views/EmergencyDataView.vue'),
         meta: {
@@ -51,8 +51,8 @@ const routes = [
         }
     },
     {
-      path: '/register/:category',
-      name: 'register',
+      path: '/form/:action/:category',
+      name: 'form',
       component: () => import('/src/views/RegisterView.vue'),
       meta: {
           title: 'register'
@@ -75,7 +75,7 @@ const routes = [
         }
     },
     {
-        path: '/manual',
+        path: '/userManual',
         name: 'manual',
         component: () => import('/src/views/ManualView.vue'),
         meta: {

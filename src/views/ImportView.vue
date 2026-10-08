@@ -143,7 +143,7 @@
   import {computed, onMounted, ref, watch} from "vue"
   import { icons } from "../assets/icons/icons.js"
 
-  import { PAGES } from "../locales/projectConfig.js"
+  import { PAGES } from "../composables/usePages.js"
 
   import Snackbar from "../components/feedback/Snackbar.vue"
   import AppHeader from "../components/layout/AppHeader.vue"

@@ -41,7 +41,8 @@
 
 <script setup>
   import { icons } from "../assets/icons/icons.js"
-  import { preferencesView, PAGES } from "../locales/projectConfig.js"
+  import { preferencesView } from "../locales/projectConfig.js"
+  import { PAGES } from "../composables/usePages.js"
 
   import { useNavigation } from "../composables/useNavigation.js"
   import { useLanguage } from "../composables/useLanguage.js"
