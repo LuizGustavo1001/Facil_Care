@@ -31,7 +31,7 @@
       >
         <div class="section-title">
           <div class="flex gap-05 align-center">
-            <Icon :icon="content.icon" size="25px" class="text-muted"/>
+            <Icon :icon="content.icon" size="25px" />
             <h2>{{ getSectionTitle(content) }}</h2>
           </div>
 

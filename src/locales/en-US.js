@@ -429,7 +429,116 @@ export default {
         },
 
         [PAGES.TERMS]: {
-
+            sections: {
+                consciousUse: {
+                    title: "Disclaimer and Conscious Use",
+                    contents: [
+                        {
+                            title: "Registered Data Responsiblity",
+                            regularSubtitles: [
+                                `FacilCare acts strictly as a tool to assist with and organize the caregiver's routine`,
+                                `We are not responsible for incorrect dosage, schedules, or the medicine name registered, as it 
+                                is the sole responsibility of the user to register and verify the data correctly`
+                            ]
+                        },
+                        {
+                            title: "Medical Warning",
+                            regularSubtitles: [
+                                `This app does not replace professional medical opinion, diagnosis, prescription, or monitoring. 
+                                In case of a health emergency, immediately contact the emergency services or the doctors listed in the patient's record`
+                            ]
+                        }
+                    ]
+                },
+                dataPrivacy: {
+                    title: "Data Privacy",
+                    contents: [
+                        {
+                            title: "Where is Your Data Stored?",
+                            regularSubtitles: [
+                                `All personal data (name, age, blood type, and emergency contacts, for example), 
+                                 physiological registries (vital signs, mood, sleep, and others), and medical history are stored only 
+                                 on the user's device, using the embedded browser's database (IndexedDB)`
+                            ]
+                        },
+                        {
+                            title: "Without Cloud Servers",
+                            regularSubtitles: [
+                                `FacilCare does not have a cloud database or central storage servers. Personal patient data will never be sent, 
+                                collected, or processed by developers or third parties in a deliberate way`
+                            ]
+                        }
+                    ]
+                },
+                telemetry: {
+                    title: "Absence of Trackers and Telemetry",
+                    contents: [
+                        {
+                            title: "No Accounts or External Sign-in",
+                            regularSubtitles: [
+                                `Our system does not require sign-up with an e-mail, passwords, or remote server authentication`
+                            ]
+                        },
+                        {
+                            title: "No Tracker Cookies or Analytics",
+                            regularSubtitles: [
+                                `Our system does not use tracking cookies or external telemetry and behavior analytics tools`
+                            ]
+                        }
+                    ]
+                },
+                devicePermissions: {
+                    title: "Device Permissions",
+                    subtitle: `To offer a complete experience, our system requires some specific permissions that operate strictly on the user’s device`,
+                    contents: [
+                        {
+                            title: "Notifications",
+                            regularSubtitles: [
+                                `Notifications are used only to trigger visual and sound alerts at the exact administration time for each registered medication`
+                            ]
+                        },
+                        {
+                            title: "Storage Persistence",
+                            regularSubtitles: [
+                                `The application requests permission from the browser to ensure that the operating system does not delete the database during 
+                                the device's automatic memory-clearing routines`
+                            ]
+                        }
+                    ]
+                },
+                dataManagement: {
+                    title: "Data Exchange, Backups and Transfer Between Device",
+                    contents: [
+                        {
+                            title: "Manual Backup (JSON)",
+                            regularSubtitles: [
+                                `The user is responsible for preventing the physical loss of the device and may generate and download a backup file in .JSON 
+                                format at any time`
+                            ]
+                        },
+                        {
+                            title: "Data Tranfer",
+                            regularSubtitles: [
+                                `When choosing to transfer data to another device via QR Code, FácilCare establishes a direct peer-to-peer connection between the two browsers`,
+                                `Network Note: A temporary internet connection is required to initially establish P2P pairing via QR code. No patient data is stored on that 
+                                server—data traffic moves directly between the two devices`
+                            ]
+                        }
+                    ]
+                },
+                dataExclusion: {
+                    title: "Data Exclusion",
+                    contents: [
+                        {
+                            title: "Cleaning Cache/Browser Storage",
+                            regularSubtitles: [
+                                `Since the data resides strictly within your browser, you can permanently delete it at any time by clearing the browser cache/storage for this site or by 
+                                using the system's own reset option`
+                            ]
+                        }
+                    ]
+                }
+            }
         }
     },
 

@@ -307,6 +307,35 @@ export const emergencyDataView = {
     ]
 }
 
+export const termsView = {
+    sections: [
+        {
+            id: "consciousUse",
+            icon: icons['user-fill'],
+        },
+        {
+            id: "dataPrivacy",
+            icon: icons['database-fill']
+        },
+        {
+            id: "telemetry",
+            icon: icons['pin-user-fill'],
+        },
+        {
+            id: "devicePermissions",
+            icon: icons['shield-keyhole-fill']
+        },
+        {
+            id: "dataManagement",
+            icon: icons['qr-scan-fill'],
+        },
+        {
+            id: "dataExclusion",
+            icon: icons['delete-bin-fill']
+        }
+    ]
+}
+
 export const registerView = {}
 
 export const warningMessages = {

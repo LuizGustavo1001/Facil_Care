@@ -429,7 +429,119 @@ export default {
         },
 
         [PAGES.TERMS]: {
-
+            sections: {
+                consciousUse: {
+                    title: "Isenção de Responsabilidade e Uso Consciente",
+                    contents: [
+                        {
+                            title: "Responsabilidade pelos Dados Cadastrados",
+                            regularSubtitles: [
+                                `O FacilCare atua estritamente como uma ferramenta de auxílio e organização da rotina do cuidador`,
+                                `Não nos responsabilizamos por informações incorretas cadastradas sobre dosagens, horários ou nomes de medicamentos, 
+                                sendo de inteira responsabilidade do usuário cadastrar e conferir os dados corretamente`
+                            ]
+                        },
+                        {
+                            title: "Aviso Médico",
+                            regularSubtitles: [
+                                `Este aplicativo não substitui o parecer, diagnóstico, prescrição ou acompanhamento médico profissional. Em casos de emergência 
+                                de saúde, contate imediatamente os serviços de emergência ou o médico responsável registrado na ficha do paciente`
+                            ]
+                        }
+                    ]
+                },
+                dataPrivacy: {
+                    title: "Privacidade de Dados",
+                    contents: [
+                        {
+                            title: "Onde seus dados ficam salvos?",
+                            regularSubtitles: [
+                                `Todos os dados pessoais (nome, idade, tipo sanguíneo e contatos de emergência, por exemplo), 
+                                 registros fisiológicos (sinais vitais, humor, sono e etc) e histórico de medicamentos são
+                                 armazenados exclusivamente de forma local no seu dispositivo, utilizando o banco de dados embutido
+                                 no navegador (IndexedDB)`
+                            ]
+                        },
+                        {
+                            title: "Sem Servidores na Nuvem",
+                            regularSubtitles: [
+                                `O FacilCare não possui banco de dados na nuvem nem servidores centrais de armazenamento. Dados pessoais do paciente nunca são enviados, 
+                                coletados ou processados por desenvolvedores ou terceiros de forma deliberada`
+                            ]
+                        }
+                    ]
+                },
+                telemetry: {
+                    title: "Ausência de Rastreamento e Telemetria",
+                    contents: [
+                        {
+                            title: "Sem Contas ou Login Externo",
+                            regularSubtitles: [
+                                `Nosso sistema não exige a criação de cadastro com e-mail, senhas ou autenticação em servidores remotos`
+                            ]
+                        },
+                        {
+                            title: "Sem Cookies de Rastreamento ou Analytics",
+                            regularSubtitles: [
+                                `O sistema não utiliza cookies de rastreamento ou ferramentas externas de telemetria e análise de comportamento`
+                            ]
+                        }
+                    ]
+                },
+                devicePermissions: {
+                    title: "Permissões de Dispositivo",
+                    subtitle: `Para oferecer uma experiência completa, nosso sistema solicita permissões específicas que operam estritamente no seu dispositivo`,
+                    contents: [
+                        {
+                            title: "Notificações",
+                            regularSubtitles: [
+                                `Notificações são utilizadas exclusivamente para disparar alertas visuais e sonoros no horário exato de administração de cada medicamento 
+                                cadastrados, por exemplo`
+                            ]
+                        },
+                        {
+                            title: "Persistência de Armazenamento",
+                            regularSubtitles: [
+                                `O aplicativo solicita ao navegador a permissão para garantir que o sistema operacional não apague a base de dados 
+                                durante rotinas automáticas de limpeza de memória do dispositivo`
+                            ]
+                        }
+                    ]
+                },
+                dataManagement: {
+                    title: "Troca de Dados, Backups e Transferências entre Dispositivos",
+                    contents: [
+                        {
+                            title: "Backup Manual (JSON)",
+                            regularSubtitles: [
+                                `A responsabilidade pela prevenção contra perda física do dispositivo é do usuário, que pode gerar e baixar a qualquer momento
+                                um arquivo de backup em formato .JSON`
+                            ]
+                        },
+                        {
+                            title: "Transferência de Dados",
+                            regularSubtitles: [
+                                `Ao optar por transferir dados para outro dispositivo via QR Code, o FácilCare estabelece uma conexão direta ponto-a-ponto (Peer-to-Peer) 
+                                entre os dois navegadores`,
+                                `Ressalva de Rede: Para estabelecimento inicial do pareamento P2P pelo QR Code, é necessária uma conexão temporária com a internet. 
+                                Nenhum dado do paciente fica armazenado nesse servidor — a carga de dados trafega diretamente entre os dois dispositivos`
+                            ]
+                        }
+                    ]
+                },
+                dataExclusion: {
+                    title: "Exclusão de Dados",
+                    contents: [
+                        {
+                            title: "Limpando Cache/Armazenamento do Navegador",
+                            regularSubtitles: [
+                                `Como os dados residem estritamente no seu navegador, você pode apagá-los permanentemente a qualquer momento limpando o cache/armazenamento 
+                                do navegador para este site ou utilizando a opção de redefinição própria do sistema`
+                            ]
+                        }
+                    ]
+                }
+            }
         }
     },
 
