@@ -96,6 +96,9 @@ export default {
         },
         vitalSign: "Sinal Vital",
         followUp: "Acompanhamento",
+        measurements: "Medições",
+        systolic: "Sistólica",
+        diastolic: "Diastólica",
         data: "Deletar",
         o_negative: "O-",
         o_positive: "O+",
@@ -662,6 +665,74 @@ export default {
     [PAGES.NOTIFICATIONS]: {
         title: "Notificações",
         markAsRead: "Marque todas como lidas"
+    },
+
+    charts: {
+        filters: {
+            today: {
+                title: "Hoje"
+            },
+            week: {
+                title: "7 dias"
+            },
+            twoWeeks: {
+                title: "14 dias"
+            },
+            threeWeeks: {
+                title: "21 dias"
+            },
+            month: {
+                title: "30 dias"
+            },
+            twoMonths: {
+                title: "60 dias"
+            },
+            all: {
+                title: "Todos"
+            }
+        },
+        fallback: "Não há um gráfico configurado para o elemento selecionado",
+        [PAGES.VITAL_SIGNS]: {
+            fallback: "Não há medições válidas para exibir",
+
+            [PAGES.BLOOD_PRESSURE]: {
+                y_axis: "Pressão Arterial",
+                x_axis: "Data da medição",
+                values: {
+                    systolic: "Sistólica",
+                    diastolic: "Diastólica"
+                }
+            },
+            [PAGES.BODY_TEMPERATURE]: {
+                y_axis: "Temperatura Corporal",
+                x_axis: "Data da medição",
+                values: {
+                    value: "Temperatura"
+                }
+            },
+            [PAGES.OXYGEN_SATURATION]: {
+                y_axis: "Saturação",
+                x_axis: "Data da medição",
+                values: {
+                    value: "Saturação"
+                }
+            },
+
+            [PAGES.BLOOD_GLUCOSE]: {
+                y_axis: "Glicemia",
+                x_axis: "Data da medição",
+                values: {
+                    value: "Glicemia"
+                }
+            },
+            [PAGES.HEART_RATE]: {
+                y_axis: "Batimentos Cardíacos",
+                x_axis: "Data da medição",
+                values: {
+                    value: "Batimentos Cardíacos"
+                }
+            }
+        },
     },
 
     formPopupTemplates: {

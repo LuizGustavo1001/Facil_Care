@@ -89,6 +89,7 @@ Recursos Futuros
 4. **Relatórios em PDF**: Geração local de relatórios médicos formatados com gráficos usando a biblioteca `jsPDF`
 5. **Adicionar Múltiplos Horários (Medicamentos)**: Gerenciar os horários dos medicamentos, enviando notificações quando estiver próximo do tempo de consumi-lo
 Afins
+6. **Converter escalas para outros sistemas**: Como exemplo, converter de graus Celsius para Fahrenheit
 ---
 - `*` Para gerar o QR Code de Backup do paciente será necessário **conexão com a internet**`*`, tendo em vista a limitação de caracteres que o código pode apresentar
 - `**` Dados pessoais ficam armazenados apensa dentro do aplicativo, nenhum desenvolvedor deve ter acesso a eles de forma deliberada.

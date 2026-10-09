@@ -191,7 +191,7 @@ body.dark {
     /* Background Color */
     --color-bg-primary: var(--gray-900);
     --color-bg-subtle: var(--gray-800);
-    --color-bg-hover: var(--gray-700);
+    --color-bg-hover: var(--gray-600);
 
     --color-bg-brand: var(--blue-400);
     --color-bg-brand-hover: var(--blue-100);

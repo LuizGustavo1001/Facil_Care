@@ -96,6 +96,9 @@ export default {
         },
         vitalSign: "Vital Sign",
         followUp: "Follow Up",
+        measurements: "Measurement",
+        systolic: "Systolic",
+        diastolic: "Diastolic",
         delete: "Delete",
         o_negative: "O-",
         o_positive: "O+",
@@ -659,6 +662,74 @@ export default {
     [PAGES.NOTIFICATIONS]: {
         title: "Notifications",
         markAsRead: "Mark all as read"
+    },
+
+    charts: {
+        filters: {
+            today: {
+                title: "Today"
+            },
+            week: {
+                title: "7 days"
+            },
+            twoWeeks: {
+                title: "14 days"
+            },
+            threeWeeks: {
+                title: "21 days"
+            },
+            month: {
+                title: "30 days"
+            },
+            twoMonths: {
+                title: "60 days"
+            },
+            all: {
+                title: "All"
+            }
+        },
+        fallback: "No chart to the selected element",
+        [PAGES.VITAL_SIGNS]: {
+            fallback: "No valid measurement to display",
+
+            [PAGES.BLOOD_PRESSURE]: {
+                y_axis: "Pressão Arterial",
+                x_axis: "Measurement Date",
+                values: {
+                    systolic: "Systolic",
+                    diastolic: "Diastolic"
+                }
+            },
+            [PAGES.BODY_TEMPERATURE]: {
+                y_axis: "Body Temperature",
+                x_axis: "Measurement Date",
+                values: {
+                    value: "Body Temperature"
+                }
+            },
+            [PAGES.OXYGEN_SATURATION]: {
+                y_axis: "Oxygen Saturation",
+                x_axis: "Measurement Date",
+                values: {
+                    value: "Oxygen Saturation"
+                }
+            },
+            [PAGES.BLOOD_GLUCOSE]: {
+                y_axis: "Blood Glucose",
+                x_axis: "Measurement Date",
+                values: {
+                    value: "Blood Glucose"
+                }
+            },
+            [PAGES.HEART_RATE]: {
+                y_axis: "Heart Rate",
+                x_axis: "Measurement Date",
+                values: {
+                    value: "Heart Rate"
+                }
+            }
+        },
+
     },
 
     formPopupTemplates: {

@@ -29,7 +29,8 @@ export class PatientRecord {
         return await this.table
             .where("record")
             .equals(field)
-            .toArray()
+            .reverse()
+            .sortBy("dateTime")
     }
 
     /**

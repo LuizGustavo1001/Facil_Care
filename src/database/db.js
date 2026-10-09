@@ -82,13 +82,111 @@ db.on("populate", (transaction) => {
     transaction.table('vitalSigns').bulkAdd([
         {
             _id: 'vs_2001',
-            dateTime: new Date(),
+            dateTime: new Date('2026-10-07T08:00:00'),
             record: 'bloodPressure',
-            value: '120/80',
-            unit: 'mmHg',
+            value: '130/80',
             caregiverId: 'cg_301',
             caregiverName: 'Marina Souza',
             observation: 'Nenhuma observação'
+        },
+        {
+            _id: 'vs_2002',
+            dateTime: new Date('2026-10-09T08:00:00'),
+            record: 'bloodPressure',
+            value: '110/84',
+            caregiverId: 'cg_301',
+            caregiverName: 'Marina Souza',
+            observation: 'Nenhuma observação'
+        },
+        {
+            _id: 'vs_2003',
+            dateTime: new Date('2026-09-09T12:00:00'),
+            record: 'bloodPressure',
+            value: '140/80',
+            caregiverId: 'cg_301',
+            caregiverName: 'Marina Souza',
+            observation: 'Nenhuma observação'
+        },
+        {
+            _id: 'vs_2004',
+            dateTime: new Date('2026-10-07T08:00:00'),
+            record: 'bodyTemperature',
+            value: '31',
+            caregiverId: 'cg_301',
+            caregiverName: 'Marina Souza',
+            observation: 'Nenhuma observação'
+        },
+        {
+            _id: 'vs_2005',
+            dateTime: new Date('2026-10-09T08:00:00'),
+            record: 'bodyTemperature',
+            value: '33',
+            caregiverId: 'cg_301',
+            caregiverName: 'Marina Souza',
+            observation: 'Nenhuma observação'
+        },
+        {
+            _id: 'vs_2006',
+            dateTime: new Date('2026-09-09T12:00:00'),
+            record: 'bodyTemperature',
+            value: '30',
+            caregiverId: 'cg_301',
+            caregiverName: 'Marina Souza',
+            observation: 'Nenhuma observação'
+        },
+        {
+            _id: 'vs_2007',
+            dateTime: new Date('2026-10-07T08:00:00'),
+            record: 'oxygenSaturation',
+            value: '98'
+        },
+        {
+            _id: 'vs_2008',
+            dateTime: new Date('2026-10-09T08:00:00'),
+            record: 'oxygenSaturation',
+            value: '99'
+        },
+        {
+            _id: 'vs_2009',
+            dateTime: new Date('2026-09-09T12:00:00'),
+            record: 'oxygenSaturation',
+            value: '95'
+        },
+        {
+            _id: 'vs_2010',
+            dateTime: new Date('2026-10-07T08:00:00'),
+            record: 'bloodGlucose',
+            value: '110'
+        },
+        {
+            _id: 'vs_2011',
+            dateTime: new Date('2026-10-09T08:00:00'),
+            record: 'bloodGlucose',
+            value: '85'
+        },
+        {
+            _id: 'vs_2012',
+            dateTime: new Date('2026-09-09T12:00:00'),
+            record: 'bloodGlucose',
+            value: '90'
+        },
+        {
+            _id: 'vs_2013',
+            dateTime: new Date('2026-10-07T08:00:00'),
+            record: 'heartRate',
+            value: '76'
+        },
+        {
+            _id: 'vs_2014',
+            dateTime: new Date('2026-10-09T08:00:00'),
+            record: 'heartRate',
+            value: '80'
+        },
+        {
+            _id: 'vs_2015',
+            dateTime: new Date('2026-09-09T12:00:00'),
+            record: 'heartRate',
+            value: '67'
         }
     ])
 

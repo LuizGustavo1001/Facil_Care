@@ -336,6 +336,47 @@ export const termsView = {
     ]
 }
 
+export const charts = {
+    colors: [
+        "#5e81ac",
+        "#d08770",
+        "#ebcb8b",
+        "#a3be8c",
+        "#b48ead"
+    ],
+    filters: [
+        {
+            id: "today",
+            days: 1
+        },
+        {
+            id: "week",
+            days: 7
+        },
+        {
+            id: "twoWeeks",
+            days: 14
+        },
+        {
+            id: "threeWeeks",
+            days: 21
+        },
+        {
+            id: "month",
+            days: 30
+        },
+        {
+            id: "twoMonths",
+            days: 60
+        },
+        {
+            id: "all",
+            days: null
+        }
+    ]
+}
+
+
 export const registerView = {}
 
 export const warningMessages = {

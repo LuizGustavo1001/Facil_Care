@@ -42,8 +42,11 @@ export function useDate() {
         const hour = String(time.getHours()).padStart(2, '0')
         const minute = String(time.getMinutes()).padStart(2, '0')
 
-        let hoursFormatted = `${hour}h ${minute}min`
-        let dateFormatted = currentLanguage.value !== 'pt-BR'
+        let hoursFormatted = currentLanguage.value === 'ptBR'
+            ? `${hour}h ${minute}min`
+            : `${hour % 12}:${minute} ${hour > 12 ? "PM" : "AM"}`
+
+        let dateFormatted = currentLanguage.value === 'ptBR'
             ? `${day}/${month}/${year}`
             : `${year}/${month}/${day}`
 

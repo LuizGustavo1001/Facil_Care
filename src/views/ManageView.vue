@@ -239,7 +239,10 @@
   }
 
   const getSectionTitle = (currentCategory) => {
-    return te(`views.${currentCategory}.sections.registers.title`) ? t(`views.${currentCategory}.sections.registers.title`) : ""
+    const key = `views.${currentCategory}.sections.registers.title`
+    return te(key)
+        ? t(key)
+        : ""
   }
 
   const handleDelete = (item) => {

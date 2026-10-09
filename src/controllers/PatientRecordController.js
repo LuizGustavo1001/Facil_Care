@@ -193,7 +193,6 @@ export default class PatientRecordController {
         }
     }
 
-
     async removeRecordById(id, type){
         try {
             const removed = await this.model.removeById(id)
