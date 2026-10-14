@@ -124,6 +124,52 @@ export default {
         oral: "Oral"
     },
 
+    options: {
+        speciality: {
+            cardiology: "Cardiologista",
+            dermatology: "Dermatologista",
+            endocrinology: "Endocrinologista",
+            geriatrics: "Geriatra",
+            gynecology: "Ginecologista",
+            neurology: "Neurologista",
+            ophthalmology: "Oftalmologista",
+            orthopedics: "Ortopedista",
+            pediatrics: "Pediatra",
+            psychiatry: "Psiquiatra",
+            psychologist: "Psicólogo",
+            generalPractice: "Médico Geral",
+            other: "Outro"
+        },
+        kinship: {
+            son: "Filho",
+            daughter: "Filha",
+            father: "Pai",
+            mother: "Mãe",
+            uncle: "Tio",
+            auntie: "Tia",
+            grandmother: "Avó",
+            grandfather: "Avô",
+            husband: "Marido",
+            wife: "Esposa",
+            friend: "Amigo(a)",
+            other: "Outro",
+        },
+        routeAdmin: {
+            oral: "Oral",
+            cutaneous: "Cutânea"
+        },
+        bloodType: {
+            o_negative: "O-",
+            o_positive: "O+",
+            a_negative: "A-",
+            a_positive: "A+",
+            b_negative: "B-",
+            b_positive: "B+",
+            ab_negative: "AB-",
+            ab_positive: "AB+"
+        }
+    },
+
     views: {
         [PAGES.HOME]: {
             subtitle: "Selecione uma das opções abaixo para visualizar as informações desejadas",
@@ -448,7 +494,8 @@ export default {
                             title: "Aviso Médico",
                             regularSubtitles: [
                                 `Este aplicativo não substitui o parecer, diagnóstico, prescrição ou acompanhamento médico profissional`,
-                                `Em casos de emergência de saúde, contate imediatamente os serviços de emergência ou o médico responsável registrado na ficha do paciente`
+                                `Em casos de emergência de saúde, contate imediatamente os serviços de emergência ou o médico responsável registrado
+                                 na ficha do paciente`
                             ]
                         }
                     ]
@@ -461,7 +508,7 @@ export default {
                             regularSubtitles: [
                                 `Todos os dados pessoais (nome, idade, tipo sanguíneo e contatos de emergência, por exemplo), 
                                  registros fisiológicos (sinais vitais, humor, sono e etc) e histórico de medicamentos são
-                                 armazenados exclusivamente de forma local no seu dispositivo, utilizando o banco de dados embutido
+                                 armazenados exclusivamente de forma local no dispositivo do usuário, utilizando o banco de dados embutido
                                  no navegador (IndexedDB)`
                             ]
                         },
@@ -480,7 +527,7 @@ export default {
                         {
                             title: "Sem Contas ou Login Externo",
                             regularSubtitles: [
-                                `Nosso sistema não exige a criação de cadastro com e-mail, senhas ou autenticação em servidores remotos`
+                                `O sistema não exige a criação de cadastro com e-mail, senhas ou autenticação em servidores remotos`
                             ]
                         },
                         {
@@ -517,8 +564,8 @@ export default {
                         {
                             title: "Backup Manual (JSON)",
                             regularSubtitles: [
-                                `A responsabilidade pela prevenção contra perda física do dispositivo é do usuário, que pode gerar e baixar a qualquer momento
-                                um arquivo de backup em formato .JSON`
+                                `A responsabilidade pela prevenção contra perda física do dispositivo é do próprio usuário, que pode gerar e baixar a qualquer momento
+                                um arquivo de backup em formato .'JSON'`
                             ]
                         },
                         {
@@ -538,7 +585,7 @@ export default {
                         {
                             title: "Limpando Cache/Armazenamento do Navegador",
                             regularSubtitles: [
-                                `Como os dados residem estritamente no seu navegador, você pode apagá-los permanentemente a qualquer momento limpando o cache/armazenamento 
+                                `Como os dados residem estritamente no seu navegador, o usuário pode apagá-los permanentemente a qualquer momento limpando o cache/armazenamento 
                                 do navegador para este site ou utilizando a opção de redefinição própria do sistema`
                             ]
                         }
@@ -777,33 +824,7 @@ export default {
             main: {
                 inputs: {
                     bloodType: {
-                        label: "Tipo Sanguíneo",
-                        options: {
-                            o_negative: {
-                                placeholder: "O-"
-                            },
-                            o_positive: {
-                                placeholder: "O+"
-                            },
-                            a_negative: {
-                                placeholder: "A-"
-                            },
-                            a_positive: {
-                                placeholder: "A+"
-                            },
-                            b_negative: {
-                                placeholder: "B-"
-                            },
-                            b_positive: {
-                                placeholder: "B+"
-                            },
-                            ab_negative: {
-                                placeholder: "AB-"
-                            },
-                            ab_positive: {
-                                placeholder: "AB-"
-                            }
-                        }
+                        label: "Tipo Sanguíneo"
                     }
                 },
                 buttons: {
@@ -857,15 +878,7 @@ export default {
                         label: "Nome do Medicamento"
                     },
                     routeAdmin: {
-                        label: "Rota de Administração",
-                        options: {
-                            oral: {
-                                placeholder: "Oral"
-                            },
-                            cutaneous: {
-                                placeholder: "Cutânea"
-                            }
-                        }
+                        label: "Rota de Administração"
                     },
                     dosage: {
                         label: "Dosagem"

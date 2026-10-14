@@ -183,7 +183,7 @@
             id: doctor.doctorId,
             title: doctor.name,
             description: getDescription([
-              doctor.speciality,
+               utils.getOptionTranslate(`speciality.${doctor.speciality}`),
               doctor.phone
             ])
           })
@@ -204,7 +204,7 @@
             title: medicine.name
                 + (
                     medicine.routeAdmin
-                      ? ` (${ getTranslatedText(medicine.routeAdmin) })`
+                      ? ` (${ utils.getOptionTranslate(`routeAdmin.${medicine.routeAdmin}`) })`
                       : ""
                 ),
             description: getDescription([medicine.observations])
@@ -225,8 +225,8 @@
             id: contact.contactId,
             title: contact.name,
             description: getDescription([
-                getTranslatedText(contact.kinship),
-                contact.phone
+              utils.getOptionTranslate(`kinship.${contact.kinship}`),
+              contact.phone
             ])
           })
         }
@@ -369,10 +369,6 @@
     const context = { sectionId: currentCategory.value, fieldId: button.id, currentCategory: currentInputValues[idKey], idKey: idKey }
 
     formPopup.open(popupTemplate, currentInputValues, context)
-  }
-
-  const getTranslatedText = (label) => {
-    return t(`utils.${label}`) ?? ""
   }
 
   // WATCHES

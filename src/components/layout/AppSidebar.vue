@@ -64,7 +64,7 @@
 
       <div class="flex flex-column">
         <h1>{{ patientData.name }}</h1>
-        <p>{{ age }} {{ t("utils.years")}} • {{ getTranslatedText(patientData.bloodType) }}</p>
+        <p>{{ age }} {{ t("utils.years")}} • {{ utils.getOptionTranslate(`bloodType.${patientData.bloodType}`) }}</p>
       </div>
     </div>
   </aside>
@@ -149,6 +149,7 @@
   import { useDate } from "../../composables/useDate.js"
   import { useI18n } from "vue-i18n"
   import { useOverlay } from "../../composables/useOverlay.js"
+  import { useUtils } from "../../composables/useUtils.js"
 
   import ActionButton from "../buttons/ActionButton.vue"
   import Icon from "../icons/Icon.vue"
@@ -162,6 +163,7 @@
   const { t, te } = useI18n()
   const overlay = useOverlay()
   const date = useDate()
+  const utils = useUtils()
 
   // COMPUTED PROPERTIES
   const age = computed(() => {

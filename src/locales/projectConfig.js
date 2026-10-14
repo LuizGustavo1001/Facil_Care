@@ -311,7 +311,7 @@ export const termsView = {
     sections: [
         {
             id: "consciousUse",
-            icon: icons['user-fill'],
+            icon: icons['user-smile-fill'],
         },
         {
             id: "dataPrivacy",
@@ -681,18 +681,66 @@ export const formPopupTemplates = [
                 },
                 {
                     id: "speciality",
-                    tag: "input",
-                    inputType: "text",
+                    tag: "select",
                     name: "speciality",
                     for: "speciality",
-                    autoCapitalize: "sentences"
+                    options: [
+                        {
+                            id: "cardiology",
+                            value: "cardiology"
+                        },
+                        {
+                            id: "dermatology",
+                            value: "dermatology"
+                        },
+                        {
+                            id: "endocrinology",
+                            value: "endocrinology"
+                        },
+                        {
+                            id: "geriatrics",
+                            value: "geriatrics"
+                        },
+                        {
+                            id: "gynecology",
+                            value: "gynecology"
+                        },
+                        {
+                            id: "neurology",
+                            value: "neurology"
+                        },
+                        {
+                            id: "ophthalmology",
+                            value: "ophthalmology"
+                        },
+                        {
+                            id: "orthopedics",
+                            value: "orthopedics"
+                        },
+                        {
+                            id: "pediatrics",
+                            value: "pediatrics"
+                        },
+                        {
+                            id: "psychiatry",
+                            value: "psychiatry"
+                        },
+                        {
+                            id: "generalPractice",
+                            value: "generalPractice"
+                        },
+                        {
+                            id: "other",
+                            value: "other"
+                        }
+                    ]
                 },
                 {
                     id: "phone",
                     tag: "input",
                     inputType: "tel",
                     name: "phone",
-                    for: "phone"
+                    for: "phone",
                 }
             ],
             buttons: [

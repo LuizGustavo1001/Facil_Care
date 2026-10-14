@@ -99,29 +99,53 @@ export default {
         measurements: "Measurement",
         systolic: "Systolic",
         diastolic: "Diastolic",
-        delete: "Delete",
-        o_negative: "O-",
-        o_positive: "O+",
-        a_negative: "A-",
-        a_positive: "A+",
-        b_negative: "B-",
-        b_positive: "B+",
-        ab_negative: "AB-",
-        ab_positive: "AB+",
-        son: "Son",
-        daughter: "Daughter",
-        father: "Father",
-        mother: "Mother",
-        uncle: "Uncle",
-        auntie: "Auntie",
-        grandmother: "Grandmother",
-        grandfather: "Grandfather",
-        husband: "Husband",
-        wife: "Wife",
-        friend: "Friend",
-        other: "Other",
-        cutaneous: "Cutânea",
-        oral: "Oral"
+        delete: "Delete"
+    },
+
+    options: {
+        speciality: {
+            cardiology: "Cardiology",
+            dermatology: "Dermatology",
+            endocrinology: "Endocrinology",
+            geriatrics: "Geriatrics",
+            gynecology: "Gynecology",
+            neurology: "Neurology",
+            ophthalmology: "Ophthalmology",
+            orthopedics: "Orthopedics",
+            pediatrics: "Pediatrics",
+            psychiatry: "Psychiatry",
+            psychologist: "Psychologist",
+            generalPractice: "General Practice",
+            other: "Other"
+        },
+        kinship: {
+            son: "Son",
+            daughter: "Daughter",
+            father: "Father",
+            mother: "Mother",
+            uncle: "Uncle",
+            auntie: "Auntie",
+            grandmother: "Grandmother",
+            grandfather: "Grandfather",
+            husband: "Husband",
+            wife: "Wife",
+            friend: "Friend",
+            other: "Other",
+        },
+        routeAdmin: {
+            oral: "Oral",
+            cutaneous: "Cutaneous"
+        },
+        bloodType: {
+            o_negative: "O-",
+            o_positive: "O+",
+            a_negative: "A-",
+            a_positive: "A+",
+            b_negative: "B-",
+            b_positive: "B+",
+            ab_negative: "AB-",
+            ab_positive: "AB+"
+        }
     },
 
     views: {
@@ -479,20 +503,20 @@ export default {
                         {
                             title: "No Accounts or External Sign-in",
                             regularSubtitles: [
-                                `Our system does not require sign-up with an e-mail, passwords, or remote server authentication`
+                                `The system does not require sign-up with an e-mail, passwords, or remote server authentication`
                             ]
                         },
                         {
                             title: "No Tracker Cookies or Analytics",
                             regularSubtitles: [
-                                `Our system does not use tracking cookies or external telemetry and behavior analytics tools`
+                                `The system does not use tracking cookies or external telemetry and behavior analytics tools`
                             ]
                         }
                     ]
                 },
                 devicePermissions: {
                     title: "Device Permissions",
-                    subtitle: `To offer a complete experience, our system requires some specific permissions that operate strictly on the user’s device`,
+                    subtitle: `To offer a complete experience, the system requires some specific permissions that operate strictly on the user’s device`,
                     contents: [
                         {
                             title: "Notifications",
@@ -515,7 +539,7 @@ export default {
                         {
                             title: "Manual Backup (JSON)",
                             regularSubtitles: [
-                                `The user is responsible for preventing the physical loss of the device and may generate and download a backup file in .JSON 
+                                `The user is responsible for preventing the physical loss of the device and may generate and download a backup file in '.JSON' 
                                 format at any time`
                             ]
                         },
@@ -774,33 +798,7 @@ export default {
             main: {
                 inputs: {
                     bloodType: {
-                        label: "Blood Type",
-                        options: {
-                            o_negative: {
-                                placeholder: "O-"
-                            },
-                            o_positive: {
-                                placeholder: "O+"
-                            },
-                            a_negative: {
-                                placeholder: "A-"
-                            },
-                            a_positive: {
-                                placeholder: "A+"
-                            },
-                            b_negative: {
-                                placeholder: "B-"
-                            },
-                            b_positive: {
-                                placeholder: "B+"
-                            },
-                            ab_negative: {
-                                placeholder: "AB-"
-                            },
-                            ab_positive: {
-                                placeholder: "AB-"
-                            }
-                        }
+                        label: "Blood Type"
                     }
                 },
                 buttons: {
@@ -854,15 +852,7 @@ export default {
                         label: "Medicine's Name"
                     },
                     routeAdmin: {
-                        label: "Administration Route",
-                        options: {
-                            oral: {
-                                placeholder: "Oral"
-                            },
-                            cutaneous: {
-                                placeholder: "Cutaneous"
-                            }
-                        }
+                        label: "Administration Route"
                     },
                     dosage: {
                         label: "Dosage"

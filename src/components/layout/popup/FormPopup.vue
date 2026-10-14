@@ -40,6 +40,7 @@
 <script setup>
   import { useForm } from "../../../composables/useForm.js"
   import { useI18n } from "vue-i18n"
+  import { useUtils } from "../../../composables/useUtils.js"
 
   import AppPopup from "./AppPopup.vue"
   import ActionButton from "../../buttons/ActionButton.vue"
@@ -50,8 +51,9 @@
   // COMPOSABLES
   const { t, te } = useI18n()
   const form = useForm()
+  const utils = useUtils()
 
-  //PROPS
+  // PROPS
   const props = defineProps({
     template: {
       type: Object,
@@ -116,7 +118,8 @@
           step: input.step ?? null,
           min: input.min ?? null,
           max: input.max ?? null,
-          modelValue: currentValue
+          modelValue: currentValue,
+          translate: "no"
         }
 
       case "select":
@@ -125,7 +128,8 @@
           for: input.for,
           name: input.name,
           options: getSelectOptions(input),
-          modelValue: currentValue
+          modelValue: currentValue,
+          translate: "no"
         }
 
       case "textarea":
@@ -133,7 +137,8 @@
           label: te(labelKey) ? t(labelKey) : "",
           for: input.for,
           name: input.name,
-          modelValue: currentValue
+          modelValue: currentValue,
+          translate: "no"
         }
 
       default:
@@ -141,13 +146,13 @@
     }
   }
 
-  // Returns "select input" options based in translate data
+  // Returns options based in translate data
   const getSelectOptions = (input) => {
     let fd = []
 
     for(const option of input.options){
       fd.push({
-        placeholder: t(`formPopupTemplates.${props.template.id}.main.inputs.${input.id}.options.${option.id}.placeholder`),
+        placeholder: utils.getOptionTranslate(t(`${input.id}.${option.id}`)),
         value: option.value
       })
     }

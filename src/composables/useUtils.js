@@ -45,5 +45,9 @@ export function useUtils() {
         }
     }
 
-    return { getPageTitle, pageExists, getMeasurementUnit }
+    const getOptionTranslate = (translationKey) => {
+        return te(`options.${translationKey}`) ? t(`options.${translationKey}`) : ""
+    }
+
+    return { getPageTitle, pageExists, getMeasurementUnit, getOptionTranslate }
 }

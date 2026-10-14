@@ -139,7 +139,7 @@
             }
 
             if(button.id === 'bloodType'){
-              dbValue = getTranslatedText(patient.value[button.id])
+              dbValue = utils.getOptionTranslate(`bloodType.${patient.value[button.id]}`)
             }
 
             return {
@@ -156,7 +156,7 @@
             dbButtons = patient.value.emergencyContacts.map((contact) => ({
               id: contact.id,
               title: contact.name,
-              subtitle: `${getTranslatedText(contact.kinship)} • ${contact.phone || ''}`
+              subtitle: `${utils.getOptionTranslate(`kinship.${contact.kinship}`)} • ${contact.phone || ''}`
             }))
           }
 
@@ -335,10 +335,6 @@
     return te(`views.emergencyData.sections.${section.id}.subtitle`)
         ? t(`views.emergencyData.sections.${section.id}.subtitle`)
         : ""
-  }
-
-  const getTranslatedText = (label) => {
-    return t(`utils.${label}`) ?? ""
   }
 
   const handleSubmit = async (formData) => {
