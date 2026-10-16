@@ -9,7 +9,9 @@
 
       <main class="main regular">
         <section class="main-section regular gap-15">
-          <p class="text-muted">{{ getPageSubtitle() }}:</p>
+          <div class="section-title-container">
+            <p class="section-description text-muted">{{ getPageSubtitle() }}:</p>
+          </div>
 
           <ul class="flex flex-column gap-1">
             <li

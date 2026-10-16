@@ -10,9 +10,11 @@
       <section
           v-for="section in preferencesView.sections"
           :key="section.id"
-          class="main-section regular gap-15"
+          class="main-section regular gap-1"
       >
-        <h2 class="section-title text-muted">{{ getSectionTitle(section) }}</h2>
+        <div class="section-title-container">
+          <h2 class="section-title text-muted">{{ getSectionTitle(section) }}</h2>
+        </div>
 
         <ul class="flex flex-column gap-1">
           <li v-for="item in section.items" :key="item.id" >

@@ -96,11 +96,11 @@
   }
 
   .item-info h2{
-    font-size: var(--text-heading-md);
+    font-size: var(--font-body-lg);
     font-weight: var(--bold-weight);
   }
   .item-info p{
-    font-size: var(--text-body-md);
+    font-size: var(--font-body-md);
     font-weight: var(--medium-weight);
   }
 
@@ -108,7 +108,6 @@
     padding: var(--spacing-sm);
     background: var(--color-bg-subtle);
     border: 1px solid var(--color-border-default);
-    font-size: var(--text-body-md);
     font-weight: var(--bold-weight);
 
     min-width: fit-content;

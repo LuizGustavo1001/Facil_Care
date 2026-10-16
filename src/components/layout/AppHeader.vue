@@ -57,7 +57,7 @@
   }
 
   header p{
-    font-size: var(--text-heading-md);
+    font-size: var(--font-heading-3);
   }
 </style>
 

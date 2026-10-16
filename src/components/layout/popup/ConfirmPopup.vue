@@ -41,7 +41,7 @@
   }
 
   .confirm-popup h2{
-    font-size: var(--text-heading-lg);
+    font-size: var(--font-heading-2);
   }
 </style>
 

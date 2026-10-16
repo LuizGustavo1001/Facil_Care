@@ -61,7 +61,7 @@
     padding-bottom: var(--spacing-2xs);
   }
   .notifications-header h1{
-    font-size: var(--text-heading-lg);
+    font-size: var(--font-heading-2);
   }
 
   .notifications-list{
@@ -87,13 +87,13 @@
   }
 
   .notification .title{
-    font-size: var(--text-heading-sm);
+    font-size: var(--font-body-md);
     font-weight: var(--bolder-weight);
     text-align: start;
   }
   .notification .description{
+    font-size: var(--font-body-sm);
     font-weight: var(--medium-weight);
-    font-size: var(--text-body-md);
     text-align: start;
   }
 
@@ -111,6 +111,7 @@
     padding: var(--spacing-2xs);
     border-radius: var(--radius-xs);
     font-weight: var(--bold-weight);
+    font-size: var(--font-caption);
     cursor: pointer;
 
     max-width: 100px;

@@ -37,14 +37,16 @@
         <section v-if="currentCategory === 'medicines'">
           <ActionButtonAlt
             tag="router"
-            :to="`/manage/${currentCategory}/registries`"
-            title="Visualizar medicamentos administrados"
+            :to="`/manage/${PAGES.MEDICINE_REGISTRIES}`"
+            :title="t('utils.viewAdministered') ?? ''"
             :leftIcon="icons['medicine-bottle-fill']"
           />
         </section>
 
         <section v-if="formattedData.length > 0" class="main-section regular gap-1">
-          <h2 class="section-title text-muted">{{ getSectionTitle(currentCategory) }}</h2>
+          <div class="section-title-container">
+            <h2 class="section-title text-muted">{{ getSectionTitle(currentCategory) }}</h2>
+          </div>
 
           <ul class="list flex flex-column gap-1">
             <li v-for="item in formattedData" :key="item.id" class="flex align-center gap-05">
@@ -85,7 +87,7 @@
   import { computed, onMounted, ref, watch } from "vue"
   import { icons } from "../assets/icons/icons.js"
   import { formPopupTemplates } from "../locales/projectConfig.js"
-  import { MANAGE_PAGES } from "../composables/usePages.js"
+  import { MANAGE_PAGES, PAGES } from "../composables/usePages.js"
 
   import { useRoute } from "vue-router"
   import { useNavigation } from "../composables/useNavigation.js"
@@ -111,6 +113,7 @@
 
   import PatientController from "../controllers/PatientController.js"
   import MedicinesController from "../controllers/MedicinesController.js"
+  import MedicineRegistriesController from "../controllers/MedicineRegistriesController.js"
 
   // COMPOSABLES
   const { t, te } = useI18n()
@@ -140,10 +143,12 @@
   // CONTROLLERS
   const patientController = new PatientController()
   const medicineController = new MedicinesController()
+  const medicineRegistrieController = new MedicineRegistriesController()
 
   const patient = ref(null)
   const medicines = ref([])
   const formattedData = ref([])
+  const medicineRegistries = ref([])
 
   // Verify if selected manage page exists
   const pageExists = computed(() => {
@@ -161,11 +166,12 @@
 
     const data = {
       ...patient.value,
-      medicines: medicines.value
+      medicines: medicines.value,
+      medicineRegistries: medicineRegistries.value
     }
 
     switch(currentCategory.value){
-      case "caregivers":
+      case PAGES.CAREGIVERS:
         for(const caregiver of data.caregivers ?? []){
           formattedData.value.push({
             id: caregiver.caregiverId,
@@ -177,7 +183,7 @@
           })
         }
         break
-      case "doctors":
+      case PAGES.DOCTORS:
         for(const doctor of data.doctors ?? []){
           formattedData.value.push({
             id: doctor.doctorId,
@@ -189,7 +195,7 @@
           })
         }
         break
-      case "allergies":
+      case PAGES.ALLERGIES:
         for(const allergy of data.allergies ?? []){
           formattedData.value.push({
             id: allergy.allergyId,
@@ -197,7 +203,7 @@
           })
         }
         break
-      case "medicines":
+      case PAGES.MEDICINES:
         for(const medicine of data.medicines ?? []){
           formattedData.value.push({
             id: medicine._id,
@@ -211,7 +217,16 @@
           })
         }
         break
-      case "healthPlans":
+      case PAGES.MEDICINE_REGISTRIES:
+        for(const registry of data.medicineRegistries ?? []){
+          formattedData.value.push({
+            id: registry._id,
+            title: registry.medicationName + " (" + registry.medicationDosage + ")",
+            description: getDescription([registry.observations, registry.caregiverName])
+          })
+        }
+        break
+      case PAGES.HEALTH_PLANS:
         for(const plan of data.healthPlans ?? []){
           formattedData.value.push({
             id: plan.planId,
@@ -219,7 +234,7 @@
           })
         }
         break
-      case "emergencyContacts":
+      case PAGES.EMERGENCY_CONTACTS:
         for(const contact of data.emergencyContacts ?? []) {
           formattedData.value.push({
             id: contact.contactId,
@@ -253,25 +268,27 @@
   const handleDeleteConfirmed = async (item) => {
     let result = null
 
-    if(currentCategory.value === "medicines"){
+    if(currentCategory.value === PAGES.MEDICINES){
       result = await medicineController.removeById(item.id)
-    }else{
+    }else if(currentCategory.value === PAGES.MEDICINE_REGISTRIES){
+      result = await medicineRegistrieController.removeById(item.id)
+    }else{ // Any other sections within "patient"
       let idKey = null
 
-      switch (currentCategory.value) {
-        case "caregivers":
+      switch(currentCategory.value){
+        case PAGES.CAREGIVERS:
           idKey = "caregiverId"
               break
-        case "doctors":
+        case PAGES.DOCTORS:
           idKey = "doctorId"
               break
-        case "allergies":
+        case PAGES.ALLERGIES:
           idKey = "allergyId"
               break
-        case "healthPlans":
+        case PAGES.HEALTH_PLANS:
           idKey = "planId"
               break
-        case "emergencyContacts":
+        case PAGES.EMERGENCY_CONTACTS:
           idKey = "contactId"
               break
       }
@@ -279,13 +296,13 @@
       result = await patientController.removePatientSectionItem(currentCategory.value, item.id, idKey)
     }
 
-    if(result && result.success){
-      await updateData(currentCategory.value, result.data)
+    if(!result) return
 
-      snackbar.open(result.code)
-    }else if(result){
-      snackbar.open(result.code)
+    if(result.success){
+      await updateData(currentCategory.value, result.data)
     }
+
+    snackbar.open(result.code)
   }
 
   // Handle form submit
@@ -296,8 +313,10 @@
     let result = null
     const { sectionId, currentCategory, idKey } = context
 
-    if(sectionId === "medicines"){
+    if(sectionId === PAGES.MEDICINES){
       result = await form.executeDBSubmit(() => medicineController.updateMedicineData(formData, currentCategory))
+    }else if(sectionId === PAGES.MEDICINE_REGISTRIES){
+      result = await form.executeDBSubmit(() => medicineRegistrieController.updateData(formData, currentCategory))
     }else{ // Data within patient data
       const cleanData = JSON.parse(JSON.stringify(formData))
 
@@ -315,8 +334,10 @@
   }
 
   const updateData = async (sectionId, updatedData) => {
-    if(sectionId === "medicines"){
+    if(sectionId === PAGES.MEDICINES){
       medicines.value = updatedData
+    }else if(PAGES.MEDICINE_REGISTRIES){
+      medicineRegistries.value = updatedData
     }else{ // Any other sections (allergies, doctors, caregivers, etc)
       patient.value = updatedData
     }
@@ -339,22 +360,23 @@
     let dataSource = null
     let idKey = "_id"
 
-    if(currentCategory.value === "medicines") {
+    if(currentCategory.value === PAGES.MEDICINES) {
       dataSource = medicines.value
-      idKey = "_id"
-    }else if(currentCategory.value === "caregivers"){
+    }else if(currentCategory.value === PAGES.MEDICINE_REGISTRIES){
+      dataSource = medicineRegistries.value
+    }else if(currentCategory.value === PAGES.CAREGIVERS){
       dataSource = patient.value?.caregivers
       idKey = "caregiverId"
-    }else if(currentCategory.value === "doctors"){
+    }else if(currentCategory.value === PAGES.DOCTORS){
       dataSource = patient.value?.doctors
       idKey = "doctorId"
-    }else if(currentCategory.value === "allergies"){
+    }else if(currentCategory.value === PAGES.ALLERGIES){
       dataSource = patient.value?.allergies
       idKey = "allergyId"
-    }else if(currentCategory.value === "healthPlans"){
+    }else if(currentCategory.value === PAGES.HEALTH_PLANS){
       dataSource = patient.value?.healthPlans
       idKey = "planId"
-    }else if(currentCategory.value === "emergencyContacts"){
+    }else if(currentCategory.value === PAGES.EMERGENCY_CONTACTS){
       dataSource = patient.value?.emergencyContacts
       idKey = "contactId"
     }else{
@@ -373,7 +395,7 @@
 
   // WATCHES
   // If updates -> refill section
-  watch([patient, medicines, currentCategory], () => {
+  watch([patient, medicines, medicineRegistries, currentCategory], () => {
     fillSection()
   }, { deep: true })
 
@@ -392,6 +414,13 @@
       medicines.value = medicinesResult.data
     }else{
       snackbar.open(medicinesResult.code)
+    }
+
+    const medicineRegistriesResult = await medicineRegistrieController.getAll()
+    if(medicineRegistriesResult.success){
+      medicineRegistries.value = medicineRegistriesResult.data
+    }else{
+      snackbar.open(medicineRegistriesResult.code)
     }
   })
 </script>

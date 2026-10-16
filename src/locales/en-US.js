@@ -11,6 +11,7 @@ export default {
         [PAGES.EMERGENCY_DATA]: "Emergency Data",
 
         [PAGES.MEDICINES]: "Medicines",
+        [PAGES.MEDICINE_REGISTRIES]: "Medicine Registries",
         [PAGES.ALLERGIES]: "Allergies",
         [PAGES.DOCTORS]: "Doctors",
         [PAGES.CAREGIVERS]: "Caregivers",
@@ -21,7 +22,7 @@ export default {
         [PAGES.EXPORT]: "Export Data",
 
         [PAGES.USER_MANUAL]: "User's Manual",
-        [PAGES.TERMS]: "Terms of Service",
+        [PAGES.TERMS]: "Terms",
 
         [PAGES.BODY_TEMPERATURE]: "Body Temperature",
         [PAGES.BLOOD_PRESSURE]: "Blood Pressure",
@@ -51,7 +52,7 @@ export default {
         [PAGES.PREFERENCES]: "Preferences",
         register: "Register",
         [PAGES.USER_MANUAL]: "User's Manual",
-        [PAGES.TERMS]: "Terms of Service",
+        [PAGES.TERMS]: "Terms",
         notFound: 'Page not Found',
         [PAGES.ERASE]: "Erase Data",
         [PAGES.IMPORT]: "Import Data",
@@ -108,7 +109,8 @@ export default {
         measurements: "Measurement",
         systolic: "Systolic",
         diastolic: "Diastolic",
-        delete: "Delete"
+        delete: "Delete",
+        viewAdministered: "View Administered Medications"
     },
 
     options: {
@@ -369,7 +371,7 @@ export default {
                             title: "System Language"
                         },
                         units: {
-                            title: "Unit of Measurement"
+                            title: "Unit of Measurement (under development)"
                         }
                     }
                 }
@@ -614,7 +616,7 @@ export default {
                         title: "User's Manual"
                     },
                     [PAGES.TERMS]: {
-                        title: "Terms of Service"
+                        title: "Terms"
                     }
                 }
             }
@@ -650,6 +652,13 @@ export default {
             buttons: {
                 primary: {
                     title: "Record New Medicine"
+                }
+            }
+        },
+        [PAGES.MEDICINE_REGISTRIES]: {
+            buttons: {
+                primary: {
+                    title: "Administer Medication"
                 }
             }
         },
@@ -854,7 +863,7 @@ export default {
                 }
             }
         },
-        medicines: {
+        [PAGES.MEDICINES]: {
             header: {
                 title: "Update Medicine's Data"
             },
@@ -880,7 +889,33 @@ export default {
                 }
             }
         },
-        caregivers: {
+        [PAGES.MEDICINE_REGISTRIES]: {
+            header: {
+                title: "Update Medicine Registry"
+            },
+            main: {
+                inputs: {
+                    medicationName: {
+                        label: "Medication Name"
+                    },
+                    medicationDosage: {
+                        label: "Medication Dosage"
+                    },
+                    caregiverName: {
+                        label: "Caregiver Name"
+                    },
+                    observations: {
+                        label: "Observations"
+                    }
+                },
+                buttons: {
+                    submit: {
+                        label: "Atualizar Dados"
+                    }
+                }
+            }
+        },
+        [PAGES.CAREGIVERS]: {
             header: {
                 title: "Update Caregiver's Data"
             },
@@ -903,7 +938,7 @@ export default {
                 }
             }
         },
-        doctors: {
+        [PAGES.DOCTORS]: {
             header: {
                 title: "Update Doctor's Data"
             },
@@ -926,7 +961,7 @@ export default {
                 }
             }
         },
-        allergies: {
+        [PAGES.ALLERGIES]: {
             header: {
                 title: "Update Allergy's Data"
             },
@@ -943,7 +978,7 @@ export default {
                 }
             }
         },
-        healthPlans: {
+        [PAGES.HEALTH_PLANS]: {
             header: {
                 title: "Update Health Plan's Data"
             },
@@ -960,7 +995,7 @@ export default {
                 }
             }
         },
-        emergencyContacts: {
+        [PAGES.EMERGENCY_CONTACTS]: {
             header: {
                 title: "Update Emergency Contact's Data"
             },
@@ -1047,6 +1082,18 @@ export default {
         },
         MedicineUpdated: {
             title: "Medicine's data updated with success"
+        },
+        NoMedicineRegistryFound: {
+            title: "No medicine registries found"
+        },
+        MedicineRegistryDeleted: {
+            title: "Medicine registry removed with success"
+        },
+        RegistryUpdated: {
+            title: "Medicine registry updated with success"
+        },
+        MedicineRegistryNotFound: {
+            title: "Selected medicine registry not found"
         },
         RecordUpdated: {
             title: "Monitoring's data updated with success"

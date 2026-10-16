@@ -15,7 +15,7 @@
 
     <main class="main regular">
       <section class="export-container main-section center gap-2">
-        <nav class="tab-selector align-center">
+        <nav class="tab-selector">
           <ActionButtonAlt
               tag="button"
               color="blue"
@@ -37,17 +37,17 @@
 
         <!-- 1. QR Code (P2P) -->
         <div v-if="activeTab === 'qr'" class="card">
-          <div class="title flex flex-column gap-05">
-            <h2>{{ t(`views.export.sections.cardQR.title`) }}</h2>
+          <div class="section-title-container flex flex-column gap-05">
+            <h2 class="section-title">{{ t(`views.export.sections.cardQR.title`) }}</h2>
 
-            <span class="description flex flex-column gap-03">
-            <span v-for="(desc, index) in tm('views.export.sections.cardQR.regularSubtitles')" :key="index" class="text-muted">
-              {{ desc }}.
-            </span>
+            <span class="section-description flex flex-column gap-03">
+              <span v-for="(desc, index) in tm('views.export.sections.cardQR.regularSubtitles')" :key="index" class="text-muted">
+                {{ desc }}.
+              </span>
 
-            <span v-for="(desc, index) in tm('views.export.sections.cardQR.destructiveSubtitles')" :key="index" class="text-destructive">
-              {{ desc }}.
-            </span>
+              <span v-for="(desc, index) in tm('views.export.sections.cardQR.destructiveSubtitles')" :key="index" class="text-destructive">
+                {{ desc }}.
+              </span>
           </span>
           </div>
 
@@ -111,10 +111,10 @@
 
         <!-- 2. JSON File (Offline) -->
         <div v-if="activeTab === 'json'" class="card">
-          <div class="title flex flex-column gap-05">
-            <h2>{{ t(`views.export.sections.cardJSON.title`) }}.</h2>
+          <div class="section-title-container flex flex-column gap-05">
+            <h2 class="section-title">{{ t(`views.export.sections.cardJSON.title`) }}.</h2>
 
-            <span class="title-description flex flex-column gap-05">
+            <span class="section-description flex flex-column gap-05">
               <span v-for="(desc, index) in tm('views.export.sections.cardJSON.regularSubtitles')" :key="index" class="text-muted">
                 {{ desc }}.
               </span>
@@ -145,9 +145,9 @@
 
 <style scoped>
   .tab-selector{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
 
     margin: 0 auto;
 
@@ -172,18 +172,12 @@
     gap: 0.5em;
   }
 
-  .card .title{
+  .section-title-container{
     text-align: center;
   }
 
-  .card .title h2{
-    font-size: var(--text-heading-2xl);
-  }
-  .card .title .description span{
-    font-size: var(--text-body-lg);
-  }
-
   .status-badge{
+    font-size: var(--font-caption);
     padding: var(--spacing-sm);
     border-radius: var(--radius-2xl);
     font-weight: var(--bolder-weight);
@@ -200,6 +194,14 @@
   .status-badge.success{
     background: var(--color-bg-green);
     color: var(--color-text-green);
+  }
+
+  @media (min-width: 768px){
+    .tab-selector{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1em;
+    }
   }
 </style>
 

@@ -98,7 +98,7 @@ export const preferencesView = {
                     name: "app-unit",
                     for: "app-unit",
                     event: "toggle-unit",
-                    options: UNITS_OPTIONS
+                    //options: UNITS_OPTIONS
                 }
             ]
         }
@@ -399,6 +399,10 @@ export const warningMessages = {
     MedicineUpdated: "success",
     MedicineNotFound: "warning",
 
+    NoMedicineRegistryFound: "error",
+    MedicineRegistryDeleted: "success",
+    RegistryUpdated: "success",
+
     RecordUpdated: "success",
     RecordDeleted: "success",
     RecordNotFound: "warning",
@@ -565,7 +569,7 @@ export const formPopupTemplates = [
         }
     },
     {
-        id: "medicines",
+        id: PAGES.MEDICINES,
         main: {
             inputs: [
                 {
@@ -594,7 +598,7 @@ export const formPopupTemplates = [
                 },
                 {
                     id: "dosage",
-                    tag: "text",
+                    tag: "input",
                     name: "dosage",
                     for: "dosage",
                 },
@@ -613,7 +617,48 @@ export const formPopupTemplates = [
         }
     },
     {
-        id: "caregivers",
+        id: PAGES.MEDICINE_REGISTRIES,
+        main: {
+            inputs: [
+                {
+                    id: "medicationName",
+                    tag: "input",
+                    inputType: "text",
+                    name: "medicationName",
+                    for: "medicationName",
+                    autoCapitalize: "words"
+                },
+                {
+                    id: "medicationDosage",
+                    tag: "input",
+                    name: "medicationDosage",
+                    for: "medicationDosage",
+                    autoCapitalize: "sentences"
+                },
+                {
+                    id: "caregiverName",
+                    tag: "input",
+                    name: "caregiverName",
+                    for: "caregiverName",
+                    autoCapitalize: "words"
+                },
+                {
+                    id: "observations",
+                    tag: "textarea",
+                    name: "observations",
+                    for: "observations",
+                    autoCapitalize: "sentences"
+                }
+            ],
+            buttons: [
+                {
+                    id: "submit"
+                }
+            ]
+        }
+    },
+    {
+        id: PAGES.CAREGIVERS,
         main: {
             inputs: [
                 {
@@ -647,7 +692,7 @@ export const formPopupTemplates = [
         }
     },
     {
-        id: "doctors",
+        id: PAGES.DOCTORS,
         main: {
             inputs: [
                 {
@@ -730,7 +775,7 @@ export const formPopupTemplates = [
         }
     },
     {
-        id: "allergies",
+        id: PAGES.ALLERGIES,
         main: {
             inputs: [
                 {
@@ -750,7 +795,7 @@ export const formPopupTemplates = [
         }
     },
     {
-        id: "healthPlans",
+        id: PAGES.HEALTH_PLANS,
         main: {
             inputs: [
                 {
@@ -770,7 +815,7 @@ export const formPopupTemplates = [
         }
     },
     {
-        id: "emergencyContacts",
+        id: PAGES.EMERGENCY_CONTACTS,
         main: {
             inputs: [
                 {
@@ -857,7 +902,7 @@ export const formPopupTemplates = [
         }
     },
     {
-        id: "vitalSigns",
+        id: PAGES.VITAL_SIGNS,
         main: {
             inputs: [
                 {
@@ -931,7 +976,7 @@ export const formPopupTemplates = [
         }
     },
     {
-        id: "followUps",
+        id: PAGES.FOLLOW_UPS,
         main: {
             inputs: [
                 {
@@ -1055,6 +1100,16 @@ export const footers = [
                 link: `/form/register/${PAGES['MEDICINES']}`
             }
         ]
+    },
+    {
+      id: PAGES['MEDICINE_REGISTRIES'],
+      buttons: [
+          {
+              id: "primary",
+              leftIcon: icons["medicine-bottle-fill"],
+              link: `/form/register/${PAGES['MEDICINE_REGISTRIES']}`
+          }
+      ]
     },
     {
         id: PAGES['ALLERGIES'],

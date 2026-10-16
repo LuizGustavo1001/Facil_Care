@@ -33,7 +33,7 @@
     max-width: 450px;
 
     border-radius: var(--radius-md);
-    font-size: var(--text-body-lg);
+    font-size: var(--font-error);
 
     z-index: 12;
   }

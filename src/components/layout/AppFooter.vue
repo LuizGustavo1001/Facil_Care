@@ -14,7 +14,7 @@
       </template>
     </div>
 
-    <p class="brand text-muted-lighter">Facil Care - 2026</p>
+    <p class="brand text-muted">Facil Care - 2026</p>
   </footer>
 </template>
 
@@ -32,7 +32,7 @@
   }
   .footer .brand{
     text-align: center;
-    font-size: var(--text-body-sm);
+    font-size: var(--font-caption);
     font-weight: var(--bolder-weight);
   }
 </style>

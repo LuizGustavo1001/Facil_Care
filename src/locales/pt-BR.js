@@ -11,6 +11,7 @@ export default {
         [PAGES.EMERGENCY_DATA]: "Dados de Emergência",
 
         [PAGES.MEDICINES]: "Medicamentos",
+        [PAGES.MEDICINE_REGISTRIES]: "Registros de Medicamentos",
         [PAGES.ALLERGIES]: "Alergias",
         [PAGES.DOCTORS]: "Médicos",
         [PAGES.CAREGIVERS]: "Cuidadores",
@@ -21,7 +22,7 @@ export default {
         [PAGES.EXPORT]: "Exportar Dados",
 
         [PAGES.USER_MANUAL]: "Manual do Usuário",
-        [PAGES.TERMS]: "Termos de Responsabilidade",
+        [PAGES.TERMS]: "Termos",
 
         [PAGES.BODY_TEMPERATURE]: "Temperatura Corporal",
         [PAGES.BLOOD_PRESSURE]: "Pressão Arterial",
@@ -51,7 +52,7 @@ export default {
         [PAGES.PREFERENCES]: "Preferências",
         register: "Registrar",
         [PAGES.USER_MANUAL]: "Manual do Usuário",
-        [PAGES.TERMS]: "Termos de Usuário",
+        [PAGES.TERMS]: "Termos",
         notFound: 'Página não encontrada',
         [PAGES.ERASE]: "Apagar Dados",
         [PAGES.IMPORT]: "Importar Dados",
@@ -108,29 +109,8 @@ export default {
         measurements: "Medições",
         systolic: "Sistólica",
         diastolic: "Diastólica",
-        data: "Deletar",
-        o_negative: "O-",
-        o_positive: "O+",
-        a_negative: "A-",
-        a_positive: "A+",
-        b_negative: "B-",
-        b_positive: "B+",
-        ab_negative: "AB-",
-        ab_positive: "AB+",
-        son: "Filho",
-        daughter: "Filha",
-        father: "Pai",
-        mother: "Mãe",
-        uncle: "Tio",
-        auntie: "Tia",
-        grandmother: "Avó",
-        grandfather: "Avô",
-        husband: "Marido",
-        wife: "Esposa",
-        friend: "Amigo(a)",
-        other: "Outro(a)",
-        cutaneous: "Cutânea",
-        oral: "Oral"
+        delete: "Deletar",
+        viewAdministered: "Visualizar medicamentos administrados"
     },
 
     options: {
@@ -391,7 +371,7 @@ export default {
                             title: "Idioma do Sistema"
                         },
                         units: {
-                            title: "Unidade de Medida"
+                            title: "Unidade de Medida (em desenvolvimento)"
                         }
                     }
                 }
@@ -640,7 +620,7 @@ export default {
                         title: "Manual do Usuário"
                     },
                     [PAGES.TERMS]: {
-                        title: "Termos de Responsabilidade"
+                        title: "Termos"
                     }
                 }
             }
@@ -676,6 +656,14 @@ export default {
             buttons: {
                 primary: {
                     title: "Registrar Novo Medicamento"
+                }
+            }
+        },
+
+        [PAGES.MEDICINE_REGISTRIES]: {
+            buttons: {
+                primary: {
+                    title: "Administrar Medicamento"
                 }
             }
         },
@@ -880,7 +868,7 @@ export default {
                 }
             }
         },
-        medicines: {
+        [PAGES.MEDICINES]: {
             header: {
                 title: "Atualizar dados de Medicamento"
             },
@@ -906,7 +894,33 @@ export default {
                 }
             }
         },
-        caregivers: {
+        [PAGES.MEDICINE_REGISTRIES]: {
+            header: {
+                title: "Atualizar Registro de Medicamento"
+            },
+            main: {
+                inputs: {
+                    medicationName: {
+                        label: "Nome do Medicamento"
+                    },
+                    medicationDosage: {
+                        label: "Dosagem"
+                    },
+                    caregiverName: {
+                        label: "Nome do Cuidador"
+                    },
+                    observations: {
+                        label: "Observações"
+                    }
+                },
+                buttons: {
+                    submit: {
+                        label: "Atualizar Dados"
+                    }
+                }
+            }
+        },
+        [PAGES.CAREGIVERS]: {
             header: {
                 title: "Atualizar Dados de Cuidador"
             },
@@ -929,7 +943,7 @@ export default {
                 }
             }
         },
-        doctors: {
+        [PAGES.DOCTORS]: {
             header: {
                 title: "Atualizar Dados de Médico"
             },
@@ -952,7 +966,7 @@ export default {
                 }
             }
         },
-        allergies: {
+        [PAGES.ALLERGIES]: {
             header: {
                 title: "Atualizar Alergia"
             },
@@ -969,7 +983,7 @@ export default {
                 }
             }
         },
-        healthPlans: {
+        [PAGES.HEALTH_PLANS]: {
             header: {
                 title: "Atualizar Plano de Saúde"
             },
@@ -986,7 +1000,7 @@ export default {
                 }
             }
         },
-        emergencyContacts: {
+        [PAGES.EMERGENCY_CONTACTS]: {
             header: {
                 title: "Atualizar Contato de Emergência"
             },
@@ -1073,6 +1087,18 @@ export default {
         },
         MedicineUpdated: {
             title: "Dados do medicamento atualizados com sucesso"
+        },
+        NoMedicineRegistryFound: {
+          title: "Nenhum registro de medicamento foi encontrado"
+        },
+        MedicineRegistryDeleted: {
+          title: "Registro de medicamento removido com sucesso"
+        },
+        RegistryUpdated: {
+          title: "Registro de medicamento atualizado com sucesso"
+        },
+        MedicineRegistryNotFound: {
+          title: "Registro de medicamento selecionado não encontrado"
         },
         RecordUpdated: {
             title: "Dados do monitoramento atualizados com sucesso"

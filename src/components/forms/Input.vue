@@ -3,7 +3,7 @@
     <label
         v-if="label"
         :for="computedId"
-        class="text-muted"
+        class="input-label text-muted"
     >
       {{ label }}
     </label>
@@ -19,10 +19,14 @@
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+  .input-label{
+    font-size: var(--font-label-md);
+  }
+</style>
 
 <script setup>
-import { computed } from "vue"
+  import { computed } from "vue"
 
   // MODEL
   defineOptions({

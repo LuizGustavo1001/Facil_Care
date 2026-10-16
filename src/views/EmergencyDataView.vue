@@ -29,15 +29,15 @@
           :key="content.id"
           class="main-section regular gap-1"
       >
-        <div class="section-title">
-          <div class="flex gap-05 align-center">
+        <div class="section-title-container">
+          <div class="flex gap-03 align-center">
             <Icon :icon="content.icon" size="25px" />
-            <h2>{{ getSectionTitle(content) }}</h2>
+            <h2 class="section-title">{{ getSectionTitle(content) }}</h2>
           </div>
 
           <p
               v-if="getSectionTitle(content)"
-              class="text-muted"
+              class="section-description text-muted"
           >
             {{ getSectionSubtitle(content) }}
           </p>
@@ -69,6 +69,7 @@
   padding: var(--spacing-md);
   border-radius: var(--radius-lg);
 }
+
 </style>
 
 <script setup>

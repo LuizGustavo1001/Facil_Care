@@ -14,7 +14,7 @@
   }
 
   p{
-    font-size: var(--text-heading-lg);
+    font-size: var(--font-heading-1);
     font-weight: var(--bolder-weight);
   }
 </style>

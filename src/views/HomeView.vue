@@ -24,7 +24,9 @@
 
     <main class="main regular gap-1">
       <section class="main-section regular gap-15">
-        <p class="text-muted">{{ t("views.home.subtitle") }}:</p>
+        <div class="section-title-container">
+          <p class="section-description text-muted">{{ t("views.home.subtitle") }}:</p>
+        </div>
 
         <nav class="home-nav flex flex-column gap-1">
           <ActionButtonAlt

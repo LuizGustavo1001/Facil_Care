@@ -1,5 +1,5 @@
 <template>
-  <aside id="sidebar" class="flex flex-column gap-1 absolute overflow-auto fixed">
+  <aside id="sidebar" class="flex flex-column absolute overflow-auto fixed" style="gap:0.7em">
     <div class="brand-info flex gap-05 align-center">
       <Icon
           :icon="icons['logo-fill-colorful']"
@@ -84,7 +84,7 @@
 
     height: calc(100dvh - 1em);
     width: 350px;
-    max-width: 60dvw;
+    max-width: 70dvw;
 
     transform: translateX(-120%);
     transition: transform 0.25s cubic-bezier(.16,.54,0,1.15);
@@ -94,11 +94,11 @@
   }
 
   .brand-info h1{
-    font-size: var(--text-heading-md);
+    font-size: var(--font-heading-3);
   }
 
   .sidebar-list-item h2{
-    font-size: var(--text-body-lg);
+    font-size: var(--font-caption);
     text-transform: uppercase;
   }
 
@@ -117,7 +117,7 @@
   }
   .sidebar-item p{
     font-weight: var(--bold-weight);
-    font-size: var(--text-heading-sm);
+    font-size: var(--font-body-sm);
   }
 
   .patient-info{
@@ -134,11 +134,12 @@
   }
 
   .patient-info h1{
-    font-size: var(--text-body-lg);
+    font-size: var(--font-body-sm);
   }
   .patient-info p{
-    font-size: var(--text-body-md);
+    font-size: var(--font-caption);
   }
+
 </style>
 
 <script setup>

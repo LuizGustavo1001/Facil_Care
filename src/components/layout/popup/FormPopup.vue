@@ -8,7 +8,7 @@
 
     <template #main>
       <form
-          class="main-form flex flex-column gap-1"
+          class="main-form flex flex-column gap-05"
           @submit.prevent="handleSubmit"
       >
         <div class="form-inputs flex flex-column gap-05">
@@ -33,7 +33,7 @@
 
 <style scoped>
   .form-popup h2{
-    font-size: var(--text-heading-lg);
+    font-size: var(--font-heading-2);
   }
 </style>
 

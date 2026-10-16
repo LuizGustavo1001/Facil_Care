@@ -108,14 +108,16 @@ export function useUnitSystem() {
      *
      * @param { String } type - Measurement type (ex: "bloodPressure" and "heartRate")
      * @param { String | Number } value - Measurement value (metric system)
-     * @returns {{unit: String, value: String|Number}}
+     * @returns {{ unit: String, value: String|Number }}
      **/
     const getMeasurementUnit = (type, value) => {
+        const strValue = String(value)
+
         return {
             unit: getUnit(type),
-            value: parseUnit(type, value)
-        }
-    }
+            value: strValue.includes("/") ? value : parseUnit(type, value)
+        };
+    };
 
     const toMetric = (type, value) => {
         if(!isImperial.value || value === null || value === "") return value

@@ -20,13 +20,13 @@
         </span>
 
         <span class="btn-content flex flex-column justify-between gap-05 flex-grow-1">
-          <span class="btn-content-title truncate-single">
+          <span class="btn-content-title truncate-multi">
             <slot name="title">{{ title }}</slot>
           </span>
 
           <span
               v-if="description || $slots.description"
-              class="btn-content-description flex flex-column text-muted truncate-multi"
+              class="btn-content-description flex flex-column text-muted truncate-single"
           >
             <slot name="description">{{ description }}</slot>
           </span>
@@ -70,13 +70,13 @@
   }
 
   .btn-content .btn-content-title{
-    font-size: var(--text-heading-md);
+    font-size: var(--font-button-title);
     font-weight: var(--bold-weight);
     color: var(--color-text-primary);
   }
 
   .btn-content .btn-content-description{
-    font-size: var(--text-body-lg);
+    font-size: var(--font-button-description);
     font-weight: var(--medium-weight);
   }
 

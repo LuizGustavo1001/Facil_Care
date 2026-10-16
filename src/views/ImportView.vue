@@ -75,9 +75,9 @@
         </template>
 
         <template v-else>
-          <div class="title flex flex-column gap-05">
-            <h2>{{ t(`views.import.sections.localFile.title`) }}</h2>
-            <p class="text-muted">{{ t(`views.import.sections.localFile.subtitle`) }}</p>
+          <div class="section-title-container flex flex-column gap-05">
+            <h2 class="section-title">{{ t(`views.import.sections.localFile.title`) }}</h2>
+            <p class="section-description text-muted">{{ t(`views.import.sections.localFile.subtitle`) }}.</p>
           </div>
 
           <input
@@ -118,7 +118,7 @@
     gap: 1em;
   }
 
-  .card .title{
+  .section-title-container{
     text-align: center;
   }
 
@@ -130,7 +130,6 @@
   }
 
   .success-import p {
-    font-size: var(--text-heading-md);
     font-weight: var(--bold-weight);
   }
   .success-import .icon-wrapper{

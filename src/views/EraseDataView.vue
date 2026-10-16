@@ -27,9 +27,11 @@
 
     <main class="main regular">
       <section v-if="!gotReset" class="main-section center text-center align-center gap-15">
-        <div class="title flex flex-column gap-1">
-          <h1>{{ t(`views.eraseData.sections.erase.title`) }}</h1>
-          <div class="description flex flex-column gap-03">
+        <div class="section-title-container flex flex-column gap-05">
+
+          <h1 class="section-title">{{ t(`views.eraseData.sections.erase.title`) }}</h1>
+
+          <div class="section-description flex flex-column gap-03">
             <p v-for="(desc, index) in tm('views.eraseData.sections.erase.regularSubtitles')" :key="index" class="text-muted">
               {{ desc }}.
             </p>
@@ -43,7 +45,6 @@
         <ActionButton
             tag="button"
             :leftIcon="icons['warning-circle-fill']"
-            :rightIcon="icons['chevron-right']"
             :title="t('views.eraseData.sections.erase.buttons[0]')"
             padding="lg"
             variant="destructive"
@@ -71,7 +72,6 @@
 
 <style scoped>
   .success-reset p {
-    font-size: var(--text-heading-md);
     font-weight: var(--bold-weight);
   }
   .success-reset .icon-wrapper{
@@ -79,11 +79,8 @@
     border-radius: var(--radius-xl);
   }
 
-  .main-section .title h1{
-    font-size: var(--text-heading-2xl);
-  }
-  .main-section .title .description{
-    font-size: var(--text-body-lg);
+  .section-title-container .section-title{
+    font-size: var(--font-heading-1);
   }
 </style>
 

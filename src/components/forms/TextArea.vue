@@ -3,7 +3,7 @@
     <label
         v-if="label"
         :for="computedId"
-        class="text-muted"
+        class="input-label text-muted"
     >
       {{ label }}
     </label>
@@ -23,6 +23,10 @@
   .custom-textarea{
     resize: vertical;
     min-height: 80px;
+  }
+
+  .input-label{
+    font-size: var(--font-label-md);
   }
 </style>
 

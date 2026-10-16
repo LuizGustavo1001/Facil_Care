@@ -12,9 +12,9 @@
         <div
             v-for="sec in termsView.sections"
             :key="sec.id"
-            class="item flex flex-column gap-1"
+            class="item flex flex-column gap-05"
         >
-          <div class="title flex align-center gap-05">
+          <div class="title flex align-center gap-03">
             <Icon v-if="sec.icon" :icon="sec.icon" size="25px" />
             <h1>{{ t(`views.${PAGES.TERMS}.sections.${sec.id}.title`) }}</h1>
           </div>
@@ -54,17 +54,17 @@
 
 <style scoped>
   .item h1{
-    font-size: var(--text-heading-xl);
+    font-size: var(--font-heading-2);
     font-weight: var(--bold-weight);
   }
 
   .item h2{
-    font-size: var(--text-heading-lg);
+    font-size: var(--font-heading-3);
     font-weight: var(--bold-weight);
   }
 
   .item .description{
-    font-size: var(--text-body-lg);
+    font-size: var(--font-body-sm);
   }
 
   .content{
