@@ -49,7 +49,7 @@
   import SelectInput from "../../forms/SelectInput.vue"
 
   // COMPOSABLES
-  const { t, te } = useI18n()
+  const { t, te, locale } = useI18n()
   const form = useForm()
   const utils = useUtils()
 
@@ -81,6 +81,16 @@
   const handleSubmit = (event) => {
     const data = form.extractData(event)
     emit("submitForm", data)
+  }
+
+  const getToday = () => {
+    const today = new Date()
+
+    const year = today.getFullYear()
+    const month = String(today.getMonth() + 1).padStart(2, "0")
+    const day = String(today.getDate()).padStart(2, "0")
+
+    return `${year}-${month}-${day}`
   }
 
   // Returns the component associated with an input tag
@@ -117,7 +127,9 @@
           autofocus: true,
           step: input.step ?? null,
           min: input.min ?? null,
-          max: input.max ?? null,
+          max: input.inputType === "date"
+              ? (input.max ?? getToday())
+              : (input.max ?? null),
           modelValue: currentValue,
           translate: "no"
         }

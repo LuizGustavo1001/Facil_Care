@@ -77,7 +77,7 @@
         <template v-else>
           <div class="title flex flex-column gap-05">
             <h2>{{ t(`views.import.sections.localFile.title`) }}</h2>
-            <p>{{ t(`views.import.sections.localFile.subtitle`) }}</p>
+            <p class="text-muted">{{ t(`views.import.sections.localFile.subtitle`) }}</p>
           </div>
 
           <input
@@ -96,7 +96,7 @@
                 : t(`views.import.sections.localFile.actions[1]`)"
               :leftIcon="isDexieImporting
                 ? ''
-                : icons['click-line']"
+                : icons['folder-open-fill']"
               :aria-disabled="isDexieImporting"
               @click="triggerFileInput"
           />

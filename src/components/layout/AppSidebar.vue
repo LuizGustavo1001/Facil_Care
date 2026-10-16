@@ -87,7 +87,7 @@
     max-width: 60dvw;
 
     transform: translateX(-120%);
-    transition: transform 0.25s ease-out;
+    transition: transform 0.25s cubic-bezier(.16,.54,0,1.15);
   }
   #sidebar.active{
     transform: translateX(0);

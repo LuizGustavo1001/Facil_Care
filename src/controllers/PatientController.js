@@ -37,23 +37,6 @@ export default class PatientController {
     }
 
     /**
-     * Returns the new patient collection after updating the collection with the new data.
-     **/
-    async updatePatientData(newData, field){
-        try{
-
-
-        }catch(error){
-            console.log("DB error: ", error)
-            return {
-                success: false,
-                code: "DatabaseError",
-                data: []
-            }
-        }
-    }
-
-    /**
      * Updates patient root attributes (ex: name, birthDate, ...)
      *
      * @param { Object } newData - Clean object with the attributes to be updated

@@ -10,7 +10,7 @@
 
     <input
         :id="computedId"
-        v-model="model"
+        v-model="formattedModel"
         :type="inputType"
         :name="name"
         v-bind="$attrs"
@@ -22,7 +22,7 @@
 <style scoped></style>
 
 <script setup>
-  import { computed } from "vue"
+import { computed } from "vue"
 
   // MODEL
   defineOptions({
@@ -46,5 +46,23 @@
   // Make sure that input ID matches label Id
   const computedId = computed(() => {
     return props.for || (props.name ? `input-${props.name}` : undefined)
+  })
+
+  // V-model interceptor - format input value
+  const formattedModel = computed( {
+    get(){
+      if(props.inputType === 'date'){ // returns the date
+        return model.value.split('T')[0]
+      }
+
+      return model.value
+    },
+    set(newValue){
+      if(props.inputType === 'date' && newValue){
+        model.value = `${newValue}T00:00:00.000Z`
+      }else{
+        model.value = newValue
+      }
+    }
   })
 </script>

@@ -64,316 +64,337 @@
 </template>
 
 <style scoped>
-  .item-list{
-    background: var(--color-bg-subtle);
-    padding: var(--spacing-md);
-    border-radius: var(--radius-lg);
-  }
+.item-list{
+  background: var(--color-bg-subtle);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-lg);
+}
 </style>
 
 <script setup>
-  import { computed, onMounted, ref } from "vue"
-  import { icons } from "../assets/icons/icons.js"
+import { computed, onMounted, ref } from "vue"
+import { icons } from "../assets/icons/icons.js"
 
-  import { emergencyDataView , formPopupTemplates } from "../locales/projectConfig.js"
-  import { PAGES } from "../composables/usePages.js"
+import { emergencyDataView , formPopupTemplates } from "../locales/projectConfig.js"
+import { PAGES } from "../composables/usePages.js"
 
-  import { useI18n } from "vue-i18n"
-  import { useNavigation } from "../composables/useNavigation.js"
-  import { useUtils } from "../composables/useUtils.js"
-  import { useSnackbar } from "../composables/useSnackbar.js"
-  import { useDate } from "../composables/useDate.js"
-  import { useForm } from "../composables/useForm.js"
-  import { useFormPopup } from "../composables/useFormPopup.js"
+import { useI18n } from "vue-i18n"
+import { useNavigation } from "../composables/useNavigation.js"
+import { useUtils } from "../composables/useUtils.js"
+import { useSnackbar } from "../composables/useSnackbar.js"
+import { useDate } from "../composables/useDate.js"
+import { useForm } from "../composables/useForm.js"
+import { useFormPopup } from "../composables/useFormPopup.js"
+import { useUnitSystem } from "../composables/useUnitSystem.js"
 
-  import AppHeader from "../components/layout/AppHeader.vue"
-  import AppFooter from "../components/layout/AppFooter.vue"
-  import ActionButton from "../components/buttons/ActionButton.vue"
-  import ActionButtonAlt from "../components/buttons/ActionButtonAlt.vue"
-  import Snackbar from "../components/feedback/Snackbar.vue"
-  import AppOverlay from "../components/layout/AppOverlay.vue"
-  import FormPopup from "../components/layout/popup/FormPopup.vue"
-  import Icon from "../components/icons/Icon.vue"
+import AppHeader from "../components/layout/AppHeader.vue"
+import AppFooter from "../components/layout/AppFooter.vue"
+import ActionButton from "../components/buttons/ActionButton.vue"
+import ActionButtonAlt from "../components/buttons/ActionButtonAlt.vue"
+import Snackbar from "../components/feedback/Snackbar.vue"
+import AppOverlay from "../components/layout/AppOverlay.vue"
+import FormPopup from "../components/layout/popup/FormPopup.vue"
+import Icon from "../components/icons/Icon.vue"
 
-  import PatientController from "../controllers/PatientController.js"
-  import MedicinesController from "../controllers/MedicinesController.js"
+import PatientController from "../controllers/PatientController.js"
+import MedicinesController from "../controllers/MedicinesController.js"
 
-  // COMPOSABLES
-  const { t, te } = useI18n()
-  const navigation = useNavigation()
-  const utils = useUtils()
-  const snackbar = useSnackbar()
-  const date = useDate()
-  const form = useForm()
-  const formPopup = useFormPopup()
 
-  // COMPUTED PROPERTIES
-  const isSnackbarOpen = computed(() => snackbar.isActive.value)
+// COMPOSABLES
+const { t, te } = useI18n()
+const navigation = useNavigation()
+const utils = useUtils()
+const snackbar = useSnackbar()
+const date = useDate()
+const form = useForm()
+const formPopup = useFormPopup()
+const unit = useUnitSystem()
 
-  const isFormOpen = computed(() => formPopup.isOpen.value)
-  const formTemplate = computed(() => formPopup.template.value)
-  const formValues = computed(() => formPopup.values.value)
+// COMPUTED PROPERTIES
+const isSnackbarOpen = computed(() => snackbar.isActive.value)
 
-  // CONTROLLERS
-  const patientController = new PatientController()
-  const medicineController = new MedicinesController()
-  const patient = ref({})
-  const medicines = ref([])
+const isFormOpen = computed(() => formPopup.isOpen.value)
+const formTemplate = computed(() => formPopup.template.value)
+const formValues = computed(() => formPopup.values.value)
 
-  // FUNCTIONS
-  // Dynamic map of emergency data sections, based at database and translate data (i18n)
-  const dynamicSections = computed(() => {
-    return emergencyDataView.sections.map((section) => {
-      let dbButtons = [] // Stores all buttons from section
+// CONTROLLERS
+const patientController = new PatientController()
+const medicineController = new MedicinesController()
+const patient = ref({})
+const medicines = ref([])
 
-      section.buttons = section.buttons || []
+// FUNCTIONS
+// Dynamic map of emergency data sections, based at database and translate data (i18n)
+const dynamicSections = computed(() => {
+  return emergencyDataView.sections.map((section) => {
+    let dbButtons = [] // Stores all buttons from section
 
-      switch(section.id){
-        case "patient":
-          dbButtons = (section.buttons).map((button) => {
+    section.buttons = section.buttons || []
 
-            let dbValue = patient.value[button.id]
+    switch(section.id){
+      case "patient":
+        dbButtons = (section.buttons).map((button) => {
 
-            if(button.id === 'birthDate'){
-              dbValue = date.getFormatted(patient.value[button.id], false)
-            }
+          let dbValue = patient.value[button.id]
 
-            if(button.id === 'bloodType'){
-              dbValue = utils.getOptionTranslate(`bloodType.${patient.value[button.id]}`)
-            }
-
-            return {
-              ...button,
-              subtitle: dbValue !== undefined && dbValue !== null
-                  ? String(dbValue)
-                  : "--"
-            }
-          })
-          break
-
-        case "emergencyContacts":
-          if(Array.isArray(patient.value.emergencyContacts)){
-            dbButtons = patient.value.emergencyContacts.map((contact) => ({
-              id: contact.id,
-              title: contact.name,
-              subtitle: `${utils.getOptionTranslate(`kinship.${contact.kinship}`)} • ${contact.phone || ''}`
-            }))
+          if(button.id === 'birthDate'){
+            dbValue = date.getFormatted(patient.value[button.id], false)
           }
 
-          dbButtons = [...dbButtons, ...(section.buttons)]
-          break
-
-        case "allergies":
-          if(Array.isArray(patient.value.allergies)){
-            dbButtons = patient.value.allergies.map((allergy) => ({
-              id: allergy.id,
-              title: allergy.name
-            }))
+          if(button.id === 'bloodType'){
+            dbValue = utils.getOptionTranslate(`bloodType.${patient.value[button.id]}`)
           }
 
-          dbButtons = [...dbButtons, ...(section.buttons)]
-          break
-
-        case "healthPlans":
-          if(Array.isArray(patient.value.healthPlans)){
-            dbButtons = patient.value.healthPlans.map((plan) => ({
-              id: plan.id,
-              title: plan.name
-            }))
+          return {
+            ...button,
+            subtitle: dbValue !== undefined && dbValue !== null
+                ? String(dbValue)
+                : "--"
           }
+        })
+        break
 
-          dbButtons = [...dbButtons, ...(section.buttons)]
-          break
-
-        case "others": {
-          const doctorsCount = Array.isArray(patient.value.doctors)
-              ? patient.value.doctors.length
-              : 0
-          const medicineCount = Array.isArray(medicines.value)
-              ? medicines.value.length
-              : 0
-
-          dbButtons = (section.buttons).map((button) => {
-            let count = 0
-
-            if(button.id === "doctors"){
-              count = doctorsCount
-            }else if(button.id === "medicines"){
-              count = medicineCount
-            }
-
-            return {
-              ...button,
-              subtitle: `${count}`
-            }
-          })
-          break
+      case "emergencyContacts":
+        if(Array.isArray(patient.value.emergencyContacts)){
+          dbButtons = patient.value.emergencyContacts.map((contact) => ({
+            id: contact.id,
+            title: contact.name,
+            subtitle: `${utils.getOptionTranslate(`kinship.${contact.kinship}`)} • ${contact.phone || ''}`
+          }))
         }
+
+        dbButtons = [...dbButtons, ...(section.buttons)]
+        break
+
+      case "allergies":
+        if(Array.isArray(patient.value.allergies)){
+          dbButtons = patient.value.allergies.map((allergy) => ({
+            id: allergy.id,
+            title: allergy.name
+          }))
+        }
+
+        dbButtons = [...dbButtons, ...(section.buttons)]
+        break
+
+      case "healthPlans":
+        if(Array.isArray(patient.value.healthPlans)){
+          dbButtons = patient.value.healthPlans.map((plan) => ({
+            id: plan.id,
+            title: plan.name
+          }))
+        }
+
+        dbButtons = [...dbButtons, ...(section.buttons)]
+        break
+
+      case "others": {
+        const doctorsCount = Array.isArray(patient.value.doctors)
+            ? patient.value.doctors.length
+            : 0
+        const medicineCount = Array.isArray(medicines.value)
+            ? medicines.value.length
+            : 0
+
+        dbButtons = (section.buttons).map((button) => {
+          let count = 0
+
+          if(button.id === "doctors"){
+            count = doctorsCount
+          }else if(button.id === "medicines"){
+            count = medicineCount
+          }
+
+          return {
+            ...button,
+            subtitle: `${count}`
+          }
+        })
+        break
       }
-
-      return {
-        ...section,
-        buttons: dbButtons
-      }
-    })
-  })
-
-  /**
-   * Popup:
-   * - Triggers the current event target (Prevents the popup from closing unexpectedly)
-   * - Defines the template data (`popupTemplate`) to be displayed in the popup
-   * - Defines the popup context (`sectionId` and `fieldId`) needed to access the corret database table and attribute. Example: `sectionId` = "patient" and `fieldId` = "birthDate"
-   *
-   * @param { Object } section
-   * @param { Object } button
-   * @param { Event } event
-   **/
-  const handleButtonAction = (section, button, event) => {
-    formPopup.triggerRef.value = event.currentTarget
-
-    if(section.action === "popup") {
-      const popupTemplate = formPopupTemplates.find(item => item.id === button.id) ?? null
-
-      let currentInputValues = null
-      if(section.id === "patient") {
-        currentInputValues = form.getInputValue(patient.value, popupTemplate)
-      }
-
-      const context = { sectionId: section.id, fieldId: button.id }
-
-      formPopup.open(popupTemplate, currentInputValues, context)
     }
-  }
 
-  const buttonComponent = (section) => {
-    return section.component === "alt"
-        ? ActionButtonAlt
-        : ActionButton
-  }
-
-  const getButtonProps = (section, button) => {
     return {
-      ...getButtonPropsAction(section),
-      ...getButtonPropsComponent(section, button)
+      ...section,
+      buttons: dbButtons
     }
+  })
+})
+
+/**
+ * Popup:
+ * - Triggers the current event target (Prevents the popup from closing unexpectedly)
+ * - Defines the template data (`popupTemplate`) to be displayed in the popup
+ * - Defines the popup context (`sectionId` and `fieldId`) needed to access the corret database table and attribute. Example: `sectionId` = "patient" and `fieldId` = "birthDate"
+ *
+ * @param { Object } section
+ * @param { Object } button
+ * @param { Event } event
+ **/
+const handleButtonAction = (section, button, event) => {
+  formPopup.triggerRef.value = event.currentTarget
+
+  if(section.action === "popup") {
+    const popupTemplate = formPopupTemplates.find(item => item.id === button.id) ?? null
+
+    let currentInputValues = null
+    if(section.id === "patient") {
+      currentInputValues = form.getInputValue(patient.value, popupTemplate)
+    }
+
+    const context = { sectionId: section.id, fieldId: button.id }
+
+    formPopup.open(popupTemplate, currentInputValues, context)
   }
+}
 
-  const getButtonPropsComponent = (section, button) => {
-    if(section.component === "alt"){
-      return {
-        leftIcon: button.icon,
-        color: button.color,
-        title: getButtonTitle(section, button),
-        description: getButtonSubtitle(section, button),
-        to: button.route || undefined
-      }
-    }
+const buttonComponent = (section) => {
+  return section.component === "alt"
+      ? ActionButtonAlt
+      : ActionButton
+}
 
-    return { // section.component === "default"
+const getButtonProps = (section, button) => {
+  return {
+    ...getButtonPropsAction(section),
+    ...getButtonPropsComponent(section, button)
+  }
+}
+
+const getButtonPropsComponent = (section, button) => {
+  if(section.component === "alt"){
+    return {
+      leftIcon: button.icon,
+      color: button.color,
       title: getButtonTitle(section, button),
       description: getButtonSubtitle(section, button),
-      padding: "lg"
+      to: button.route || undefined
     }
   }
 
-  const getButtonPropsAction = (section) => {
-    if(section.action === "popup"){
-      return {
-        rightIcon: icons["pencil-line"],
-        tag: "button",
-        ref: formPopup.triggerRef
-      }
-    }
+  return { // section.component === "default"
+    title: getButtonTitle(section, button),
+    description: getButtonSubtitle(section, button),
+    padding: "lg"
+  }
+}
 
-    if(section.action === "externalLink"){
-      return {
-        rightIcon: icons["external-link"],
-        target: "_blank"
-      }
-    }
-
-    if(section.action === "internalLink"){
-      return {
-        tag: "router",
-        rightIcon: icons["chevron-right"]
-      }
-    }
-
-    // section.action === "default" or nothing
+const getButtonPropsAction = (section) => {
+  if(section.action === "popup"){
     return {
-      tag: "button"
+      rightIcon: icons["pencil-line"],
+      tag: "button",
+      ref: formPopup.triggerRef
     }
   }
 
-  const getButtonTitle = (section, button) => {
-    // 1. Gets from database
-    if(button.title) return button.title
-
-    // 2. Gets from translate or Fallback
-    return te(`views.emergencyData.sections.${section.id}.buttons.${button.id}.title`)
-        ? t(`views.emergencyData.sections.${section.id}.buttons.${button.id}.title`)
-        : ""
+  if(section.action === "externalLink"){
+    return {
+      rightIcon: icons["external-link"],
+      target: "_blank"
+    }
   }
 
-  const getButtonSubtitle = (section, button) => {
-    // 1. Gets from database
-    if(button.subtitle) return button.subtitle
+  if(section.action === "internalLink"){
+    return {
+      tag: "router",
+      rightIcon: icons["chevron-right"]
+    }
+  }
 
-    // 2. Gets from translate or Fallback
-    return te(`views.emergencyData.sections.${section.id}.buttons.${button.id}.subtitle`)
+  // section.action === "default" or nothing
+  return {
+    tag: "button"
+  }
+}
+
+const measurementTypes = {
+  weight: PAGES.WEIGHT,
+  bodyTemperature: PAGES.BODY_TEMPERATURE,
+  waterIntake: PAGES.WATER_INTAKE
+}
+
+const getButtonTitle = (section, button) => {
+  const title = button.title
+      ? button.title
+      : te(`views.emergencyData.sections.${section.id}.buttons.${button.id}.title`)
+          ? t(`views.emergencyData.sections.${section.id}.buttons.${button.id}.title`)
+          : ""
+
+  return title
+  /*
+  const measurementType = measurementTypes[button.id]
+
+  if (!measurementType) return title
+
+  const measurementUnit = unit.getUnit(measurementType)
+
+  return measurementUnit
+      ? `${title} (${measurementUnit})`
+      : title
+
+   */
+}
+
+const getButtonSubtitle = (section, button) => {
+  // 1. Gets from database
+  if(button.subtitle) return button.subtitle
+
+  // 2. Gets from translate or Fallback
+  return te(`views.emergencyData.sections.${section.id}.buttons.${button.id}.subtitle`)
       ? t(`views.emergencyData.sections.${section.id}.buttons.${button.id}.subtitle`)
       : ""
+}
+
+const getSectionTitle = (section) => {
+  return te(`views.emergencyData.sections.${section.id}.title`)
+      ? t(`views.emergencyData.sections.${section.id}.title`)
+      : ""
+}
+
+const getSectionSubtitle = (section) => {
+  return te(`views.emergencyData.sections.${section.id}.subtitle`)
+      ? t(`views.emergencyData.sections.${section.id}.subtitle`)
+      : ""
+}
+
+const handleSubmit = async (formData) => {
+  const context = formPopup.context.value
+  if(!context) return
+
+  let result = null
+
+  const cleanData = JSON.parse(JSON.stringify(formData))
+
+  if(context.sectionId === "patient"){
+    result = await form.executeDBSubmit(() => patientController.updatePatientRoot(cleanData))
   }
 
-  const getSectionTitle = (section) => {
-    return te(`views.emergencyData.sections.${section.id}.title`)
-        ? t(`views.emergencyData.sections.${section.id}.title`)
-        : ""
+  if(result && result.success){
+    patient.value = result.data
+    formPopup.close()
+    snackbar.open(result.code)
+  }else if(result){
+    snackbar.open(result.code)
+  }
+}
+
+onMounted(async() => {
+  const patientData = await patientController.getPatient()
+  const medicineData = await medicineController.getAll()
+
+  // Update frontend patient data
+  if(patientData.success){
+    patient.value = patientData.data
+  }else if(!patientData.success){
+    snackbar.open(patientData.code)
   }
 
-  const getSectionSubtitle = (section) => {
-    return te(`views.emergencyData.sections.${section.id}.subtitle`)
-        ? t(`views.emergencyData.sections.${section.id}.subtitle`)
-        : ""
+  // Update frontend medicines data
+  if(medicineData.success){
+    medicines.value = medicineData.data
+  }else if(!medicineData.success){
+    snackbar.open(medicineData.code)
   }
-
-  const handleSubmit = async (formData) => {
-    const context = formPopup.context.value
-    if(!context) return
-
-    let result = null
-
-    const cleanData = JSON.parse(JSON.stringify(formData))
-
-    if(context.sectionId === "patient"){
-      result = await form.executeDBSubmit(() => patientController.updatePatientRoot(cleanData))
-    }
-
-    if(result && result.success){
-      patient.value = result.data
-      formPopup.close()
-      snackbar.open(result.code)
-    }else if(result){
-      snackbar.open(result.code)
-    }
-  }
-
-  onMounted(async() => {
-    const patientData = await patientController.getPatient()
-    const medicineData = await medicineController.getAll()
-
-    // Update frontend patient data
-    if(patientData.success){
-      patient.value = patientData.data
-    }else if(!patientData.success){
-      snackbar.open(patientData.code)
-    }
-
-    // Update frontend medicines data
-    if(medicineData.success){
-      medicines.value = medicineData.data
-    }else if(!medicineData.success){
-      snackbar.open(medicineData.code)
-    }
-  })
+})
 </script>

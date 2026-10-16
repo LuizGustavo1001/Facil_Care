@@ -18,7 +18,7 @@ db.on("populate", (transaction) => {
             _id: 'pat_1001',
             name: 'Patient',
             address: 'S. ABC, 41',
-            birthDate: '1953-03-15',
+            birthDate: '1953-03-10T00:00:00.000Z',
             bloodType: 'o_negative',
             allergies: [
                 {

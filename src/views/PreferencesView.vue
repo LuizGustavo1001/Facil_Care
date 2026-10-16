@@ -46,6 +46,7 @@
 
   import { useNavigation } from "../composables/useNavigation.js"
   import { useLanguage } from "../composables/useLanguage.js"
+  import { useUnitSystem } from "../composables/useUnitSystem.js"
   import { useTheme } from "../composables/useTheme.js"
   import { useI18n } from "vue-i18n"
   import { useUtils } from "../composables/useUtils.js"
@@ -60,6 +61,7 @@
   const navigation = useNavigation()
   const language = useLanguage()
   const theme = useTheme()
+  const unit = useUnitSystem()
 
   // FUNCTIONS
   const getCurrentEventValue = (item) => {
@@ -68,6 +70,9 @@
     }
     if(item.event === "toggle-language"){
       return locale.value
+    }
+    if(item.event === "toggle-unit"){
+      return unit.currentUnit.value
     }
 
     return item.for
@@ -84,6 +89,9 @@
         break
       case "toggle-language":
         language.initLanguage(selectedValue)
+        break
+      case "toggle-unit":
+        unit.initUnitSystem(selectedValue)
         break
     }
   }

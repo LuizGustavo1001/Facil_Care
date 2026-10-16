@@ -23,7 +23,7 @@ export function useLanguage() {
             return
         }
 
-        // 2. Specified Languaged required
+        // 2. Specific Language required
         if(nextLanguage){
             setLanguage(nextLanguage)
             return

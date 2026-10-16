@@ -1,6 +1,7 @@
 import { PAGES } from "../composables/usePages.js"
 import { THEME_PREFERENCES as THEMES } from "../composables/useTheme.js"
 import { LANGUAGES } from "../composables/useLanguage.js"
+import { UNITS } from "../composables/useUnitSystem.js"
 
 export default {
     pageTitle: {
@@ -32,7 +33,7 @@ export default {
         [PAGES.PAIN_LEVEL]: "Pain Level",
         [PAGES.SLEEP]: "Slee Quality",
         [PAGES.WATER_INTAKE]: "Water Intake",
-        [PAGES.MEAL_ACCEPTANCE]: "Food Acceptance",
+        [PAGES.MEAL_ACCEPTANCE]: "Meal Acceptance",
         [PAGES.WEIGHT]: "Weight",
         [PAGES.NECESSITIES]: "Monitoring of bowel and urine",
 
@@ -84,6 +85,14 @@ export default {
             },
             [LANGUAGES.EN_US]: {
                 label: "English"
+            }
+        },
+        units: {
+            [UNITS.METRIC]: {
+                label: "Metric"
+            },
+            [UNITS.IMPERIAL]: {
+                label: "Imperial"
             }
         },
         pageFallback: {
@@ -225,10 +234,10 @@ export default {
                         title: "Sleep Quality"
                     },
                     [PAGES.WATER_INTAKE]: {
-                        title: "Water Ingestion"
+                        title: "Water Intake"
                     },
-                    [PAGES.WATER_INTAKE]: {
-                        title: "Food Acceptance"
+                    [PAGES.MEAL_ACCEPTANCE]: {
+                        title: "Meal Acceptance"
                     },
                     [PAGES.WEIGHT]: {
                         title: "Weight"
@@ -256,7 +265,7 @@ export default {
                             title: "Blood Type",
                         },
                         weight: {
-                            title: "Weight (Kg)"
+                            title: "Weight"
                         },
                         address: {
                             title: "Address"
@@ -358,6 +367,9 @@ export default {
                         },
                         languages: {
                             title: "System Language"
+                        },
+                        units: {
+                            title: "Unit of Measurement"
                         }
                     }
                 }

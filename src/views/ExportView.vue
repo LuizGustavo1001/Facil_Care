@@ -19,7 +19,7 @@
           <ActionButtonAlt
               tag="button"
               color="blue"
-              :leftIcon="icons['qr-code-line']"
+              :leftIcon="icons['qr-code-fill']"
               :title="t(`views.export.sections.tabSelector.qrCode.title`)"
               :class="{ active: activeTab === 'qr' }"
               @click="activeTab = 'qr'"
@@ -28,7 +28,7 @@
           <ActionButtonAlt
               tag="button"
               color="yellow"
-              :leftIcon="icons['file-line']"
+              :leftIcon="icons['file-fill']"
               :title="t(`views.export.sections.tabSelector.json.title`)"
               :class="{ active: activeTab === 'json' }"
               @click="activeTab = 'json'"
@@ -40,7 +40,7 @@
           <div class="title flex flex-column gap-05">
             <h2>{{ t(`views.export.sections.cardQR.title`) }}</h2>
 
-            <span class="description flex flex-column">
+            <span class="description flex flex-column gap-03">
             <span v-for="(desc, index) in tm('views.export.sections.cardQR.regularSubtitles')" :key="index" class="text-muted">
               {{ desc }}.
             </span>
@@ -114,11 +114,11 @@
           <div class="title flex flex-column gap-05">
             <h2>{{ t(`views.export.sections.cardJSON.title`) }}.</h2>
 
-            <span class="title-description">
-            <span v-for="(desc, index) in tm('views.export.sections.cardJSON.regularSubtitles')" :key="index" class="text-muted">
-              {{ desc }}.
+            <span class="title-description flex flex-column gap-05">
+              <span v-for="(desc, index) in tm('views.export.sections.cardJSON.regularSubtitles')" :key="index" class="text-muted">
+                {{ desc }}.
+              </span>
             </span>
-          </span>
           </div>
 
           <ActionButton

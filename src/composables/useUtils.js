@@ -1,5 +1,4 @@
 import { useI18n } from "vue-i18n"
-import {PAGES} from "./usePages.js";
 
 export function useUtils() {
     const { t, te } = useI18n()
@@ -24,30 +23,9 @@ export function useUtils() {
         return te(`pageTitle.${page}`)
     }
 
-    const getMeasurementUnit = (item) => {
-        switch(item){
-            case PAGES.BLOOD_PRESSURE:
-                return "mmHg"
-            case PAGES.BODY_TEMPERATURE:
-                return "°Celsius"
-            case PAGES.OXYGEN_SATURATION:
-                return "%"
-            case PAGES.BLOOD_GLUCOSE:
-                return "mg/dL"
-            case PAGES.HEART_RATE:
-                return "/min"
-            case PAGES.WATER_INTAKE:
-                return "l"
-            case PAGES.WEIGHT:
-                return "Kg"
-            default:
-                return ""
-        }
-    }
-
     const getOptionTranslate = (translationKey) => {
         return te(`options.${translationKey}`) ? t(`options.${translationKey}`) : ""
     }
 
-    return { getPageTitle, pageExists, getMeasurementUnit, getOptionTranslate }
+    return { getPageTitle, pageExists, getOptionTranslate }
 }

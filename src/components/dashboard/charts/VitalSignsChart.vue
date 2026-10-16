@@ -24,6 +24,7 @@
   import { useI18n } from "vue-i18n"
   import { useUtils } from "../../../composables/useUtils.js"
   import { useDate } from "../../../composables/useDate.js"
+  import {useUnitSystem} from "../../../composables/useUnitSystem.js";
 
   ChartJS.register(
       LineController,
@@ -40,6 +41,7 @@
   const { t, locale } = useI18n()
   const utils = useUtils()
   const date = useDate()
+  const unit = useUnitSystem()
 
   // PROPS
   const props = defineProps({
@@ -57,7 +59,7 @@
   const chartData = ref({ labels: [], datasets: [] })
   const chartKey = ref(0)
 
-  const unit = computed(() => utils.getMeasurementUnit(props.type))
+  const currentUnit = computed(() => unit.getMeasurementUnit(props.type))
 
   const chartOptions = {
     responsive: true,
@@ -74,7 +76,7 @@
       },
       tooltip: {
         callbacks: {
-          label: context => `${context.dataset.label}: ${context.parsed.y} ${unit.value}`
+          label: context => `${context.dataset.label}: ${context.parsed.y} ${currentUnit.value}`
         }
       }
     },
@@ -90,7 +92,7 @@
         beginAtZero: false,
         title: {
           display: true,
-          text: `${t(`charts.${PAGES.VITAL_SIGNS}.${props.type}.y_axis`)} (${unit.value})`
+          text: `${t(`charts.${PAGES.VITAL_SIGNS}.${props.type}.y_axis`)} (${currentUnit.value})`
         }
       }
     }

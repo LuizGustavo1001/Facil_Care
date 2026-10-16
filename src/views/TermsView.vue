@@ -74,6 +74,7 @@
   .content li{
     background: var(--color-bg-subtle);
     padding: var(--spacing-md);
+    text-align: justify;
   }
 
 </style>

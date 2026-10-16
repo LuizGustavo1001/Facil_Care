@@ -1,6 +1,7 @@
 import { PAGES } from "../composables/usePages.js"
 import { THEME_PREFERENCES as THEMES } from "../composables/useTheme.js"
 import { LANGUAGES } from "../composables/useLanguage.js"
+import { UNITS } from "../composables/useUnitSystem.js"
 
 export default {
     pageTitle: {
@@ -84,6 +85,14 @@ export default {
             },
             [LANGUAGES.EN_US]: {
                 label: "Inglês"
+            }
+        },
+        units: {
+            [UNITS.METRIC]: {
+                label: "Metric"
+            },
+            [UNITS.IMPERIAL]: {
+                label: "Imperial"
             }
         },
         pageFallback: {
@@ -278,7 +287,7 @@ export default {
                             title: "Tipo Sanguíneo",
                         },
                         weight: {
-                            title: "Peso (Kg)"
+                            title: "Peso"
                         },
                         address: {
                             title: "Endereço"
@@ -380,6 +389,9 @@ export default {
                         },
                         languages: {
                             title: "Idioma do Sistema"
+                        },
+                        units: {
+                            title: "Unidade de Medida"
                         }
                     }
                 }

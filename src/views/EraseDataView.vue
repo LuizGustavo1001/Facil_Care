@@ -29,7 +29,7 @@
       <section v-if="!gotReset" class="main-section center text-center align-center gap-15">
         <div class="title flex flex-column gap-1">
           <h1>{{ t(`views.eraseData.sections.erase.title`) }}</h1>
-          <div class="description">
+          <div class="description flex flex-column gap-03">
             <p v-for="(desc, index) in tm('views.eraseData.sections.erase.regularSubtitles')" :key="index" class="text-muted">
               {{ desc }}.
             </p>

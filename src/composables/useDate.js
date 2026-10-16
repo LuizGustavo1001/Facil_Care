@@ -48,7 +48,7 @@ export function useDate() {
 
         let dateFormatted = currentLanguage.value === 'ptBR'
             ? `${day}/${month}/${year}`
-            : `${year}/${month}/${day}`
+            : `${month}/${day}/${year}`
 
         return fullDate
             ? `${hoursFormatted} - ${dateFormatted}`

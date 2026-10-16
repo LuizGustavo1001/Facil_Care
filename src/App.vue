@@ -12,6 +12,7 @@
   import { onMounted } from "vue"
   import { useTheme } from "./composables/useTheme.js"
   import { useLanguage } from "./composables/useLanguage.js"
+  import { useUnitSystem } from "./composables/useUnitSystem.js"
   import NotificationsController from "./controllers/NotificationsController.js"
 
   // CONTROLLERS
@@ -20,11 +21,13 @@
   // COMPOSABLES
   const { initToggleTheme } = useTheme()
   const { initLanguage } = useLanguage()
+  const { initUnitSystem } = useUnitSystem()
 
   // MOUNTED || UNMOUNTED
   onMounted(async () => {
     initToggleTheme()
     initLanguage()
+    initUnitSystem()
     await notificationsController.removeOldNotifications()
   })
 </script>

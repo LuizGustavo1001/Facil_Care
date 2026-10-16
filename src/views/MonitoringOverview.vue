@@ -138,6 +138,7 @@
   import { useUtils } from "../composables/useUtils.js"
   import { useSnackbar } from "../composables/useSnackbar.js"
   import { useConfirmPopup } from "../composables/useConfirmPopup.js"
+  import { useUnitSystem } from "../composables/useUnitSystem.js"
 
   import AppHeader from "../components/layout/AppHeader.vue"
   import AppFallback from "./AppFallback.vue"
@@ -160,6 +161,7 @@
   const navigation = useNavigation()
   const date = useDate()
   const utils = useUtils()
+  const unit = useUnitSystem()
 
   // COMPUTED PROPERTIES
   const activeFilterDays = ref(7)
@@ -252,12 +254,12 @@
 
     for(const item of result){
       const formattedDate = item.dateTime ? date.getFormatted(new Date(item.dateTime)) : null
-      const unit = utils.getMeasurementUnit(item.record)
+      const parsedValue = unit.getMeasurementUnit(item.record, item.value)
       const subTitleParts = [item.caregiverName, formattedDate].filter(Boolean)
 
       formattedData.value.push({
         id: item._id,
-        value: `${item.value}${unit ? ` ${unit}` : ''} `.trim(),
+        value: `${parsedValue.value}${parsedValue.unit ? ` ${parsedValue.unit}` : ''} `.trim(),
         description: [
           subTitleParts.join(' • '),
           item.observation || null

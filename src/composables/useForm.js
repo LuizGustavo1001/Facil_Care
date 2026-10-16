@@ -1,15 +1,42 @@
 import { ref } from "vue"
+import { useUnitSystem } from "./useUnitSystem.js"
 
 export function useForm(){
     const isSubmitting = ref(false)
     const formWarning = ref(null)
 
+    const unit = useUnitSystem()
+
     /**
-     * Defines the input `value` based in the database data of the input.
+     * Converts measurement fields according to the provided converter.
+     *
+     * @param { Object } data
+     * @param { Object } template
+     * @param { (type: string, value: any) => any } converter
+     * @returns { Object }
+     */
+    const convertFormValues = (data, template, converter) => {
+        const result = { ...data }
+
+        for(const input of template?.main?.inputs ?? []){
+            if(!input.measurementType || result[input.name] === undefined) continue
+
+            // convert value
+            result[input.name] = converter(
+                input.measurementType, result[input.name]
+            )
+        }
+        return result
+    }
+
+    /**
+     * Prepares database values for form inputs.
      *
      * @param { Object | Array } dataSource - Database data source (ex: patient.value, patient.value.emergencyContacts)
      * @param { String } idKey - Specifies the id format (ex: _id, id or doctorId)
      * @param { Object } template - Selected popup template
+     *
+     * @returns { Object|Array }
      **/
     const getInputValue = (dataSource, template, idKey = "_id") => {
         if(!template || !template.main || !template.main.inputs || !dataSource) return Array.isArray(dataSource) ? [] : {}
@@ -27,32 +54,46 @@ export function useForm(){
                 values[fieldName] = dataObj[fieldName]
             }
 
+
             return values
+            /*
+            return convertFormValues(
+                values,
+                template,
+                (type, value) => unit.getMeasurementUnit(type, value).value
+            )
+             */
         }
 
-        // Handle Array data source
-        if(Array.isArray(dataSource)) {
-            return dataSource.map(item => extractFields(item))
-        }
-
-        // Handle Object data source
-        return extractFields(dataSource)
+        return Array.isArray(dataSource)
+            ? dataSource.map(extractFields)
+            : extractFields(dataSource)
     }
 
     /**
-    * Extracts form data from a **`submit` event**
+     * Normalizes form values to metric units before persistence.
      *
-     * @param { event } event - Event triggered data *(submit event)*
+     * @param { Object } data
+     * @param { Object } template
+     * @returns { Object }
+     */
+    const normalizeFormValues = (data, template) => {
+        return convertFormValues(data, template,  (type, value) => unit.toMetric(type, value))
+    }
+
+    /**
+     * Extracts data from a submit event.
      *
-     * @return { Object } - Object representing the form data *(ex: { patientName: "name" })*
-    **/
+     * @param { SubmitEvent } event
+     * @returns { Object }
+     */
     const extractData = (event) => {
         const formData = new FormData(event.target)
         return Object.fromEntries(formData.entries())
     }
 
     /**
-     * Executes a database query based in the specified `actionCallback`
+     *  Executes a database operation and tracks its submission state.
      *
      * @param { () => Promise<Object> } actionCallback - Controller method to access the desired model of the database
      *
@@ -65,12 +106,12 @@ export function useForm(){
         isSubmitting.value = true
         formWarning.value = null
 
-        const result = await actionCallback()
-
-        isSubmitting.value = false
-
-        return result
+        try{
+            return await actionCallback()
+        }finally{
+            isSubmitting.value = false
+        }
     }
 
-    return { extractData, executeDBSubmit, isSubmitting, formWarning, getInputValue}
+    return { extractData, executeDBSubmit, isSubmitting, formWarning, getInputValue, normalizeFormValues, convertFormValues }
 }

@@ -2,6 +2,7 @@ import { icons } from "../assets/icons/icons.js"
 import { THEME_PREFERENCES } from "../composables/useTheme.js"
 import { LANGUAGES } from "../composables/useLanguage.js"
 import { PAGES } from "../composables/usePages.js"
+import { UNITS } from "../composables/useUnitSystem.js"
 
 const THEME_OPTIONS = [
     { id: THEME_PREFERENCES.LIGHT },
@@ -13,6 +14,11 @@ const THEME_OPTIONS = [
 const LANGUAGE_OPTIONS = [
     { id: LANGUAGES.PT_BR },
     { id: LANGUAGES.EN_US }
+]
+
+const UNITS_OPTIONS = [
+    { id: UNITS.METRIC },
+    { id: UNITS.IMPERIAL }
 ]
 
 export const homeView = {
@@ -86,6 +92,13 @@ export const preferencesView = {
                     for: "app-lang",
                     event: "toggle-language",
                     options: LANGUAGE_OPTIONS
+                },
+                {
+                    id: "units",
+                    name: "app-unit",
+                    for: "app-unit",
+                    event: "toggle-unit",
+                    options: UNITS_OPTIONS
                 }
             ]
         }
@@ -416,41 +429,6 @@ export const warningMessages = {
     SystemDataReset: "success"
 }
 
-export const formTemplates = {
-    patient: {
-        id: "patient",
-    },
-    caregivers: {
-        id: "caregivers",
-    },
-    doctors: {
-        id: "doctors",
-    },
-    allergies: {
-        id: "allergies",
-    },
-    healthPlans: {
-        id: "healthPlans",
-    },
-    emergencyContacts: {
-        id: "emergencyContacts",
-    },
-
-    medicines: {
-        id: "medicines",
-    },
-    medicinesRegistries: {
-        id: "medicinesRegistries",
-    },
-
-    vitalSigns: {
-        id: "vitalSigns",
-    },
-    followUps: {
-        id: "followUps",
-    }
-}
-
 export const formPopupTemplates = [
     {
         id: "name",
@@ -552,6 +530,7 @@ export const formPopupTemplates = [
                     tag: "input",
                     name: "weight",
                     for: "weight",
+                    measurementType: PAGES.WEIGHT,
                     inputType: "number",
                     autoCapitalize: "words",
                     step: "0.1",
