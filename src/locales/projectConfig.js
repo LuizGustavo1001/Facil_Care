@@ -3,6 +3,7 @@ import { THEME_PREFERENCES } from "../composables/useTheme.js"
 import { LANGUAGES } from "../composables/useLanguage.js"
 import { PAGES } from "../composables/usePages.js"
 import { UNITS } from "../composables/useUnitSystem.js"
+import { FORM_TYPES } from "../composables/useForm.js"
 
 const THEME_OPTIONS = [
     { id: THEME_PREFERENCES.LIGHT },
@@ -390,30 +391,101 @@ export const charts = {
 }
 
 
-export const registerView = {}
+export const registerView = {
+
+}
 
 export const warningMessages = {
     PatientNotFound: "warning",
     PatientUpdated: "success",
 
+    NotificationNotFound: "error",
+
+    SystemDataReset: "success",
+    DatabaseError: "error",
+
+    NoVitalSignFound: "error",
+    NoVitalSignByField: "error",
+    NoVitalSignByDate: "error",
+    NoVitalSignByFieldAndDate: "error",
+    VitalSignNotFound: "error",
+    VitalSignUpdated: "success",
+    VitalSignDeleted: "success",
+    VitalSignCreated: "success",
+
+    NoFollowUpFound: "error",
+    NoFollowUpByField: "error",
+    NoFollowUpByDate: "error",
+    NoFollowUpByFieldAndDate: "error",
+    FollowUpNotFound: "error",
+    FollowUpUpdated: "success",
+    FollowUpDeleted: "success",
+    FollowUpCreated: "success",
+
+    NoAllergyFound: "error",
+    AllergyNotFound: "error",
+    AllergyUpdated: "success",
+    AllergyDeleted: "success",
+    AllergyCreated: "success",
+    AllergyCreationFailed: "error",
+    AllergyUpdateFailed: "error",
+    AllergyDeleteFailed: "error",
+
+    NoCaregiverFound: "error",
+    CaregiverNotFound: "error",
+    CaregiverUpdated: "success",
+    CaregiverDeleted: "success",
+    CaregiverCreated: "success",
+    CaregiverCreationFailed: "error",
+    CaregiverUpdateFailed: "error",
+    CaregiverDeleteFailed: "error",
+
+    NoDoctorFound: "error",
+    DoctorNotFound: "error",
+    DoctorUpdated: "success",
+    DoctorDeleted: "success",
+    DoctorCreated: "success",
+    DoctorCreationFailed: "error",
+    DoctorUpdateFailed: "error",
+    DoctorDeleteFailed: "error",
+
+    NoEmergencyContactFound: "error",
+    EmergencyContactNotFound: "error",
+    EmergencyContactUpdated: "success",
+    EmergencyContactDeleted: "success",
+    EmergencyContactCreated: "success",
+    EmergencyContactCreationFailed: "error",
+    EmergencyContactUpdateFailed: "error",
+    EmergencyContactDeleteFailed: "error",
+
+    NoHealthPlansFound: "error",
+    HealthPlansNotFound: "error",
+    HealthPlansUpdated: "success",
+    HealthPlansDeleted: "success",
+    HealthPlansCreated: "success",
+    HealthPlansCreationFailed: "error",
+    HealthPlansUpdateFailed: "error",
+    HealthPlansDeleteFailed: "error",
+
+    NoMedicineFound: "error",
+    MedicineNotFound: "error",
     MedicineUpdated: "success",
-    MedicineNotFound: "warning",
+    MedicineDeleted: "success",
+    MedicineCreated: "success",
+    MedicineCreationFailed: "error",
+    MedicineUpdateFailed: "error",
+    MedicineDeleteFailed: "error",
 
     NoMedicineRegistryFound: "error",
+    MedicineRegistryNotFound: "error",
+    MedicineRegistryUpdated: "success",
     MedicineRegistryDeleted: "success",
-    RegistryUpdated: "success",
-
-    RecordUpdated: "success",
-    RecordDeleted: "success",
-    RecordNotFound: "warning",
-    NoRecordsByField: "error",
-    NoRecordsByDate: "error",
-    NoRecordsByFieldAndDate: "error",
-    RecordRemoved: "success",
+    MedicineRegistryCreated: "success",
+    MedicineRegistryCreationFailed: "error",
+    MedicineRegistryUpdateFailed: "error",
+    MedicineRegistryDeleteFailed: "error",
 
     InvalidDateInterval: "error",
-
-    NotificationNotFound: "error",
 
     ExportFailed: "error",
     ImportFailed: "error",
@@ -427,13 +499,9 @@ export const warningMessages = {
 
     HostNotFound: "error",
     OfflineDevice: "warning",
-
-    MedicineDeleted: "success",
-
-    SystemDataReset: "success"
 }
 
-export const formPopupTemplates = [
+export const formTemplates = [
     {
         id: "name",
         main: {
@@ -941,13 +1009,6 @@ export const formPopupTemplates = [
                     inputType: "text"
                 },
                 {
-                  id: "dateTime",
-                  tag: "input",
-                  inputType: "date",
-                  name: "dateTime",
-                  for: "dateTime"
-                },
-                {
                     id: "caregiverName",
                     tag: "select",
                     name: "caregiverName",
@@ -1067,7 +1128,7 @@ export const footers = [
             {
                 id: "primary",
                 leftIcon: icons["medicine-bottle-fill"],
-                link: `/form/register/${PAGES['MEDICINE_REGISTRIES']}`
+                link: `/register/${PAGES['MEDICINE_REGISTRIES']}`
             }
         ]
     },
@@ -1077,7 +1138,7 @@ export const footers = [
             {
                 id: "primary",
                 leftIcon: icons["heart-fill"],
-                link: `/form/register/${PAGES["VITAL_SIGNS"]}`
+                link: `/register/${PAGES["VITAL_SIGNS"]}`
             }
         ]
     },
@@ -1087,7 +1148,7 @@ export const footers = [
             {
                 id: "primary",
                 leftIcon: icons["mental-health-fill"],
-                link: `/form/register/${PAGES['FOLLOW_UPS']}`
+                link: `/register/${PAGES['FOLLOW_UPS']}`
             }
         ]
     },
@@ -1097,7 +1158,7 @@ export const footers = [
             {
                 id: "primary",
                 leftIcon: icons["capsule-fill"],
-                link: `/form/register/${PAGES['MEDICINES']}`
+                link: `/register/${PAGES['MEDICINES']}`
             }
         ]
     },
@@ -1107,7 +1168,7 @@ export const footers = [
           {
               id: "primary",
               leftIcon: icons["medicine-bottle-fill"],
-              link: `/form/register/${PAGES['MEDICINE_REGISTRIES']}`
+              link: `/register/${PAGES['MEDICINE_REGISTRIES']}`
           }
       ]
     },
@@ -1117,7 +1178,7 @@ export const footers = [
             {
                 id: "primary",
                 leftIcon: icons["virus-fill"],
-                link: `/form/register/${PAGES['ALLERGIES']}`
+                link: `/register/${PAGES['ALLERGIES']}`
             }
         ]
     },
@@ -1127,7 +1188,7 @@ export const footers = [
             {
                 id: "primary",
                 leftIcon: icons["stethoscope-line"],
-                link: `/form/register/${PAGES['DOCTOR']}`,
+                link: `/register/${PAGES['DOCTORS']}`,
             }
         ]
     },
@@ -1137,7 +1198,7 @@ export const footers = [
             {
                 id: "primary",
                 leftIcon: icons["user-fill"],
-                link: `/form/register/${PAGES['CAREGIVERS']}`
+                link: `/register/${PAGES['CAREGIVERS']}`
             }
         ]
     },
@@ -1147,7 +1208,7 @@ export const footers = [
             {
                 id: "primary",
                 leftIcon: icons['first-aid-fill'],
-                link: `/form/register/${PAGES['HEALTH_PLANS']}`
+                link: `/register/${PAGES['HEALTH_PLANS']}`
             }
         ]
     },
@@ -1157,8 +1218,24 @@ export const footers = [
             {
                 id: "primary",
                 leftIcon: icons['contacts-fill'],
-                link: `/form/register/${PAGES['EMERGENCY_CONTACTS']}`
+                link: `/register/${PAGES['EMERGENCY_CONTACTS']}`
             }
         ]
     }
 ]
+
+export const popupTypes = {
+    [FORM_TYPES.CREATE]: {
+        title: "create",
+        submitLabel: "add",
+        readOnly: false,
+        showSubmit: true
+    },
+
+    [FORM_TYPES.EDIT]: {
+        title: "edit",
+        submitLabel: "save",
+        readOnly: false,
+        showSubmit: true
+    }
+}

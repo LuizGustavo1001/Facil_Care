@@ -51,8 +51,8 @@ const routes = [
         }
     },
     {
-      path: '/form/:action/:category',
-      name: 'form',
+      path: '/register/:category',
+      name: 'register-form',
       component: () => import('/src/views/RegisterView.vue'),
       meta: {
           title: 'register'

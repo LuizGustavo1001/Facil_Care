@@ -90,6 +90,8 @@ Recursos Futuros
 5. **Adicionar Múltiplos Horários (Medicamentos)**: Gerenciar os horários dos medicamentos, enviando notificações quando estiver próximo do tempo de consumi-lo
 Afins
 6. **Converter escalas para outros sistemas**: Como exemplo, converter de graus Celsius para Fahrenheit
+7. **Verificar Validade do arquivo de backup**
+
 ---
 - `*` Para gerar o QR Code de Backup do paciente será necessário **conexão com a internet**`*`, tendo em vista a limitação de caracteres que o código pode apresentar
 - `**` Dados pessoais ficam armazenados apensa dentro do aplicativo, nenhum desenvolvedor deve ter acesso a eles de forma deliberada.

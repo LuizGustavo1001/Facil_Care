@@ -1,14 +1,29 @@
 import { ref } from "vue"
 import { useUnitSystem } from "./useUnitSystem.js"
+import { useDate } from "./useDate.js"
+import { useI18n } from "vue-i18n"
+import { useUtils } from "./useUtils.js"
+
+import Input from "../components/forms/Input.vue"
+import TextArea from "../components/forms/TextArea.vue"
+import SelectInput from "../components/forms/SelectInput.vue"
+
+export const FORM_TYPES = {
+    CREATE: "create",
+    EDIT: "edit"
+}
 
 export function useForm(){
     const isSubmitting = ref(false)
     const formWarning = ref(null)
 
     const unit = useUnitSystem()
+    const date = useDate()
+    const utils = useUtils()
+    const { t, te } = useI18n()
 
     /**
-     * Converts measurement fields according to the provided converter.
+     * Converts fields according to the provided converter.
      *
      * @param { Object } data
      * @param { Object } template
@@ -45,7 +60,7 @@ export function useForm(){
         const extractFields = (dataObj) => {
             const values = {}
 
-            if(dataObj[idKey] !== undefined) {
+            if(dataObj[idKey] !== undefined){
                 values[idKey] = dataObj[idKey]
             }
 
@@ -53,7 +68,6 @@ export function useForm(){
                 const fieldName = input.name
                 values[fieldName] = dataObj[fieldName]
             }
-
 
             return values
             /*
@@ -113,5 +127,109 @@ export function useForm(){
         }
     }
 
-    return { extractData, executeDBSubmit, isSubmitting, formWarning, getInputValue, normalizeFormValues, convertFormValues }
+    // Returns the component associated with an input tag
+    const getInputComponent = (tag) => {
+        switch (tag) {
+            case "input":
+                return Input
+
+            case "textarea":
+                return TextArea
+
+            case "select":
+                return SelectInput
+
+            default:
+                return null
+        }
+    }
+
+    // Returns the props required by an input component
+    const getInputProps = (input, popupConfig, templateId, inputValue = null) => {
+        if(!templateId) return
+
+        const labelKey = `formPopupTemplates.${templateId}.main.inputs.${input.id}.label`
+        const placeholderKey = `formPopupTemplates.${templateId}.main.inputs.${input.id}.placeholder`
+
+        const title = te(labelKey) ? t(labelKey) : ""
+        const placeholder = te(placeholderKey) ? t(placeholderKey) : ""
+
+        const currentValue = inputValue ? inputValue[input.name] : null
+
+        switch(input.tag){
+            case "input":
+                return {
+                    label: title,
+                    placeholder: placeholder,
+                    for: input.for,
+                    name: input.name,
+                    inputType: input.inputType,
+                    autoCapitalize: input.autoCapitalize ?? null,
+                    autofocus: true,
+                    step: input.step ?? null,
+                    min: input.min ?? null,
+                    max: input.inputType === "date"
+                        ? (input.max ?? date.getToday())
+                        : (input.max ?? null),
+                    modelValue: currentValue ?? "",
+                    translate: "no"
+                }
+
+            case "select":
+                return {
+                    label: title,
+                    for: input.for,
+                    name: input.name,
+                    options: getSelectOptions(input),
+                    modelValue: currentValue ?? "",
+                    translate: "no",
+                    disabled: popupConfig?.value?.readOnly ?? null
+                }
+
+            case "textarea":
+                return {
+                    label: title,
+                    placeholder: placeholder,
+                    for: input.for,
+                    name: input.name,
+                    modelValue: currentValue ?? "",
+                    translate: "no",
+                    readonly: popupConfig?.value?.readOnly ?? null
+                }
+
+            default:
+                return {}
+        }
+    }
+
+    // Returns options based in translate data
+    const getSelectOptions = (input) => {
+        let options = []
+
+        for(const option of input.options){
+            options.push({
+                placeholder: utils.getOptionTranslate(t(`${input.id}.${option.id}`) ?? ""),
+                value: option.value
+            })
+        }
+
+        return options
+    }
+
+    // Returns form button props
+    const getBtnProps = (btn, type) => {
+        const key = `formPopupTypes.${type}.title`
+
+        const title = te(key) ? t(key) : ""
+
+        return {
+            title: title,
+            padding: "md",
+            alignCenter: true,
+            tag: btn.tag ?? "button",
+            type: btn.type ?? "submit"
+        }
+    }
+
+    return { extractData, executeDBSubmit, isSubmitting, formWarning, getInputValue, normalizeFormValues, convertFormValues, getInputComponent, getInputProps, getSelectOptions, getBtnProps }
 }

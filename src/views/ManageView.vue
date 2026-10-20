@@ -84,9 +84,9 @@
 <style scoped></style>
 
 <script setup>
-  import { computed, onMounted, ref, watch } from "vue"
+  import { computed, ref, watch } from "vue"
   import { icons } from "../assets/icons/icons.js"
-  import { formPopupTemplates } from "../locales/projectConfig.js"
+  import { formTemplates } from "../locales/projectConfig.js"
   import { MANAGE_PAGES, PAGES } from "../composables/usePages.js"
 
   import { useRoute } from "vue-router"
@@ -94,7 +94,7 @@
   import { useUtils } from "../composables/useUtils.js"
   import { useI18n } from "vue-i18n"
   import { useSnackbar } from "../composables/useSnackbar.js"
-  import { useForm } from "../composables/useForm.js"
+  import { FORM_TYPES, useForm } from "../composables/useForm.js"
   import { useDate } from "../composables/useDate.js"
   import { useConfirmPopup } from "../composables/useConfirmPopup.js"
   import { useFormPopup } from "../composables/useFormPopup.js"
@@ -111,9 +111,13 @@
   import ConfirmPopup from "../components/layout/popup/ConfirmPopup.vue"
   import ActionButtonAlt from "../components/buttons/ActionButtonAlt.vue"
 
-  import PatientController from "../controllers/PatientController.js"
-  import MedicinesController from "../controllers/MedicinesController.js"
+  import MedicineController from "../controllers/MedicineController.js"
   import MedicineRegistriesController from "../controllers/MedicineRegistriesController.js"
+  import CaregiverController from "../controllers/CaregiverController.js"
+  import HealthPlanController from "../controllers/HealthPlanController.js"
+  import DoctorController from "../controllers/DoctorController.js"
+  import AllergyController from "../controllers/AllergyController.js"
+  import EmergencyContactController from "../controllers/EmergencyContactController.js"
 
   // COMPOSABLES
   const { t, te } = useI18n()
@@ -141,13 +145,20 @@
   const currentCategory = computed(() => route.params.category)
 
   // CONTROLLERS
-  const patientController = new PatientController()
-  const medicineController = new MedicinesController()
-  const medicineRegistrieController = new MedicineRegistriesController()
+  const medicineController = new MedicineController()
+  const medicineRegistryController = new MedicineRegistriesController()
+  const caregiverController = new CaregiverController()
+  const healthPlanController = new HealthPlanController()
+  const doctorController = new DoctorController()
+  const allergyController = new AllergyController()
+  const emergencyContactController = new EmergencyContactController()
 
-  const patient = ref(null)
+  const caregivers = ref([])
+  const healthPlans = ref([])
+  const doctors = ref([])
+  const allergies = ref([])
+  const emergencyContacts = ref([])
   const medicines = ref([])
-  const formattedData = ref([])
   const medicineRegistries = ref([])
 
   // Verify if selected manage page exists
@@ -159,94 +170,113 @@
     return MANAGE_PAGES.includes(rawId)
   })
 
-  // FUNCTIONS
-  const fillSection = () => {
-    // Clears old formattedData
-    formattedData.value = []
-
-    const data = {
-      ...patient.value,
-      medicines: medicines.value,
-      medicineRegistries: medicineRegistries.value
-    }
-
-    switch(currentCategory.value){
+  // COMPUTED PROPERTIES
+  const formattedData = computed(() => {
+    switch (currentCategory.value) {
       case PAGES.CAREGIVERS:
-        for(const caregiver of data.caregivers ?? []){
-          formattedData.value.push({
-            id: caregiver.caregiverId,
-            title: caregiver.name,
-            description: getDescription([
+        return caregivers.value.map(caregiver => ({
+          id: caregiver._id,
+          title: caregiver.name,
+          description: getDescription([
               caregiver.phone,
               date.getFormatted(caregiver.startDate, false)
-            ])
-          })
-        }
-        break
+          ])
+        }))
       case PAGES.DOCTORS:
-        for(const doctor of data.doctors ?? []){
-          formattedData.value.push({
-            id: doctor.doctorId,
-            title: doctor.name,
-            description: getDescription([
-               utils.getOptionTranslate(`speciality.${doctor.speciality}`),
+        return doctors.value.map(doctor => ({
+          id: doctor._id,
+          title: doctor.name,
+          description: getDescription([
+              utils.getOptionTranslate(`speciality.${doctor.speciality}`),
               doctor.phone
-            ])
-          })
-        }
-        break
+          ])
+        }))
       case PAGES.ALLERGIES:
-        for(const allergy of data.allergies ?? []){
-          formattedData.value.push({
-            id: allergy.allergyId,
-            title: allergy.name,
-          })
-        }
-        break
+        return allergies.value.map(allergy => ({
+          id: allergy._id,
+          title: allergy.name
+        }))
+
       case PAGES.MEDICINES:
-        for(const medicine of data.medicines ?? []){
-          formattedData.value.push({
-            id: medicine._id,
-            title: medicine.name
-                + (
-                    medicine.routeAdmin
-                      ? ` (${ utils.getOptionTranslate(`routeAdmin.${medicine.routeAdmin}`) })`
-                      : ""
-                ),
-            description: getDescription([medicine.observations])
-          })
-        }
+        return medicines.value.map(medicine => ({
+          id: medicine._id,
+          title: medicine.name + (medicine.routeAdmin
+              ? ` (${utils.getOptionTranslate(
+                  `routeAdmin.${medicine.routeAdmin}`
+              )})`
+              : ""
+          ),
+          description: getDescription([medicine.observations])
+        }))
+
+      case PAGES.MEDICINE_REGISTRIES:
+        return medicineRegistries.value.map(registry => ({
+          id: registry._id,
+          title: `${registry.medicationName} (${registry.medicationDosage})`,
+          description: getDescription([
+            registry.observations,
+            registry.caregiverName
+          ])
+        }))
+
+      case PAGES.HEALTH_PLANS:
+        return healthPlans.value.map(plan => ({
+          id: plan._id,
+          title: plan.name
+        }))
+
+      case PAGES.EMERGENCY_CONTACTS:
+        return emergencyContacts.value.map(contact => ({
+          id: contact._id,
+          title: contact.name,
+          description: getDescription([
+            utils.getOptionTranslate(
+                `kinship.${contact.kinship}`
+            ),
+            contact.phone
+          ])
+        }))
+      default:
+        return []
+    }
+  })
+
+  // FUNCTIONS
+  const loadCategoryData = async (category) => {
+    let result = null
+
+    switch(category) {
+      case PAGES.MEDICINES:
+        result = await medicineController.getAll()
         break
       case PAGES.MEDICINE_REGISTRIES:
-        for(const registry of data.medicineRegistries ?? []){
-          formattedData.value.push({
-            id: registry._id,
-            title: registry.medicationName + " (" + registry.medicationDosage + ")",
-            description: getDescription([registry.observations, registry.caregiverName])
-          })
-        }
+        result = await medicineRegistryController.getAll()
         break
-      case PAGES.HEALTH_PLANS:
-        for(const plan of data.healthPlans ?? []){
-          formattedData.value.push({
-            id: plan.planId,
-            title: plan.name
-          })
-        }
+      case PAGES.CAREGIVERS:
+        result = await caregiverController.getAll()
+        break
+      case PAGES.DOCTORS:
+        result = await doctorController.getAll()
         break
       case PAGES.EMERGENCY_CONTACTS:
-        for(const contact of data.emergencyContacts ?? []) {
-          formattedData.value.push({
-            id: contact.contactId,
-            title: contact.name,
-            description: getDescription([
-              utils.getOptionTranslate(`kinship.${contact.kinship}`),
-              contact.phone
-            ])
-          })
-        }
+        result = await emergencyContactController.getAll()
         break
+      case PAGES.ALLERGIES:
+        result = await allergyController.getAll()
+        break
+      case PAGES.HEALTH_PLANS:
+        result = await healthPlanController.getAll()
+        break
+      default:
+        return
     }
+
+    if (!result?.success) {
+      snackbar.open(result?.code || "DBError")
+      return
+    }
+
+    await updateData(category, result.data)
   }
 
   const getDescription = (parts) => {
@@ -268,78 +298,105 @@
   const handleDeleteConfirmed = async (item) => {
     let result = null
 
-    if(currentCategory.value === PAGES.MEDICINES){
-      result = await medicineController.removeById(item.id)
-    }else if(currentCategory.value === PAGES.MEDICINE_REGISTRIES){
-      result = await medicineRegistrieController.removeById(item.id)
-    }else{ // Any other sections within "patient"
-      let idKey = null
-
-      switch(currentCategory.value){
-        case PAGES.CAREGIVERS:
-          idKey = "caregiverId"
-              break
-        case PAGES.DOCTORS:
-          idKey = "doctorId"
-              break
-        case PAGES.ALLERGIES:
-          idKey = "allergyId"
-              break
-        case PAGES.HEALTH_PLANS:
-          idKey = "planId"
-              break
-        case PAGES.EMERGENCY_CONTACTS:
-          idKey = "contactId"
-              break
-      }
-
-      result = await patientController.removePatientSectionItem(currentCategory.value, item.id, idKey)
+    switch(currentCategory.value){
+      case PAGES.MEDICINES:
+        result = await medicineController.delete(item.id)
+        break
+      case PAGES.MEDICINE_REGISTRIES:
+        result = await medicineRegistryController.delete(item.id)
+        break
+      case PAGES.CAREGIVERS:
+        result = await caregiverController.delete(item.id)
+        break
+      case PAGES.DOCTORS:
+        result = await doctorController.delete(item.id)
+        break
+      case PAGES.EMERGENCY_CONTACTS:
+        result = await emergencyContactController.delete(item.id)
+        break
+      case PAGES.ALLERGIES:
+        result = await allergyController.delete(item.id)
+        break
+      case PAGES.HEALTH_PLANS:
+        result = await healthPlanController.delete(item.id)
+        break
     }
 
     if(!result) return
 
-    if(result.success){
+    if(result && result.success){
       await updateData(currentCategory.value, result.data)
     }
 
-    snackbar.open(result.code)
+    snackbar.open(result.code || "DBError")
   }
 
-  // Handle form submit
   const handleSubmit = async (formData) => {
     const context = formPopup.context.value
     if (!context) return
 
+    const { itemId } = context
+
     let result = null
-    const { sectionId, currentCategory, idKey } = context
 
-    if(sectionId === PAGES.MEDICINES){
-      result = await form.executeDBSubmit(() => medicineController.updateMedicineData(formData, currentCategory))
-    }else if(sectionId === PAGES.MEDICINE_REGISTRIES){
-      result = await form.executeDBSubmit(() => medicineRegistrieController.updateData(formData, currentCategory))
-    }else{ // Data within patient data
-      const cleanData = JSON.parse(JSON.stringify(formData))
-
-      result = await form.executeDBSubmit(() => patientController.updatePatientSectionItem(sectionId, currentCategory, idKey, cleanData))
+    switch(currentCategory.value){
+      case PAGES.MEDICINES:
+        result = await form.executeDBSubmit(() => medicineController.update(itemId, formData))
+        break
+      case PAGES.MEDICINE_REGISTRIES:
+        result = await form.executeDBSubmit(() => medicineRegistryController.update(itemId, formData))
+        break
+      case PAGES.CAREGIVERS:
+        result = await form.executeDBSubmit(() => caregiverController.update(itemId, formData))
+        break
+      case PAGES.DOCTORS:
+        result = await form.executeDBSubmit(() => doctorController.update(itemId, formData))
+        break
+      case PAGES.EMERGENCY_CONTACTS:
+        result = await form.executeDBSubmit(() => emergencyContactController.update(itemId, formData))
+        break
+      case PAGES.ALLERGIES:
+        result = await form.executeDBSubmit(() => allergyController.update(itemId, formData))
+        break
+      case PAGES.HEALTH_PLANS:
+        result = await form.executeDBSubmit(() => healthPlanController.update(itemId, formData))
+        break
     }
+
+    if(!result) return
 
     if(result && result.success){
-      await updateData(sectionId, result.data)
+      await updateData(currentCategory.value, result.data)
 
-      snackbar.open(result.code)
       formPopup.close()
-    }else if(result){
-      snackbar.open(result.code)
     }
+
+    snackbar.open(result.code || "DBError")
   }
 
-  const updateData = async (sectionId, updatedData) => {
-    if(sectionId === PAGES.MEDICINES){
-      medicines.value = updatedData
-    }else if(PAGES.MEDICINE_REGISTRIES){
-      medicineRegistries.value = updatedData
-    }else{ // Any other sections (allergies, doctors, caregivers, etc)
-      patient.value = updatedData
+  const updateData = async (categoryId, updatedData) => {
+    switch(categoryId){
+      case PAGES.MEDICINES:
+        medicines.value = updatedData
+        break
+      case PAGES.MEDICINE_REGISTRIES:
+        medicineRegistries.value = updatedData
+        break
+      case PAGES.CAREGIVERS:
+        caregivers.value = updatedData
+        break
+      case PAGES.DOCTORS:
+        doctors.value = updatedData
+        break
+      case PAGES.EMERGENCY_CONTACTS:
+        emergencyContacts.value = updatedData
+        break
+      case PAGES.ALLERGIES:
+        allergies.value = updatedData
+        break
+      case PAGES.HEALTH_PLANS:
+        healthPlans.value = updatedData
+        break
     }
   }
 
@@ -352,75 +409,75 @@
    * @param { Object } button
    * @param { Event } event
    **/
-  const handleButtonAction = (button, event) => {
+  const handleButtonAction = async (button, event) => {
     formPopup.triggerRef.value = event.currentTarget
 
-    const popupTemplate = formPopupTemplates.find(item => item.id === currentCategory.value) ?? null
-
-    let dataSource = null
-    let idKey = "_id"
-
-    if(currentCategory.value === PAGES.MEDICINES) {
-      dataSource = medicines.value
-    }else if(currentCategory.value === PAGES.MEDICINE_REGISTRIES){
-      dataSource = medicineRegistries.value
-    }else if(currentCategory.value === PAGES.CAREGIVERS){
-      dataSource = patient.value?.caregivers
-      idKey = "caregiverId"
-    }else if(currentCategory.value === PAGES.DOCTORS){
-      dataSource = patient.value?.doctors
-      idKey = "doctorId"
-    }else if(currentCategory.value === PAGES.ALLERGIES){
-      dataSource = patient.value?.allergies
-      idKey = "allergyId"
-    }else if(currentCategory.value === PAGES.HEALTH_PLANS){
-      dataSource = patient.value?.healthPlans
-      idKey = "planId"
-    }else if(currentCategory.value === PAGES.EMERGENCY_CONTACTS){
-      dataSource = patient.value?.emergencyContacts
-      idKey = "contactId"
-    }else{
-      dataSource = []
+    const popupTemplate = formTemplates.find(item => item.id === currentCategory.value) ?? null
+    if(!popupTemplate){
+      snackbar.open("ItemNotFound")
+      return
     }
 
-    // defining the current item selected within the collection
-    const currentItem = dataSource.find(item => item[idKey] === button.id)
+    let result = null
 
-    const currentInputValues = form.getInputValue(currentItem, popupTemplate, idKey)
+    switch(currentCategory.value){
+      case PAGES.MEDICINES:
+        result = await medicineController.getById(button.id)
+        break
+      case PAGES.MEDICINE_REGISTRIES:
+        result = await medicineRegistryController.getById(button.id)
+        break
+      case PAGES.CAREGIVERS:
+        result = await caregiverController.getById(button.id)
+        break
+      case PAGES.DOCTORS:
+        result = await doctorController.getById(button.id)
+        break
+      case PAGES.EMERGENCY_CONTACTS:
+        result = await emergencyContactController.getById(button.id)
+        break
+      case PAGES.ALLERGIES:
+        result = await allergyController.getById(button.id)
+        break
+      case PAGES.HEALTH_PLANS:
+        result = await healthPlanController.getById(button.id)
+        break
+      default:
+        return
+    }
 
-    const context = { sectionId: currentCategory.value, fieldId: button.id, currentCategory: currentInputValues[idKey], idKey: idKey }
+    if (!result?.success || !result.data) {
+      snackbar.open(result?.code || "DBError")
+      return
+    }
 
-    formPopup.open(popupTemplate, currentInputValues, context)
+    const currentItem = result.data
+
+    const currentInputValues = form.getInputValue(
+        currentItem,
+        popupTemplate,
+        "_id"
+    )
+
+    const context = {
+      sectionId: currentCategory.value,
+      itemId: currentItem._id,
+      fieldId: button.id,
+      idKey: "_id"
+    }
+
+    formPopup.open(
+        popupTemplate,
+        currentInputValues,
+        context,
+        FORM_TYPES.EDIT
+    )
   }
 
-  // WATCHES
-  // If updates -> refill section
-  watch([patient, medicines, medicineRegistries, currentCategory], () => {
-    fillSection()
-  }, { deep: true })
+  // Dynamic category data loading
+  watch(currentCategory, async (category) => {
+    if(!category || !pageExists.value) return
 
-  // MOUNTED || UNMOUNTED
-  onMounted(async() => {
-    const patientResult = await patientController.getPatient()
-
-    if(patientResult.success){
-      patient.value = patientResult.data
-    }else{
-      snackbar.open(patientResult.code)
-    }
-
-    const medicinesResult = await medicineController.getAll()
-    if(medicinesResult.success){
-      medicines.value = medicinesResult.data
-    }else{
-      snackbar.open(medicinesResult.code)
-    }
-
-    const medicineRegistriesResult = await medicineRegistrieController.getAll()
-    if(medicineRegistriesResult.success){
-      medicineRegistries.value = medicineRegistriesResult.data
-    }else{
-      snackbar.open(medicineRegistriesResult.code)
-    }
-  })
+    await loadCategoryData(category)
+  }, { immediate: true })
 </script>

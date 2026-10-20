@@ -13,10 +13,11 @@
   import { useTheme } from "./composables/useTheme.js"
   import { useLanguage } from "./composables/useLanguage.js"
   import { useUnitSystem } from "./composables/useUnitSystem.js"
-  import NotificationsController from "./controllers/NotificationsController.js"
+
+  import NotificationController from "./controllers/NotificationController.js"
 
   // CONTROLLERS
-  const notificationsController = new NotificationsController()
+  const notificationsController = new NotificationController()
 
   // COMPOSABLES
   const { initToggleTheme } = useTheme()

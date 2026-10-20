@@ -2,11 +2,13 @@ import { PAGES } from "../composables/usePages.js"
 import { THEME_PREFERENCES as THEMES } from "../composables/useTheme.js"
 import { LANGUAGES } from "../composables/useLanguage.js"
 import { UNITS } from "../composables/useUnitSystem.js"
+import { FORM_TYPES } from "../composables/useForm.js"
 
 export default {
     pageTitle: {
         [PAGES.VITAL_SIGNS]: "Sinais Vitais",
         [PAGES.FOLLOW_UPS]: "Acompanhamento Fisiológico e Comportamental",
+        [PAGES.REGISTER]: "Registrar",
 
         [PAGES.EMERGENCY_DATA]: "Dados de Emergência",
 
@@ -66,6 +68,7 @@ export default {
         deleteAccount: "Apagar Dados",
         homePage: "Voltar à página inicial",
         years: "anos",
+        selectOption: "Selecione uma opção",
         themes: {
             [THEMES.LIGHT]: {
                 label: "Tema Claro"
@@ -140,6 +143,7 @@ export default {
             grandfather: "Avô",
             husband: "Marido",
             wife: "Esposa",
+            cousin: "Primo(a)",
             friend: "Amigo(a)",
             other: "Outro",
         },
@@ -195,6 +199,38 @@ export default {
                 [PAGES.EMERGENCY_CONTACTS]: {
                     title: "Contatos de Emergência",
                     description: "Gerenciar contatos de emergência"
+                }
+            }
+        },
+
+        [PAGES.REGISTER]: {
+            categories: {
+                [PAGES.MEDICINE_REGISTRIES]: {
+                    title: "Administração de Medicamento"
+                },
+                [PAGES.MEDICINES]: {
+                    title: "Medicamento"
+                },
+                [PAGES.VITAL_SIGNS]: {
+                    title: "Sinal Vital"
+                },
+                [PAGES.FOLLOW_UPS]: {
+                    title: "Acompanhamento ou Comportamento"
+                },
+                [PAGES.ALLERGIES]: {
+                    title: "Alergia"
+                },
+                [PAGES.DOCTORS]: {
+                    title: "Médico"
+                },
+                [PAGES.CAREGIVERS]: {
+                    title: "Cuidador"
+                },
+                [PAGES.HEALTH_PLANS]: {
+                    title: "Plano de Saúde"
+                },
+                [PAGES.EMERGENCY_CONTACTS]: {
+                    title: "Contato de Emergência"
                 }
             }
         },
@@ -782,284 +818,234 @@ export default {
         },
     },
 
+    formPopupTypes: {
+        [FORM_TYPES.CREATE]: {
+          title: "Adicionar"
+        },
+        [FORM_TYPES.EDIT]: {
+            title: "Atualizar"
+        }
+    },
+
     formPopupTemplates: {
         name: {
             header: {
-                title: "Alterar Nome do Paciente"
+                title: "Nome do Paciente"
             },
             main: {
                 inputs: {
                     usr_1: {
-                        label: "Nome de Paciente"
-                    }
-                },
-                buttons: {
-                    submit: {
-                        label: "Atualizar Dados"
+                        label: "Nome de Paciente",
+                        placeholder: "ex: João Gomes Pereira"
                     }
                 }
             }
         },
         birthDate: {
             header: {
-                title: "Alterar Data de Nascimento"
+                title: "Data de Nascimento"
             },
             main: {
                 inputs: {
                     bday: {
                         label: "Data de Nascimento"
                     }
-                },
-                buttons: {
-                    submit: {
-                        label: "Atualizar Dados"
-                    }
                 }
             }
         },
         bloodType: {
             header: {
-                title: "Atualizar Tipo Sanguíneo"
+                title: "Tipo Sanguíneo"
             },
             main: {
                 inputs: {
                     bloodType: {
                         label: "Tipo Sanguíneo"
                     }
-                },
-                buttons: {
-                    submit: {
-                        label: "Atualizar Dados"
-                    }
                 }
             }
         },
         weight: {
             header: {
-                title: "Atualizar Peso do Paciente"
+                title: "Peso do Paciente"
             },
             main: {
                 inputs: {
                     weight: {
-                        label: "Peso do Paciente"
-                    }
-                },
-                buttons: {
-                    submit: {
-                        label: "Atualizar Dados"
+                        label: "Peso do Paciente",
+                        placeholder: "Peso do paciente aqui"
                     }
                 }
             }
         },
         address: {
             header: {
-                title: "Atualizar Endereço do Paciente"
+                title: "Endereço do Paciente"
             },
             main: {
                 inputs: {
                     address: {
-                        label: "Endereço"
-                    }
-                },
-                buttons: {
-                    submit: {
-                        label: "Atualizar Dados"
+                        label: "Endereço",
+                        placeholder: "R. Alpha, 135 - Bairro, Cidade"
                     }
                 }
             }
         },
         [PAGES.MEDICINES]: {
             header: {
-                title: "Atualizar dados de Medicamento"
+                title: "dados de Medicamento"
             },
             main: {
                 inputs: {
                     name: {
-                        label: "Nome do Medicamento"
+                        label: "Nome do Medicamento",
+                        placeholder: "Tylenol - 500mg"
                     },
                     routeAdmin: {
                         label: "Rota de Administração"
                     },
                     dosage: {
-                        label: "Dosagem"
+                        label: "Dosagem",
+                        placeholder: "ex: 1 comprimido por dia"
                     },
                     observations: {
-                        label: "Observações"
-                    }
-                },
-                buttons: {
-                    submit: {
-                        label: "Atualizar Dados"
+                        label: "Observações",
+                        placeholder: "Observações aqui"
                     }
                 }
             }
         },
         [PAGES.MEDICINE_REGISTRIES]: {
             header: {
-                title: "Atualizar Registro de Medicamento"
+                title: "Registro de Medicamento"
             },
             main: {
                 inputs: {
                     medicationName: {
-                        label: "Nome do Medicamento"
+                        label: "Nome do Medicamento",
+                        placeholder: "Tylenol - 500mg"
                     },
                     medicationDosage: {
-                        label: "Dosagem"
+                        label: "Dosagem",
+                        placeholder: "ex: 1 comprimido"
                     },
                     caregiverName: {
-                        label: "Nome do Cuidador"
+                        label: "Nome do Cuidador",
+                        placeholder: "ex: Marcio Cunha Pereira"
                     },
                     observations: {
-                        label: "Observações"
-                    }
-                },
-                buttons: {
-                    submit: {
-                        label: "Atualizar Dados"
+                        label: "Observações",
+                        placeholder: "Observações aqui"
                     }
                 }
             }
         },
         [PAGES.CAREGIVERS]: {
             header: {
-                title: "Atualizar Dados de Cuidador"
+                title: "Dados de Cuidador"
             },
             main: {
                 inputs: {
                     name: {
-                        label: "Nome do Cuidador"
+                        label: "Nome do Cuidador",
+                        placeholder: "ex: Marcio Cunha Pereira"
                     },
                     startDate: {
                         label: "Data de Início dos Cuidados"
                     },
                     phone: {
-                        label: "Telefone de Contato"
-                    }
-                },
-                buttons: {
-                    submit: {
-                        label: "Atualizar Dados"
+                        label: "Telefone de Contato",
+                        placeholder: "(XX) X XXXX-XXXX"
                     }
                 }
             }
         },
         [PAGES.DOCTORS]: {
             header: {
-                title: "Atualizar Dados de Médico"
+                title: "Dados de Médico"
             },
             main: {
                 inputs: {
                     name: {
-                        label: "Nome do Médico"
+                        label: "Nome do Médico",
+                        placeholder: "ex: Pedro Silva Gomes"
                     },
                     speciality: {
                         label: "Especialidade"
                     },
                     phone: {
-                        label: "Telefone de Contato"
-                    }
-                },
-                buttons: {
-                    submit: {
-                        label: "Atualizar Dados"
+                        label: "Telefone de Contato",
+                        placeholder: "(XX) X XXXX-XXXX"
                     }
                 }
             }
         },
         [PAGES.ALLERGIES]: {
             header: {
-                title: "Atualizar Alergia"
+                title: "Alergia"
             },
             main: {
                 inputs: {
                     name: {
-                        label: "Nome da Alergia"
-                    }
-                },
-                buttons: {
-                    submit: {
-                        label: "Atualizar Dados"
+                        label: "Nome da Alergia",
+                        placeholder: "Alergia a Penicilina"
                     }
                 }
             }
         },
         [PAGES.HEALTH_PLANS]: {
             header: {
-                title: "Atualizar Plano de Saúde"
+                title: "Plano de Saúde"
             },
             main: {
                 inputs: {
                     name: {
-                        label: "Nome do Plano"
-                    }
-                },
-                buttons: {
-                    submit: {
-                        label: "Atualizar Dados"
+                        label: "Nome do Plano",
+                        ex: "Plano SUS"
                     }
                 }
             }
         },
         [PAGES.EMERGENCY_CONTACTS]: {
             header: {
-                title: "Atualizar Contato de Emergência"
+                title: "Contato de Emergência"
             },
             main: {
                 inputs: {
                     name: {
-                        label: "Nome da Pessoa"
+                        label: "Nome da Pessoa",
+                        placeholder: "Augusto Morais Lemos"
                     },
                     kinship: {
                         label: "Parentesco",
-                        options: {
-                            father: {
-                                placeholder: "Pai"
-                            },
-                            mother: {
-                                placeholder: "Mãe"
-                            },
-                            husband: {
-                                placeholder: "Marido"
-                            },
-                            wife: {
-                                placeholder: "Esposa"
-                            },
-                            son: {
-                                placeholder: "Filho"
-                            },
-                            daughter: {
-                                placeholder: "Filha"
-                            },
-                            uncle: {
-                                placeholder: "Tio"
-                            },
-                            auntie: {
-                                placeholder: "Tia"
-                            },
-                            grandfather: {
-                                placeholder: "Avô"
-                            },
-                            grandmother: {
-                                placeholder: "Avó"
-                            },
-                            cousin: {
-                                placeholder: "Primo(a)"
-                            },
-                            friend: {
-                                placeholder: "Amigo(a)"
-                            },
-                            other: {
-                                placeholder: "Outro"
-                            }
-                        }
                     },
                     phone: {
-                        label: "Telefone de Contato"
+                        label: "Telefone de Contato",
+                        placeholder: "(XX) X XXXX-XXXX"
                     }
                 },
-                buttons: {
-                    submit: {
-                        label: "Atualizar Dados"
+            }
+        },
+        [PAGES.VITAL_SIGNS]: {
+            header: {
+                title: "Sinais Vitais"
+            },
+            main: {
+                inputs: {
+                    record: {
+                        label: "Sinal Vital"
+                    },
+                    value: {
+                        label: "Medição",
+                        placeholder: "ex: (120/80) para pressão arterial..."
+                    },
+                    caregiverName: {
+                        label: "Nome do Cuidador(a)",
+                        placeholder: "ex: Marcio Cunha Pereira"
+                    },
+                    observations: {
+                        label: "Observações",
+                        placeholder: "Observações aqui"
                     }
                 }
             }
@@ -1077,56 +1063,248 @@ export default {
 
     warningMessages: {
         PatientNotFound: {
-            title: "Paciente não encontrado"
+            title: "O paciente selecionado não foi encontrado"
         },
         PatientUpdated: {
-            title: "Dados do paciente atualizados com sucesso"
+            title: "Os dados do paciente foram atualizados com sucesso"
+        },
+
+        SystemDataReset: {
+            title: "Os dados do paciente foram redefinidos com sucesso"
+        },
+        NotificationNotFound: {
+            title: "A Notificação selecionada não foi encontrada"
+        },
+
+        NoVitalSignFound: {
+            title: "Nenhum sinal vital foi encontrado"
+        },
+        NoVitalSignByField: {
+            title: "Nenhum sinal vital foi encontrado com base no campo selecionado"
+        },
+        NoVitalSignByDate: {
+            title: "Nenhum sinal vital foi encontrado com base no intervalo de datas selecionado"
+        },
+        NoVitalSignByFieldAndDate: {
+            title: "Nenhum sinal vital foi encontrado com base no intervalo de datas e no campo selecionado"
+        },
+        VitalSignNotFound: {
+            title: "Sinal vital selecionado não encontrado"
+        },
+        VitalSignCreated: {
+            title: "O sinal vital foi criado com sucesso"
+        },
+        VitalSignUpdated: {
+            title: "Os dados do sinal vital selecionado foram atualizados com sucesso"
+        },
+        VitalSignDeleted: {
+            title: "Sinal vital selecionado foi excluído com sucesso"
+        },
+
+        NoFollowUpFound: {
+            title: "Nenhum acompanhamento foi encontrado"
+        },
+        NoFollowUpByField: {
+            title: "Nenhum acompanhamento foi encontrado com base no campo selecionado"
+        },
+        NoFollowUpByDate: {
+            title: "Nenhum acompanhamento foi encontrado com base no intervalo de datas selecionado"
+        },
+        NoFollowUpByFieldAndDate: {
+            title: "Nenhum acompanhamento foi encontrado com base no intervalo de datas e no campo selecionado"
+        },
+        FollowUpNotFound: {
+            title: "O acompanhamento selecionado não foi encontrado"
+        },
+        FollowUpUpdated: {
+            title: "Os Dados do acompanhamento selecionado foram atualizados com sucesso"
+        },
+        FollowUpDeleted: {
+            title: "O acompanhamento selecionado foi excluído com sucesso"
+        },
+        FollowUpCreated: {
+            title: "O acompanhamento foi criado com sucesso"
+        },
+
+        NoAllergyFound: {
+            title: "Nenhuma alergia foi encontrado"
+        },
+        AllergyNotFound: {
+            title: "A alergia selecionada não foi encontrada"
+        },
+        AllergyUpdated: {
+            title: "Os dados da alergia selecionada foram atualizados com sucesso"
+        },
+        AllergyDeleted: {
+            title: "A alergia selecionada foi excluído com sucesso"
+        },
+        AllergyCreated: {
+            title: "Nova alergia adicionada com sucesso"
+        },
+        AllergyCreationFailed: {
+            title: "Erro ao tentar adicionar uma alergia, tente novamente mais tarde"
+        },
+        AllergyUpdateFailed: {
+            title: "Erro ao tentar atualizar dados de uma alergia, tente novamente mais tarde"
+        },
+        AllergyDeleteFailed: {
+            title: "Erro ao tentar remover uma alergia, tente novamente mais tarde"
+        },
+
+        NoCaregiverFound: {
+            title: "Nenhum cuidador foi encontrado"
+        },
+        CaregiverNotFound: {
+            title: "O cuidador selecionado não foi encontrado"
+        },
+        CaregiverUpdated: {
+            title: "Os ddos do cuidador selecionado foram atualizados com sucesso"
+        },
+        CaregiverDeleted: {
+            title: "O cuidador selecionado foi excluído com sucesso"
+        },
+        CaregiverCreated: {
+            title: "Novo cuidador adicionado com sucesso"
+        },
+        CaregiverCreationFailed: {
+            title: "Erro ao tentar adicionar um cuidador, tente novamente mais tarde"
+        },
+        CaregiverUpdateFailed: {
+            title: "Erro ao tentar atualizar dados de uma cuidador, tente novamente mais tarde"
+        },
+        CaregiverDeleteFailed: {
+            title: "Erro ao tentar remover um cuidador, tente novamente mais tarde"
+        },
+
+        NoDoctorFound: {
+            title: "Nenhum médico foi encontrado"
+        },
+        DoctorNotFound: {
+            title: "O médico selecionado não foi encontrado"
+        },
+        DoctorUpdated: {
+            title: "Os dados do médico selecionado foram atualizados com sucesso"
+        },
+        DoctorDeleted: {
+            title: "O médico selecionado foi excluído com sucesso"
+        },
+        DoctorCreated: {
+            title: "Novo médico adicionado com sucesso"
+        },
+        DoctorCreationFailed: {
+            title: "Erro ao tentar adicionar um médico, tente novamente mais tarde"
+        },
+        DoctorUpdateFailed: {
+            title: "Erro ao tentar atualizar dados de uma médico, tente novamente mais tarde"
+        },
+        DoctorDeleteFailed: {
+            title: "Erro ao tentar remover um médico, tente novamente mais tarde"
+        },
+
+        NoEmergencyContactFound: {
+            title: "Nenhum contato de emergência foi encontrado"
+        },
+        EmergencyContactNotFound: {
+            title: "O contato de emergência selecionado não foi encontrado"
+        },
+        EmergencyContactUpdated: {
+            title: "Os dados do contato de emergência selecionado foram atualizados com sucesso"
+        },
+        EmergencyContactDeleted: {
+            title: "O contato de emergência selecionado foi excluído com sucesso"
+        },
+        EmergencyContactCreated: {
+            title: "Novo contato de emergência adicionado com sucesso"
+        },
+        EmergencyContactCreationFailed: {
+            title: "Erro ao tentar adicionar um contato de emergência, tente novamente mais tarde"
+        },
+        EmergencyContactUpdateFailed: {
+            title: "Erro ao tentar atualizar dados de uma contato de emergência, tente novamente mais tarde"
+        },
+        EmergencyContactDeleteFailed: {
+            title: "Erro ao tentar remover um contato de emergência, tente novamente mais tarde"
+        },
+
+        NoHealthPlanFound: {
+            title: "Nenhum plano de saúde foi encontrado"
+        },
+        HealthPlanNotFound: {
+            title: "O plano de saúde selecionado não foi encontrado"
+        },
+        HealthPlanUpdated: {
+            title: "Os dados do plano de saúde selecionado foram atualizados com sucesso"
+        },
+        HealthPlanDeleted: {
+            title: "O plano de saúde selecionado foi excluído com sucesso"
+        },
+        HealthPlanCreated: {
+            title: "Novo plano de saúde adicionado com sucesso"
+        },
+        HealthPlanCreationFailed: {
+            title: "Erro ao tentar adicionar um plano de saúde, tente novamente mais tarde"
+        },
+        HealthPlanUpdateFailed: {
+            title: "Erro ao tentar atualizar dados de um plano de saúde, tente novamente mais tarde"
+        },
+        HealthPlanDeleteFailed: {
+            title: "Erro ao tentar remover um plano de saúde, tente novamente mais tarde"
+        },
+
+        NoMedicineFound: {
+            title: "Nenhum medicamento foi encontrado"
         },
         MedicineNotFound: {
-            title: "Medicamento não encontrado"
+            title: "O medicamento selecionado não foi encontrado"
         },
         MedicineUpdated: {
-            title: "Dados do medicamento atualizados com sucesso"
+            title: "Os dados do medicamento selecionado foram atualizados com sucesso"
         },
+        MedicineDeleted: {
+            title: "O medicamento selecionado foi excluído com sucesso"
+        },
+        MedicineCreated: {
+            title: "Novo medicamento adicionado com sucesso"
+        },
+        MedicineCreationFailed: {
+            title: "Erro ao tentar adicionar um medicamento, tente novamente mais tarde"
+        },
+        MedicineUpdateFailed: {
+            title: "Erro ao tentar atualizar dados de um medicamento, tente novamente mais tarde"
+        },
+        MedicineDeleteFailed: {
+            title: "Erro ao tentar remover um medicamento, tente novamente mais tarde"
+        },
+
         NoMedicineRegistryFound: {
-          title: "Nenhum registro de medicamento foi encontrado"
-        },
-        MedicineRegistryDeleted: {
-          title: "Registro de medicamento removido com sucesso"
-        },
-        RegistryUpdated: {
-          title: "Registro de medicamento atualizado com sucesso"
+            title:  "Nenhum registro de medicamento foi encontrado"
         },
         MedicineRegistryNotFound: {
-          title: "Registro de medicamento selecionado não encontrado"
+            title: "O registro do medicamento selecionado não foi encontrada"
         },
-        RecordUpdated: {
-            title: "Dados do monitoramento atualizados com sucesso"
+        MedicineRegistryUpdated: {
+            title: "Os dados do registro do medicamento selecionado foram atualizados com sucesso"
         },
-        RecordNotFound: {
-            title: "Monitoramento não encontrado"
+        MedicineRegistryDeleted: {
+            title: "O registro do medicamento selecionado foi excluído com sucesso"
         },
-        NoRecords: {
-            title: "Nenhum item encontrado"
+        MedicineRegistryCreated: {
+            title: "Novo registro de medicamento adicionado com sucesso"
         },
-        NoRecordsByField: {
-            title: "Nenhum item encontrado com base no campo selecionado"
+        MedicineRegistryCreationFailed: {
+            title: "Erro ao tentar adicionar um registro de um medicamento, tente novamente mais tarde"
         },
-        NoRecordsByDate: {
-            title: "Nenhum item encontrado com base nas datas selecionadas"
+        MedicineRegistryUpdateFailed: {
+            title: "Erro ao tentar atualizar dados de um registro de um medicamento, tente novamente mais tarde"
         },
-        NoRecordsByFieldAndDate: {
-            title: "Nenhum item encontrado com base no intervalo de datas e no campo selecionado"
+        MedicineRegistryDeleteFailed: {
+            title: "Erro ao tentar remover um registro de um medicamento, tente novamente mais tarde"
         },
-        NoMonitoring: {
-            title: "Nenhum item encontrado"
-        },
+
         InvalidDateInterval: {
             title: "Intervalo de data inválido. Data mínima deve ser menor que a data máxima"
         },
-        NotificationNotFound: {
-            title: "Notificação selecionado não encontrada"
-        },
+
         ExportFailed: {
             title: "Erro ao tentar exportar dados do paciente"
         },
@@ -1146,29 +1324,21 @@ export default {
             title: "Erro ao receber dados do paciente via QR Code"
         },
         HostNotFound: {
-            title: "Emissor de dados não encontrado. Tente novamente mais tarde"
+            title: "O emissor de dados não foi encontrado. Tente novamente mais tarde"
         },
         OfflineDevice: {
-            title: "Seu dispositivo está não está conectado à uma rede. Tente novamente quando estiver online"
+            title: "O seu dispositivo está não está conectado à uma rede. Tente novamente quando estiver online"
         },
         QRCodeGenFailed: {
             title: "Erro ao gerar o QR Code"
         },
         JSONImportSuccess: {
-            title: "Dados importados com sucesso"
+            title: "Os dados importados com sucesso"
         },
         exportJSONSuccess: {
-            title: "Dados exportados com sucesso"
+            title: "os dados exportados com sucesso"
         },
-        SystemDataReset: {
-            title: "Dados do paciente redefinidos com sucesso"
-        },
-        MedicineDeleted: {
-          title: "Medicamento removido com sucesso"
-        },
-        RecordRemoved: {
-            title: "Registro selecionado foi removido com sucesso"
-        },
+
         generic: {
             title: "Um erro inesperado aconteceu. Tente novamente mais tarde"
         }

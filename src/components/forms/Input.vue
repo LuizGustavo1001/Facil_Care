@@ -27,13 +27,16 @@
 
 <script setup>
   import { computed } from "vue"
+  import { useUtils } from "../../composables/useUtils.js"
 
   // MODEL
   defineOptions({
     inheritAttrs: false
   })
-
-  const model = defineModel({ type: [String, Number], default: "" })
+  const model = defineModel({
+    type: [String, Number],
+    default: ""
+  })
 
   // PROPS
   const props = defineProps({
@@ -46,6 +49,9 @@
     name: String
   })
 
+  // COMPOSABLES
+  const utils = useUtils()
+
   // COMPUTED PROPERTIES
   // Make sure that input ID matches label Id
   const computedId = computed(() => {
@@ -55,18 +61,34 @@
   // V-model interceptor - format input value
   const formattedModel = computed( {
     get(){
-      if(props.inputType === 'date'){ // returns the date
-        return model.value.split('T')[0]
+      const value = model.value ?? ""
+
+      if(props.inputType === "date"){
+        return String(value).split("T")[0]
       }
 
-      return model.value
+      if(props.inputType === "tel"){
+        return utils.formatPhone(value)
+      }
+
+      return value
     },
     set(newValue){
-      if(props.inputType === 'date' && newValue){
-        model.value = `${newValue}T00:00:00.000Z`
-      }else{
+      if(props.inputType === 'date'){ // Store date + time
         model.value = newValue
+            ? `${newValue}T00:00:00.000Z`
+            : ""
+        return
       }
+
+      if(props.inputType === "tel"){ // Store only phone digits
+        model.value = String(newValue ?? "")
+            .replace(/\D/g, "")
+
+        return
+      }
+
+      model.value = newValue
     }
   })
 </script>

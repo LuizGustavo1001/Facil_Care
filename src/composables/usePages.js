@@ -2,6 +2,7 @@ export const PAGES = {
     HOME: "home",
     MONITORING: "monitoring",
     MANAGE: "manage",
+    REGISTER: "register",
 
     VITAL_SIGNS: "vitalSigns",
     FOLLOW_UPS: "followUps",

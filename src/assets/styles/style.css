@@ -10,7 +10,7 @@
     /* -=-=-=- PRIMAL TOKENS -=-=-=- */
     /* Colors */
     --gray-900: #2e3440;
-    --gray-800:#3b4252;
+    --gray-800: #3b4252;
     --gray-700: #434c5e;
     --gray-600: #4c566a;
     --gray-500: #646f85;
@@ -155,13 +155,11 @@
     --font-label-sm: var(--font-size-200);
 
     --font-caption: var(--font-size-100);
-    --font-overline: var(--font-size-100);
 
     --font-button-title: var(--font-size-500);
     --font-button-description: var(--font-size-400);
     --font-input: var(--font-size-400);
 
-    --font-helper: var(--font-size-200);
     --font-error: var(--font-size-300);
 
     @media(min-width: 768px){
@@ -178,13 +176,11 @@
         --font-label-sm: var(--font-size-300);
 
         --font-caption: var(--font-size-200);
-        --font-overline: var(--font-size-100);
 
         --font-button-title: var(--font-size-600);
         --font-button-description: var(--font-size-400);
         --font-input: var(--font-size-500);
 
-        --font-helper: var(--font-size-300);
         --font-error: var(--font-size-400);
     }
 

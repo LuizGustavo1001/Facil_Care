@@ -55,5 +55,20 @@ export function useDate() {
             : `${dateFormatted}`
     }
 
-    return { getAge, getFormatted }
+    /**
+     * Returns today's date formatted by `YYYY-MM-DD`.
+     *
+     * @returns { String } Formatted today's date.
+     **/
+    const getToday = () => {
+        const today = new Date()
+
+        const year = today.getFullYear()
+        const month = String(today.getMonth() + 1).padStart(2, "0")
+        const day = String(today.getDate()).padStart(2, "0")
+
+        return `${year}-${month}-${day}`
+    }
+
+    return { getAge, getFormatted, getToday }
 }

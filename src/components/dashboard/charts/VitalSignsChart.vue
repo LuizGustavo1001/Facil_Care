@@ -22,9 +22,8 @@
   import { charts } from "../../../locales/projectConfig.js"
 
   import { useI18n } from "vue-i18n"
-  import { useUtils } from "../../../composables/useUtils.js"
   import { useDate } from "../../../composables/useDate.js"
-  import {useUnitSystem} from "../../../composables/useUnitSystem.js";
+  import { useUnitSystem } from "../../../composables/useUnitSystem.js"
 
   ChartJS.register(
       LineController,
@@ -39,7 +38,6 @@
 
   // COMPOSABLES
   const { t, locale } = useI18n()
-  const utils = useUtils()
   const date = useDate()
   const unit = useUnitSystem()
 
@@ -59,7 +57,7 @@
   const chartData = ref({ labels: [], datasets: [] })
   const chartKey = ref(0)
 
-  const currentUnit = computed(() => unit.getMeasurementUnit(props.type))
+  const currentUnit = computed(() => unit.getMeasurementUnit(props.type).unit)
 
   const chartOptions = {
     responsive: true,

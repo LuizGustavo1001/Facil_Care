@@ -1,8 +1,12 @@
 <template>
-  <AppPopup class="form-popup" :isOpen="isOpen" :popupRef="popupRef">
+  <AppPopup
+      class="form-popup"
+      :isOpen="isOpen"
+      :popupRef="popupRef"
+  >
     <template #header>
       <h2>
-        {{ t(`formPopupTemplates.${template.id}.header.title`) }}
+        {{ getPopupTitle() }}
       </h2>
     </template>
 
@@ -13,17 +17,22 @@
       >
         <div class="form-inputs flex flex-column gap-05">
           <component
-              v-for="input in template.main.inputs" :key="input.id || input.name"
-              :is="getInputComponent(input.tag)"
-              v-bind="getInputProps(input)"
+              v-for="input in template.main.inputs"
+              :key="input.id || input.name"
+              :is="form.getInputComponent(input.tag)"
+              v-bind="form.getInputProps(input, popupConfig, template.id, inputValue)"
           />
         </div>
 
-        <div class="popup-bts flex flex-column gap-05">
+        <div
+            v-if="popupConfig.showSubmit"
+            class="popup-bts flex flex-column gap-05"
+        >
           <ActionButton
-              v-for="btn in template.main.buttons" :key="btn.id"
-              v-bind="getBtnProps(btn)"
-              :aria-disabled="form.isSubmitting"
+              v-for="btn in getButtons()"
+              :key="btn.id"
+              v-bind="form.getBtnProps(btn, type)"
+              :aria-disabled="form.isSubmitting.value"
           />
         </div>
       </form>
@@ -38,20 +47,20 @@
 </style>
 
 <script setup>
+  import { computed } from "vue"
+
   import { useForm } from "../../../composables/useForm.js"
   import { useI18n } from "vue-i18n"
-  import { useUtils } from "../../../composables/useUtils.js"
+
+  import { FORM_TYPES } from "../../../composables/useForm.js"
+  import { popupTypes } from "../../../locales/projectConfig.js"
 
   import AppPopup from "./AppPopup.vue"
   import ActionButton from "../../buttons/ActionButton.vue"
-  import Input from "../../forms/Input.vue"
-  import TextArea from "../../forms/TextArea.vue"
-  import SelectInput from "../../forms/SelectInput.vue"
 
   // COMPOSABLES
-  const { t, te, locale } = useI18n()
+  const { t, te } = useI18n()
   const form = useForm()
-  const utils = useUtils()
 
   // PROPS
   const props = defineProps({
@@ -70,6 +79,11 @@
     popupRef: {
       type: Object,
       required: true
+    },
+    type: {
+      type: String,
+      default: FORM_TYPES.EDIT,
+      validator: (value) => Object.values(FORM_TYPES).includes(value)
     }
   })
 
@@ -77,111 +91,32 @@
   const emit = defineEmits(["submitForm"])
 
   // FUNCTIONS
-  // Submits the form data to the parent
+  const getPopupTitle = () => {
+    const typeKey = `formPopupTypes.${props.type}.title` // type label
+
+    const templateKey = `formPopupTemplates.${props.template.id}.header.title`
+
+    const type = te(typeKey) ? t(typeKey) : ""
+    const template = te(templateKey) ? t(templateKey) : ""
+
+    return `${type} ${template}`
+  }
+
+  // Returns the form buttons based on the selected template, verifing if there's submit button
+  const getButtons = () => {
+    if(!popupConfig.value.showSubmit) return []
+
+    return props.template.main.buttons ?? []
+  }
+
+  // Returns current popupConfig based on the selected popup type
+  const popupConfig = computed(() => popupTypes[props.type])
+
+  // Emits the form submit
   const handleSubmit = (event) => {
+    if (popupConfig.value.readOnly) return
+
     const data = form.extractData(event)
     emit("submitForm", data)
-  }
-
-  const getToday = () => {
-    const today = new Date()
-
-    const year = today.getFullYear()
-    const month = String(today.getMonth() + 1).padStart(2, "0")
-    const day = String(today.getDate()).padStart(2, "0")
-
-    return `${year}-${month}-${day}`
-  }
-
-  // Returns the component associated with an input tag
-  const getInputComponent = (tag) => {
-    switch (tag) {
-      case "input":
-        return Input
-
-      case "textarea":
-        return TextArea
-
-      case "select":
-        return SelectInput
-
-      default:
-          return null
-    }
-  }
-
-  // Returns the props required by an input component
-  const getInputProps = (input) => {
-    const labelKey = `formPopupTemplates.${props.template.id}.main.inputs.${input.id}.label`
-
-    const currentValue = props.inputValue ? props.inputValue[input.name] : null
-
-    switch(input.tag){
-      case "input":
-        return {
-          label: te(labelKey) ? t(labelKey) : "",
-          for: input.for,
-          name: input.name,
-          inputType: input.inputType,
-          autoCapitalize: input.autoCapitalize ?? null,
-          autofocus: true,
-          step: input.step ?? null,
-          min: input.min ?? null,
-          max: input.inputType === "date"
-              ? (input.max ?? getToday())
-              : (input.max ?? null),
-          modelValue: currentValue,
-          translate: "no"
-        }
-
-      case "select":
-        return {
-          label: te(labelKey) ? t(labelKey) : "",
-          for: input.for,
-          name: input.name,
-          options: getSelectOptions(input),
-          modelValue: currentValue,
-          translate: "no"
-        }
-
-      case "textarea":
-        return {
-          label: te(labelKey) ? t(labelKey) : "",
-          for: input.for,
-          name: input.name,
-          modelValue: currentValue,
-          translate: "no"
-        }
-
-      default:
-        return {}
-    }
-  }
-
-  // Returns options based in translate data
-  const getSelectOptions = (input) => {
-    let fd = []
-
-    for(const option of input.options){
-      fd.push({
-        placeholder: utils.getOptionTranslate(t(`${input.id}.${option.id}`)),
-        value: option.value
-      })
-    }
-
-    return fd
-  }
-
-  // Form button props
-  const getBtnProps = (btn) => {
-    const key = `formPopupTemplates.${props.template.id}.main.buttons.${btn.id}.label`
-
-    return {
-      title: te(key) ? t(key) : "",
-      padding: "md",
-      alignCenter: true,
-      tag: btn.tag ?? "button",
-      type: btn.type ?? "submit"
-    }
   }
 </script>

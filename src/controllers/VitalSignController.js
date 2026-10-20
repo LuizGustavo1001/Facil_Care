@@ -1,8 +1,8 @@
 import PatientRecordController from "./PatientRecordController.js"
 import VitalSign from "../models/VitalSign.js"
 
-export default class VitalSignsController extends PatientRecordController {
+export default class VitalSignController extends PatientRecordController {
     constructor() {
-        super(VitalSign)
+        super(VitalSign, "VitalSign")
     }
 }

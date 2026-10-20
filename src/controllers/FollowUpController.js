@@ -1,8 +1,8 @@
 import PatientRecordController from "./PatientRecordController.js"
 import FollowUp from "../models/FollowUp.js"
 
-export default class FollowUpsController extends PatientRecordController {
+export default class FollowUpController extends PatientRecordController {
     constructor() {
-        super(FollowUp)
+        super(FollowUp, "FollowUp")
     }
 }

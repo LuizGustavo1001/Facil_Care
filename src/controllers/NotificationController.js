@@ -1,7 +1,7 @@
 import Notification from "../models/Notification.js"
 import db from "../database/db.js"
 
-export default class NotificationsController {
+export default class NotificationController {
     constructor() {
         this.model = new Notification(db)
     }
@@ -39,7 +39,7 @@ export default class NotificationsController {
     /**
      * Marks a notification as **read**.
      *
-     * @param { string } id - Notification `_id`
+     * @param { number } id - Notification `_id`
      **/
     async markAsRead(id){
         try{

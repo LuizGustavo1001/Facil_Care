@@ -123,7 +123,7 @@
   import { computed, onMounted, ref } from "vue"
   import { useI18n } from "vue-i18n"
 
-  import NotificationsController from "../../controllers/NotificationsController.js"
+  import NotificationController from "../../controllers/NotificationController.js"
   import NotFoundCard from "../feedback/NotFoundCard.vue"
 
   // COMPOSABLES
@@ -138,7 +138,7 @@
   })
 
   // CONTROLLERS
-  const notificationController = new NotificationsController()
+  const notificationController = new NotificationController()
   const notifications = ref([])
 
   // COMPUTED PROPERTIES

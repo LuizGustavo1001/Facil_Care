@@ -2,11 +2,13 @@ import { PAGES } from "../composables/usePages.js"
 import { THEME_PREFERENCES as THEMES } from "../composables/useTheme.js"
 import { LANGUAGES } from "../composables/useLanguage.js"
 import { UNITS } from "../composables/useUnitSystem.js"
+import { FORM_TYPES } from "../composables/useForm.js"
 
 export default {
     pageTitle: {
         [PAGES.VITAL_SIGNS]: "Vital Signs",
         [PAGES.FOLLOW_UPS]: "Physiological and Behavioral Monitoring",
+        [PAGES.REGISTER]: "Register",
 
         [PAGES.EMERGENCY_DATA]: "Emergency Data",
 
@@ -15,8 +17,8 @@ export default {
         [PAGES.ALLERGIES]: "Allergies",
         [PAGES.DOCTORS]: "Doctors",
         [PAGES.CAREGIVERS]: "Caregivers",
-        [PAGES.HEALTH_PLANS]: "Planos de Saúde",
-        [PAGES.EMERGENCY_CONTACTS]: "Contatos de Emergência",
+        [PAGES.HEALTH_PLANS]: "Health Plans",
+        [PAGES.EMERGENCY_CONTACTS]: "Emergency Contacts",
 
         [PAGES.IMPORT]: "Import Data",
         [PAGES.EXPORT]: "Export Data",
@@ -66,6 +68,7 @@ export default {
         deleteAccount: "Erase Data",
         homePage: "Back to home page",
         years: "years",
+        selectOption: "Select an option",
         themes: {
             [THEMES.LIGHT]: {
                 label: "Light Mode"
@@ -139,6 +142,7 @@ export default {
             grandmother: "Grandmother",
             grandfather: "Grandfather",
             husband: "Husband",
+            cousin: "Cousin",
             wife: "Wife",
             friend: "Friend",
             other: "Other",
@@ -193,8 +197,40 @@ export default {
                     description: "Manage patient's health plans"
                 },
                 [PAGES.EMERGENCY_CONTACTS]: {
-                    title: "Contatos de Emergência",
+                    title: "Emergency Contacts",
                     description: "Manage patient's emergency contacts"
+                }
+            }
+        },
+
+        [PAGES.REGISTER]: {
+            categories: {
+                [PAGES.MEDICINE_REGISTRIES]: {
+                    title: "Medicine Administration"
+                },
+                [PAGES.MEDICINES]: {
+                    title: "Medicine"
+                },
+                [PAGES.VITAL_SIGNS]: {
+                    title: "Vital Sign"
+                },
+                [PAGES.FOLLOW_UPS]: {
+                    title: "Physiological and Behavioral Monitoring"
+                },
+                [PAGES.ALLERGIES]: {
+                    title: "Allergy"
+                },
+                [PAGES.DOCTORS]: {
+                    title: "Doctor"
+                },
+                [PAGES.CAREGIVERS]: {
+                    title: "Caregiver"
+                },
+                [PAGES.HEALTH_PLANS]: {
+                    title: "Health Plan"
+                },
+                [PAGES.EMERGENCY_CONTACTS]: {
+                    title: "Emergency Contact"
                 }
             }
         },
@@ -777,126 +813,112 @@ export default {
 
     },
 
+    formPopupTypes: {
+        [FORM_TYPES.CREATE]: {
+            title: "Create"
+        },
+        [FORM_TYPES.EDIT]: {
+            title: "Update"
+        }
+    },
+
     formPopupTemplates: {
         name: {
             header: {
-                title: "Update Patient's Name"
+                title: "Patient's Name"
             },
             main: {
                 inputs: {
                     usr_1: {
-                        label: "Patient's Name"
-                    }
-                },
-                buttons: {
-                    submit: {
-                        label: "Update Data"
+                        label: "Patient's Name",
+                        placeholder: "ex: Joshua Canny"
                     }
                 }
             }
         },
         birthDate: {
             header: {
-                title: "Update Birth Date"
+                title: "Birth Date"
             },
             main: {
                 inputs: {
                     bday: {
                         label: "Birth Date"
                     }
-                },
-                buttons: {
-                    submit: {
-                        label: "Update Data"
-                    }
                 }
             }
         },
         bloodType: {
             header: {
-                title: "Update Blood Type",
+                title: "Blood Type",
             },
             main: {
                 inputs: {
                     bloodType: {
                         label: "Blood Type"
                     }
-                },
-                buttons: {
-                    submit: {
-                        label: "Update Data"
-                    }
                 }
             }
         },
         weight: {
             header: {
-                title: "Update Patient's Weight"
+                title: "Patient Weight"
             },
             main: {
                 inputs: {
                     weight: {
-                        label: "Patient's Weight"
-                    }
-                },
-                buttons: {
-                    submit: {
-                        label: "Update Data"
+                        label: "Patient's Weight",
+                        placeholder: "Patient weight here"
                     }
                 }
             }
         },
         address: {
             header: {
-                title: "Update Patient's Address"
+                title: "Patient Address"
             },
             main: {
                 inputs: {
                     address: {
-                        label: "Address"
-                    }
-                },
-                buttons: {
-                    submit: {
-                        label: "Update Data"
+                        label: "Address",
+                        placeholder: "969 Cox Rd - Gastonia, NC"
                     }
                 }
             }
         },
         [PAGES.MEDICINES]: {
             header: {
-                title: "Update Medicine's Data"
+                title: "Medicine Data"
             },
             main: {
                 inputs: {
                     name: {
-                        label: "Medicine's Name"
+                        label: "Medicine's Name",
+                        placeholder: "Tylenol - 500mg"
                     },
                     routeAdmin: {
                         label: "Administration Route"
                     },
                     dosage: {
-                        label: "Dosage"
+                        label: "Dosage",
+                        placeholder: "ex: 1 pill per day"
                     },
                     observations: {
-                        label: "Observations"
-                    }
-                },
-                buttons: {
-                    submit: {
-                        label: "Update Data"
+                        label: "Observations",
+                        placeholder: "Observations here"
                     }
                 }
             }
         },
         [PAGES.MEDICINE_REGISTRIES]: {
             header: {
-                title: "Update Medicine Registry"
+                title: "Medicine Registry"
             },
             main: {
                 inputs: {
                     medicationName: {
-                        label: "Medication Name"
+                        label: "Medication Name",
+                        placeholder: "Tylenol - 500mg"
                     },
                     medicationDosage: {
                         label: "Medication Dosage"
@@ -905,156 +927,118 @@ export default {
                         label: "Caregiver Name"
                     },
                     observations: {
-                        label: "Observations"
-                    }
-                },
-                buttons: {
-                    submit: {
-                        label: "Atualizar Dados"
+                        label: "Observations",
+                        placeholder: "Observations here"
                     }
                 }
             }
         },
         [PAGES.CAREGIVERS]: {
             header: {
-                title: "Update Caregiver's Data"
+                title: "Caregiver Data"
             },
             main: {
                 inputs: {
                     name: {
-                        label: "Caregiver's Name"
+                        label: "Caregiver's Name",
+                        placeholder: "ex: Jane Doe"
                     },
                     startDate: {
                         label: "Care Start Date"
                     },
                     phone: {
-                        label: "Contact Number"
-                    }
-                },
-                buttons: {
-                    submit: {
-                        label: "Update Data"
+                        label: "Contact Number",
+                        placeholder: "(XXX) XXX-XXXX"
                     }
                 }
             }
         },
         [PAGES.DOCTORS]: {
             header: {
-                title: "Update Doctor's Data"
+                title: "Doctor Data"
             },
             main: {
                 inputs: {
                     name: {
-                        label: "Doctor's Name"
+                        label: "Doctor's Name",
+                        placeholder: "ex: Robert Johnson"
                     },
                     speciality: {
                         label: "Speciality"
                     },
                     phone: {
-                        label: "Contact Number"
-                    }
-                },
-                buttons: {
-                    submit: {
-                        label: "Update Data"
+                        label: "Contact Number",
+                        placeholder: "(XXX) XXX-XXXX"
                     }
                 }
             }
         },
         [PAGES.ALLERGIES]: {
             header: {
-                title: "Update Allergy's Data"
+                title: "Allergy Data"
             },
             main: {
                 inputs: {
                     name: {
-                        label: "Allergy's Name"
-                    }
-                },
-                buttons: {
-                    submit: {
-                        label: "Update Data"
+                        label: "Allergy's Name",
+                        placeholder: "ex: Penicillin allergy"
                     }
                 }
             }
         },
         [PAGES.HEALTH_PLANS]: {
             header: {
-                title: "Update Health Plan's Data"
+                title: "Health Plan Data"
             },
             main: {
                 inputs: {
                     name: {
-                        label: "Plan's Name"
-                    }
-                },
-                buttons: {
-                    submit: {
-                        label: "Update Data"
+                        label: "Plan's Name",
+                        ex: "SUS plan"
                     }
                 }
             }
         },
         [PAGES.EMERGENCY_CONTACTS]: {
             header: {
-                title: "Update Emergency Contact's Data"
+                title: "Emergency Contact Data"
             },
             main: {
                 inputs: {
                     name: {
-                        label: "Contact's Name"
+                        label: "Contact's Name",
+                        placeholder: "ex: William Larkin"
                     },
                     kinship: {
                         label: "Kinship",
-                        options: {
-                            father: {
-                                placeholder: "Father"
-                            },
-                            mother: {
-                                placeholder: "Mother"
-                            },
-                            husband: {
-                                placeholder: "Husband"
-                            },
-                            wife: {
-                                placeholder: "Wife"
-                            },
-                            son: {
-                                placeholder: "Son"
-                            },
-                            daughter: {
-                                placeholder: "Daughter"
-                            },
-                            uncle: {
-                                placeholder: "Uncle"
-                            },
-                            auntie: {
-                                placeholder: "Auntie"
-                            },
-                            grandfather: {
-                                placeholder: "Grandfather"
-                            },
-                            grandmother: {
-                                placeholder: "Grandmother"
-                            },
-                            cousin: {
-                                placeholder: "Cousin"
-                            },
-                            friend: {
-                                placeholder: "Friend"
-                            },
-                            other: {
-                                placeholder: "Other"
-                            }
-                        }
                     },
                     phone: {
-                        label: "Contact Number"
+                        label: "Contact Number",
+                        placeholder: "(XXX) XXX-XXXX"
                     }
-                },
-                buttons: {
-                    submit: {
-                        label: "Update Data"
+                }
+            }
+        },
+        [PAGES.VITAL_SIGNS]: {
+            header: {
+                title: "Vital Sign"
+            },
+            main: {
+                inputs: {
+                    record: {
+                        label: "Vital Sign"
+                    },
+                    value: {
+                        label: "Measurement",
+                        placeholder: "ex: (120/80) for blood pressure..."
+                    },
+                    caregiverName: {
+                        label: "Caregiver's Name",
+                        placeholder: "ex: Jane Doe"
+                    },
+                    observations: {
+                        label: "Observations",
+                        placeholder: "Observations here"
                     }
                 }
             }
@@ -1077,51 +1061,243 @@ export default {
         PatientUpdated: {
             title: "Patient's data updated with success"
         },
+
+        SystemDataReset: {
+            title: "The patient data was reset successfully"
+        },
+        NotificationNotFound: {
+            title: "The selected notification was not found"
+        },
+
+        NoVitalSignFound: {
+            title: "No vital sign was found"
+        },
+        NoVitalSignByField: {
+            title: "No vital sign was found based on the selected field"
+        },
+        NoVitalSignByDate: {
+            title: "No vital sign was found based on the selected date interval"
+        },
+        NoVitalSignByFieldAndDate: {
+            title: "No vital sign was found based on the selected date interval, and the field"
+        },
+        VitalSignNotFound: {
+            title: "The selected vital sign not found"
+        },
+        VitalSignUpdated: {
+            title: "The selected vital sign was updated successfully"
+        },
+        VitalSignDeleted: {
+            title: "The selected vital sing was deleted successfully"
+        },
+        VitalSignCreated: {
+            title:  "The vital sign was added successfully"
+        },
+
+        NoFollowUpFound: {
+            title: "No follow up was found"
+        },
+        NoFollowUpByField: {
+            title: "No follow up was found based on the selected field"
+        },
+        NoFollowUpByDate: {
+            title: "No follow up was found based on the selected date interval"
+        },
+        NoFollowUpByFieldAndDate: {
+            title: "No follow up was found based on the selected date interval, and the field"
+        },
+        FollowUpNotFound: {
+            title: "The selected follow up was not found"
+        },
+        FollowUpUpdated: {
+            title: "The selected follow up was updated successfully"
+        },
+        FollowUpDeleted: {
+            title: "The selected follow up was deleted successfully"
+        },
+        FollowUpCreated: {
+            title:  "The allergy was added successfully"
+        },
+
+        NoAllergyFound: {
+            title: "No allergy was found"
+        },
+        AllergyNotFound: {
+            title: "The selected allergy was not found"
+        },
+        AllergyUpdated: {
+            title: "The selected allergy was updated successfully"
+        },
+        AllergyDeleted: {
+            title: "The selected allergy was deleted successfully"
+        },
+        AllergyCreated: {
+            title:  "The allergy was added successfully"
+        },
+        AllergyCreationFailed: {
+            title: "Error trying to add new allergy, try again later"
+        },
+        AllergyUpdateFailed: {
+            title: "Error trying to update allergy data, try again later"
+        },
+        AllergyDeleteFailed: {
+            title: "Error trying to remove allergy, try again later"
+        },
+
+        NoCaregiverFound: {
+            title:  "No caregiver was found"
+        },
+        CaregiverNotFound: {
+            title: "The selected caregiver was not found"
+        },
+        CaregiverUpdated: {
+            title:  "The selected caregiver was updated successfully"
+        },
+        CaregiverDeleted: {
+            title: "The selected caregiver was deleted successfully"
+        },
+        CaregiverCreated: {
+            title: "The caregiver was added successfully"
+        },
+        CaregiverCreationFailed: {
+            title: "Error trying to add new caregiver, try again later"
+        },
+        CaregiverUpdateFailed: {
+            title: "Error trying to update caregiver data, try again later"
+        },
+        CaregiverDeleteFailed: {
+            title: "Error trying to remove caregiver, try again later"
+        },
+
+        NoDoctorFound: {
+            title:  "No doctor was found"
+        },
+        DoctorNotFound: {
+            title: "The selected doctor was not found"
+        },
+        DoctorUpdated: {
+            title: "The selected doctor was updated successfully"
+        },
+        DoctorDeleted: {
+            title: "The selected doctor was deleted successfully"
+        },
+        DoctorCreated: {
+            title: "The doctor was added successfully"
+        },
+        DoctorCreationFailed: {
+            title: "Error trying to add new doctor, try again later"
+        },
+        DoctorUpdateFailed: {
+            title: "Error trying to update doctor data, try again later"
+        },
+        DoctorDeleteFailed: {
+            title: "Error trying to remove doctor, try again later"
+        },
+
+        NoEmergencyContactFound: {
+            title:  "No emergency contact was found"
+        },
+        EmergencyContactNotFound: {
+            title: "The selected emergency contact was not found"
+        },
+        EmergencyContactUpdated: {
+            title: "The selected emergency contact was updated successfully"
+        },
+        EmergencyContactDeleted: {
+            title: "The selected emergency contact was deleted successfully"
+        },
+        EmergencyContactCreated: {
+            title: "The emergency contact was added successfully"
+        },
+        EmergencyContactCreationFailed: {
+            title: "Error trying to add new emergency contact, try again later"
+        },
+        EmergencyContactUpdateFailed: {
+            title: "Error trying to update emergency contact data, try again later"
+        },
+        EmergencyContactDeleteFailed: {
+            title: "Error trying to remove emergency contact, try again later"
+        },
+
+        NoHealthPlanFound: {
+            title:  "No health plan was found"
+        },
+        HealthPlanNotFound: {
+            title: "The selected health plan contact was not found"
+        },
+        HealthPlanUpdated: {
+            title: "The selected health plan was updated successfully"
+        },
+        HealthPlanDeleted: {
+            title: "The selected health plan was deleted successfully"
+        },
+        HealthPlanCreated: {
+            title: "The health plan was added successfully"
+        },
+        HealthPlanCreationFailed: {
+            title: "Error trying to add new health plan, try again later"
+        },
+        HealthPlanUpdateFailed: {
+            title: "Error trying to update health plan data, try again later"
+        },
+        HealthPlanDeleteFailed: {
+            title: "Error trying to remove health plan, try again later"
+        },
+
+        NoMedicineFound: {
+            title: "No medicine was found"
+        },
         MedicineNotFound: {
-            title: "Medicine not found"
+            title: "The selected medicine was not found"
         },
         MedicineUpdated: {
-            title: "Medicine's data updated with success"
+            title: "The selected medicine was updated successfully"
         },
+        MedicineDeleted: {
+            title: "The selected medicine was deleted successfully"
+        },
+        MedicineCreated: {
+            title: "The medicine was added successfully"
+        },
+        MedicineCreationFailed: {
+            title: "Error trying to add new medicine, try again later"
+        },
+        MedicineUpdateFailed: {
+            title: "Error trying to update medicine data, try again later"
+        },
+        MedicineDeleteFailed: {
+            title: "Error trying to remove medicine, try again later"
+        },
+
         NoMedicineRegistryFound: {
             title: "No medicine registries found"
-        },
-        MedicineRegistryDeleted: {
-            title: "Medicine registry removed with success"
-        },
-        RegistryUpdated: {
-            title: "Medicine registry updated with success"
         },
         MedicineRegistryNotFound: {
             title: "Selected medicine registry not found"
         },
-        RecordUpdated: {
-            title: "Monitoring's data updated with success"
+        MedicineRegistryUpdated: {
+            title: "The selected medicine registry was updated successfully"
         },
-        RecordNotFound: {
-            title: "Record not found"
+        MedicineRegistryDeleted: {
+            title: "The selected medicine registry was deleted successfully"
         },
-        NoRecords: {
-            title: "No data founded"
+        MedicineRegistryCreated: {
+            title: "The medicine registry was added successfully"
         },
-        NoRecordsByField: {
-            title: "No data founded with selected field"
+        MedicineRegistryCreationFailed: {
+            title: "Error trying to add new medicine registry, try again later"
         },
-        NoRecordsByDate: {
-            title: "No data founded with selected dates"
+        MedicineRegistryUpdateFailed: {
+            title: "Error trying to update medicine registry data, try again later"
         },
-        NoRecordsByFieldAndDate: {
-            title: "No data founded with selected field and date interval"
+        MedicineRegistryDeleteFailed: {
+            title: "Error trying to remove medicine registry, try again later"
         },
-        NoMonitoring: {
-            title: "No monitoring founded"
-        },
+
         InvalidDateInterval: {
             title: "Invalid date interval. Minimum date needs to be lower than maximum date"
         },
-        NotificationNotFound: {
-            title: "Selected notification not found"
-        },
+
         ExportFailed: {
             title: "Error trying to export patient data"
         },
@@ -1155,15 +1331,7 @@ export default {
         exportJSONSuccess: {
             title: "Data exported with success"
         },
-        SystemDataReset: {
-            title: "Patient data successfully reset"
-        },
-        MedicineDeleted: {
-            title: "Medicine has been removed with success"
-        },
-        RecordRemoved: {
-            title: "Selected registry has been removed with success"
-        },
+
         generic: {
             title: "An unexpected error occurred. Try again later"
         }

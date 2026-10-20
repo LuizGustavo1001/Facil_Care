@@ -34,7 +34,6 @@
         </ul>
       </section>
     </main>
-
     <AppFooter page="preferences" />
   </div>
 </template>
@@ -101,7 +100,7 @@
   const getInputProps = (section, item) => {
     return {
       label: t(`views.preferences.sections.${section.id}.items.${item.id}.title`),
-      name: item.name
+      name: item.name,
     }
   }
 

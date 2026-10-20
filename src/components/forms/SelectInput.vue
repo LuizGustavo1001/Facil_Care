@@ -15,7 +15,7 @@
         v-bind="$attrs"
         class="cursor-pointer default-input-attr active-border"
     >
-      <option value="" disabled hidden>Selecione uma opção...</option>
+      <option value="" disabled hidden>{{t(`utils.selectOption`)}}...</option>
 
       <slot>
         <!-- Fallback: render via Prop if slot not specified -->
@@ -41,6 +41,9 @@
 
 <script setup>
   import { computed } from "vue"
+  import { useI18n } from "vue-i18n"
+
+  const { t } = useI18n()
 
   // MODEL
   defineOptions({

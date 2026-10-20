@@ -1,4 +1,5 @@
 import { useI18n } from "vue-i18n"
+import { AsYouType } from "libphonenumber-js"
 
 export function useUtils() {
     const { t, te } = useI18n()
@@ -23,9 +24,27 @@ export function useUtils() {
         return te(`pageTitle.${page}`)
     }
 
+    /**
+     * Returns select input options label translated to the current language
+     *
+     * @param { String } translationKey - i18n translate key
+     *
+     * @return { String }
+     **/
     const getOptionTranslate = (translationKey) => {
         return te(`options.${translationKey}`) ? t(`options.${translationKey}`) : ""
     }
 
-    return { getPageTitle, pageExists, getOptionTranslate }
+    // Format Brazilian phone numbers
+    function formatPhone(value){
+        const digits = String(value ?? "")
+            .replace(/\D/g, "")
+            .slice(0, 11)
+
+        if(!digits) return ""
+
+        return new AsYouType("BR").input(digits)
+    }
+
+    return { getPageTitle, pageExists, getOptionTranslate, formatPhone }
 }

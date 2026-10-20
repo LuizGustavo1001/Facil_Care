@@ -76,7 +76,7 @@
 import { computed, onMounted, ref } from "vue"
 import { icons } from "../assets/icons/icons.js"
 
-import { emergencyDataView , formPopupTemplates } from "../locales/projectConfig.js"
+import { emergencyDataView , formTemplates } from "../locales/projectConfig.js"
 import { PAGES } from "../composables/usePages.js"
 
 import { useI18n } from "vue-i18n"
@@ -98,8 +98,11 @@ import FormPopup from "../components/layout/popup/FormPopup.vue"
 import Icon from "../components/icons/Icon.vue"
 
 import PatientController from "../controllers/PatientController.js"
-import MedicinesController from "../controllers/MedicinesController.js"
-
+import MedicineController from "../controllers/MedicineController.js"
+import EmergencyContactController from "../controllers/EmergencyContactController.js";
+import AllergyController from "../controllers/AllergyController.js";
+import HealthPlanController from "../controllers/HealthPlanController.js";
+import DoctorController from "../controllers/DoctorController.js";
 
 // COMPOSABLES
 const { t, te } = useI18n()
@@ -120,13 +123,25 @@ const formValues = computed(() => formPopup.values.value)
 
 // CONTROLLERS
 const patientController = new PatientController()
-const medicineController = new MedicinesController()
-const patient = ref({})
+const medicineController = new MedicineController()
+const emergencyContactController = new EmergencyContactController()
+const allergyController = new AllergyController()
+const healthPlanController = new HealthPlanController()
+const doctorController = new DoctorController()
+
+const patient = ref(null)
+const caregivers = ref([])
+const healthPlans = ref([])
+const doctors = ref([])
+const allergies = ref([])
+const emergencyContacts = ref([])
 const medicines = ref([])
 
 // FUNCTIONS
 // Dynamic map of emergency data sections, based at database and translate data (i18n)
 const dynamicSections = computed(() => {
+  if(!patient.value) return []
+
   return emergencyDataView.sections.map((section) => {
     let dbButtons = [] // Stores all buttons from section
 
@@ -135,7 +150,6 @@ const dynamicSections = computed(() => {
     switch(section.id){
       case "patient":
         dbButtons = (section.buttons).map((button) => {
-
           let dbValue = patient.value[button.id]
 
           if(button.id === 'birthDate'){
@@ -155,60 +169,50 @@ const dynamicSections = computed(() => {
         })
         break
 
-      case "emergencyContacts":
-        if(Array.isArray(patient.value.emergencyContacts)){
-          dbButtons = patient.value.emergencyContacts.map((contact) => ({
-            id: contact.id,
-            title: contact.name,
-            subtitle: `${utils.getOptionTranslate(`kinship.${contact.kinship}`)} • ${contact.phone || ''}`
-          }))
-        }
-
-        dbButtons = [...dbButtons, ...(section.buttons)]
+      case PAGES.EMERGENCY_CONTACTS:
+          dbButtons = [
+            ...emergencyContacts.value.map((contact) => ({
+              id: contact._id,
+              title: contact.name,
+              subtitle: `${utils.getOptionTranslate(`kinship.${contact.kinship}`)} • ${contact.phone || ""}`
+            })),
+            ...section.buttons
+          ]
         break
 
-      case "allergies":
-        if(Array.isArray(patient.value.allergies)){
-          dbButtons = patient.value.allergies.map((allergy) => ({
-            id: allergy.id,
+      case PAGES.ALLERGIES:
+        dbButtons = [
+          ...allergies.value.map((allergy) => ({
+            id: allergy._id,
             title: allergy.name
-          }))
-        }
-
-        dbButtons = [...dbButtons, ...(section.buttons)]
+          })),
+          ...section.buttons
+        ]
         break
 
-      case "healthPlans":
-        if(Array.isArray(patient.value.healthPlans)){
-          dbButtons = patient.value.healthPlans.map((plan) => ({
-            id: plan.id,
+      case PAGES.HEALTH_PLANS:
+        dbButtons = [
+          ...healthPlans.value.map((plan) => ({
+            id: plan._id,
             title: plan.name
-          }))
-        }
-
-        dbButtons = [...dbButtons, ...(section.buttons)]
+          })),
+          ...section.buttons
+        ]
         break
 
       case "others": {
-        const doctorsCount = Array.isArray(patient.value.doctors)
-            ? patient.value.doctors.length
-            : 0
-        const medicineCount = Array.isArray(medicines.value)
-            ? medicines.value.length
-            : 0
-
-        dbButtons = (section.buttons).map((button) => {
+        dbButtons = section.buttons.map((button) => {
           let count = 0
 
-          if(button.id === "doctors"){
-            count = doctorsCount
-          }else if(button.id === "medicines"){
-            count = medicineCount
+          if (button.id === "doctors") {
+            count = doctors.value.length
+          } else if (button.id === "medicines") {
+            count = medicines.value.length
           }
 
           return {
             ...button,
-            subtitle: `${count}`
+            subtitle: String(count)
           }
         })
         break
@@ -236,7 +240,7 @@ const handleButtonAction = (section, button, event) => {
   formPopup.triggerRef.value = event.currentTarget
 
   if(section.action === "popup") {
-    const popupTemplate = formPopupTemplates.find(item => item.id === button.id) ?? null
+    const popupTemplate = formTemplates.find(item => item.id === button.id) ?? null
 
     let currentInputValues = null
     if(section.id === "patient") {
@@ -363,39 +367,53 @@ const handleSubmit = async (formData) => {
   const context = formPopup.context.value
   if(!context) return
 
-  let result = null
-
   const cleanData = JSON.parse(JSON.stringify(formData))
 
+  let result = null
   if(context.sectionId === "patient"){
-    result = await form.executeDBSubmit(() => patientController.updatePatientRoot(cleanData))
+    result = await form.executeDBSubmit(() => patientController.update(cleanData))
   }
+
+  if(!result) return
 
   if(result && result.success){
     patient.value = result.data
     formPopup.close()
     snackbar.open(result.code)
-  }else if(result){
-    snackbar.open(result.code)
   }
+
+  snackbar.open(result.code)
 }
 
-onMounted(async() => {
-  const patientData = await patientController.getPatient()
-  const medicineData = await medicineController.getAll()
+onMounted(async () => {
+  const results = await Promise.all([
+      patientController.getPatient(),
+      medicineController.getAll(),
+      allergyController.getAll(),
+      healthPlanController.getAll(),
+      doctorController.getAll(),
+      emergencyContactController.getAll(),
+  ])
 
-  // Update frontend patient data
+  const [
+      patientData,
+      medicineData,
+      allergyData,
+      healthPlanData,
+      doctorData,
+      emergencyContactData
+  ] = results
+
   if(patientData.success){
     patient.value = patientData.data
-  }else if(!patientData.success){
+  }else{
     snackbar.open(patientData.code)
   }
 
-  // Update frontend medicines data
-  if(medicineData.success){
-    medicines.value = medicineData.data
-  }else if(!medicineData.success){
-    snackbar.open(medicineData.code)
-  }
+  if (medicineData.success) medicines.value = medicineData.data
+  if (allergyData.success) allergies.value = allergyData.data
+  if (healthPlanData.success) healthPlans.value = healthPlanData.data
+  if (doctorData.success) doctors.value = doctorData.data
+  if (emergencyContactData.success) emergencyContacts.value = emergencyContactData.data
 })
 </script>

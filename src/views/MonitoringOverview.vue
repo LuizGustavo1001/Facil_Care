@@ -149,8 +149,8 @@
   import AppOverlay from "../components/layout/AppOverlay.vue"
   import VitalSignsChart from "../components/dashboard/charts/VitalSignsChart.vue"
 
-  import VitalSignsController from "../controllers/VitalSignsController.js"
-  import FollowUpsController from "../controllers/FollowUpsController.js"
+  import VitalSignController from "../controllers/VitalSignController.js"
+  import FollowUpController from "../controllers/FollowUpController.js"
 
   // COMPOSABLES
   const { t } = useI18n()
@@ -226,9 +226,9 @@
     let result = null
 
     if(currentCategory.value === "vitalSigns"){
-      result = await vitalSignsController.removeRecordById(item.id, currentType.value)
+      result = await vitalSignsController.delete(item.id, currentType.value)
     }else if(currentCategory.value === "followUps"){
-      result = await followUpsController.removeRecordById(item.id, currentType.value)
+      result = await followUpsController.delete(item.id, currentType.value)
     }
 
     if(result && result.success){
@@ -258,19 +258,20 @@
 
       formattedData.value.push({
         id: item._id,
-        value: `${parsedValue.value}${parsedValue.unit ? ` ${parsedValue.unit}` : ''} `.trim(),
+        value: `${parsedValue.value} ${parsedValue.unit ? ` ${parsedValue.unit}` : ''} `.trim(),
         description: [
           subTitleParts.join(' • '),
           item.observation || null
         ],
-        type: item.record
+        type: item.record,
+        originalRecord: {...item}
       })
     }
   }
 
   // CONTROLLERS
-  const vitalSignsController = new VitalSignsController()
-  const followUpsController = new FollowUpsController()
+  const vitalSignsController = new VitalSignController()
+  const followUpsController = new FollowUpController()
 
   const monitoringData = ref([])
   const formattedData = ref([])

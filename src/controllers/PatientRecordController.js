@@ -1,12 +1,13 @@
 import db from "../database/db.js"
 
 export default class PatientRecordController {
-    constructor(Model) {
+    constructor(Model, codeLabel) {
         if(!Model){
             throw new Error("Model class must be provided to PatientRecordController")
         }
 
         this.model = new Model(db)
+        this.codeLabel = codeLabel
     }
 
     /**
@@ -19,7 +20,7 @@ export default class PatientRecordController {
             if(records.length <= 0){
                 return {
                     success: false,
-                    code: "NoRecords",
+                    code: `No${this.codeLabel}Found`,
                     data: []
                 }
             }
@@ -51,7 +52,7 @@ export default class PatientRecordController {
             if(records.length <= 0){
                 return {
                     success: false,
-                    code: "NoRecordsByField",
+                    code: `No${this.codeLabel}ByField`,
                     data: []
                 }
             }
@@ -92,7 +93,7 @@ export default class PatientRecordController {
             if(records.length <= 0){
                 return {
                     success: false,
-                    code: "NoRecordsByDate",
+                    code: `No${this.codeLabel}ByDate`,
                     data: []
                 }
             }
@@ -136,7 +137,7 @@ export default class PatientRecordController {
             if(records.length <= 0){
                 return {
                     success: false,
-                    code: "NoRecordsByFieldAndDate",
+                    code: `No${this.codeLabel}ByFieldAndDate`,
                     data: []
                 }
             }
@@ -171,7 +172,7 @@ export default class PatientRecordController {
             if(!updated){
                 return {
                     success: false,
-                    code: "RecordNotFound",
+                    code: `${this.codeLabel}NotFound`,
                     data: []
                 }
             }
@@ -180,7 +181,7 @@ export default class PatientRecordController {
 
             return {
                 success: true,
-                code: "RecordUpdated",
+                code: `${this.codeLabel}Updated`,
                 data: records
             }
         }catch(error){
@@ -193,14 +194,14 @@ export default class PatientRecordController {
         }
     }
 
-    async removeRecordById(id, type){
+    async delete(id, type){
         try {
             const removed = await this.model.removeById(id)
 
             if(!removed){
                 return {
                     success: false,
-                    code: "RecordNotFound",
+                    code: `${this.codeLabel}NotFound`,
                     data: []
                 }
             }
@@ -209,7 +210,7 @@ export default class PatientRecordController {
 
             return {
                 success: true,
-                code: "RecordRemoved",
+                code: `${this.codeLabel}Deleted`,
                 data: records
             }
         }catch(error){
