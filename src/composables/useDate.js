@@ -1,6 +1,7 @@
-import { currentLanguage } from "./useLanguage.js"
+import { currentLanguage, LANGUAGES } from "./useLanguage.js"
 
 export function useDate() {
+    const today = new Date()
 
     /**
      * Returns age based in `ISO` or `String` date
@@ -11,7 +12,6 @@ export function useDate() {
      **/
     const getAge = (birthDate) => {
         const time = new Date(birthDate)
-        const today = new Date()
 
         let age = today.getFullYear() - time.getFullYear()
         const monthDifference = today.getMonth() - time.getMonth()
@@ -34,6 +34,21 @@ export function useDate() {
      *  getFormatted("2026-09-19T14:24:36.172Z", false) -> "19/09/2026"
      **/
     const getFormatted = (dateInput, fullDate = true) => {
+        // Handle standalone times (HH:mm)
+        if (typeof dateInput === 'string' &&
+            /^\d{2}:\d{2}$/.test(dateInput)) {
+
+            const [hour, minute] = dateInput.split(':').map(Number)
+
+            if (hour > 23 || minute > 59) {
+                return dateInput
+            }
+
+            return currentLanguage.value === LANGUAGES.PT_BR
+                ? `${String(hour).padStart(2, '0')}h ${String(minute).padStart(2, '0')}min`
+                : `${String(hour % 12 || 12).padStart(2, '0')}:${String(minute).padStart(2, '0')} ${hour >= 12 ? 'PM' : 'AM'}`
+        }
+
         const time = new Date(dateInput)
 
         const day = String(time.getDate()).padStart(2, '0')
@@ -42,11 +57,11 @@ export function useDate() {
         const hour = String(time.getHours()).padStart(2, '0')
         const minute = String(time.getMinutes()).padStart(2, '0')
 
-        let hoursFormatted = currentLanguage.value === 'ptBR'
+        let hoursFormatted = currentLanguage.value === LANGUAGES.PT_BR
             ? `${hour}h ${minute}min`
             : `${hour % 12}:${minute} ${hour > 12 ? "PM" : "AM"}`
 
-        let dateFormatted = currentLanguage.value === 'ptBR'
+        let dateFormatted = currentLanguage.value === LANGUAGES.PT_BR
             ? `${day}/${month}/${year}`
             : `${month}/${day}/${year}`
 
@@ -59,10 +74,9 @@ export function useDate() {
      * Returns today's date formatted by `YYYY-MM-DD`.
      *
      * @returns { String } Formatted today's date.
+     * @example date.getToday() -> "2026-05-14"
      **/
     const getToday = () => {
-        const today = new Date()
-
         const year = today.getFullYear()
         const month = String(today.getMonth() + 1).padStart(2, "0")
         const day = String(today.getDate()).padStart(2, "0")
@@ -71,9 +85,23 @@ export function useDate() {
     }
 
     /**
+     * Returns today's time formatted by `HH:MM`.
+     *
+     * @returns { String } Formatted today's time.
+     * @example date.getTime() -> "14:30"
+     **/
+    const getTime = () => {
+        const hours = String(today.getHours()).padStart(2, "0")
+        const minutes = String(today.getMinutes()).padStart(2, "0")
+
+        return `${hours}:${minutes}`
+    }
+
+    /**
      * Returns current local date and time formatted for `datetime-local` input (`YYYY-MM-DDTHH:mm`).
      *
      * @returns { String } Formatted current local date and time.
+     * @example getCurrentDateTimeLocal() -> "2026-05-10T08:10"
      **/
     const getCurrentDateTimeLocal = () => {
         return formatToDateTimeLocal(new Date())
@@ -83,7 +111,6 @@ export function useDate() {
      * Parse any Date/ISO String to datetime-local formart by the local time zone.
      *
      * @param { Date | String } dateInput
-     * @returns { String } Ex: "2026-10-21T13:50"
      */
     const formatToDateTimeLocal = (dateInput) => {
         if (!dateInput) return ""
@@ -100,5 +127,5 @@ export function useDate() {
         return `${year}-${month}-${day}T${hours}:${minutes}`
     }
 
-    return { getAge, getFormatted, getToday, formatToDateTimeLocal, getCurrentDateTimeLocal }
+    return { getAge, getFormatted, getToday, formatToDateTimeLocal, getCurrentDateTimeLocal, getTime }
 }

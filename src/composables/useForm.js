@@ -7,6 +7,7 @@ import { useUtils } from "./useUtils.js"
 import Input from "../components/forms/Input.vue"
 import TextArea from "../components/forms/TextArea.vue"
 import SelectInput from "../components/forms/SelectInput.vue"
+import MultipleTimeInput from "../components/forms/MultipleTimeInput.vue"
 
 export const FORM_TYPES = {
     CREATE: "create",
@@ -102,8 +103,27 @@ export function useForm(){
      * @returns { Object }
      */
     const extractData = (event) => {
-        const formData = new FormData(event.target)
-        return Object.fromEntries(formData.entries())
+        const formData = new FormData(event.currentTarget)
+        const data = {}
+
+        for(const [rawName, value] of formData.entries()){
+            const isArray = rawName.endsWith("[]")
+            const name = isArray
+                ? rawName.slice(0, -2)
+                : rawName
+
+            if(isArray){
+                if(!Array.isArray(data[name])){
+                    data[name] = []
+                }
+
+                data[name].push(value)
+            } else {
+                data[name] = value
+            }
+        }
+
+        return data
     }
 
     /**
@@ -139,6 +159,9 @@ export function useForm(){
             case "select":
                 return SelectInput
 
+            case "mpTime":
+                return MultipleTimeInput
+
             default:
                 return null
         }
@@ -161,10 +184,22 @@ export function useForm(){
 
         let currentValue = inputValue ? inputValue[input.name] : null
 
-        if ((currentValue === null || currentValue === undefined || currentValue === "") && input.isDefaultNow) {
-            currentValue = input.inputType === "datetime-local"
-                ? date.getCurrentDateTimeLocal()
-                : date.getToday()
+        if(!currentValue) {
+            if (input.inputType === 'datetime-local') {
+                if ((currentValue === null || currentValue === undefined || currentValue === "") && input.isDefaultNow) {
+                    currentValue = date.getCurrentDateTimeLocal()
+                }
+            } else if (input.inputType === 'date') {
+                currentValue = date.getToday()
+            } else if (input.inputType === 'time') {
+                currentValue = date.getTime()
+            }
+
+            if (input.tag === "mpTime") {
+                currentValue = Array.isArray(currentValue) && currentValue.length
+                    ? currentValue
+                    : [date.getTime()]
+            }
         }
 
         switch(input.tag){
@@ -209,6 +244,17 @@ export function useForm(){
                     modelValue: currentValue ?? "",
                     translate: "no",
                     readonly: popupConfig?.value?.readOnly ?? null
+                }
+
+            case "mpTime":
+                return {
+                    label: title,
+                    placeholder: placeholder,
+                    for: input.for,
+                    name: input.name,
+                    modelValue: currentValue,
+                    translate: "no",
+                    readonly: popupConfig?.value?.readOnly ?? null,
                 }
 
             default:

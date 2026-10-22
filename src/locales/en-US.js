@@ -1293,9 +1293,8 @@ export default {
                     routeAdmin: {
                         label: "Administration Route"
                     },
-                    dosage: {
-                        label: "Dosage",
-                        placeholder: "ex: 1 pill per day"
+                    administrationTimes: {
+                        label: "Horários de Administração"
                     },
                     observations: {
                         label: "Observations",
@@ -1310,15 +1309,15 @@ export default {
             },
             main: {
                 inputs: {
-                    medicationName: {
-                        label: "Medication Name",
-                        placeholder: "Tylenol - 500mg"
+                    medicineId: {
+                        label: "Medication Name"
                     },
-                    medicationDosage: {
-                        label: "Medication Dosage"
+                    dosage: {
+                        label: "Medication Dosage",
+                        placeholder: "ex: 1 pill"
                     },
-                    caregiverId: {
-                        label: "Caregiver Name"
+                    adminTime: {
+                        label: "Administration Time",
                     },
                     observations: {
                         label: "Observations",
@@ -1430,6 +1429,9 @@ export default {
         },
         PatientUpdated: {
             title: "Patient's data updated with success"
+        },
+        ItemNotFound: {
+            title: "Item not found"
         },
 
         SystemDataReset: {

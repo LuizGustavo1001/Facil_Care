@@ -7,7 +7,7 @@ db.version(1).stores({
     vitalSigns: '++_id, dateTime, record, caregiverId, [record+dateTime]',
     followUps: '++_id, dateTime, record, caregiverId, [record+dateTime]',
     medicines: '++_id, active',
-    medicineRegistries: '++_id, medicationId, dateTime, caregiverId',
+    medicineRegistries: '++_id, medicineId, dateTime, caregiverId',
     notifications: '++_id, read, dateTime'
 })
 
@@ -25,7 +25,7 @@ db.version(2)
         followUps: '++_id, dateTime, record, caregiverId, [record+dateTime]',
 
         medicines: '++_id, active',
-        medicineRegistries: '++_id, medicationId, dateTime, caregiverId',
+        medicineRegistries: '++_id, medicineId, dateTime, caregiverId',
 
         notifications: '++_id, read, dateTime'
     })
@@ -280,19 +280,19 @@ db.on("populate", async (transaction) => {
         }
     ])
 
-    const medicationIds = await transaction.table('medicines').bulkAdd([
+    const medicineIds = await transaction.table('medicines').bulkAdd([
         {
             name: 'Metformina 850mg',
-            dosage: '1 comprimido',
             routeAdmin: 'oral',
+            administrationTimes: ["08:00", "14:00", "20:00"],
             observations: 'Tomar logo após as refeições',
             patientId: patientId,
             active: true
         },
         {
             name: 'Dipirona Monossódica 1g',
-            dosage: '1 comprimido',
             routeAdmin: 'oral',
+            administrationTimes: ["08:00", "14:00", "20:00"],
             observations: '',
             patientId: patientId,
             active: false
@@ -302,12 +302,9 @@ db.on("populate", async (transaction) => {
     transaction.table('medicineRegistries').bulkAdd([
         {
             patientId: patientId,
-            medicationId: medicationIds[0],
-            medicationName: 'Metformina 850mg', //
-            medicationDosage: '1 comprimido', //
-            dateTime: new Date(),
-            caregiverId: caregivers[0],
-            caregiverName: 'Marina Souza', //
+            medicineId: medicineIds[0],
+            adminTime: new Date('2026-10-09T08:00:00'),
+            dosage: '1 comprimido',
             observations: 'Paciente tomou sem resistência'
         }
     ])

@@ -26,7 +26,7 @@ export class PatientSubCategory {
      * @returns { Promise<Object|undefined> } - The matching item, or undefined if not found.
      **/
     async getById(id){
-        return this.table.get(id)
+        return this.table.get(Number(id))
     }
 
     /**

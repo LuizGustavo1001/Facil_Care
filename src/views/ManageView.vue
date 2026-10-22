@@ -15,6 +15,7 @@
           :popupRef="formPopup.popupRef"
           :template="formTemplate"
           :inputValue="formValues"
+          :dynamicData="dynamicData"
           @submitForm="handleSubmit"
       />
 
@@ -171,7 +172,7 @@
   })
 
   // COMPUTED PROPERTIES
-  const formattedData = computed(() => {
+  const formattedData = computed( () => {
     switch (currentCategory.value) {
       case PAGES.CAREGIVERS:
         return caregivers.value.map(caregiver => ({
@@ -206,16 +207,16 @@
               )})`
               : ""
           ),
-          description: getDescription([medicine.observations])
+          description: getDescription([medicine.observations, joinTimes(medicine.administrationTimes)])
         }))
 
       case PAGES.MEDICINE_REGISTRIES:
         return medicineRegistries.value.map(registry => ({
           id: registry._id,
-          title: `${registry.medicationName} (${registry.medicationDosage})`,
+          title: `${registry.medicineName} (${registry.dosage})`,
           description: getDescription([
             registry.observations,
-            registry.caregiverName
+            date.getFormatted(registry.adminTime, true)
           ])
         }))
 
@@ -241,6 +242,27 @@
     }
   })
 
+  async function loadMedicineRegistries(registries) {
+    return Promise.all(
+        registries.map(async registry => {
+          const [medicineResult] = await Promise.all([
+            registry.medicineId
+                ? medicineController.getById(registry.medicineId)
+                : null
+          ])
+
+          const medicine = medicineResult?.success
+              ? medicineResult.data
+              : null
+
+          return {
+            ...registry,
+            medicineName: medicine?.name ?? registry.medicineId ?? ""
+          }
+        })
+    )
+  }
+
   // FUNCTIONS
   const loadCategoryData = async (category) => {
     let result = null
@@ -251,6 +273,7 @@
         break
       case PAGES.MEDICINE_REGISTRIES:
         result = await medicineRegistryController.getAll()
+        result.data = await loadMedicineRegistries(result.data)
         break
       case PAGES.CAREGIVERS:
         result = await caregiverController.getAll()
@@ -281,6 +304,13 @@
 
   const getDescription = (parts) => {
     return parts.filter(Boolean).join(" • ")
+  }
+
+  const joinTimes = (parts = []) => {
+    return parts
+        .filter(Boolean)
+        .map(time => date.getFormatted(time))
+        .join(", ")
   }
 
   const getSectionTitle = (currentCategory) => {
@@ -380,7 +410,7 @@
         medicines.value = updatedData
         break
       case PAGES.MEDICINE_REGISTRIES:
-        medicineRegistries.value = updatedData
+        medicineRegistries.value = await loadMedicineRegistries(updatedData)
         break
       case PAGES.CAREGIVERS:
         caregivers.value = updatedData
@@ -411,8 +441,8 @@
    **/
   const handleButtonAction = async (button, event) => {
     formPopup.triggerRef.value = event.currentTarget
-
     const popupTemplate = formTemplates.find(item => item.id === currentCategory.value) ?? null
+
     if(!popupTemplate){
       snackbar.open("ItemNotFound")
       return
@@ -474,10 +504,37 @@
     )
   }
 
-  // Dynamic category data loading
-  watch(currentCategory, async (category) => {
-    if(!category || !pageExists.value) return
+  const medicinesList = ref([])
 
-    await loadCategoryData(category)
-  }, { immediate: true })
+  const dynamicData = computed(() => ({
+    medicines: medicinesList.value
+  }))
+
+  async function loadMedicinesList() {
+    try {
+      const response = await medicineController.getAll()
+
+      medicinesList.value = response?.success
+          ? response.data
+          : []
+    } catch (error) {
+      console.error("DB Error:", error)
+      medicinesList.value = []
+    }
+  }
+
+  // Dynamic category data loading
+  watch(
+      currentCategory,
+      async (category) => {
+        if (!category || !pageExists.value) return
+
+        await loadCategoryData(category)
+
+        if (category === PAGES.MEDICINE_REGISTRIES) {
+          await loadMedicinesList()
+        }
+      },
+      { immediate: true }
+  )
 </script>

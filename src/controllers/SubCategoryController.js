@@ -106,7 +106,7 @@ export default class SubCategoryController {
         try{
             const updated = await this.model.update(id, newData)
 
-            if(!updated){
+            if(!updated) {
                 return {
                     success: false,
                     code: `${this.codeLabel}NotFound`,

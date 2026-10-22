@@ -390,14 +390,10 @@ export const charts = {
     ]
 }
 
-
-export const registerView = {
-
-}
-
 export const warningMessages = {
     PatientNotFound: "warning",
     PatientUpdated: "success",
+    ItemNotFound: "warning",
 
     NotificationNotFound: "error",
 
@@ -672,10 +668,12 @@ export const formTemplates = [
                     ]
                 },
                 {
-                    id: "dosage",
-                    tag: "input",
-                    name: "dosage",
-                    for: "dosage",
+                    id: "administrationTimes",
+                    tag: "mpTime",
+                    inputType: "time",
+                    name: "administrationTimes",
+                    for: "administrationTimes",
+                    required: true,
                 },
                 {
                     id: "observations",
@@ -696,29 +694,29 @@ export const formTemplates = [
         main: {
             inputs: [
                 {
-                    id: "medicationName",
-                    tag: "input",
-                    inputType: "text",
-                    name: "medicationName",
-                    for: "medicationName",
-                    autoCapitalize: "words",
+                    id: "medicineId",
+                    tag: "select",
+                    name: "medicineId",
+                    for: "medicineId",
+                    dynamicKey: PAGES.MEDICINES,
                     required: true
                 },
                 {
-                    id: "medicationDosage",
+                    id: "dosage",
                     tag: "input",
-                    name: "medicationDosage",
-                    for: "medicationDosage",
+                    name: "dosage",
+                    for: "dosage",
                     autoCapitalize: "sentences",
                     required: true
                 },
                 {
-                    id: "caregiverId",
-                    tag: "select",
-                    name: "caregiverId",
-                    for: "caregiverId",
-                    dynamicKey: PAGES.CAREGIVERS,
-                    required: true
+                    id: "adminTime",
+                    tag: "input",
+                    name: "adminTime",
+                    for: "adminTime",
+                    required: true,
+                    inputType: "datetime-local",
+                    isDefaultNow: true
                 },
                 {
                     id: "observations",

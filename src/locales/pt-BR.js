@@ -1297,9 +1297,8 @@ export default {
                     routeAdmin: {
                         label: "Rota de Administração"
                     },
-                    dosage: {
-                        label: "Dosagem",
-                        placeholder: "ex: 1 comprimido por dia"
+                    administrationTimes: {
+                        label: "Horários de Administração"
                     },
                     observations: {
                         label: "Observações",
@@ -1314,17 +1313,15 @@ export default {
             },
             main: {
                 inputs: {
-                    medicationName: {
-                        label: "Nome do Medicamento",
-                        placeholder: "Tylenol - 500mg"
+                    medicineId: {
+                        label: "Nome do Medicamento"
                     },
-                    medicationDosage: {
+                    dosage: {
                         label: "Dosagem",
                         placeholder: "ex: 1 comprimido"
                     },
-                    caregiverId: {
-                        label: "Nome do Cuidador",
-                        placeholder: "ex: Marcio Cunha Pereira"
+                    adminTime: {
+                        label: "Horário de Administração"
                     },
                     observations: {
                         label: "Observações",
@@ -1436,6 +1433,9 @@ export default {
         },
         PatientUpdated: {
             title: "Os dados do paciente foram atualizados com sucesso"
+        },
+        ItemNotFound: {
+            title: "Item não encotrado"
         },
 
         SystemDataReset: {
