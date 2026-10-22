@@ -32,7 +32,9 @@ export function useUtils() {
      * @return { String }
      **/
     const getOptionTranslate = (translationKey) => {
-        return te(`options.${translationKey}`) ? t(`options.${translationKey}`) : ""
+        return te(`options.${translationKey}`)
+            ? t(`options.${translationKey}`)
+            : ""
     }
 
     // Format Brazilian phone numbers

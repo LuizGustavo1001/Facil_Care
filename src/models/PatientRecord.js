@@ -102,6 +102,25 @@ export class PatientRecord {
     }
 
     /**
+     * Adds new patient record item to the database.
+     *
+     * @param { Object } newItem
+     *
+     * @returns { Promise<boolean> } `true` if the record was added, or `false` if the patient does not exist.
+     *
+     * @throws { Error } If a database operation fails.
+     **/
+    async create(newItem){
+        try{
+            await this.table.add(newItem)
+            return true
+        }catch(err){
+            console.error("Database Error:", err)
+            throw err
+        }
+    }
+
+    /**
      * Updates an existing record by merging the provided fields with its current data, preserving its original identifier.
      *
      * @param { Object } newData

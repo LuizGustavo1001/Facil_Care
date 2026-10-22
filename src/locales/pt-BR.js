@@ -30,7 +30,7 @@ export default {
         [PAGES.BLOOD_PRESSURE]: "Pressão Arterial",
         [PAGES.OXYGEN_SATURATION]: "Saturação de Oxigênio",
         [PAGES.BLOOD_GLUCOSE]: "Glicemia",
-        [PAGES.HEART_RATE]: "Batimentos Cardíacos",
+        [PAGES.HEART_RATE]: "Frequência Cardíaca",
 
         [PAGES.MOOD]: "Humor",
         [PAGES.PAIN_LEVEL]: "Nível de Dor",
@@ -68,6 +68,7 @@ export default {
         deleteAccount: "Apagar Dados",
         homePage: "Voltar à página inicial",
         years: "anos",
+        back: "Voltar",
         selectOption: "Selecione uma opção",
         themes: {
             [THEMES.LIGHT]: {
@@ -211,12 +212,45 @@ export default {
                 [PAGES.MEDICINES]: {
                     title: "Medicamento"
                 },
-                [PAGES.VITAL_SIGNS]: {
-                    title: "Sinal Vital"
+
+                [PAGES.BODY_TEMPERATURE]: {
+                    title: "Temperatura Corporal"
                 },
-                [PAGES.FOLLOW_UPS]: {
-                    title: "Acompanhamento ou Comportamento"
+                [PAGES.BLOOD_PRESSURE]: {
+                    title: "Pressão Sanguínea"
                 },
+                [PAGES.OXYGEN_SATURATION]: {
+                    title: "Saturação"
+                },
+                [PAGES.BLOOD_GLUCOSE]: {
+                    title: "Glicose"
+                },
+                [PAGES.HEART_RATE]: {
+                    title: "Frequência Cardíaca"
+                },
+
+                [PAGES.MOOD]: {
+                    title: "Humor"
+                },
+                [PAGES.PAIN_LEVEL]: {
+                    title: "Nível de Dor"
+                },
+                [PAGES.SLEEP]: {
+                    title: "Qualidade de Sono"
+                },
+                [PAGES.WATER_INTAKE]: {
+                    title: "Ingestão de Água"
+                },
+                [PAGES.MEAL_ACCEPTANCE]: {
+                    title: "Aceitação de Refeições"
+                },
+                [PAGES.WEIGHT]: {
+                    title: "Peso"
+                },
+                [PAGES.NECESSITIES]: {
+                    title: "Necessidades"
+                },
+
                 [PAGES.ALLERGIES]: {
                     title: "Alergia"
                 },
@@ -253,7 +287,7 @@ export default {
                         title: "Glicemia"
                     },
                     [PAGES.HEART_RATE]: {
-                        title: "Batimentos Cardíacos"
+                        title: "Frequência Cardíaca"
                     }
                 }
             },
@@ -672,18 +706,88 @@ export default {
             }
         },
 
-        [PAGES.VITAL_SIGNS]: {
+        [PAGES.BODY_TEMPERATURE]: {
             buttons: {
                 primary: {
-                    title: "Registrar Sinais Vitais"
+                    title: "Registrar Temperature Corporal"
+                }
+            }
+        },
+        [PAGES.BLOOD_PRESSURE]: {
+            buttons: {
+                primary: {
+                    title: "Registrar Pressão Arterial"
+                }
+            }
+        },
+        [PAGES.OXYGEN_SATURATION]: {
+            buttons: {
+                primary: {
+                    title: "Registrar Saturação"
+                }
+            }
+        },
+        [PAGES.BLOOD_GLUCOSE]: {
+            buttons: {
+                primary: {
+                    title: "Registrar Glicemia"
+                }
+            }
+        },
+        [PAGES.HEART_RATE]: {
+            buttons: {
+                primary: {
+                    title: "Registrar Frequência Cardíaca"
                 }
             }
         },
 
-        [PAGES.FOLLOW_UPS]: {
+        [PAGES.MOOD]: {
             buttons: {
                 primary: {
-                    title: "Registrar Estado Físico / Comportamental"
+                    title: "Registar Humor"
+                }
+            }
+        },
+        [PAGES.PAIN_LEVEL]: {
+            buttons: {
+                primary: {
+                    title: "Registrar Nível de Dor"
+                }
+            }
+        },
+        [PAGES.SLEEP]: {
+            buttons: {
+                primary: {
+                    title: "Registrar Qualidade de Sono"
+                }
+            }
+        },
+        [PAGES.WATER_INTAKE]: {
+            buttons: {
+                primary: {
+                    title: "Registrar Ingestão de Água"
+                }
+            }
+        },
+        [PAGES.MEAL_ACCEPTANCE]: {
+            buttons: {
+                primary: {
+                    title: "Registrar Aceitação de Refeições"
+                }
+            }
+        },
+        [PAGES.WEIGHT]: {
+            buttons: {
+                primary: {
+                    title: "Registrar Peso"
+                }
+            }
+        },
+        [PAGES.NECESSITIES]: {
+            buttons: {
+                primary: {
+                    title: "Registrar Necessidades"
                 }
             }
         },
@@ -809,10 +913,10 @@ export default {
                 }
             },
             [PAGES.HEART_RATE]: {
-                y_axis: "Batimentos Cardíacos",
+                y_axis: "Frequência Cardíaca",
                 x_axis: "Data da medição",
                 values: {
-                    value: "Batimentos Cardíacos"
+                    value: "Frequência Cardíaca"
                 }
             }
         },
@@ -827,7 +931,7 @@ export default {
         }
     },
 
-    formPopupTemplates: {
+    formTemplates: {
         name: {
             header: {
                 title: "Nome do Paciente"
@@ -891,9 +995,298 @@ export default {
                 }
             }
         },
+
+        [PAGES.BODY_TEMPERATURE]: {
+            header: {
+                title: "Registro de Temperatura Corporal"
+            },
+            main: {
+                inputs: {
+                    value: {
+                        label: "Temperatura",
+                        placeholder: "ex: 33"
+                    },
+                    dateTime: {
+                        label: "Data e Hora da Medição"
+                    },
+                    caregiverId: {
+                        label: "Cuidador Responsável"
+                    },
+                    observations: {
+                        label: "Observações",
+                        placeholder: "Relate alguma particularidade..."
+                    }
+                }
+            },
+        },
+
+        [PAGES.BLOOD_PRESSURE]: {
+            header: {
+                title: "Registro de Pressão Sanguínea"
+            },
+            main: {
+                inputs: {
+                    value: {
+                        label: "(Desenvolvimento) Pressão Sanguínea",
+                        placeholder: "ex: 120/80"
+                    },
+                    dateTime: {
+                        label: "Data e Hora da Medição"
+                    },
+                    caregiverId: {
+                        label: "Cuidador Responsável"
+                    },
+                    observations: {
+                        label: "Observações",
+                        placeholder: "Relate alguma particularidade..."
+                    }
+                }
+            }
+        },
+
+        [PAGES.OXYGEN_SATURATION]: {
+            header: {
+                title: "Registro de Saturação"
+            },
+            main: {
+                inputs: {
+                    value: {
+                        label: "Saturação",
+                        placeholder: "ex: 99"
+                    },
+                    dateTime: {
+                        label: "Data e Hora da Medição"
+                    },
+                    caregiverId: {
+                        label: "Cuidador Responsável"
+                    },
+                    observations: {
+                        label: "Observações",
+                        placeholder: "Relate alguma particularidade..."
+                    }
+                }
+            }
+        },
+
+        [PAGES.BLOOD_GLUCOSE]: {
+            header: {
+                title: "Registro de Glicemia"
+            },
+            main: {
+                inputs: {
+                    value: {
+                        label: "Glicemia",
+                        placeholder: "ex: 120"
+                    },
+                    dateTime: {
+                        label: "Data e Hora da Medição"
+                    },
+                    caregiverId: {
+                        label: "Cuidador Responsável"
+                    },
+                    observations: {
+                        label: "Observações",
+                        placeholder: "Relate alguma particularidade..."
+                    }
+                }
+            }
+        },
+
+        [PAGES.HEART_RATE]: {
+            header: {
+                title: "Registro de Frequência Cardíaca"
+            },
+            main: {
+                inputs: {
+                    value: {
+                        label: "Frequência Cardíaca",
+                        placeholder: "ex: 75"
+                    },
+                    dateTime: {
+                        label: "Data e Hora da Medição"
+                    },
+                    caregiverId: {
+                        label: "Cuidador Responsável"
+                    },
+                    observations: {
+                        label: "Observações",
+                        placeholder: "Relate alguma particularidade..."
+                    }
+                }
+            }
+        },
+
+        [PAGES.MOOD]: {
+            header: {
+                title: "Registro de Humor"
+            },
+            main: {
+                inputs: {
+                    value: {
+                        label: "Descrição do Humor",
+                        placeholder: "ex: Paciente demonstra-se ansioso diante dos exames que serão realizados hoje..."
+                    },
+                    dateTime: {
+                        label: "Data e Hora da Medição"
+                    },
+                    caregiverId: {
+                        label: "Cuidador Responsável"
+                    },
+                    observations: {
+                        label: "Observações",
+                        placeholder: "Relate alguma particularidade..."
+                    }
+                }
+            }
+        },
+
+        [PAGES.PAIN_LEVEL]: {
+            header: {
+                title: "Registro de Nível de Dor"
+            },
+            main: {
+                inputs: {
+                    value: {
+                        label: "Nível de Dor (0 a 10)",
+                        placeholder: "ex: 4"
+                    },
+                    dateTime: {
+                        label: "Data e Hora da Medição"
+                    },
+                    caregiverId: {
+                        label: "Cuidador Responsável"
+                    },
+                    observations: {
+                        label: "Observações",
+                        placeholder: "Relate alguma particularidade..."
+                    }
+                }
+            }
+        },
+
+        [PAGES.SLEEP]: {
+            header: {
+                title: "Registro de Qualidade do Sono"
+            },
+            main: {
+                inputs: {
+                    value: {
+                        label: "Qualidade do Sono (0 até 10)",
+                        placeholder: "ex: 4"
+                    },
+                    dateTime: {
+                        label: "Data e Hora da Medição"
+                    },
+                    caregiverId: {
+                        label: "Cuidador Responsável"
+                    },
+                    observations: {
+                        label: "Observações",
+                        placeholder: "Relate alguma particularidade..."
+                    }
+                }
+            }
+        },
+
+        [PAGES.WATER_INTAKE]: {
+            header: {
+                title: "Registro de Ingestão de Água"
+            },
+            main: {
+                inputs: {
+                    value: {
+                        label: "Quantidade (litros)",
+                        placeholder: "ex: 1.5"
+                    },
+                    dateTime: {
+                        label: "Data e Hora da Medição"
+                    },
+                    caregiverId: {
+                        label: "Cuidador Responsável"
+                    },
+                    observations: {
+                        label: "Observações",
+                        placeholder: "Relate alguma particularidade..."
+                    }
+                }
+            }
+        },
+
+        [PAGES.MEAL_ACCEPTANCE]: {
+            header: {
+                title: "Registro de Aceitação de Refeições"
+            },
+            main: {
+                inputs: {
+                    value: {
+                        label: "Descrição da Aceitação",
+                        placeholder: "ex: Paciente comeu sem problemas para mastigar..."
+                    },
+                    dateTime: {
+                        label: "Data e Hora da Medição"
+                    },
+                    caregiverId: {
+                        label: "Cuidador Responsável"
+                    },
+                    observations: {
+                        label: "Observações",
+                        placeholder: "Relate alguma particularidade..."
+                    }
+                }
+            }
+        },
+
+        [PAGES.WEIGHT]: {
+            header: {
+                title: "Registro de Peso"
+            },
+            main: {
+                inputs: {
+                    value: {
+                        label: "Peso (Kg)",
+                        placeholder: "ex: 65"
+                    },
+                    dateTime: {
+                        label: "Data e Hora da Medição"
+                    },
+                    caregiverId: {
+                        label: "Cuidador Responsável"
+                    },
+                    observations: {
+                        label: "Observações",
+                        placeholder: "Relate alguma particularidade..."
+                    }
+                }
+            }
+        },
+
+        [PAGES.NECESSITIES]: {
+            header: {
+                title: "Registro de Controle de Evacuação e Diurese",
+            },
+            main: {
+                inputs: {
+                    value: {
+                        label: "Descrição do Controle",
+                        placeholder: "ex: Paciente evacuando normalmente..."
+                    },
+                    dateTime: {
+                        label: "Data e Hora da Medição"
+                    },
+                    caregiverId: {
+                        label: "Cuidador Responsável"
+                    },
+                    observations: {
+                        label: "Observações",
+                        placeholder: "Relate alguma particularidade..."
+                    }
+                }
+            }
+        },
+
         [PAGES.MEDICINES]: {
             header: {
-                title: "dados de Medicamento"
+                title: "Dados de Medicamento"
             },
             main: {
                 inputs: {
@@ -929,7 +1322,7 @@ export default {
                         label: "Dosagem",
                         placeholder: "ex: 1 comprimido"
                     },
-                    caregiverName: {
+                    caregiverId: {
                         label: "Nome do Cuidador",
                         placeholder: "ex: Marcio Cunha Pereira"
                     },
@@ -1001,7 +1394,7 @@ export default {
                 inputs: {
                     name: {
                         label: "Nome do Plano",
-                        ex: "Plano SUS"
+                        placeholder: "Plano SUS"
                     }
                 }
             }
@@ -1026,30 +1419,6 @@ export default {
                 },
             }
         },
-        [PAGES.VITAL_SIGNS]: {
-            header: {
-                title: "Sinais Vitais"
-            },
-            main: {
-                inputs: {
-                    record: {
-                        label: "Sinal Vital"
-                    },
-                    value: {
-                        label: "Medição",
-                        placeholder: "ex: (120/80) para pressão arterial..."
-                    },
-                    caregiverName: {
-                        label: "Nome do Cuidador(a)",
-                        placeholder: "ex: Marcio Cunha Pereira"
-                    },
-                    observations: {
-                        label: "Observações",
-                        placeholder: "Observações aqui"
-                    }
-                }
-            }
-        }
     },
 
     confirmPopupTemplates: {

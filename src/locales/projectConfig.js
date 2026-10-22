@@ -512,7 +512,8 @@ export const formTemplates = [
                     name: "name",
                     for: "name",
                     inputType: "text",
-                    autoCapitalize: "words"
+                    autoCapitalize: "words",
+                    required: true
                 }
             ],
             buttons: [
@@ -531,7 +532,8 @@ export const formTemplates = [
                     tag: "input",
                     name: "birthDate",
                     for: "birthDate",
-                    inputType: "date"
+                    inputType: "date",
+                    required: true
                 }
             ],
             buttons: [
@@ -550,6 +552,7 @@ export const formTemplates = [
                     tag: "select",
                     name: "bloodType",
                     for: "bloodType",
+                    required: true,
                     options: [
                         {
                             id: "o_negative",
@@ -606,7 +609,8 @@ export const formTemplates = [
                     inputType: "number",
                     autoCapitalize: "words",
                     step: "0.1",
-                    min: 0
+                    min: 0,
+                    required: true,
                 }
             ],
             buttons: [
@@ -626,7 +630,8 @@ export const formTemplates = [
                     inputType: "text",
                     name: "address",
                     for: "address",
-                    autoCapitalize: "sentences"
+                    autoCapitalize: "sentences",
+                    required: true
                 }
             ],
             buttons: [
@@ -646,13 +651,15 @@ export const formTemplates = [
                     inputType: "text",
                     name: "name",
                     for: "name",
-                    autoCapitalize: "words"
+                    autoCapitalize: "words",
+                    required: true
                 },
                 {
                     id: "routeAdmin",
                     tag: "select",
                     name: "routeAdmin",
                     for: "routeAdmin",
+                    required: true,
                     options: [
                         {
                             id: "oral",
@@ -694,21 +701,24 @@ export const formTemplates = [
                     inputType: "text",
                     name: "medicationName",
                     for: "medicationName",
-                    autoCapitalize: "words"
+                    autoCapitalize: "words",
+                    required: true
                 },
                 {
                     id: "medicationDosage",
                     tag: "input",
                     name: "medicationDosage",
                     for: "medicationDosage",
-                    autoCapitalize: "sentences"
+                    autoCapitalize: "sentences",
+                    required: true
                 },
                 {
-                    id: "caregiverName",
-                    tag: "input",
-                    name: "caregiverName",
-                    for: "caregiverName",
-                    autoCapitalize: "words"
+                    id: "caregiverId",
+                    tag: "select",
+                    name: "caregiverId",
+                    for: "caregiverId",
+                    dynamicKey: PAGES.CAREGIVERS,
+                    required: true
                 },
                 {
                     id: "observations",
@@ -735,21 +745,25 @@ export const formTemplates = [
                     inputType: "text",
                     name: "name",
                     for: "name",
-                    autoCapitalize: "words"
+                    autoCapitalize: "words",
+                    required: true
                 },
                 {
                     id: "startDate",
                     tag: "input",
-                    inputType: "date",
                     name: "startDate",
-                    for: "startDate"
+                    for: "startDate",
+                    required: true,
+                    inputType: "datetime-local",
+                    isDefaultNow: true
                 },
                 {
                     id: "phone",
                     tag: "input",
                     inputType: "tel",
                     name: "phone",
-                    for: "phone"
+                    for: "phone",
+                    required: true
                 }
             ],
             buttons: [
@@ -769,13 +783,15 @@ export const formTemplates = [
                     inputType: "text",
                     name: "name",
                     for: "name",
-                    autoCapitalize: "words"
+                    autoCapitalize: "words",
+                    required: true
                 },
                 {
                     id: "speciality",
                     tag: "select",
                     name: "speciality",
                     for: "speciality",
+                    required: true,
                     options: [
                         {
                             id: "cardiology",
@@ -833,6 +849,7 @@ export const formTemplates = [
                     inputType: "tel",
                     name: "phone",
                     for: "phone",
+                    required: true
                 }
             ],
             buttons: [
@@ -852,7 +869,8 @@ export const formTemplates = [
                     inputType: "text",
                     name: "name",
                     for: "name",
-                    autoCapitalize: "sentences"
+                    autoCapitalize: "sentences",
+                    required: true
                 }
             ],
             buttons: [
@@ -872,7 +890,8 @@ export const formTemplates = [
                     inputType: "text",
                     name: "name",
                     for: "name",
-                    autoCapitalize: "words"
+                    autoCapitalize: "words",
+                    required: true
                 }
             ],
             buttons: [
@@ -892,13 +911,15 @@ export const formTemplates = [
                     inputType: "text",
                     name: "name",
                     for: "name",
-                    autoCapitalize: "words"
+                    autoCapitalize: "words",
+                    required: true
                 },
                 {
                     id: "kinship",
                     tag: "select",
                     name: "kinship",
                     for: "kinship",
+                    required: true,
                     options: [
                         {
                             id: "father",
@@ -959,156 +980,8 @@ export const formTemplates = [
                     tag: "input",
                     inputType: "tel",
                     name: "phone",
-                    for: "phone"
-                }
-            ],
-            buttons: [
-                {
-                    id: "submit"
-                }
-            ]
-        }
-    },
-    {
-        id: PAGES.VITAL_SIGNS,
-        main: {
-            inputs: [
-                {
-                    id: "record",
-                    tag: "select",
-                    name: "record",
-                    for: "record",
-                    options: [
-                        {
-                            id: "bodyTemperature",
-                            value: "bodyTemperature"
-                        },
-                        {
-                            id: "bloodPressure",
-                            value: "bloodPressure"
-                        },
-                        {
-                            id: "oxygenSaturation",
-                            value: "oxygenSaturation"
-                        },
-                        {
-                            id: "glucose",
-                            value: "glucose"
-                        },
-                        {
-                            id: "heartRate",
-                            value: "heartRate"
-                        }
-                    ]
-                },
-                {
-                    id: "value",
-                    tag: "input",
-                    name: "value",
-                    for: "value",
-                    inputType: "text"
-                },
-                {
-                    id: "caregiverName",
-                    tag: "select",
-                    name: "caregiverName",
-                    for: "caregiverName",
-                    options: [
-                        { // não informado (valor nulo no banco de dados)
-                          id: "none",
-                          value: "none"
-                        },
-                        // vem do banco de dados (coleção de caregivers dentro de patient)
-                    ]
-                },
-                {
-                    id: "observations",
-                    tag: "textarea",
-                    name: "observations",
-                    for: "observations",
-                    autoCapitalize: "sentences"
-                }
-            ],
-            buttons: [
-                {
-                    id: "submit"
-                }
-            ]
-        }
-    },
-    {
-        id: PAGES.FOLLOW_UPS,
-        main: {
-            inputs: [
-                {
-                    id: "record",
-                    tag: "select",
-                    name: "record",
-                    for: "record",
-                    options: [
-                        {
-                            id: "mood",
-                            value: "mood"
-                        },
-                        {
-                            id: "painLevel",
-                            value: "painLevel"
-                        },
-                        {
-                            id: "sleepQuality",
-                            value: "sleepQuality"
-                        },
-                        {
-                            id: "waterIntake",
-                            value: "waterIntake"
-                        },
-                        {
-                            id: "mealAcceptance",
-                            value: "mealAcceptance"
-                        },
-                        {
-                            id: "weight",
-                            value: "weight"
-                        },
-                        {
-                            id: "necessities",
-                            value: "necessities"
-                        }
-                    ]
-                },
-                {
-                    id: "value",
-                    tag: "input",
-                    name: "value",
-                    for: "value",
-                    inputType: "text"
-                },
-                {
-                    id: "dateTime",
-                    tag: "input",
-                    inputType: "date",
-                    name: "dateTime",
-                    for: "dateTime"
-                },
-                {
-                    id: "caregiverName",
-                    tag: "select",
-                    name: "caregiverName",
-                    for: "caregiverName",
-                    options: [
-                        { // não informado (valor nulo no banco de dados)
-                            id: "none",
-                            value: "none"
-                        },
-                        // vem do banco de dados (coleção de caregivers dentro de patient)
-                    ]
-                },
-                {
-                    id: "observations",
-                    tag: "textarea",
-                    name: "observations",
-                    for: "observations",
-                    autoCapitalize: "sentences"
+                    for: "phone",
+                    required: true
                 }
             ],
             buttons: [
@@ -1119,6 +992,563 @@ export const formTemplates = [
         }
     },
 
+    {
+        id: PAGES.BODY_TEMPERATURE,
+        main: {
+            inputs: [
+                {
+                    id: "value",
+                    tag: "input",
+                    name: "value",
+                    for: "value",
+                    inputType: "number",
+                    step: "0.1",
+                    min: 20,
+                    max: 200,
+                    required: true,
+                    mods: {
+                        hasMeasurementUnit: true,
+                        measurementUnitType: PAGES.BODY_TEMPERATURE
+                    },
+                },
+                {
+                    id: "dateTime",
+                    tag: "input",
+                    name: "dateTime",
+                    for: "dateTime",
+                    inputType: "datetime-local",
+                    isDefaultNow: true,
+                    required: true
+                },
+                {
+                    id: "caregiverId",
+                    tag: "select",
+                    name: "caregiverId",
+                    for: "caregiverId",
+                    dynamicKey: PAGES.CAREGIVERS,
+                    required: true
+                },
+                {
+                    id: "observations",
+                    tag: "textarea",
+                    name: "observations",
+                    for: "observations"
+                }
+            ],
+            buttons: [{ id: "submit" }]
+        }
+    },
+    {
+        id: PAGES.BLOOD_PRESSURE,
+        main: {
+            inputs: [
+                {
+                    id: "value",
+                    tag: "input",
+                    name: "value",
+                    for: "value",
+                    inputType: "text",
+                    required: true,
+                    mods: {
+                        hasMeasurementUnit: true,
+                        measurementUnitType: PAGES.BLOOD_PRESSURE
+                    },
+                },
+                {
+                    id: "dateTime",
+                    tag: "input",
+                    name: "dateTime",
+                    for: "dateTime",
+                    inputType: "datetime-local",
+                    isDefaultNow: true,
+                    required: true
+                },
+                {
+                    id: "caregiverId",
+                    tag: "select",
+                    name: "caregiverId",
+                    for: "caregiverId",
+                    dynamicKey: PAGES.CAREGIVERS,
+                    required: true
+                },
+                {
+                    id: "observations",
+                    tag: "textarea",
+                    name: "observations",
+                    for: "observations"
+                }
+            ],
+            buttons: [{ id: "submit" }]
+        }
+    },
+    {
+        id: PAGES.OXYGEN_SATURATION,
+        main: {
+            inputs: [
+                {
+                    id: "value",
+                    tag: "input",
+                    name: "value",
+                    for: "value",
+                    inputType: "number",
+                    step: "1",
+                    min: 0,
+                    max: 100,
+                    required: true,
+                    mods: {
+                        hasMeasurementUnit: true,
+                        measurementUnitType: PAGES.OXYGEN_SATURATION
+                    },
+                },
+                {
+                    id: "dateTime",
+                    tag: "input",
+                    name: "dateTime",
+                    for: "dateTime",
+                    inputType: "datetime-local",
+                    isDefaultNow: true,
+                    required: true
+                },
+                {
+                    id: "caregiverId",
+                    tag: "select",
+                    name: "caregiverId",
+                    for: "caregiverId",
+                    dynamicKey: PAGES.CAREGIVERS,
+                    required: true
+                },
+                {
+                    id: "observations",
+                    tag: "textarea",
+                    name: "observations",
+                    for: "observations"
+                }
+            ],
+            buttons: [{ id: "submit" }]
+        }
+    },
+    {
+        id: PAGES.BLOOD_GLUCOSE,
+        main: {
+            inputs: [
+                {
+                    id: "value",
+                    tag: "input",
+                    name: "value",
+                    for: "value",
+                    inputType: "number",
+                    step: "1",
+                    min: 50,
+                    max: 300,
+                    required: true,
+                    mods: {
+                        hasMeasurementUnit: true,
+                        measurementUnitType: PAGES.BLOOD_GLUCOSE
+                    },
+                },
+                {
+                    id: "dateTime",
+                    tag: "input",
+                    name: "dateTime",
+                    for: "dateTime",
+                    inputType: "datetime-local",
+                    isDefaultNow: true,
+                    required: true
+                },
+                {
+                    id: "caregiverId",
+                    tag: "select",
+                    name: "caregiverId",
+                    for: "caregiverId",
+                    dynamicKey: PAGES.CAREGIVERS,
+                    required: true
+                },
+                {
+                    id: "observations",
+                    tag: "textarea",
+                    name: "observations",
+                    for: "observations"
+                }
+            ],
+            buttons: [{ id: "submit" }]
+        }
+    },
+    {
+        id: PAGES.HEART_RATE,
+        main: {
+            inputs: [
+                {
+                    id: "value",
+                    tag: "input",
+                    name: "value",
+                    for: "value",
+                    inputType: "number",
+                    step: "1",
+                    min: 0,
+                    max: 200,
+                    required: true,
+                    mods: {
+                        hasMeasurementUnit: true,
+                        measurementUnitType: PAGES.HEART_RATE
+                    },
+                },
+                {
+                    id: "dateTime",
+                    tag: "input",
+                    name: "dateTime",
+                    for: "dateTime",
+                    inputType: "datetime-local",
+                    isDefaultNow: true,
+                    required: true
+                },
+                {
+                    id: "caregiverId",
+                    tag: "select",
+                    name: "caregiverId",
+                    for: "caregiverId",
+                    dynamicKey: PAGES.CAREGIVERS,
+                    required: true
+                },
+                {
+                    id: "observations",
+                    tag: "textarea",
+                    name: "observations",
+                    for: "observations"
+                }
+            ],
+            buttons: [{ id: "submit" }]
+        }
+    },
+
+    {
+      id: PAGES.MOOD,
+      main: {
+          inputs: [
+              {
+                  id: "value",
+                  tag: "input",
+                  name: "value",
+                  for: "value",
+                  inputType: "text",
+                  autoCapitalize: "sentences",
+                  required: true
+              },
+              {
+                  id: "dateTime",
+                  tag: "input",
+                  name: "dateTime",
+                  for: "dateTime",
+                  inputType: "datetime-local",
+                  isDefaultNow: true,
+                  required: true
+              },
+              {
+                  id: "caregiverId",
+                  tag: "select",
+                  name: "caregiverId",
+                  for: "caregiverId",
+                  dynamicKey: PAGES.CAREGIVERS,
+                  required: true
+              },
+              {
+                  id: "observations",
+                  tag: "textarea",
+                  name: "observations",
+                  for: "observations"
+              }
+          ],
+          buttons: [{ id: "submit" }]
+      }
+    },
+    {
+        id: PAGES.PAIN_LEVEL,
+        main: {
+            inputs: [
+                {
+                    id: "value",
+                    tag: "input",
+                    name: "value",
+                    for: "value",
+                    inputType: "number",
+                    min: 0,
+                    max: 10,
+                    required: true
+                },
+                {
+                    id: "dateTime",
+                    tag: "input",
+                    name: "dateTime",
+                    for: "dateTime",
+                    inputType: "datetime-local",
+                    isDefaultNow: true,
+                    required: true
+                },
+                {
+                    id: "caregiverId",
+                    tag: "select",
+                    name: "caregiverId",
+                    for: "caregiverId",
+                    dynamicKey: PAGES.CAREGIVERS,
+                    required: true
+                },
+                {
+                    id: "observations",
+                    tag: "textarea",
+                    name: "observations",
+                    for: "observations"
+                }
+            ],
+            buttons: [{ id: "submit" }]
+        }
+    },
+    {
+        id: PAGES.SLEEP,
+        main: {
+            inputs: [
+                {
+                    id: "value",
+                    tag: "select",
+                    name: "value",
+                    for: "value",
+                    required: true,
+                    options: [
+                        {
+                            id: "0",
+                            value: 0
+                        },
+                        {
+                            id: "1",
+                            value: 1
+                        },
+                        {
+                            id: "2",
+                            value: 2
+                        },
+                        {
+                            id: "3",
+                            value: 3
+                        },
+                        {
+                            id: "4",
+                            value: 4
+                        },
+                        {
+                            id: "5",
+                            value: 5
+                        },
+                        {
+                            id: "6",
+                            value: 6
+                        },
+                        {
+                            id: "7",
+                            value: 7
+                        },
+                        {
+                            id: "8",
+                            value: 8
+                        },
+                        {
+                            id: "9",
+                            value: 9
+                        },
+                        {
+                            id: "10",
+                            value: 10
+                        }
+                    ]
+                },
+                {
+                    id: "dateTime",
+                    tag: "input",
+                    name: "dateTime",
+                    for: "dateTime",
+                    inputType: "datetime-local",
+                    isDefaultNow: true,
+                    required: true
+                },
+                {
+                    id: "caregiverId",
+                    tag: "select",
+                    name: "caregiverId",
+                    for: "caregiverId",
+                    dynamicKey: PAGES.CAREGIVERS,
+                    required: true
+                },
+                {
+                    id: "observations",
+                    tag: "textarea",
+                    name: "observations",
+                    for: "observations"
+                }
+            ],
+            buttons: [{ id: "submit" }]
+        }
+    },
+    {
+        id: PAGES.WATER_INTAKE,
+        main: {
+            inputs: [
+                {
+                    id: "value",
+                    tag: "input",
+                    name: "value",
+                    for: "value",
+                    inputType: "number",
+                    step: "0.1",
+                    min: 0.1,
+                    max: 10,
+                    required: true
+                },
+                {
+                    id: "dateTime",
+                    tag: "input",
+                    name: "dateTime",
+                    for: "dateTime",
+                    inputType: "datetime-local",
+                    isDefaultNow: true,
+                    required: true
+                },
+                {
+                    id: "caregiverId",
+                    tag: "select",
+                    name: "caregiverId",
+                    for: "caregiverId",
+                    dynamicKey: PAGES.CAREGIVERS,
+                    required: true
+                },
+                {
+                    id: "observations",
+                    tag: "textarea",
+                    name: "observations",
+                    for: "observations"
+                }
+            ],
+            buttons: [{ id: "submit" }]
+        }
+    },
+    {
+      id: PAGES.MEAL_ACCEPTANCE,
+        main: {
+            inputs: [
+                {
+                    id: "value",
+                    tag: "input",
+                    name: "value",
+                    for: "value",
+                    inputType: "text",
+                    autoCapitalize: "sentence",
+                    required: true
+                },
+                {
+                    id: "dateTime",
+                    tag: "input",
+                    name: "dateTime",
+                    for: "dateTime",
+                    inputType: "datetime-local",
+                    isDefaultNow: true,
+                    required: true
+                },
+                {
+                    id: "caregiverId",
+                    tag: "select",
+                    name: "caregiverId",
+                    for: "caregiverId",
+                    dynamicKey: PAGES.CAREGIVERS,
+                    required: true
+                },
+                {
+                    id: "observations",
+                    tag: "textarea",
+                    name: "observations",
+                    for: "observations"
+                }
+            ],
+            buttons: [{ id: "submit" }]
+        }
+    },
+    {
+        id: PAGES.WEIGHT,
+        main: {
+            inputs: [
+                {
+                    id: "value",
+                    tag: "input",
+                    name: "value",
+                    for: "value",
+                    inputType: "number",
+                    step: "0.1",
+                    min: 0,
+                    max: 300,
+                    required: true
+                },
+                {
+                    id: "dateTime",
+                    tag: "input",
+                    name: "dateTime",
+                    for: "dateTime",
+                    inputType: "datetime-local",
+                    isDefaultNow: true,
+                    required: true
+                },
+                {
+                    id: "caregiverId",
+                    tag: "select",
+                    name: "caregiverId",
+                    for: "caregiverId",
+                    dynamicKey: PAGES.CAREGIVERS,
+                    required: true
+                },
+                {
+                    id: "observations",
+                    tag: "textarea",
+                    name: "observations",
+                    for: "observations"
+                }
+            ],
+            buttons: [{ id: "submit" }]
+        }
+    },
+    {
+        id: PAGES.NECESSITIES,
+        main: {
+            inputs: [
+                {
+                    id: "value",
+                    tag: "input",
+                    name: "value",
+                    for: "value",
+                    inputType: "text",
+                    autoCapitalize: "sentence",
+                    required: true
+                },
+                {
+                    id: "dateTime",
+                    tag: "input",
+                    name: "dateTime",
+                    for: "dateTime",
+                    inputType: "datetime-local",
+                    isDefaultNow: true,
+                    required: true
+                },
+                {
+                    id: "caregiverId",
+                    tag: "select",
+                    name: "caregiverId",
+                    for: "caregiverId",
+                    dynamicKey: PAGES.CAREGIVERS,
+                    required: true
+                },
+                {
+                    id: "observations",
+                    tag: "textarea",
+                    name: "observations",
+                    for: "observations"
+                }
+            ],
+            buttons: [{ id: "submit" }]
+        }
+    },
 ]
 
 export const footers = [
@@ -1132,26 +1562,129 @@ export const footers = [
             }
         ]
     },
+
     {
-        id: PAGES['VITAL_SIGNS'],
+        id: PAGES.BODY_TEMPERATURE,
         buttons: [
             {
                 id: "primary",
-                leftIcon: icons["heart-fill"],
-                link: `/register/${PAGES["VITAL_SIGNS"]}`
+                leftIcon: icons["thermometer-fill"],
+                link: `/register/${PAGES['BODY_TEMPERATURE']}`
             }
         ]
     },
     {
-        id: PAGES['FOLLOW_UPS'],
+        id: PAGES.BLOOD_PRESSURE,
         buttons: [
             {
                 id: "primary",
-                leftIcon: icons["mental-health-fill"],
-                link: `/register/${PAGES['FOLLOW_UPS']}`
+                leftIcon: icons["blood-pressure-line"],
+                link: `/register/${PAGES['BLOOD_PRESSURE']}`
             }
         ]
     },
+    {
+        id: PAGES.OXYGEN_SATURATION,
+        buttons: [
+            {
+                id: "primary",
+                leftIcon: icons["oxygen-line"],
+                link: `/register/${PAGES['OXYGEN_SATURATION']}`
+            }
+        ]
+    },
+    {
+        id: PAGES.BLOOD_GLUCOSE,
+        buttons: [
+            {
+                id: "primary",
+                leftIcon: icons["glucose-line"],
+                link: `/register/${PAGES['BLOOD_GLUCOSE']}`
+            }
+        ]
+    },
+    {
+        id: PAGES.HEART_RATE,
+        buttons: [
+            {
+                id: "primary",
+                leftIcon: icons["heart-pulse-fill"],
+                link: `/register/${PAGES['HEART_RATE']}`
+            }
+        ]
+    },
+
+    {
+        id: PAGES.MOOD,
+        buttons: [
+            {
+                id: "primary",
+                leftIcon: icons["user-smile-fill"],
+                link: `/register/${PAGES['MOOD']}`
+            }
+        ]
+    },
+    {
+        id: PAGES.PAIN_LEVEL,
+        buttons: [
+            {
+                id: "primary",
+                leftIcon: icons["emotion-unhappy-fill"],
+                link: `/register/${PAGES['PAIN_LEVEL']}`
+            }
+        ]
+    },
+    {
+        id: PAGES.SLEEP,
+        buttons: [
+            {
+                id: "primary",
+                leftIcon: icons["zzz"],
+                link: `/register/${PAGES['SLEEP']}`
+            }
+        ]
+    },
+    {
+        id: PAGES.WATER_INTAKE,
+        buttons: [
+            {
+                id: "primary",
+                leftIcon: icons["drop-fill"],
+                link: `/register/${PAGES['WATER_INTAKE']}`
+            }
+        ]
+    },
+    {
+        id: PAGES.MEAL_ACCEPTANCE,
+        buttons: [
+            {
+                id: "primary",
+                leftIcon: icons["restaurant"],
+                link: `/register/${PAGES['MEAL_ACCEPTANCE']}`
+            }
+        ]
+    },
+    {
+        id: PAGES.WEIGHT,
+        buttons: [
+            {
+                id: "primary",
+                leftIcon: icons["weight-fill"],
+                link: `/register/${PAGES['WEIGHT']}`
+            }
+        ]
+    },
+    {
+        id: PAGES.NECESSITIES,
+        buttons: [
+            {
+                id: "primary",
+                leftIcon: icons["drop-fill"],
+                link: `/register/${PAGES['NECESSITIES']}`
+            }
+        ]
+    },
+
     {
         id: PAGES['MEDICINES'],
         buttons: [

@@ -28,11 +28,13 @@
 <script setup>
   import { computed } from "vue"
   import { useUtils } from "../../composables/useUtils.js"
+  import { useDate } from "../../composables/useDate.js"
 
   // MODEL
   defineOptions({
     inheritAttrs: false
   })
+
   const model = defineModel({
     type: [String, Number],
     default: ""
@@ -51,6 +53,7 @@
 
   // COMPOSABLES
   const utils = useUtils()
+  const date = useDate()
 
   // COMPUTED PROPERTIES
   // Make sure that input ID matches label Id
@@ -63,6 +66,10 @@
     get(){
       const value = model.value ?? ""
 
+      if(props.inputType === "datetime-local" && value){
+        return date.formatToDateTimeLocal(value)
+      }
+
       if(props.inputType === "date"){
         return String(value).split("T")[0]
       }
@@ -74,12 +81,22 @@
       return value
     },
     set(newValue){
+      if(props.inputType === "datetime-local" || props.inputType === "date"){
+        model.value = newValue
+            ? model.value = newValue ? new Date(newValue).toISOString() : ""
+            : ""
+
+        return
+      }
+
+      /*
       if(props.inputType === 'date'){ // Store date + time
         model.value = newValue
             ? `${newValue}T00:00:00.000Z`
             : ""
         return
       }
+       */
 
       if(props.inputType === "tel"){ // Store only phone digits
         model.value = String(newValue ?? "")

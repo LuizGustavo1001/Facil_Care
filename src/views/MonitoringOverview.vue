@@ -151,6 +151,7 @@
 
   import VitalSignController from "../controllers/VitalSignController.js"
   import FollowUpController from "../controllers/FollowUpController.js"
+  import CaregiverController from "../controllers/CaregiverController.js";
 
   // COMPOSABLES
   const { t } = useI18n()
@@ -161,6 +162,8 @@
   const date = useDate()
   const utils = useUtils()
   const unit = useUnitSystem()
+
+  const caregiverController = new CaregiverController()
 
   // COMPUTED PROPERTIES
   const activeFilterDays = ref(7)
@@ -181,6 +184,7 @@
     return route.params.type || null
   })
 
+  // filters monitoring by date interval
   const filteredMonitoringData = computed(() => {
     if(activeFilterDays.value === null) { // all data
       return monitoringData.value
@@ -235,7 +239,7 @@
       monitoringData.value = result.data
 
       // Formatting result
-      setFormattedData(result.data)
+      await setFormattedData(result.data)
 
       snackbar.open(result.code)
     }else if(result){
@@ -248,13 +252,24 @@
    *
    * @param { Object | Array } result - Database query result
    **/
-  const setFormattedData = (result) => {
+  const setFormattedData = async (result) => {
     formattedData.value = []
 
     for(const item of result){
       const formattedDate = item.dateTime ? date.getFormatted(new Date(item.dateTime)) : null
       const parsedValue = unit.getMeasurementUnit(item.record, item.value)
-      const subTitleParts = [item.caregiverName, formattedDate].filter(Boolean)
+
+      let subTitleParts = []
+
+      if(item.caregiverId){
+        const caregiver = await caregiverController.getById(Number(item.caregiverId))
+
+        if(caregiver){
+          subTitleParts.push(caregiver?.data.name)
+        }
+      }
+
+      subTitleParts.push(formattedDate)
 
       formattedData.value.push({
         id: item._id,

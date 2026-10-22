@@ -80,254 +80,234 @@ db.on("populate", async (transaction) => {
 
     await transaction.table('allergies').bulkAdd([
         {
-            patientId,
-            name: 'Alergia Grave a Penicilina'
+            name: 'Alergia Grave a Penicilina',
+            patientId: patientId,
         },
         {
-            patientId,
-            name: 'Outra Alergia'
+            name: 'Outra Alergia',
+            patientId: patientId
         }
     ])
 
     await transaction.table('healthPlans').bulkAdd([
-        { patientId, name: 'Unimed Familiar' },
-        { patientId, name: 'Plano Municipal SUS' }
+        { name: 'Unimed Familiar', patientId: patientId },
+        { name: 'Plano Municipal SUS', patientId: patientId }
     ])
 
     await transaction.table('doctors').bulkAdd([
         {
-            patientId,
             name: 'Dr. Carlos Eduardo',
             speciality: 'cardiology',
-            phone: '(11) 99999-8888'
+            phone: '(11) 99999-8888',
+            patientId: patientId
         }
     ])
 
     const caregivers = await transaction.table('caregivers').bulkAdd([
         {
-            patientId: patientId,
             name: 'Marina Souza',
             startDate: '2026-01-15',
-            phone: '(11) 98888-7777'
+            phone: '(11) 98888-7777',
+            patientId: patientId
         },
         {
-            patientId: patientId,
             name: 'Cleiton Gomes',
             startDate: '2026-01-10',
-            phone: '(11) 98888-6666'
+            phone: '(11) 98888-6666',
+            patientId: patientId
         }
     ], { allKeys: true })
 
     transaction.table('emergencyContacts').bulkAdd([
         {
-            patientId: patientId,
             name: 'Roberto Silva',
             kinship: 'son',
-            phone: '(11) 97777-5555'
+            phone: '(11) 97777-5555',
+            patientId: patientId
         },
         {
-            patientId: patientId,
             name: "Carla Abreu",
             kinship: 'auntie',
-            phone: "(11) 97777-4444"
+            phone: "(11) 97777-4444",
+            patientId: patientId
         }
     ])
 
     transaction.table('vitalSigns').bulkAdd([
         {
-            dateTime: new Date('2026-10-07T08:00:00'),
             record: 'bloodPressure',
             value: '130/80',
+            dateTime: new Date('2026-10-07T08:00:00'),
+            observation: 'Nenhuma observação',
             patientId: patientId,
-            caregiverId: caregivers[0],
-            caregiverName: 'Marina Souza',
-            observation: 'Nenhuma observação'
+            caregiverId: caregivers[0]
         },
         {
-            dateTime: new Date('2026-10-09T08:00:00'),
             record: 'bloodPressure',
             value: '110/84',
+            dateTime: new Date('2026-10-09T08:00:00'),
+            observation: 'Nenhuma observação',
             patientId: patientId,
-            caregiverId: caregivers[0],
-            caregiverName: 'Marina Souza',
-            observation: 'Nenhuma observação'
+            caregiverId: caregivers[0]
         },
         {
-            dateTime: new Date('2026-09-09T12:00:00'),
             record: 'bloodPressure',
             value: '140/80',
+            dateTime: new Date('2026-09-09T12:00:00'),
+            observation: 'Nenhuma observação',
             patientId: patientId,
-            caregiverId: caregivers[0],
-            caregiverName: 'Marina Souza',
-            observation: 'Nenhuma observação'
+            caregiverId: caregivers[0]
         },
         {
-            dateTime: new Date('2026-10-07T08:00:00'),
             record: 'bodyTemperature',
             value: '31',
+            dateTime: new Date('2026-10-07T08:00:00'),
+            observation: 'Nenhuma observação',
             patientId: patientId,
-            caregiverId: caregivers[0],
-            caregiverName: 'Marina Souza',
-            observation: 'Nenhuma observação'
+            caregiverId: caregivers[0]
         },
         {
-            dateTime: new Date('2026-10-09T08:00:00'),
             record: 'bodyTemperature',
             value: '33',
+            dateTime: new Date('2026-10-09T08:00:00'),
+            observation: 'Nenhuma observação',
             patientId: patientId,
-            caregiverId: caregivers[0],
-            caregiverName: 'Marina Souza',
-            observation: 'Nenhuma observação'
+            caregiverId: caregivers[0]
         },
         {
-            dateTime: new Date('2026-09-09T12:00:00'),
             record: 'bodyTemperature',
             value: '30',
+            dateTime: new Date('2026-09-09T12:00:00'),
+            observation: 'Nenhuma observação',
             patientId: patientId,
-            caregiverId: caregivers[0],
-            caregiverName: 'Marina Souza',
-            observation: 'Nenhuma observação'
+            caregiverId: caregivers[0]
         },
         {
-            dateTime: new Date('2026-10-07T08:00:00'),
             record: 'oxygenSaturation',
             value: '98',
+            dateTime: new Date('2026-10-07T08:00:00'),
+            observation: 'Nenhuma observação',
             patientId: patientId,
-            caregiverId: caregivers[0],
-            caregiverName: 'Marina Souza',
-            observation: 'Nenhuma observação'
+            caregiverId: caregivers[0]
         },
         {
-            dateTime: new Date('2026-10-09T08:00:00'),
             record: 'oxygenSaturation',
             value: '99',
+            dateTime: new Date('2026-10-09T08:00:00'),
+            observation: 'Nenhuma observação',
             patientId: patientId,
-            caregiverId: caregivers[0],
-            caregiverName: 'Marina Souza',
-            observation: 'Nenhuma observação'
+            caregiverId: caregivers[0]
         },
         {
-            dateTime: new Date('2026-09-09T12:00:00'),
             record: 'oxygenSaturation',
             value: '95',
+            dateTime: new Date('2026-09-09T12:00:00'),
+            observation: 'Nenhuma observação',
             patientId: patientId,
             caregiverId: caregivers[0],
-            caregiverName: 'Marina Souza',
-            observation: 'Nenhuma observação'
         },
         {
-            dateTime: new Date('2026-10-07T08:00:00'),
             record: 'bloodGlucose',
             value: '110',
+            dateTime: new Date('2026-10-07T08:00:00'),
+            observation: 'Nenhuma observação',
             patientId: patientId,
-            caregiverId: caregivers[0],
-            caregiverName: 'Marina Souza',
-            observation: 'Nenhuma observação'
+            caregiverId: caregivers[0]
         },
         {
-            dateTime: new Date('2026-10-09T08:00:00'),
             record: 'bloodGlucose',
             value: '85',
+            dateTime: new Date('2026-10-09T08:00:00'),
+            observation: 'Nenhuma observação',
             patientId: patientId,
-            caregiverId: caregivers[0],
-            caregiverName: 'Marina Souza',
-            observation: 'Nenhuma observação'
+            caregiverId: caregivers[0]
         },
         {
-            dateTime: new Date('2026-09-09T12:00:00'),
             record: 'bloodGlucose',
             value: '90',
+            dateTime: new Date('2026-09-09T12:00:00'),
+            observation: 'Nenhuma observação',
             patientId: patientId,
-            caregiverId: caregivers[0],
-            caregiverName: 'Marina Souza',
-            observation: 'Nenhuma observação'
+            caregiverId: caregivers[0]
         },
         {
-            dateTime: new Date('2026-10-07T08:00:00'),
             record: 'heartRate',
             value: '76',
+            dateTime: new Date('2026-10-07T08:00:00'),
+            observation: 'Nenhuma observação',
             patientId: patientId,
-            caregiverId: caregivers[0],
-            caregiverName: 'Marina Souza',
-            observation: 'Nenhuma observação'
+            caregiverId: caregivers[0]
         },
         {
-            dateTime: new Date('2026-10-09T08:00:00'),
             record: 'heartRate',
             value: '80',
+            dateTime: new Date('2026-10-09T08:00:00'),
+            observation: 'Nenhuma observação',
             patientId: patientId,
-            caregiverId: caregivers[0],
-            caregiverName: 'Marina Souza',
-            observation: 'Nenhuma observação'
+            caregiverId: caregivers[0]
         },
         {
-            dateTime: new Date('2026-09-09T12:00:00'),
             record: 'heartRate',
             value: '67',
+            dateTime: new Date('2026-09-09T12:00:00'),
+            observation: 'Nenhuma observação',
             patientId: patientId,
-            caregiverId: caregivers[0],
-            caregiverName: 'Marina Souza',
-            observation: 'Nenhuma observação'
+            caregiverId: caregivers[0]
         }
     ])
 
     transaction.table('followUps').bulkAdd([
         {
-            dateTime: new Date(),
             record: 'mood',
             value: 'Paciente calmo e colaborativo',
+            dateTime: new Date(),
             patientId: patientId,
-            caregiverId: caregivers[0],
-            caregiverName: 'Marina Souza',
+            caregiverId: caregivers[0]
         },
         {
-            dateTime: new Date(),
             record: 'sleep',
-            value: 85,
+            value: '8',
+            dateTime: new Date(),
             patientId: patientId,
-            caregiverId: caregivers[0],
-            caregiverName: 'Marina Souza',
+            caregiverId: caregivers[0]
         },
         {
-            dateTime: new Date(),
-            record: 'foodAcceptance',
+            record: 'mealAcceptance',
             value: 'Comeu toda a sopa do jantar',
+            dateTime: new Date(),
             patientId: patientId,
-            caregiverId: caregivers[0],
-            caregiverName: 'Marina Souza',
+            caregiverId: caregivers[0]
         }
     ])
 
-    const medicationIds = await transaction
-        .table('medicines')
-        .bulkAdd([
-            {
-                name: 'Metformina 850mg',
-                dosage: '1 comprimido',
-                routeAdmin: 'oral',
-                observations: 'Tomar logo após as refeições',
-                patientId: patientId,
-                active: true
-            },
-            {
-                name: 'Dipirona Monosódica 1g',
-                dosage: '1 comprimido',
-                routeAdmin: 'oral',
-                observations: '',
-                patientId: patientId,
-                active: false
-            }
-        ], {allKeys: true})
+    const medicationIds = await transaction.table('medicines').bulkAdd([
+        {
+            name: 'Metformina 850mg',
+            dosage: '1 comprimido',
+            routeAdmin: 'oral',
+            observations: 'Tomar logo após as refeições',
+            patientId: patientId,
+            active: true
+        },
+        {
+            name: 'Dipirona Monossódica 1g',
+            dosage: '1 comprimido',
+            routeAdmin: 'oral',
+            observations: '',
+            patientId: patientId,
+            active: false
+        }
+    ], {allKeys: true})
 
     transaction.table('medicineRegistries').bulkAdd([
         {
             patientId: patientId,
             medicationId: medicationIds[0],
-            medicationName: 'Metformina 850mg',
-            medicationDosage: '1 comprimido',
+            medicationName: 'Metformina 850mg', //
+            medicationDosage: '1 comprimido', //
             dateTime: new Date(),
             caregiverId: caregivers[0],
-            caregiverName: 'Marina Souza',
+            caregiverName: 'Marina Souza', //
             observations: 'Paciente tomou sem resistência'
         }
     ])

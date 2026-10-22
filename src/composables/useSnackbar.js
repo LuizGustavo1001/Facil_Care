@@ -23,11 +23,7 @@ export function useSnackbar() {
 
         const warningTemplate = warningMessages[code]
 
-        const translationKey = `warningMessages.${code}.title`
-
-        data.message = te(translationKey)
-            ? t(translationKey)
-            : t("warningMessages.generic.title")
+        data.message = getWarningTitle(code)
 
         data.type = warningTemplate || ""
         isActive.value = true
@@ -39,5 +35,11 @@ export function useSnackbar() {
         data.type = ""
     }
 
-    return { data, open, isActive, clear }
+    const getWarningTitle = (code) => {
+        return te(`warningMessages.${code}.title`)
+            ? t(`warningMessages.${code}.title`)
+            : t("warningMessages.generic.title")
+    }
+
+    return { data, open, isActive, clear, getWarningTitle }
 }

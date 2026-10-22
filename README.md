@@ -91,6 +91,7 @@ Recursos Futuros
 Afins
 6. **Converter escalas para outros sistemas**: Como exemplo, converter de graus Celsius para Fahrenheit
 7. **Verificar Validade do arquivo de backup**
+8. **Adaptar o formulário de Pressão Sanguínea**
 
 ---
 - `*` Para gerar o QR Code de Backup do paciente será necessário **conexão com a internet**`*`, tendo em vista a limitação de caracteres que o código pode apresentar

@@ -70,5 +70,35 @@ export function useDate() {
         return `${year}-${month}-${day}`
     }
 
-    return { getAge, getFormatted, getToday }
+    /**
+     * Returns current local date and time formatted for `datetime-local` input (`YYYY-MM-DDTHH:mm`).
+     *
+     * @returns { String } Formatted current local date and time.
+     **/
+    const getCurrentDateTimeLocal = () => {
+        return formatToDateTimeLocal(new Date())
+    }
+
+    /**
+     * Parse any Date/ISO String to datetime-local formart by the local time zone.
+     *
+     * @param { Date | String } dateInput
+     * @returns { String } Ex: "2026-10-21T13:50"
+     */
+    const formatToDateTimeLocal = (dateInput) => {
+        if (!dateInput) return ""
+
+        const d = new Date(dateInput)
+        if (isNaN(d.getTime())) return ""
+
+        const year = d.getFullYear()
+        const month = String(d.getMonth() + 1).padStart(2, "0")
+        const day = String(d.getDate()).padStart(2, "0")
+        const hours = String(d.getHours()).padStart(2, "0")
+        const minutes = String(d.getMinutes()).padStart(2, "0")
+
+        return `${year}-${month}-${day}T${hours}:${minutes}`
+    }
+
+    return { getAge, getFormatted, getToday, formatToDateTimeLocal, getCurrentDateTimeLocal }
 }

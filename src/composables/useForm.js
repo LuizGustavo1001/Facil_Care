@@ -92,7 +92,7 @@ export function useForm(){
      * @returns { Object }
      */
     const normalizeFormValues = (data, template) => {
-        return convertFormValues(data, template,  (type, value) => unit.toMetric(type, value))
+        return convertFormValues(data, template, (type, value) => unit.toMetric(type, value))
     }
 
     /**
@@ -120,9 +120,9 @@ export function useForm(){
         isSubmitting.value = true
         formWarning.value = null
 
-        try{
+        try {
             return await actionCallback()
-        }finally{
+        }finally {
             isSubmitting.value = false
         }
     }
@@ -145,34 +145,48 @@ export function useForm(){
     }
 
     // Returns the props required by an input component
-    const getInputProps = (input, popupConfig, templateId, inputValue = null) => {
+    const getInputProps = (input, popupConfig, templateId, inputValue = null, dynamicData = {}) => {
         if(!templateId) return
 
-        const labelKey = `formPopupTemplates.${templateId}.main.inputs.${input.id}.label`
-        const placeholderKey = `formPopupTemplates.${templateId}.main.inputs.${input.id}.placeholder`
+        const labelKey = `formTemplates.${templateId}.main.inputs.${input.id}.label`
+        const placeholderKey = `formTemplates.${templateId}.main.inputs.${input.id}.placeholder`
 
-        const title = te(labelKey) ? t(labelKey) : ""
+        let title = te(labelKey) ? t(labelKey) : ""
         const placeholder = te(placeholderKey) ? t(placeholderKey) : ""
 
-        const currentValue = inputValue ? inputValue[input.name] : null
+        // Concat measurement unit of the current input
+        if(input.mods && input.mods.hasMeasurementUnit){
+            title += ` (${unit.getUnit(input.mods.measurementUnitType)})`
+        }
+
+        let currentValue = inputValue ? inputValue[input.name] : null
+
+        if ((currentValue === null || currentValue === undefined || currentValue === "") && input.isDefaultNow) {
+            currentValue = input.inputType === "datetime-local"
+                ? date.getCurrentDateTimeLocal()
+                : date.getToday()
+        }
 
         switch(input.tag){
             case "input":
                 return {
-                    label: title,
+                    label: input.inputType === "hidden"
+                        ? ""
+                        : title,
                     placeholder: placeholder,
                     for: input.for,
                     name: input.name,
                     inputType: input.inputType,
                     autoCapitalize: input.autoCapitalize ?? null,
-                    autofocus: true,
+                    autofocus: input.inputType !== "hidden",
                     step: input.step ?? null,
                     min: input.min ?? null,
                     max: input.inputType === "date"
                         ? (input.max ?? date.getToday())
                         : (input.max ?? null),
                     modelValue: currentValue ?? "",
-                    translate: "no"
+                    translate: "no",
+                    required: input.required ?? false
                 }
 
             case "select":
@@ -180,7 +194,7 @@ export function useForm(){
                     label: title,
                     for: input.for,
                     name: input.name,
-                    options: getSelectOptions(input),
+                    options: getSelectOptions(input, dynamicData),
                     modelValue: currentValue ?? "",
                     translate: "no",
                     disabled: popupConfig?.value?.readOnly ?? null
@@ -202,15 +216,41 @@ export function useForm(){
         }
     }
 
-    // Returns options based in translate data
-    const getSelectOptions = (input) => {
+    /**
+     * Generates options for Select input supporting both fixed options and dynamic database records.
+     *
+     * @param { Object } input - Input configuration object
+     * @param { Object } dynamicData - Object containing dynamic datasets (ex: { caregivers: [...] })
+     */
+    const getSelectOptions = (input, dynamicData = {}) => {
         let options = []
 
-        for(const option of input.options){
-            options.push({
-                placeholder: utils.getOptionTranslate(t(`${input.id}.${option.id}`) ?? ""),
-                value: option.value
-            })
+        // 1. Static Options
+        if (Array.isArray(input.options)) {
+            for (const option of input.options) {
+                const translationKey = `${input.id}.${option.id}`
+
+                let label = utils.getOptionTranslate(t(translationKey))
+
+                if(label === ""){
+                    label = (option.label || option.value)
+                }
+
+                options.push({
+                    placeholder: label,
+                    value: option.value
+                })
+            }
+        }
+
+        // 2. Dynamic Options from Database
+        if (input.dynamicKey && dynamicData[input.dynamicKey]) {
+            const dbItems = dynamicData[input.dynamicKey].map(item => ({
+                placeholder: item.name || item.title || item.label,
+                value: item.id || item._id || item.name
+            }))
+
+            options = [...options, ...dbItems]
         }
 
         return options
@@ -219,7 +259,6 @@ export function useForm(){
     // Returns form button props
     const getBtnProps = (btn, type) => {
         const key = `formPopupTypes.${type}.title`
-
         const title = te(key) ? t(key) : ""
 
         return {

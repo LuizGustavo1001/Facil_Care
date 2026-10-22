@@ -20,7 +20,7 @@
               v-for="input in template.main.inputs"
               :key="input.id || input.name"
               :is="form.getInputComponent(input.tag)"
-              v-bind="form.getInputProps(input, popupConfig, template.id, inputValue)"
+              v-bind="form.getInputProps(input, popupConfig, template.id, inputValue, dynamicData)"
           />
         </div>
 
@@ -84,6 +84,10 @@
       type: String,
       default: FORM_TYPES.EDIT,
       validator: (value) => Object.values(FORM_TYPES).includes(value)
+    },
+    dynamicData: {
+      type: Object,
+      default: () => ({})
     }
   })
 
@@ -94,7 +98,7 @@
   const getPopupTitle = () => {
     const typeKey = `formPopupTypes.${props.type}.title` // type label
 
-    const templateKey = `formPopupTemplates.${props.template.id}.header.title`
+    const templateKey = `formTemplates.${props.template.id}.header.title`
 
     const type = te(typeKey) ? t(typeKey) : ""
     const template = te(templateKey) ? t(templateKey) : ""
@@ -114,6 +118,13 @@
 
   // Emits the form submit
   const handleSubmit = (event) => {
+    const formElement = event.currentTarget
+
+    if(!formElement.checkValidity()){
+      formElement.checkValidity()
+      return
+    }
+
     if (popupConfig.value.readOnly) return
 
     const data = form.extractData(event)

@@ -14,8 +14,7 @@ export function useUnitSystem() {
      * Initializes or updates the application's unit.
      * The unit selection follows a hierarchy:
      * - Explicity provided unit
-     * - Saved unit in `localStorage`
-     * - System preference (or browser preference)
+     * - Saved unit at `localStorage`
      *
      * @param { string | null } nextUnit - The specific unit code (ex: `metric` or `imperial`). Defaults to `null`.
      **/
@@ -33,10 +32,7 @@ export function useUnitSystem() {
         const savedUnit = localStorage.getItem("unit")
         if(savedUnit){
             setUnit(savedUnit)
-            return
         }
-
-        return
     }
 
     /**
@@ -73,7 +69,7 @@ export function useUnitSystem() {
             case PAGES.WATER_INTAKE:
                 return isImperial.value ? "fl oz" : "L"
             case PAGES.WEIGHT:
-                return isImperial.value ? "lb" : "kg"
+                return isImperial.value ? "lb" : "Kg"
             default:
                 return ""
         }

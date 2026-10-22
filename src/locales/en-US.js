@@ -29,7 +29,7 @@ export default {
         [PAGES.BODY_TEMPERATURE]: "Body Temperature",
         [PAGES.BLOOD_PRESSURE]: "Blood Pressure",
         [PAGES.OXYGEN_SATURATION]: "Oxygen Saturation",
-        [PAGES.BLOOD_GLUCOSE]: "Glucose",
+        [PAGES.BLOOD_GLUCOSE]: "Blood Glucose",
         [PAGES.HEART_RATE]: "Heart Rate",
 
         [PAGES.MOOD]: "Mood",
@@ -38,7 +38,7 @@ export default {
         [PAGES.WATER_INTAKE]: "Water Intake",
         [PAGES.MEAL_ACCEPTANCE]: "Meal Acceptance",
         [PAGES.WEIGHT]: "Weight",
-        [PAGES.NECESSITIES]: "Monitoring of bowel and urine",
+        [PAGES.NECESSITIES]: "Monitoring of Bowel and Urine",
 
         [PAGES.NOTIFICATIONS]: "Notifications",
         [PAGES.ERASE]: "Erase Data",
@@ -68,6 +68,7 @@ export default {
         deleteAccount: "Erase Data",
         homePage: "Back to home page",
         years: "years",
+        back: "Back",
         selectOption: "Select an option",
         themes: {
             [THEMES.LIGHT]: {
@@ -211,12 +212,45 @@ export default {
                 [PAGES.MEDICINES]: {
                     title: "Medicine"
                 },
-                [PAGES.VITAL_SIGNS]: {
-                    title: "Vital Sign"
+
+                [PAGES.BODY_TEMPERATURE]: {
+                    title: "Body Temperature"
                 },
-                [PAGES.FOLLOW_UPS]: {
-                    title: "Physiological and Behavioral Monitoring"
+                [PAGES.BLOOD_PRESSURE]: {
+                    title: "Blood Pressure"
                 },
+                [PAGES.OXYGEN_SATURATION]: {
+                    title: "Oxygen Saturation"
+                },
+                [PAGES.BLOOD_GLUCOSE]: {
+                    title: "Blood Glucose"
+                },
+                [PAGES.HEART_RATE]: {
+                    title: "Heart Rate"
+                },
+
+                [PAGES.MOOD]: {
+                    title: "Mood"
+                },
+                [PAGES.PAIN_LEVEL]: {
+                    title: "Pain Level"
+                },
+                [PAGES.SLEEP]: {
+                    title: "Sleep Quality"
+                },
+                [PAGES.WATER_INTAKE]: {
+                    title: "Water Intake"
+                },
+                [PAGES.MEAL_ACCEPTANCE]: {
+                    title: "Meal Acceptance",
+                },
+                [PAGES.WEIGHT]: {
+                    title: "Weight"
+                },
+                [PAGES.NECESSITIES]: {
+                    title: "Necessities"
+                },
+
                 [PAGES.ALLERGIES]: {
                     title: "Allergy"
                 },
@@ -668,18 +702,88 @@ export default {
             }
         },
 
-        [PAGES.VITAL_SIGNS]: {
+        [PAGES.BODY_TEMPERATURE]: {
             buttons: {
                 primary: {
-                    title: "Record Vital Sign"
+                    title: "Record New Body Temperature"
+                }
+            }
+        },
+        [PAGES.BLOOD_PRESSURE]: {
+            buttons: {
+                primary: {
+                    title: "Record New Blood Pressure"
+                }
+            }
+        },
+        [PAGES.OXYGEN_SATURATION]: {
+            buttons: {
+                primary: {
+                    title: "Record New Oxygen Saturation"
+                }
+            }
+        },
+        [PAGES.BLOOD_GLUCOSE]: {
+            buttons: {
+                primary: {
+                    title: "Record New Blood Glucose"
+                }
+            }
+        },
+        [PAGES.HEART_RATE]: {
+            buttons: {
+                primary: {
+                    title: "Record New Heart Rate"
                 }
             }
         },
 
-        [PAGES.FOLLOW_UPS]: {
+        [PAGES.MOOD]: {
             buttons: {
                 primary: {
-                    title: "Record Physiological / Behavioral State"
+                    title: "Record New Mood"
+                }
+            }
+        },
+        [PAGES.PAIN_LEVEL]: {
+            buttons: {
+                primary: {
+                    title: "Record New Pain Level"
+                }
+            }
+        },
+        [PAGES.SLEEP]: {
+            buttons: {
+                primary: {
+                    title: "Record New Sleep Quality"
+                }
+            }
+        },
+        [PAGES.WATER_INTAKE]: {
+            buttons: {
+                primary: {
+                    title: "Record New Water Intake"
+                }
+            }
+        },
+        [PAGES.MEAL_ACCEPTANCE]: {
+            buttons: {
+                primary: {
+                    title: "Record New Meal Acceptance"
+                }
+            }
+        },
+        [PAGES.WEIGHT]: {
+            buttons: {
+                primary: {
+                    title: "Record New Weight"
+                }
+            }
+        },
+        [PAGES.NECESSITIES]: {
+            buttons: {
+                primary: {
+                    title: "Record New Necessities"
                 }
             }
         },
@@ -691,10 +795,11 @@ export default {
                 }
             }
         },
+
         [PAGES.MEDICINE_REGISTRIES]: {
             buttons: {
                 primary: {
-                    title: "Administer Medication"
+                    title: "Administer Medicine"
                 }
             }
         },
@@ -822,7 +927,7 @@ export default {
         }
     },
 
-    formPopupTemplates: {
+    formTemplates: {
         name: {
             header: {
                 title: "Patient's Name"
@@ -886,6 +991,295 @@ export default {
                 }
             }
         },
+
+        [PAGES.BODY_TEMPERATURE]: {
+            header: {
+                title: "Body Temperature Registry",
+            },
+            main: {
+                inputs: {
+                    value: {
+                        label: "Temperature",
+                        placeholder: "ex: 33"
+                    },
+                    dateTime: {
+                        label: "Measurement Date-Time"
+                    },
+                    caregiverId: {
+                        label: "Caregiver Responsible"
+                    },
+                    observations: {
+                        label: "Observations",
+                        placeholder: "Mention any specific detail..."
+                    }
+                }
+            }
+        },
+
+        [PAGES.BLOOD_PRESSURE]: {
+            header: {
+                title: "Blood Pressure Registry",
+            },
+            main: {
+                inputs: {
+                    value: {
+                        label: "(Under development) Blood Pressure",
+                        placeholder: "ex: 120/80"
+                    },
+                    dateTime: {
+                        label: "Measurement Date-Time"
+                    },
+                    caregiverId: {
+                        label: "Caregiver Responsible"
+                    },
+                    observations: {
+                        label: "Observations",
+                        placeholder: "Mention any specific detail..."
+                    }
+                }
+            }
+        },
+
+        [PAGES.OXYGEN_SATURATION]: {
+            header: {
+                title: "Oxygen Saturation Registry",
+            },
+            main: {
+                inputs: {
+                    value: {
+                        label: "Saturation",
+                        placeholder: "ex: 99"
+                    },
+                    dateTime: {
+                        label: "Measurement Date-Time"
+                    },
+                    caregiverId: {
+                        label: "Caregiver Responsible"
+                    },
+                    observations: {
+                        label: "Observations",
+                        placeholder: "Mention any specific detail..."
+                    }
+                }
+            }
+        },
+
+        [PAGES.BLOOD_GLUCOSE]: {
+            header: {
+                title: "Blood Glucose Registry",
+            },
+            main: {
+                inputs: {
+                    value: {
+                        label: "Glucose",
+                        placeholder: "ex: 120"
+                    },
+                    dateTime: {
+                        label: "Measurement Date-Time"
+                    },
+                    caregiverId: {
+                        label: "Caregiver Responsible"
+                    },
+                    observations: {
+                        label: "Observations",
+                        placeholder: "Mention any specific detail..."
+                    }
+                }
+            }
+        },
+
+        [PAGES.HEART_RATE]: {
+            header: {
+                title: "Heart Rate Registry",
+            },
+            main: {
+                inputs: {
+                    value: {
+                        label: "Heart Rate",
+                        placeholder: "ex: 75"
+                    },
+                    dateTime: {
+                        label: "Measurement Date-Time"
+                    },
+                    caregiverId: {
+                        label: "Caregiver Responsible"
+                    },
+                    observations: {
+                        label: "Observations",
+                        placeholder: "Mention any specific detail..."
+                    }
+                }
+            }
+        },
+
+        [PAGES.MOOD]: {
+            header: {
+                title: "Mood Registry",
+            },
+            main: {
+                inputs: {
+                    value: {
+                        label: "Mood Description",
+                        placeholder: "ex: The patient appears anxious about the tests that will be performed today...."
+                    },
+                    dateTime: {
+                        label: "Measurement Date-Time"
+                    },
+                    caregiverId: {
+                        label: "Caregiver Responsible"
+                    },
+                    observations: {
+                        label: "Observations",
+                        placeholder: "Mention any specific detail..."
+                    }
+                }
+            }
+        },
+
+        [PAGES.PAIN_LEVEL]: {
+            header: {
+                title: "Pain Level Registry",
+            },
+            main: {
+                inputs: {
+                    value: {
+                        label: "Pain Level (0 a 10)",
+                        placeholder: "ex: 4"
+                    },
+                    dateTime: {
+                        label: "Measurement Date-Time"
+                    },
+                    caregiverId: {
+                        label: "Caregiver Responsible"
+                    },
+                    observations: {
+                        label: "Observations",
+                        placeholder: "Mention any specific detail..."
+                    }
+                }
+            }
+        },
+
+        [PAGES.SLEEP]: {
+            header: {
+                title: "Sleep Quality Registry",
+            },
+            main: {
+                inputs: {
+                    value: {
+                        label: "Sleep Quality (0 throught 10)",
+                        placeholder: "ex: 4"
+                    },
+                    dateTime: {
+                        label: "Measurement Date-Time"
+                    },
+                    caregiverId: {
+                        label: "Caregiver Responsible"
+                    },
+                    observations: {
+                        label: "Observations",
+                        placeholder: "Mention any specific detail..."
+                    }
+                }
+            }
+        },
+
+        [PAGES.WATER_INTAKE]: {
+            header: {
+                title: "Water Intake Registry",
+            },
+            main: {
+                inputs: {
+                    value: {
+                        label: "Amount (liters)",
+                        placeholder: "ex: 1.5"
+                    },
+                    dateTime: {
+                        label: "Measurement Date-Time"
+                    },
+                    caregiverId: {
+                        label: "Caregiver Responsible"
+                    },
+                    observations: {
+                        label: "Observations",
+                        placeholder: "Mention any specific detail..."
+                    }
+                }
+            }
+        },
+
+        [PAGES.MEAL_ACCEPTANCE]: {
+            header: {
+                title: "Meal Acceptance Registry",
+            },
+            main: {
+                inputs: {
+                    value: {
+                        label: "Acceptance Description",
+                        placeholder: "ex: The patient ate without any chewing difficulties...."
+                    },
+                    dateTime: {
+                        label: "Measurement Date-Time"
+                    },
+                    caregiverId: {
+                        label: "Caregiver Responsible"
+                    },
+                    observations: {
+                        label: "Observations",
+                        placeholder: "Mention any specific detail..."
+                    }
+                }
+            }
+        },
+
+        [PAGES.WEIGHT]: {
+            header: {
+                title: "Weight Registry",
+            },
+            main: {
+                inputs: {
+                    value: {
+                        label: "Weight (Kg)",
+                        placeholder: "ex: 65"
+                    },
+                    dateTime: {
+                        label: "Measurement Date-Time"
+                    },
+                    caregiverId: {
+                        label: "Caregiver Responsible"
+                    },
+                    observations: {
+                        label: "Observations",
+                        placeholder: "Mention any specific detail..."
+                    }
+                }
+            }
+        },
+
+        [PAGES.NECESSITIES]: {
+            header: {
+                title: "Necessities Registry",
+            },
+            main: {
+                inputs: {
+                    value: {
+                        label: "Description",
+                        placeholder: "ex: Patient evacuating normally..."
+                    },
+                    dateTime: {
+                        label: "Measurement Date-Time"
+                    },
+                    caregiverId: {
+                        label: "Caregiver Responsible"
+                    },
+                    observations: {
+                        label: "Observations",
+                        placeholder: "Mention any specific detail..."
+                    }
+                }
+            }
+        },
+
         [PAGES.MEDICINES]: {
             header: {
                 title: "Medicine Data"
@@ -923,7 +1317,7 @@ export default {
                     medicationDosage: {
                         label: "Medication Dosage"
                     },
-                    caregiverName: {
+                    caregiverId: {
                         label: "Caregiver Name"
                     },
                     observations: {
@@ -994,7 +1388,7 @@ export default {
                 inputs: {
                     name: {
                         label: "Plan's Name",
-                        ex: "SUS plan"
+                        plan: "SUS plan"
                     }
                 }
             }
@@ -1015,30 +1409,6 @@ export default {
                     phone: {
                         label: "Contact Number",
                         placeholder: "(XXX) XXX-XXXX"
-                    }
-                }
-            }
-        },
-        [PAGES.VITAL_SIGNS]: {
-            header: {
-                title: "Vital Sign"
-            },
-            main: {
-                inputs: {
-                    record: {
-                        label: "Vital Sign"
-                    },
-                    value: {
-                        label: "Measurement",
-                        placeholder: "ex: (120/80) for blood pressure..."
-                    },
-                    caregiverName: {
-                        label: "Caregiver's Name",
-                        placeholder: "ex: Jane Doe"
-                    },
-                    observations: {
-                        label: "Observations",
-                        placeholder: "Observations here"
                     }
                 }
             }

@@ -158,6 +158,39 @@ export default class PatientRecordController {
     }
 
     /**
+     * Adds a new patient record item to the collection based on the selected patient's Id
+     *
+     * @param { Object } newItem
+     * @param { number } patientId
+     * @param { string } recordType
+     **/
+    async create(newItem, recordType, patientId = 1) {
+        try {
+            const itemData = {
+                ...newItem,
+                patientId,
+                record: recordType
+            }
+
+            await this.model.create(itemData)
+            const updatedData = await this.model.getAll()
+
+            return{
+                success: true,
+                code: `${this.codeLabel}Created`,
+                data: updatedData
+            }
+        }catch(err){
+            console.log("Database Error: ", err)
+            return{
+                success: false,
+                code: `${this.codeLabel}CreationFailed`,
+                data: []
+            }
+        }
+    }
+
+    /**
      * Updates patient's record data merging fields.
      * Retains the record's original `_id` and overwrite the sended keys.
      *
