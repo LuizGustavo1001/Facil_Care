@@ -223,7 +223,7 @@ export default {
                     title: "Saturação"
                 },
                 [PAGES.BLOOD_GLUCOSE]: {
-                    title: "Glicose"
+                    title: "Glicemia"
                 },
                 [PAGES.HEART_RATE]: {
                     title: "Frequência Cardíaca"

@@ -1,6 +1,26 @@
-# FacilCare (PWA) - PWA Offline-First para Monitoramento de Saúde
 
-> **Contexto**: Com o envelhecimento acelerado da população no Brasil e no mundo, famílias precisam monitorar a rotina de saúde dos idosos em tempo real.
+<div align="center">
+  <img src="/docs/logo/facilCare-fill.webp" alt="" width="75" />
+
+  <h1>FacilCare</h1>
+  <p>PWA <em>Offline-First</em> para <strong>Monitoramento de Saúde</strong></p>
+</div>
+ 
+<div align="center">
+  <a href="https://www.figma.com/design/Hz5x5uWg9bis53saHyB4vJ/Cuidados-Di%C3%A1rios?node-id=0-1&p=f&t=72omA2iRuWiTJfML-0">
+    <img src="https://img.shields.io/badge/Projeto no Figma-696969?style=for-the-badge&logo=figma&logoColor=figma" alt="Figma Project">
+  </a>
+
+  <a href="https://facilcare.vercel.app">
+    <img src="https://img.shields.io/badge/Acessar%20Sistema-2E7D32?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Acessar Sistema">
+  </a>
+</div>
+
+> 🎨 Projeto Figma: [Clique Aqui](https://www.figma.com/design/Hz5x5uWg9bis53saHyB4vJ/Cuidados-Di%C3%A1rios?node-id=0-1&p=f&t=72omA2iRuWiTJfML-0)
+
+> 🌐 Página Web: [Clique Aqui](https://facilcare.vercel.app/)
+
+> Com o **envelhecimento acelerado** da população no Brasil e no mundo, famílias precisam **monitorar** a rotina de saúde dos idosos em **tempo real**.
 
 O *Progressive Web App* (PWA) será **100% offline** (salvo as exceções`*`), ou seja, é possível:
 - Acessá-lo mesmo **sem conexão** com internet
@@ -9,9 +29,34 @@ O *Progressive Web App* (PWA) será **100% offline** (salvo as exceções`*`), o
 
 Para isso, utiliza-se o banco de dados interno aos navegadores (`IndexedDB` + wrapper `Dexie.js`)
 
-> 🎨 Projeto Figma: [Clique Aqui](https://www.figma.com/design/Hz5x5uWg9bis53saHyB4vJ/Cuidados-Di%C3%A1rios?node-id=0-1&p=f&t=72omA2iRuWiTJfML-0)
-
-> 🌐 Página Web: [Clique Aqui](https://facilcare.vercel.app/)
+Imagens do Sistema
+---
+<table>
+  <tr>
+    <th>Página Inicial</th>
+    <th>Gerenciamento</th>
+    <th>Registros</th>
+    <th>Estatísticas</th>
+    <th>Sinais Vitais</th>
+  </tr>
+  <tr>
+    <td>
+      <img src="/docs/preview/home-page.webp" alt="Página Inicial" width="240">
+    </td>
+    <td>
+      <img src="/docs/preview/manage-page.webp" alt="Página Exemplo de Gerenciamento" width="240">
+    </td>
+    <td>
+      <img src="/docs/preview/register-page.webp" alt="Página Exemplo de Registros" width="240">
+    </td>
+    <td>
+      <img src="/docs/preview/statistics-page.webp" alt="Página Exemplo de Estatísticas" width="240">
+    </td>
+    <td>
+      <img src="/docs/preview/vital-signs-page.webp" alt="Página de Sinais Vitais" width="240">
+    </td>
+  </tr>
+</table>
 
 Funcionalidades
 ---
@@ -34,11 +79,10 @@ Sistema com foco em **facilitar a rotina de cuidadores**, permitindo:
   - Últimas medições/registros
 - **Registro de sinais vitais**:
     - Medições diárias *(glicemia, pressão arterial, temperatura, saturação de oxigênio, frequência cardíaca)*
-    - Medições podem ocorrer mais de uma vez por dia
 - **Acompanhamento Fisiológico e Comportamental**:
     - Humor
-    - Nível de dor (Escala númerica (0 a 10))
-    - Qualidade do sono (0 a 100)
+    - Nível de dor
+    - Qualidade do sono
     - Aceitação de refeições + Ingestão de água
     - Controle de evacuação e diurese
     - Peso
@@ -47,15 +91,13 @@ Sistema com foco em **facilitar a rotina de cuidadores**, permitindo:
 - **Cadastro de Aprazamento**:
     - Registro de medicamentos *(dosagens, via de administração, horários e observações)*
 - **Alerta (Notificações)**:
-    - Alertas visuais e sonoros no momento que algum remédio deve ser tomado *(`Web Notifications API`)*
+    - Alertas visuais e sonoros no momento que algum remédio deve ser tomado
 - **Checklist de Aprazamentos**
     - Registrar os dados de medicamentos administrados (data/hora da administração, cuidador e observações)
 
 ## Análise de Dados (Relatórios)
 - **Dashboard Interativo**:
     - Gráficos representando, por exemplo, sinais vitais do paciente ou comportamento em um determinado período (período selecionável)
-- **Linha do Tempo (Diária)**:
-    - Feed diário (remédios administrados,f quem aplicou e observações registradas)
 
 ## Troca de Dados
 - **Backup JSON**: Exportação e importação manual do arquivo de backup para migração de dispositivos e prevenção de perdas sem uso de nuvem
@@ -68,17 +110,17 @@ Esquema de Pastas
 ---
 ```
   |
-  |- public             # Ícones do PWA
+  |- public            # Imagens do PWA
   |- src              
      |- assets         # Estilos globais, fontes e ícones
      |- components     # Componentes de UI em Vue
      |- composables    # Regras de Negócio
      |- controllers    # Controladores da aplicação
      |- database       # Inicialização do Dexie.js / IndexedDB
-     |- locales        # Lógica de internacionalização (i18n)
+     |- locales        # Lógica de tradução (idioma) (i18n)
      |- models         # Modelos de acesso aos dados
      |- router         # Rotas de navegação do Vue Router
-     |- views          # Páginas principais do sistema
+     |- views          # Páginas do sistema
 ```
 
 Recursos Futuros
