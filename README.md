@@ -7,18 +7,14 @@
 </div>
  
 <div align="center">
-  <a href="https://www.figma.com/design/Hz5x5uWg9bis53saHyB4vJ/Cuidados-Di%C3%A1rios?node-id=0-1&p=f&t=72omA2iRuWiTJfML-0">
+  <a href="https://www.figma.com/design/Hz5x5uWg9bis53saHyB4vJ/Cuidados-Di%C3%A1rios?node-id=0-1&p=f&t=72omA2iRuWiTJfML-0" rel="external">
     <img src="https://img.shields.io/badge/Projeto no Figma-696969?style=for-the-badge&logo=figma&logoColor=figma" alt="Figma Project">
   </a>
 
-  <a href="https://facilcare.vercel.app">
+  <a href="https://facilcare.vercel.app" rel="external">
     <img src="https://img.shields.io/badge/Acessar%20Sistema-2E7D32?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Acessar Sistema">
   </a>
 </div>
-
-> 🎨 Projeto Figma: [Clique Aqui](https://www.figma.com/design/Hz5x5uWg9bis53saHyB4vJ/Cuidados-Di%C3%A1rios?node-id=0-1&p=f&t=72omA2iRuWiTJfML-0)
-
-> 🌐 Página Web: [Clique Aqui](https://facilcare.vercel.app/)
 
 > Com o **envelhecimento acelerado** da população no Brasil e no mundo, famílias precisam **monitorar** a rotina de saúde dos idosos em **tempo real**.
 
