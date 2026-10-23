@@ -7,7 +7,7 @@
 </div>
  
 <div align="center">
-  <a href="https://www.figma.com/design/Hz5x5uWg9bis53saHyB4vJ/Cuidados-Di%C3%A1rios?node-id=0-1&p=f&t=72omA2iRuWiTJfML-0" rel="external" target="_blank">>
+  <a href="https://www.figma.com/design/Hz5x5uWg9bis53saHyB4vJ/Cuidados-Di%C3%A1rios?node-id=0-1&p=f&t=72omA2iRuWiTJfML-0" rel="external" target="_blank">
     <img src="https://img.shields.io/badge/Projeto no Figma-696969?style=for-the-badge&logo=figma&logoColor=figma" alt="Figma Project">
   </a>
 
