@@ -1,7 +1,5 @@
-
 <div align="center">
-  <img src="/docs/logo/facilCare-fill.webp" alt="" width="75" />
-
+  <img src="/docs/logo/facilCare-fill.webp" alt="" width="100" />
   <h1>FacilCare</h1>
   <p>PWA <em>Offline-First</em> para <strong>Monitoramento de Saúde</strong></p>
 </div>
@@ -54,11 +52,12 @@ Imagens do Sistema
   </tr>
 </table>
 
-Funcionalidades
 ---
+
+## Funcionalidades
 Sistema com foco em **facilitar a rotina de cuidadores**, permitindo: 
 
-## Gestão de Perfil e Emergência `**`
+### Gestão de Perfil e Emergência `**`
 - **Ficha médica básica:**
     - Dados pessoais (nome, endereço, data de nascimento e peso)
     - Tipo sanguíneo
@@ -69,7 +68,7 @@ Sistema com foco em **facilitar a rotina de cuidadores**, permitindo:
 - **Outros:**
     - Familiares Próximos
 
-## Diário de Cuidados e Rotina Diária
+### Diário de Cuidados e Rotina Diária
 - Possibilita visualizar cada registro de forma unitária, apresentando:
   - Estatísticas (filtradas por data)
   - Últimas medições/registros
@@ -83,7 +82,7 @@ Sistema com foco em **facilitar a rotina de cuidadores**, permitindo:
     - Controle de evacuação e diurese
     - Peso
 
-## Controle de Medicamentos `***`
+### Controle de Medicamentos `***`
 - **Cadastro de Aprazamento**:
     - Registro de medicamentos *(dosagens, via de administração, horários e observações)*
 - **Alerta (Notificações)**:
@@ -91,19 +90,20 @@ Sistema com foco em **facilitar a rotina de cuidadores**, permitindo:
 - **Checklist de Aprazamentos**
     - Registrar os dados de medicamentos administrados (data/hora da administração, cuidador e observações)
 
-## Análise de Dados (Relatórios)
+### Análise de Dados (Relatórios)
 - **Dashboard Interativo**:
     - Gráficos representando, por exemplo, sinais vitais do paciente ou comportamento em um determinado período (período selecionável)
 
-## Troca de Dados
+### Troca de Dados
 - **Backup JSON**: Exportação e importação manual do arquivo de backup para migração de dispositivos e prevenção de perdas sem uso de nuvem
 - **Sincronização P2P (WebRTC/PeerJS)**: Envio de dados diretamente entre dispositivos por meio da geração de QR Code com link de pareamento (`site/import?peerId=<hostPeerId>`)
 
-## Acessibilidade
+### Acessibilidade
 - **Interface Adaptada**: Modo claro, escuro e alto contraste
 
-Esquema de Pastas
 ---
+
+## Esquema de Pastas
 ```
   |
   |- public            # Imagens do PWA
@@ -119,8 +119,9 @@ Esquema de Pastas
      |- views          # Páginas do sistema
 ```
 
-Recursos Futuros
 ---
+
+## Recursos Futuros
 1. **Acompanhamento Visual de Lesões**: Uso da câmera do dispositivo para registro fotográfico de alterações na corporais em geral
 2. **Controle Automático de Estoque**: Baixa automática de quantidade disponível de remédios ao confirmar a dose, com alertas visuais para reposição
 3. **Síntese de Voz (Web Speech API)**: Leitura dos lembretes e horários de remédios em voz alta para apoiar pessoas com limitações visuais
