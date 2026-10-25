@@ -188,7 +188,7 @@
           id: doctor._id,
           title: doctor.name,
           description: getDescription([
-              utils.getOptionTranslate(`speciality.${doctor.speciality}`),
+              utils.getOptionTranslate("speciality", `${doctor.speciality}`),
               doctor.phone
           ])
         }))
@@ -203,7 +203,8 @@
           id: medicine._id,
           title: medicine.name + (medicine.routeAdmin
               ? ` (${utils.getOptionTranslate(
-                  `routeAdmin.${medicine.routeAdmin}`
+                  "routeAdmin",
+                  `${medicine.routeAdmin}`
               )})`
               : ""
           ),
@@ -232,7 +233,8 @@
           title: contact.name,
           description: getDescription([
             utils.getOptionTranslate(
-                `kinship.${contact.kinship}`
+                "kinship",
+                `${contact.kinship}`
             ),
             contact.phone
           ])

@@ -70,36 +70,6 @@ export default {
         years: "years",
         back: "Back",
         selectOption: "Select an option",
-        themes: {
-            [THEMES.LIGHT]: {
-                label: "Light Mode"
-            },
-            [THEMES.DARK]: {
-                label: "Dark Mode"
-            },
-            [THEMES.SYSTEM]: {
-                label: "Follow System"
-            },
-            [THEMES.HIGH_CONTRAST]: {
-                label: "High Contrast"
-            }
-        },
-        languages: {
-            [LANGUAGES.PT_BR]: {
-                label: "Portuguese Brazil"
-            },
-            [LANGUAGES.EN_US]: {
-                label: "English"
-            }
-        },
-        units: {
-            [UNITS.METRIC]: {
-                label: "Metric"
-            },
-            [UNITS.IMPERIAL]: {
-                label: "Imperial"
-            }
-        },
         pageFallback: {
             title: "Page not found",
             button: "Click to go to the homepage",
@@ -161,7 +131,21 @@ export default {
             b_positive: "B+",
             ab_negative: "AB-",
             ab_positive: "AB+"
-        }
+        },
+        units: {
+            [UNITS.METRIC]: "Metric",
+            [UNITS.IMPERIAL]: "Imperial"
+        },
+        themes: {
+            [THEMES.LIGHT]: "Light Mode",
+            [THEMES.DARK]: "Dark Mode",
+            [THEMES.SYSTEM]: "Follow System",
+            [THEMES.HIGH_CONTRAST]: "High Contrast"
+        },
+        languages: {
+            [LANGUAGES.PT_BR]: "Portuguese Brazil",
+            [LANGUAGES.EN_US]: "English"
+        },
     },
 
     views: {
@@ -336,9 +320,6 @@ export default {
                         bloodType: {
                             title: "Blood Type",
                         },
-                        weight: {
-                            title: "Weight"
-                        },
                         address: {
                             title: "Address"
                         }
@@ -441,7 +422,7 @@ export default {
                             title: "System Language"
                         },
                         units: {
-                            title: "Unit of Measurement (under development)"
+                            title: "Unit of Measurement"
                         }
                     }
                 }
@@ -934,7 +915,7 @@ export default {
             },
             main: {
                 inputs: {
-                    usr_1: {
+                    name: {
                         label: "Patient's Name",
                         placeholder: "ex: Joshua Canny"
                     }
@@ -947,7 +928,7 @@ export default {
             },
             main: {
                 inputs: {
-                    bday: {
+                    birthDate: {
                         label: "Birth Date"
                     }
                 }
@@ -961,19 +942,6 @@ export default {
                 inputs: {
                     bloodType: {
                         label: "Blood Type"
-                    }
-                }
-            }
-        },
-        weight: {
-            header: {
-                title: "Patient Weight"
-            },
-            main: {
-                inputs: {
-                    weight: {
-                        label: "Patient's Weight",
-                        placeholder: "Patient weight here"
                     }
                 }
             }
@@ -1023,7 +991,7 @@ export default {
             main: {
                 inputs: {
                     value: {
-                        label: "(Under development) Blood Pressure",
+                        label: "Blood Pressure",
                         placeholder: "ex: 120/80"
                     },
                     dateTime: {

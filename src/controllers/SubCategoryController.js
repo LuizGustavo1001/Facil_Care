@@ -1,8 +1,8 @@
 import db from "../database/db.js"
 
 export default class SubCategoryController {
-    constructor(Model, codeLabel){
-        if(!Model){
+    constructor(Model, codeLabel) {
+        if(!Model) {
             throw new Error("Model class must be provided to SubCategoryController")
         }
 
@@ -11,11 +11,11 @@ export default class SubCategoryController {
     }
 
     // Returns all sub-category collection.
-    async getAll(){
+    async getAll() {
         try {
             const items = await this.model.getAll()
 
-            if(!items.length){
+            if(!items.length) {
                 return {
                     success: false,
                     code: `No${this.codeLabel}Found`,
@@ -28,19 +28,24 @@ export default class SubCategoryController {
                 code: `${this.codeLabel}Found`,
                 data: items
             }
-        }catch(err){
+        }catch(err) {
             console.log("DB Error: ", err)
             return {
                 success: false,
-                code: `DatabaseError`,
+                code: "DatabaseError",
                 data: []
             }
         }
     }
 
+    /**
+     * Returns data from the sub-category based on the selected subclass `id`.
+     *
+     * @param { number } id
+     **/
     async getById(id){
         try{
-            const item = await this.model.getById(id)
+            const item = await this.model.getById(Number(id))
 
             if(!item){
                 return {
@@ -59,7 +64,7 @@ export default class SubCategoryController {
             console.log("DB Error: ", err)
             return{
                 success: false,
-                code: `DatabaseError`,
+                code: "DatabaseError",
                 data: []
             }
         }
@@ -157,7 +162,7 @@ export default class SubCategoryController {
                 data: updatedData
             }
         }catch(err){
-            return{
+            return {
                 success: false,
                 code: `${this.codeLabel}DeleteFailed`,
                 data: []

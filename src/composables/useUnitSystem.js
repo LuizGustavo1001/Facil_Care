@@ -6,7 +6,13 @@ export const UNITS = {
     IMPERIAL: "imperial"
 }
 
-export const currentUnit = ref(UNITS.METRIC)
+export const TRANSLATABLE_ITEMS = [
+    PAGES.BODY_TEMPERATURE,
+    PAGES.WATER_INTAKE,
+    PAGES.WEIGHT
+]
+
+export const currentUnit = ref(localStorage.getItem("unit") ?? UNITS.METRIC)
 export const isImperial = computed(() => currentUnit.value === UNITS.IMPERIAL)
 
 export function useUnitSystem() {
@@ -23,14 +29,14 @@ export function useUnitSystem() {
         if(nextUnit && nextUnit === currentUnit.value) return
 
         // 2. Specific unit required
-        if(nextUnit){
+        if(nextUnit) {
             setUnit(nextUnit)
             return
         }
 
         // 3. Unit not specified -> Try get from localStorage
         const savedUnit = localStorage.getItem("unit")
-        if(savedUnit){
+        if(savedUnit) {
             setUnit(savedUnit)
         }
     }
@@ -79,39 +85,39 @@ export function useUnitSystem() {
      * Converts metric values to imperial values
      *
      * @param { String } type
-     * @param {String | Number } value
+     * @param { String | Number } value
      * @returns { String | Number }
      **/
     const parseUnit = (type, value) => {
-        if(!isImperial.value || value === null || value === "") return value
+        if(!isImperial.value || value === null || value === "" || !TRANSLATABLE_ITEMS.includes(type)) return value
 
         const numericValue = Number(value)
 
         switch (type) {
             case PAGES.BODY_TEMPERATURE:
-                return (numericValue * 9 / 5) + 32
+                return Number((numericValue * 9 / 5) + 32).toFixed(2)
             case PAGES.WATER_INTAKE:
-                return numericValue * 33.8140227
+                return Number(numericValue * 33.8140227).toFixed(2)
             case PAGES.WEIGHT:
-                return numericValue * 2.20462262
-            default:
-                return numericValue
+                return Number(numericValue * 2.20462262).toFixed(2)
         }
     }
 
     /**
-     * Returns the measurement unit and converted value.
+     * Returns the current measurement unit and converted value.
      *
      * @param { String } type - Measurement type (ex: "bloodPressure" and "heartRate")
      * @param { String | Number } value - Measurement value (metric system)
      * @returns {{ unit: String, value: String|Number }}
      **/
-    const getMeasurementUnit = (type, value) => {
+    const getTranslatedUnit = (type, value) => {
         const strValue = String(value)
 
         return {
             unit: getUnit(type),
-            value: strValue.includes("/") ? value : parseUnit(type, value)
+            value: strValue.includes("/") || !TRANSLATABLE_ITEMS.includes(type)
+                ? value
+                : parseUnit(type, value)
         };
     };
 
@@ -134,5 +140,5 @@ export function useUnitSystem() {
         }
     }
 
-    return { currentUnit, initUnitSystem, getMeasurementUnit, parseUnit, getUnit, toMetric }
+    return { currentUnit, initUnitSystem, getTranslatedUnit, parseUnit, getUnit, toMetric, isImperial }
 }

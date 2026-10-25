@@ -43,9 +43,9 @@ export default class NotificationController {
      **/
     async markAsRead(id){
         try{
-            const notifications = await this.model.markAllAsRead(id)
+            const result = await this.model.markAsRead(Number(id))
 
-            if(!notifications){
+            if(!result){
                 return {
                     success: false,
                     code: "NotificationNotFound",
@@ -53,10 +53,12 @@ export default class NotificationController {
                 }
             }
 
+            const notifications = await this.getAll()
+
             return {
                 success: true,
                 code: null,
-                data: notifications
+                data: notifications.data
             }
         }catch(error){
             console.log("DB error: ", error)
@@ -73,9 +75,9 @@ export default class NotificationController {
      **/
     async markAllAsRead(){
         try{
-            const notifications = await this.model.markAllAsRead()
+            const result = await this.model.markAllAsRead()
 
-            if(!notifications){
+            if(!result){
                 return {
                     success: false,
                     code: "NotificationNotFound",
@@ -83,12 +85,14 @@ export default class NotificationController {
                 }
             }
 
+            const notifications = await this.getAll()
+
             return {
                 success: true,
                 code: null,
-                data: notifications
+                data: notifications.data
             }
-        }catch(error){
+        }catch(error) {
             console.log("DB error: ", error)
             return {
                 success: false,
@@ -101,9 +105,22 @@ export default class NotificationController {
     /**
      * Removes old notifications *(30+ days old)*.
      **/
-    async removeOldNotifications() {
+    async removeOlds() {
         try{
-            await this.model.removeOldNotifications()
+            const result = await this.model.removeOldNotifications()
+
+            if(!result){
+                return false
+            }
+
+            const notifications = await this.getAll()
+
+            return {
+                success: true,
+                code: null,
+                data: notifications
+            }
+
         }catch(error){
             console.log("DB error: ", error)
         }

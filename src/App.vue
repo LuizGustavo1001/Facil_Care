@@ -12,6 +12,7 @@
   import { onMounted } from "vue"
   import { useTheme } from "./composables/useTheme.js"
   import { useLanguage } from "./composables/useLanguage.js"
+  import { usePersistentStorage } from "./composables/usePersistentStorage.js"
   import { useUnitSystem } from "./composables/useUnitSystem.js"
 
   import NotificationController from "./controllers/NotificationController.js"
@@ -23,12 +24,15 @@
   const { initToggleTheme } = useTheme()
   const { initLanguage } = useLanguage()
   const { initUnitSystem } = useUnitSystem()
+  const { requestPersistence } = usePersistentStorage()
 
   // MOUNTED || UNMOUNTED
   onMounted(async () => {
     initToggleTheme()
     initLanguage()
     initUnitSystem()
-    await notificationsController.removeOldNotifications()
+
+    await requestPersistence()
+    await notificationsController.removeOlds()
   })
 </script>

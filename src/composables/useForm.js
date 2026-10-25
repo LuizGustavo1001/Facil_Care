@@ -127,7 +127,7 @@ export function useForm(){
     }
 
     /**
-     *  Executes a database operation and tracks its submission state.
+     * Executes a database operation and tracks its submission state.
      *
      * @param { () => Promise<Object> } actionCallback - Controller method to access the desired model of the database
      *
@@ -167,20 +167,42 @@ export function useForm(){
         }
     }
 
+    const getInputLabel = (templateId, input) => {
+        if (!input || !templateId) return ""
+
+        const labelKey = `formTemplates.${templateId}.main.inputs.${input.id}.label`
+
+        const exists = te(labelKey)
+
+        let title = exists ? t(labelKey) : ""
+
+        if (input.mods?.hasMeasurementUnit) {
+            const measurementUnit = unit.getUnit(
+                input.mods.measurementUnitType
+            )
+
+            if (measurementUnit) {
+                title += ` (${measurementUnit})`
+            }
+        }
+
+        return title
+    }
+
+    const getInputPlaceholder = (templateId, input) => {
+        if(!input || !templateId) return
+
+        const placeholderKey = `formTemplates.${templateId}.main.inputs.${input.id}.placeholder`
+
+        return t(placeholderKey) ?? ""
+    }
+
     // Returns the props required by an input component
     const getInputProps = (input, popupConfig, templateId, inputValue = null, dynamicData = {}) => {
         if(!templateId) return
 
-        const labelKey = `formTemplates.${templateId}.main.inputs.${input.id}.label`
-        const placeholderKey = `formTemplates.${templateId}.main.inputs.${input.id}.placeholder`
-
-        let title = te(labelKey) ? t(labelKey) : ""
-        const placeholder = te(placeholderKey) ? t(placeholderKey) : ""
-
-        // Concat measurement unit of the current input
-        if(input.mods && input.mods.hasMeasurementUnit){
-            title += ` (${unit.getUnit(input.mods.measurementUnitType)})`
-        }
+        const title = getInputLabel(templateId, input)
+        const placeholder = getInputPlaceholder(templateId, input)
 
         let currentValue = inputValue ? inputValue[input.name] : null
 
@@ -274,16 +296,10 @@ export function useForm(){
         // 1. Static Options
         if (Array.isArray(input.options)) {
             for (const option of input.options) {
-                const translationKey = `${input.id}.${option.id}`
-
-                let label = utils.getOptionTranslate(t(translationKey))
-
-                if(label === ""){
-                    label = (option.label || option.value)
-                }
+                const label = utils.getOptionTranslate(input.id, option.id)
 
                 options.push({
-                    placeholder: label,
+                    placeholder: label === "" ? (option.label || option.value) : label,
                     value: option.value
                 })
             }
@@ -316,5 +332,5 @@ export function useForm(){
         }
     }
 
-    return { extractData, executeDBSubmit, isSubmitting, formWarning, getInputValue, normalizeFormValues, convertFormValues, getInputComponent, getInputProps, getSelectOptions, getBtnProps }
+    return { extractData, executeDBSubmit, isSubmitting, formWarning, getInputValue, normalizeFormValues, convertFormValues, getInputComponent, getInputProps, getSelectOptions, getBtnProps, getInputPlaceholder, getInputLabel }
 }

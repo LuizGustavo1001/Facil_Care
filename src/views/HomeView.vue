@@ -17,6 +17,7 @@
 
     <AppHeader
         toggleBtnRef="toggleBtnRef"
+        :hasNotifications="true"
         @sidebar-toggle="sidebar.toggle"
     >
       {{ t('utils.hello') }}, <strong>{{ patient.name }}</strong>!

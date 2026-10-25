@@ -99,7 +99,7 @@ export const preferencesView = {
                     name: "app-unit",
                     for: "app-unit",
                     event: "toggle-unit",
-                    //options: UNITS_OPTIONS
+                    options: UNITS_OPTIONS
                 }
             ]
         }
@@ -263,11 +263,6 @@ export const emergencyDataView = {
                     id: "bloodType",
                     color: "red",
                     icon: icons["drop-fill"]
-                },
-                {
-                    id: "weight",
-                    color: "orange",
-                    icon: icons["weight-fill"]
                 },
                 {
                     id: "address",
@@ -503,7 +498,7 @@ export const formTemplates = [
         main: {
             inputs: [
                 {
-                    id: "usr_1",
+                    id: "name",
                     tag: "input",
                     name: "name",
                     for: "name",
@@ -524,7 +519,7 @@ export const formTemplates = [
         main: {
             inputs: [
                 {
-                    id: "bday",
+                    id: "birthDate",
                     tag: "input",
                     name: "birthDate",
                     for: "birthDate",
@@ -583,30 +578,6 @@ export const formTemplates = [
                             value: "ab_positive",
                         }
                     ]
-                }
-            ],
-            buttons: [
-                {
-                    id: "submit"
-                }
-            ]
-        }
-    },
-    {
-        id: "weight",
-        main: {
-            inputs: [
-                {
-                    id: "weight",
-                    tag: "input",
-                    name: "weight",
-                    for: "weight",
-                    measurementType: PAGES.WEIGHT,
-                    inputType: "number",
-                    autoCapitalize: "words",
-                    step: "0.1",
-                    min: 0,
-                    required: true,
                 }
             ],
             buttons: [
@@ -1478,7 +1449,11 @@ export const formTemplates = [
                     step: "0.1",
                     min: 0,
                     max: 300,
-                    required: true
+                    required: true,
+                    mods: {
+                        hasMeasurementUnit: true,
+                        measurementUnitType: PAGES.WEIGHT
+                    },
                 },
                 {
                     id: "dateTime",

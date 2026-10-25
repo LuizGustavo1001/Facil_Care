@@ -64,7 +64,7 @@
 
       <div class="flex flex-column">
         <h1>{{ patientData.name }}</h1>
-        <p>{{ age }} {{ t("utils.years")}} • {{ utils.getOptionTranslate(`bloodType.${patientData.bloodType}`) }}</p>
+        <p>{{ age }} {{ t("utils.years") }} • {{ utils.getOptionTranslate("bloodType", `${patientData.bloodType}`) }}</p>
       </div>
     </div>
   </aside>

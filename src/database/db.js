@@ -3,76 +3,32 @@ import { Dexie } from 'dexie'
 const db = new Dexie('facilCareDB')
 
 db.version(1).stores({
-    patient: '++_id, name',
+    patient: '++_id, name, address, birthDate, bloodType, weight',
+
+    allergies: '++_id, patientId, name',
+    healthPlans: '++_id, patientId, name',
+    doctors: '++_id, patientId, name',
+    caregivers: '++_id, patientId, name',
+    emergencyContacts: '++_id, patientId, name',
+
     vitalSigns: '++_id, dateTime, record, caregiverId, [record+dateTime]',
     followUps: '++_id, dateTime, record, caregiverId, [record+dateTime]',
+
     medicines: '++_id, active',
-    medicineRegistries: '++_id, medicineId, dateTime, caregiverId',
+    medicineRegistries: '++_id, medicineId, dateTime',
+
     notifications: '++_id, read, dateTime'
 })
-
-db.version(2)
-    .stores({
-        patient: '++_id, name',
-
-        allergies: '++_id, patientId, name',
-        healthPlans: '++_id, patientId, name',
-        doctors: '++_id, patientId, name',
-        caregivers: '++_id, patientId, name',
-        emergencyContacts: '++_id, patientId, name',
-
-        vitalSigns: '++_id, dateTime, record, caregiverId, [record+dateTime]',
-        followUps: '++_id, dateTime, record, caregiverId, [record+dateTime]',
-
-        medicines: '++_id, active',
-        medicineRegistries: '++_id, medicineId, dateTime, caregiverId',
-
-        notifications: '++_id, read, dateTime'
-    })
-    .upgrade(async transaction => {
-        const patientTable = transaction.table('patient')
-        const patient = await patientTable.toCollection().first()
-
-        if (!patient) return
-
-        const patientId = patient._id
-
-        const relations = [
-            ['allergies', patient.allergies],
-            ['healthPlans', patient.healthPlans],
-            ['doctors', patient.doctors],
-            ['caregivers', patient.caregivers],
-            ['emergencyContacts', patient.emergencyContacts]
-        ]
-
-        for (const [tableName, records] of relations) {
-            if (!records?.length) continue
-
-            await transaction.table(tableName).bulkAdd(
-                records.map(({ allergyId, planId, doctorId, caregiverId, contactId, ...record }) => ({
-                    ...record,
-                    patientId
-                }))
-            )
-        }
-
-        await patientTable.update(patientId, {
-            allergies: undefined,
-            healthPlans: undefined,
-            doctors: undefined,
-            caregivers: undefined,
-            emergencyContacts: undefined
-        })
-    })
 
 // Populate Event
 db.on("populate", async (transaction) => {
     const patientIds = await transaction.table('patient').bulkAdd([
         {
             name: 'João Carlos Esposito',
-            address: 'S. ABC, 41',
+            address: 'Av. Afonso Pena, 1537 - Centro, Belo Horizonte',
             birthDate: '1953-03-10T00:00:00.000Z',
-            bloodType: 'o_negative'
+            bloodType: 'o_negative',
+            weight: '65'
         }
     ], { allKeys: true })
 
@@ -81,16 +37,16 @@ db.on("populate", async (transaction) => {
     await transaction.table('allergies').bulkAdd([
         {
             name: 'Alergia Grave a Penicilina',
-            patientId: patientId,
+            patientId: patientId
         },
         {
-            name: 'Outra Alergia',
+            name: 'Alergia a Ibuprofeno',
             patientId: patientId
         }
     ])
 
     await transaction.table('healthPlans').bulkAdd([
-        { name: 'Unimed Familiar', patientId: patientId },
+        { name: 'Plano Usisaúde', patientId: patientId },
         { name: 'Plano Municipal SUS', patientId: patientId }
     ])
 
@@ -137,123 +93,51 @@ db.on("populate", async (transaction) => {
         {
             record: 'bloodPressure',
             value: '130/80',
-            dateTime: new Date('2026-10-07T08:00:00'),
-            observation: 'Nenhuma observação',
-            patientId: patientId,
-            caregiverId: caregivers[0]
-        },
-        {
-            record: 'bloodPressure',
-            value: '110/84',
-            dateTime: new Date('2026-10-09T08:00:00'),
-            observation: 'Nenhuma observação',
-            patientId: patientId,
-            caregiverId: caregivers[0]
-        },
-        {
-            record: 'bloodPressure',
-            value: '140/80',
-            dateTime: new Date('2026-09-09T12:00:00'),
-            observation: 'Nenhuma observação',
+            dateTime: new Date(),
+            observations: 'Adicione mais registros clicando no botão abaixo',
             patientId: patientId,
             caregiverId: caregivers[0]
         },
         {
             record: 'bodyTemperature',
             value: '31',
-            dateTime: new Date('2026-10-07T08:00:00'),
-            observation: 'Nenhuma observação',
-            patientId: patientId,
-            caregiverId: caregivers[0]
-        },
-        {
-            record: 'bodyTemperature',
-            value: '33',
-            dateTime: new Date('2026-10-09T08:00:00'),
-            observation: 'Nenhuma observação',
-            patientId: patientId,
-            caregiverId: caregivers[0]
-        },
-        {
-            record: 'bodyTemperature',
-            value: '30',
-            dateTime: new Date('2026-09-09T12:00:00'),
-            observation: 'Nenhuma observação',
+            dateTime: new Date(),
+            observations: 'Adicione mais registros clicando no botão abaixo',
             patientId: patientId,
             caregiverId: caregivers[0]
         },
         {
             record: 'oxygenSaturation',
             value: '98',
-            dateTime: new Date('2026-10-07T08:00:00'),
-            observation: 'Nenhuma observação',
+            dateTime: new Date(),
+            observations: 'Adicione mais registros clicando no botão abaixo',
             patientId: patientId,
             caregiverId: caregivers[0]
-        },
-        {
-            record: 'oxygenSaturation',
-            value: '99',
-            dateTime: new Date('2026-10-09T08:00:00'),
-            observation: 'Nenhuma observação',
-            patientId: patientId,
-            caregiverId: caregivers[0]
-        },
-        {
-            record: 'oxygenSaturation',
-            value: '95',
-            dateTime: new Date('2026-09-09T12:00:00'),
-            observation: 'Nenhuma observação',
-            patientId: patientId,
-            caregiverId: caregivers[0],
         },
         {
             record: 'bloodGlucose',
             value: '110',
-            dateTime: new Date('2026-10-07T08:00:00'),
-            observation: 'Nenhuma observação',
-            patientId: patientId,
-            caregiverId: caregivers[0]
-        },
-        {
-            record: 'bloodGlucose',
-            value: '85',
-            dateTime: new Date('2026-10-09T08:00:00'),
-            observation: 'Nenhuma observação',
-            patientId: patientId,
-            caregiverId: caregivers[0]
-        },
-        {
-            record: 'bloodGlucose',
-            value: '90',
-            dateTime: new Date('2026-09-09T12:00:00'),
-            observation: 'Nenhuma observação',
+            dateTime: new Date(),
+            observations: 'Adicione mais registros clicando no botão abaixo',
             patientId: patientId,
             caregiverId: caregivers[0]
         },
         {
             record: 'heartRate',
             value: '76',
-            dateTime: new Date('2026-10-07T08:00:00'),
-            observation: 'Nenhuma observação',
+            dateTime: new Date(),
+            observations: 'Adicione mais registros clicando no botão abaixo',
             patientId: patientId,
             caregiverId: caregivers[0]
         },
         {
             record: 'heartRate',
             value: '80',
-            dateTime: new Date('2026-10-09T08:00:00'),
-            observation: 'Nenhuma observação',
+            dateTime: new Date(),
+            observations: 'Adicione mais registros clicando no botão abaixo',
             patientId: patientId,
             caregiverId: caregivers[0]
         },
-        {
-            record: 'heartRate',
-            value: '67',
-            dateTime: new Date('2026-09-09T12:00:00'),
-            observation: 'Nenhuma observação',
-            patientId: patientId,
-            caregiverId: caregivers[0]
-        }
     ])
 
     transaction.table('followUps').bulkAdd([
@@ -274,6 +158,34 @@ db.on("populate", async (transaction) => {
         {
             record: 'mealAcceptance',
             value: 'Comeu toda a sopa do jantar',
+            dateTime: new Date(),
+            patientId: patientId,
+            caregiverId: caregivers[0]
+        },
+        {
+            record: 'waterIntake',
+            value: 1.5,
+            dateTime: new Date(),
+            patientId: patientId,
+            caregiverId: caregivers[0]
+        },
+        {
+            record: "weight",
+            value: 65,
+            dateTime: new Date(),
+            patientId: patientId,
+            caregiverId: caregivers[0]
+        },
+        {
+            record: "necessities",
+            value: "Urinando sem problemas",
+            dateTime: new Date(),
+            patientId: patientId,
+            caregiverId: caregivers[0]
+        },
+        {
+            record: "painLevel",
+            value: 3,
             dateTime: new Date(),
             patientId: patientId,
             caregiverId: caregivers[0]
@@ -303,7 +215,7 @@ db.on("populate", async (transaction) => {
         {
             patientId: patientId,
             medicineId: medicineIds[0],
-            adminTime: new Date('2026-10-09T08:00:00'),
+            adminTime: new Date(),
             dosage: '1 comprimido',
             observations: 'Paciente tomou sem resistência'
         }
@@ -314,13 +226,6 @@ db.on("populate", async (transaction) => {
             title: 'Horário de Medicamento',
             description: 'Metformina 850mg pendente de administração às 20:00.',
             read: false,
-            patientId: patientId,
-            dateTime: new Date()
-        },
-        {
-            title: "Notificação Lida Teste",
-            description: 'Descricação de notificação lida',
-            read: true,
             patientId: patientId,
             dateTime: new Date()
         }

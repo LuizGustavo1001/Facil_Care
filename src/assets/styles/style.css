@@ -202,7 +202,7 @@ body.dark {
     --color-text-inverse-subtle: var(--gray-800);
 
     --color-text-brand: var(--blue-100);
-    --color-text-brand-subtle: var(--blue-400);
+    --color-text-brand-subtle: var(--blue-200);
 
     --color-text-red: var(--red-100);
     --color-text-yellow: var(--yellow-100);
@@ -465,7 +465,7 @@ main {
 
 .default-input-attr{
     border-radius: var(--radius-xs);
-    border: 2px solid var(--color-border-default);
+    border: 3px solid var(--color-border-default);
 
     padding: var(--spacing-md);
     font-weight: var(--bold-weight);

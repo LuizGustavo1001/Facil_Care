@@ -115,7 +115,6 @@ export class PatientRecord {
             await this.table.add(newItem)
             return true
         }catch(err){
-            console.error("Database Error:", err)
             throw err
         }
     }
@@ -128,7 +127,7 @@ export class PatientRecord {
      *
      * @returns { Promise<boolean> } - `true` if the record was updated, `false` if not found.
      **/
-    async updateRecord(newData, recordId){
+    async update(newData, recordId){
         try {
             const record = await this.getById(recordId)
 
@@ -144,18 +143,18 @@ export class PatientRecord {
             })
 
             return true
-        }catch(error) {
-            console.log("Database Error: ", error)
-            throw error
+        }catch(err) {
+            console.log("Database Error: ", err)
+            throw err
         }
     }
 
     /**
-     * Deletes a record by its `id`
+     * Deletes a record by its `id`.
      *
-     * @param { string } id - Record `id`
+     * @param { string } id - Record `id`.
      *
-     * @returns { Promise<boolean> } `true` if the record was deleted, `false` if not found
+     * @returns { Promise<boolean> } `true` if the record was deleted, `false` if not found.
      **/
     async removeById(id){
         try{

@@ -20,6 +20,7 @@
     <AppHeader
         :title="utils.getPageTitle(PAGES['EMERGENCY_DATA'])"
         :leftBtnIcon="icons['chevron-left']"
+        :hasNotifications="false"
         @return-page="navigation.handleReturn"
     />
 
@@ -157,7 +158,7 @@ const dynamicSections = computed(() => {
           }
 
           if(button.id === 'bloodType'){
-            dbValue = utils.getOptionTranslate(`bloodType.${patient.value[button.id]}`)
+            dbValue = utils.getOptionTranslate("bloodType",`${patient.value[button.id]}`)
           }
 
           return {
@@ -174,7 +175,7 @@ const dynamicSections = computed(() => {
             ...emergencyContacts.value.map((contact) => ({
               id: contact._id,
               title: contact.name,
-              subtitle: `${utils.getOptionTranslate(`kinship.${contact.kinship}`)} • ${contact.phone || ""}`
+              subtitle: `${utils.getOptionTranslate("kinship", contact.kinship)} • ${contact.phone || ""}`
             })),
             ...section.buttons
           ]
@@ -247,7 +248,10 @@ const handleButtonAction = (section, button, event) => {
       currentInputValues = form.getInputValue(patient.value, popupTemplate)
     }
 
-    const context = { sectionId: section.id, fieldId: button.id }
+    const context = {
+      sectionId: section.id,
+      fieldId: button.id
+    }
 
     formPopup.open(popupTemplate, currentInputValues, context)
   }
@@ -268,10 +272,14 @@ const getButtonProps = (section, button) => {
 
 const getButtonPropsComponent = (section, button) => {
   if(section.component === "alt"){
+    const title = section.action === "popup"
+        ? form.getInputLabel(button.id, button)
+        : getButtonTitle(section, button)
+
     return {
       leftIcon: button.icon,
       color: button.color,
-      title: getButtonTitle(section, button),
+      title: title,
       description: getButtonSubtitle(section, button),
       to: button.route || undefined
     }
@@ -313,32 +321,12 @@ const getButtonPropsAction = (section) => {
   }
 }
 
-const measurementTypes = {
-  weight: PAGES.WEIGHT,
-  bodyTemperature: PAGES.BODY_TEMPERATURE,
-  waterIntake: PAGES.WATER_INTAKE
-}
-
 const getButtonTitle = (section, button) => {
-  const title = button.title
+  return button.title
       ? button.title
       : te(`views.emergencyData.sections.${section.id}.buttons.${button.id}.title`)
           ? t(`views.emergencyData.sections.${section.id}.buttons.${button.id}.title`)
           : ""
-
-  return title
-  /*
-  const measurementType = measurementTypes[button.id]
-
-  if (!measurementType) return title
-
-  const measurementUnit = unit.getUnit(measurementType)
-
-  return measurementUnit
-      ? `${title} (${measurementUnit})`
-      : title
-
-   */
 }
 
 const getButtonSubtitle = (section, button) => {

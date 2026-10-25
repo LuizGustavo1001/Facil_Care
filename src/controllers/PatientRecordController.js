@@ -1,4 +1,7 @@
 import db from "../database/db.js"
+import { TRANSLATABLE_ITEMS, isImperial, useUnitSystem } from "../composables/useUnitSystem.js"
+
+const unit = useUnitSystem()
 
 export default class PatientRecordController {
     constructor(Model, codeLabel) {
@@ -163,8 +166,15 @@ export default class PatientRecordController {
      * @param { Object } newItem
      * @param { number } patientId
      * @param { string } recordType
+     *
+     * @throws { Error } If a database operation fails.
      **/
     async create(newItem, recordType, patientId = 1) {
+        // Translate back measurement unit to metric system
+        if(isImperial && TRANSLATABLE_ITEMS.includes(recordType) && newItem?.value){
+            newItem.value = unit.toMetric(recordType, newItem.value)
+        }
+
         try {
             const itemData = {
                 ...newItem,
@@ -181,12 +191,7 @@ export default class PatientRecordController {
                 data: updatedData
             }
         }catch(err){
-            console.log("Database Error: ", err)
-            return{
-                success: false,
-                code: `${this.codeLabel}CreationFailed`,
-                data: []
-            }
+            throw err
         }
     }
 
@@ -198,9 +203,9 @@ export default class PatientRecordController {
      * @param { String } recordId - Id of the record to be updated
      * @param { String } type - Selected collection's item to be returned
      **/
-    async updatePatientRecord(newData, recordId, type) {
+    async update(newData, recordId, type) {
         try{
-            const updated = await this.model.updateRecord(newData, recordId)
+            const updated = await this.model.update(newData, recordId)
 
             if(!updated){
                 return {

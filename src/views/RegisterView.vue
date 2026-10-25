@@ -86,6 +86,7 @@
   import AppFooter from "../components/layout/AppFooter.vue"
   import Snackbar from "../components/feedback/Snackbar.vue"
   import ActionButton from "../components/buttons/ActionButton.vue"
+  import Icon from "../components/icons/Icon.vue"
 
   import MedicinesController from "../controllers/MedicineController.js"
   import MedicineRegistriesController from "../controllers/MedicineRegistriesController.js"
@@ -96,7 +97,6 @@
   import EmergencyContactController from "../controllers/EmergencyContactController.js"
   import FollowUpController from "../controllers/FollowUpController.js"
   import VitalSignController from "../controllers/VitalSignController.js"
-  import Icon from "../components/icons/Icon.vue"
 
   // COMPOSABLES
   const navigation = useNavigation()

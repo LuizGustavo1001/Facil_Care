@@ -27,13 +27,14 @@ export function useUtils() {
     /**
      * Returns select input options label translated to the current language
      *
+     * @param { string } type - Option Type (Unit, Language etc.)
      * @param { String } translationKey - i18n translate key
      *
      * @return { String }
      **/
-    const getOptionTranslate = (translationKey) => {
-        return te(`options.${translationKey}`)
-            ? t(`options.${translationKey}`)
+    const getOptionTranslate = (type, translationKey) => {
+        return te(`options.${type}.${translationKey}`)
+            ? t(`options.${type}.${translationKey}`)
             : ""
     }
 

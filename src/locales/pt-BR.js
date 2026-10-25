@@ -70,36 +70,6 @@ export default {
         years: "anos",
         back: "Voltar",
         selectOption: "Selecione uma opção",
-        themes: {
-            [THEMES.LIGHT]: {
-                label: "Tema Claro"
-            },
-            [THEMES.DARK]: {
-                label: "Tema Escuro"
-            },
-            [THEMES.SYSTEM]: {
-                label: "Seguir Sistema"
-            },
-            [THEMES.HIGH_CONTRAST]: {
-                label: "Alto Contraste"
-            }
-        },
-        languages: {
-            [LANGUAGES.PT_BR]: {
-                label: "Português Brasil"
-            },
-            [LANGUAGES.EN_US]: {
-                label: "Inglês"
-            }
-        },
-        units: {
-            [UNITS.METRIC]: {
-                label: "Metric"
-            },
-            [UNITS.IMPERIAL]: {
-                label: "Imperial"
-            }
-        },
         pageFallback: {
             title: "Página não encontrada",
             button: "Clique aqui para voltar para a página inicial"
@@ -161,7 +131,22 @@ export default {
             b_positive: "B+",
             ab_negative: "AB-",
             ab_positive: "AB+"
-        }
+        },
+        units: {
+            [UNITS.METRIC]: "Métrico",
+            [UNITS.IMPERIAL]: "Imperial"
+        },
+        themes: {
+            [THEMES.DARK]: "Tema Escuro",
+            [THEMES.LIGHT]: "Tema Claro",
+            [THEMES.HIGH_CONTRAST]: "Alto Contraste",
+            [THEMES.SYSTEM]: "Seguir Sistema"
+        },
+        languages: {
+            [LANGUAGES.PT_BR]: "Português Brasil"
+            ,
+            [LANGUAGES.EN_US]: "Inglês"
+        },
     },
 
     views: {
@@ -336,9 +321,6 @@ export default {
                         bloodType: {
                             title: "Tipo Sanguíneo",
                         },
-                        weight: {
-                            title: "Peso"
-                        },
                         address: {
                             title: "Endereço"
                         }
@@ -441,7 +423,7 @@ export default {
                             title: "Idioma do Sistema"
                         },
                         units: {
-                            title: "Unidade de Medida (em desenvolvimento)"
+                            title: "Unidade de Medida"
                         }
                     }
                 }
@@ -938,7 +920,7 @@ export default {
             },
             main: {
                 inputs: {
-                    usr_1: {
+                    name: {
                         label: "Nome de Paciente",
                         placeholder: "ex: João Gomes Pereira"
                     }
@@ -951,7 +933,7 @@ export default {
             },
             main: {
                 inputs: {
-                    bday: {
+                    birthDate: {
                         label: "Data de Nascimento"
                     }
                 }
@@ -965,19 +947,6 @@ export default {
                 inputs: {
                     bloodType: {
                         label: "Tipo Sanguíneo"
-                    }
-                }
-            }
-        },
-        weight: {
-            header: {
-                title: "Peso do Paciente"
-            },
-            main: {
-                inputs: {
-                    weight: {
-                        label: "Peso do Paciente",
-                        placeholder: "Peso do paciente aqui"
                     }
                 }
             }
@@ -1027,7 +996,7 @@ export default {
             main: {
                 inputs: {
                     value: {
-                        label: "(Desenvolvimento) Pressão Sanguínea",
+                        label: "Pressão Sanguínea",
                         placeholder: "ex: 120/80"
                     },
                     dateTime: {
@@ -1243,7 +1212,7 @@ export default {
             main: {
                 inputs: {
                     value: {
-                        label: "Peso (Kg)",
+                        label: "Peso",
                         placeholder: "ex: 65"
                     },
                     dateTime: {

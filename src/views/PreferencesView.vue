@@ -3,6 +3,7 @@
     <AppHeader
         :title="utils.getPageTitle(PAGES['PREFERENCES'])"
         :leftBtnIcon="icons['chevron-left']"
+        :hasNotifications="false"
         @return-page="navigation.handleReturn"
     />
 
@@ -27,7 +28,7 @@
                   v-for="option in item.options" :key="option.id"
                   :value="option.id"
               >
-                {{ getOptionLabel(item, option) }}
+                {{ utils.getOptionTranslate(item.id, option.id) }}
               </option>
             </SelectInput>
           </li>

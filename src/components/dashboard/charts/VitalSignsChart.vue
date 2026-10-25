@@ -23,7 +23,7 @@
 
   import { useI18n } from "vue-i18n"
   import { useDate } from "../../../composables/useDate.js"
-  import { useUnitSystem } from "../../../composables/useUnitSystem.js"
+  import {TRANSLATABLE_ITEMS, useUnitSystem} from "../../../composables/useUnitSystem.js"
 
   ChartJS.register(
       LineController,
@@ -57,7 +57,7 @@
   const chartData = ref({ labels: [], datasets: [] })
   const chartKey = ref(0)
 
-  const currentUnit = computed(() => unit.getMeasurementUnit(props.type).unit)
+  const currentUnit = computed(() => unit.getTranslatedUnit(props.type).unit)
 
   const chartOptions = {
     responsive: true,
@@ -100,16 +100,21 @@
   function normalizeValues(value) {
     if(props.type === PAGES.BLOOD_PRESSURE){
       value = parseBloodPressure(value)
+
     }
 
-    if (typeof value === "number") return { value }
+    if(TRANSLATABLE_ITEMS.includes(props.type)) {
+      value = Number(unit.parseUnit(props.type, value))
+    }
+
+    if(typeof value === "number") return { value: value }
 
     if(typeof value === "string") return { value: Number(value) }
 
     if(value && typeof value === "object" && !Array.isArray(value)){
       return Object.fromEntries(
           Object.entries(value).filter(
-              ([, item]) =>typeof item === "number"
+              ([, item]) => typeof item === "number"
           )
       )
     }

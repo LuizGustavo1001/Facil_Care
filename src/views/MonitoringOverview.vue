@@ -68,6 +68,7 @@
                 <IconBtn
                     :icon="icons['delete-bin-line']"
                     variant="destructive"
+                    size="25px"
                     @click.stop="handleDelete(item)"
                 />
               </li>
@@ -257,7 +258,7 @@
 
     for(const item of result){
       const formattedDate = item.dateTime ? date.getFormatted(new Date(item.dateTime)) : null
-      const parsedValue = unit.getMeasurementUnit(item.record, item.value)
+      const parsedValue = unit.getTranslatedUnit(item.record, item.value)
 
       let subTitleParts = []
 
@@ -273,10 +274,17 @@
 
       formattedData.value.push({
         id: item._id,
-        value: `${parsedValue.value} ${parsedValue.unit ? ` ${parsedValue.unit}` : ''} `.trim(),
+        value: `
+          ${parsedValue.value}
+          ${
+          parsedValue.unit
+            ? ` ${parsedValue.unit}`
+            : ""
+        }
+        `.trim(),
         description: [
           subTitleParts.join(' • '),
-          item.observation || null
+          item.observations || null
         ],
         type: item.record,
         originalRecord: {...item}

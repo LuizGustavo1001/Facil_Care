@@ -15,13 +15,14 @@ export class PatientSubCategory {
     async getAll(){
         return this.table
             .toCollection()
+            .reverse()
             .toArray()
     }
 
     /**
      * Retrieves sub-category item by the `id`.
      *
-     * @param { Number } id - Sub-category Id.
+     * @param { number } id - Sub-category Id.
      *
      * @returns { Promise<Object|undefined> } - The matching item, or undefined if not found.
      **/
@@ -43,7 +44,6 @@ export class PatientSubCategory {
             await this.table.add(newItem)
             return true
         }catch(err){
-            console.error("Database Error:", err)
             throw err
         }
     }
@@ -55,13 +55,14 @@ export class PatientSubCategory {
      * @param { Object } updatedData - Sub-category item data
      *
      * @returns { Promise<boolean> } `true` if the item was deleted, `false` if not found.
+     *
+     * @throws { Error } If a database operation fails.
      **/
     async update(id, updatedData){
         try{
             const updatedCount = await this.table.update(id, updatedData)
             return updatedCount > 0
         }catch(err){
-            console.log('Database Error: ', err)
             throw err
         }
     }
@@ -72,6 +73,8 @@ export class PatientSubCategory {
      * @param { number } id - Item `id`
      *
      * @returns { Promise<boolean> } `true` if the item was deleted, `false` if not found.
+     *
+     * @throws { Error } If a database operation fails.
      **/
     async removeById(id){
         try{
@@ -81,7 +84,6 @@ export class PatientSubCategory {
             await this.table.delete(id)
             return true
         }catch(err){
-            console.log('Database Error: ', err)
             throw err
         }
     }

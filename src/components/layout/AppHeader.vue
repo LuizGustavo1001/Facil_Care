@@ -78,7 +78,7 @@
     },
     hasNotifications: {
       type: Boolean,
-      default: true
+      default: false
     },
     toggleBtnRef: String
   })
