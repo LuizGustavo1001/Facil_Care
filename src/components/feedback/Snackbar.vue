@@ -1,0 +1,83 @@
+<template>
+  <transition name="fade-bounce" mode="out-in">
+    <div
+        v-if="isActive"
+        class="snackbar flex gap-1 align-center justify-between cursor-pointer active-border fixed"
+        :class="props.type"
+    >
+    <span class="flex gap-05 align-center flex-grow-1">
+      <Icon
+          :icon="icons['warning-circle-fill']"
+          size="25px"
+      />
+
+      <span class="snackbar-text flex-grow-1">
+        <slot name="message">{{ props.message }}</slot>
+      </span>
+    </span>
+
+      <Icon :icon="icons.close" class="right-icon"/>
+    </div>
+  </transition>
+</template>
+
+<style scoped>
+  .snackbar{
+    padding: var(--spacing-md);
+
+    bottom: 2em;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: 90dvw;
+    max-width: 450px;
+
+    border-radius: var(--radius-md);
+    font-size: var(--font-error);
+
+    z-index: 12;
+  }
+
+  /* VARIANTS */
+  /* 1. success */
+  .snackbar.success{
+    background: var(--color-bg-green);
+    color: var(--color-text-green);
+  }
+
+  /* 2. error */
+  .snackbar.error{
+    background: var(--color-bg-red);
+    color: var(--color-text-red);
+  }
+
+  /* 3. warning */
+  .snackbar.warning{
+    background: var(--color-bg-orange);
+    color: var(--color-text-orange);
+  }
+
+  /* 4. info */
+  .snackbar.info{
+    background: var(--color-bg-blue);
+    color: var(--color-text-blue);
+  }
+</style>
+
+<script setup>
+  import { icons } from "../../assets/icons/icons.js"
+  import Icon from "../icons/Icon.vue"
+
+  // PROPS
+  const props = defineProps({
+    message: String,
+    type: {
+      type: String,
+      default: 'success'
+    },
+    isActive: {
+      type: Boolean,
+      required: true
+    }
+  })
+</script>

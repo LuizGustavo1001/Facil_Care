@@ -1,9 +1,17 @@
 import { createApp } from 'vue'
-import './assets/styles/style.css'
 import App from './App.vue'
-import router from './router'
+
+import router from './router/vueRoute.js'
+import { i18n } from "./locales/i18n.js"
+
+import './assets/styles/style.css'
+
+import { registerSW } from "virtual:pwa-register"
+
+registerSW({ immediate: true })
 
 const app = createApp(App)
 
+app.use(i18n)
 app.use(router)
 app.mount('#app')
