@@ -35,6 +35,7 @@
                   :title="item.name ?? ''"
                   :leftIcon="item.iconFill"
                   :rightIcon="icons['external-link']"
+                  rightIconSize="20px"
                   style="border-radius: var(--radius-sm)"
               />
             </li>

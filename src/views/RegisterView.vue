@@ -78,6 +78,7 @@
 
   import { FORM_TYPES } from "../constants/formTypes.js"
   import { VITAL_SIGNS_PAGES, FOLLOW_UPS_PAGES } from "../constants/sysPages.js"
+  import { BUTTON_COLORS } from "../constants/btnColors.js"
 
   import { useRoute } from "vue-router"
   import { useI18n } from "vue-i18n"
@@ -99,7 +100,6 @@
   import EmergencyContactController from "../controllers/EmergencyContactController.js"
   import FollowUpController from "../controllers/FollowUpController.js"
   import VitalSignController from "../controllers/VitalSignController.js"
-  import {BUTTON_COLORS} from "../constants/btnColors.js";
 
   // COMPOSABLES
   const navigation = useNavigation()
@@ -176,7 +176,8 @@
 
   const handleSubmit = async (event) => {
     const formElement = event.currentTarget
-    const data = form.extractData(event)
+
+    const data = form.extractData(event, template.value)
     let result
 
     if(!formElement.checkValidity()) {

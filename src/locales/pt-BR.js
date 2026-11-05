@@ -3,6 +3,7 @@ import { THEME_PREFERENCES as THEMES } from "../constants/sysThemes.js"
 import { LANGUAGES } from "../constants/sysLanguages.js"
 import { UNITS } from "../constants/sysUnits.js"
 import { FORM_TYPES } from "../constants/formTypes.js"
+import {WEEK_DAYS} from "../constants/weekDays.js";
 
 export default {
     pageTitle: {
@@ -1194,6 +1195,9 @@ export default {
             },
             main: {
                 inputs: {
+                    administrationWeekDays: {
+                        label: "Dias de Administração"
+                    },
                     name: {
                         label: "Nome do Medicamento",
                         placeholder: "Tylenol - 500mg"

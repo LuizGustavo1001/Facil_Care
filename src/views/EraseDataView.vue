@@ -65,7 +65,7 @@
             style="border-radius: var(--radius-sm)"
         />
 
-        <p>{{ t(`views.eraseData.sections.erase.successDelete`) }}!</p>
+        <p>{{ t(`views.eraseData.categories.erase.successDelete`) }}!</p>
 
         <ActionButton
             tag="button"

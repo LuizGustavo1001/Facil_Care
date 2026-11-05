@@ -27,7 +27,7 @@
 
           <div class="flex flex-column">
             <h1>{{ patient.name }}</h1>
-            <p>{{ age }} {{ t("utils.years") }} • {{ utils.getOptionTranslate("bloodType", `${patient.bloodType}`) }}</p>
+            <p class="text-muted">{{ age }} {{ t("utils.years") }} • {{ utils.getOptionTranslate("bloodType", `${patient.bloodType}`) }}</p>
           </div>
         </div>
       </section>
@@ -96,8 +96,9 @@
   .patient-info {
     padding: var(--spacing-md);
     border-radius: var(--radius-sm);
-    background: var(--color-bg-hover);
-    border: 1px solid var(--color-border-default);
+    background: var(--color-bg-blue);
+
+    box-shadow: 0 2px 2px 1px var(--color-shadow-subtle);
   }
 
   .patient-info h1 {

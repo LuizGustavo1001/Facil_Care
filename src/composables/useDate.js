@@ -3,7 +3,7 @@ import { LANGUAGES } from "../constants/sysLanguages.js"
 import { computed } from "vue"
 import { DAY_PERIODS } from "../constants/dayPeriods.js"
 
-const language = computed(() => {
+export const formatedLanguage = computed(() => {
     switch (currentLanguage.value) {
         case LANGUAGES.PT_BR:
             return "pt-BR"
@@ -13,22 +13,22 @@ const language = computed(() => {
 })
 
 const formatters = {
-    fullDate: computed(() => new Intl.DateTimeFormat(language.value, {
+    fullDate: computed(() => new Intl.DateTimeFormat(formatedLanguage.value, {
         weekday: "long",
         day: "numeric",
         month: "long",
         year: "numeric"
     })),
-    numericDate: computed(() => new Intl.DateTimeFormat(language.value, {
+    numericDate: computed(() => new Intl.DateTimeFormat(formatedLanguage.value, {
         day: "2-digit",
         month: "2-digit",
         year: "numeric"
     })),
-    numericTime: computed(() => new Intl.DateTimeFormat(language.value, {
+    numericTime: computed(() => new Intl.DateTimeFormat(formatedLanguage.value, {
         hour: "2-digit",
         minute: "2-digit",
     })),
-    numericDateTime: computed(() => new Intl.DateTimeFormat(language.value, {
+    numericDateTime: computed(() => new Intl.DateTimeFormat(formatedLanguage.value, {
         day: "2-digit",
         month: "2-digit",
         year: "numeric",
@@ -116,6 +116,13 @@ export function useDate() {
      */
     const getNumericHour = (date = new Date()) => {
         return formatters.numericTime.value.format(date)
+    }
+
+    const getTime = (date = new Date()) => {
+        const hour = date.getHours()
+        const minutes = date.getMinutes()
+
+        return `${hour}:${minutes}`
     }
 
     /**
@@ -235,5 +242,5 @@ export function useDate() {
     }
 
 
-    return { getAge, getFormatted, getToday, getFullDate, getNumericDate, getNumericHour, getNumericDateTime, getCurrentDateTimeLocal, formatToDateTimeLocal, timeToDate, getDayPeriod }
+    return { getAge, getFormatted, getTime, getToday, getFullDate, getNumericDate, getNumericHour, getNumericDateTime, getCurrentDateTimeLocal, formatToDateTimeLocal, timeToDate, getDayPeriod }
 }

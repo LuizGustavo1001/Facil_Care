@@ -16,7 +16,7 @@
     <!-- Form -->
     <template #main>
       <form
-          class="main-form flex flex-column gap-05"
+          class="main-form flex flex-column gap-1"
           @submit.prevent="handleSubmit"
       >
         <div class="form-inputs flex flex-column gap-05">
@@ -38,6 +38,7 @@
               :key="btn.id"
               v-bind="form.getBtnProps(btn, type)"
               :aria-disabled="form.isSubmitting.value"
+              style="min-width: 150px; align-self: flex-end;"
           />
         </div>
       </form>
@@ -133,7 +134,7 @@
 
     if (popupConfig.value.readOnly) return
 
-    const data = form.extractData(event)
+    const data = form.extractData(event, props.template)
     emit("submitForm", data)
   }
 </script>

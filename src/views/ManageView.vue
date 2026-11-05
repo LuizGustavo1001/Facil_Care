@@ -280,6 +280,12 @@
   const joinTimes = (parts = []) => {
     return parts
         .filter(Boolean)
+        .sort((a, b) => {
+          const [hourA, minuteA] = a.split(":").map(Number)
+          const [hourB, minuteB] = b.split(":").map(Number)
+
+          return (hourA * 60 + minuteA) - (hourB * 60 + minuteB)
+        })
         .map(time => date.getNumericHour(date.timeToDate(time)))
         .join(", ")
   }

@@ -19,7 +19,7 @@
     <main class="main regular flex flex-column gap-1">
       <section class="main-section gap-1">
         <!-- Hero -->
-        <div class="main-card flex flex-column gap-1 text-center">
+        <div class="main-card flex flex-column gap-1 text-center relative overflow-hidden">
           <div>
             <Icon :icon="icons['logo-colorful-bg']" size="50px" />
 
@@ -64,7 +64,7 @@
                 <div class="flex-grow-1">
                   <p class="truncate-single">
                     <span class="bold-weight">{{ medicine.name }}</span>
-                    <span class="capitalize-words medium-weight"> ({{ medicine.routeAdmin }})</span>
+                    <span class="capitalize-words medium-weight"> ({{ getRouteAdminLabel(medicine.routeAdmin) }})</span>
                   </p>
 
                   <p class="text-muted truncate-single">
@@ -106,31 +106,26 @@
   .main-card:before {
     content: "";
     position: absolute;
-    top: 50%;
-    left: 50%;
-
-    transform: translate(-50%, -50%);
 
     height: 100%;
     width: 100%;
-    background-image:
-        linear-gradient(to top, var(--alpha-black-10)),
-        url("../assets/images/lm-doodles.svg"),
-        url("../assets/images/lm-blurry-gradient.svg");
-
-    background-position: center, center;
-    background-repeat: no-repeat, repeat, no-repeat;
-    background-size: cover, contain, cover;
+    inset: 0;
+    background:
+        linear-gradient(to top, var(--color-shadow-default), transparent),
+        var(--color-bg-blue);
 
     z-index: -1;
   }
   .main-card {
-    position: relative;
-    overflow: hidden;
+    background: url("../assets/images/lm-doodles.svg");
+    background-size: contain;
 
     padding: var(--spacing-xl);
     border-radius: var(--radius-sm);
-    color: var(--color-text-inverse);
+  }
+
+  .main-card .badge {
+    box-shadow: 0 0 2px 2px var(--color-shadow-subtle);
   }
 
   .main-card .text-muted {
@@ -155,14 +150,8 @@
 
   /* DARK MODE */
   .dark .main-card {
-    background-image:
-        linear-gradient(to top, var(--alpha-black-10)),
-        url("../assets/images/dm-doodles.svg"),
-        url("../assets/images/dm-blurry-gradient.svg");
-
-    background-position: center, center;
-    background-repeat: no-repeat, repeat, no-repeat;
-    background-size: cover, contain, cover;
+    background: url("../assets/images/dm-doodles.svg");
+    background-size: contain;
 
     color: inherit;
   }
@@ -200,7 +189,7 @@
   import MedicineController from "../controllers/MedicineController.js"
 
   // COMPOSABLES
-  const { t } = useI18n()
+  const { t, te } = useI18n()
   const snackbar = useSnackbar()
   const utils = useUtils()
   const date = useDate()
@@ -232,6 +221,12 @@
       default:
         return BUTTON_COLORS.BLUE
     }
+  }
+
+  const getRouteAdminLabel = (route) => {
+    const key = `options.routeAdmin.${route}`
+
+    return te(key) ? t(key) : ""
   }
 
   // MOUNTED || UNMOUNTED

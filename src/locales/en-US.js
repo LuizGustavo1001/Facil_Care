@@ -1190,6 +1190,9 @@ export default {
             },
             main: {
                 inputs: {
+                    administrationWeekDays: {
+                        label: "Administration Days"
+                    },
                     name: {
                         label: "Medicine's Name",
                         placeholder: "Tylenol - 500mg"

@@ -8,6 +8,7 @@ import Input from "../components/inputs/Input.vue"
 import TextArea from "../components/inputs/TextArea.vue"
 import SelectInput from "../components/inputs/SelectInput.vue"
 import MultipleTimeInput from "../components/inputs/MultipleTimeInput.vue"
+import WeekDaysInput from "../components/inputs/WeekDaysInput.vue";
 
 export function useForm(){
     const isSubmitting = ref(false)
@@ -90,22 +91,37 @@ export function useForm(){
      * @param { SubmitEvent } event
      * @returns { Object }
      */
-    const extractData = (event) => {
+    const extractData = (event, template) => {
         const formData = new FormData(event.currentTarget)
         const data = {}
 
-        for(const [rawName, value] of formData.entries()){
+        const weekDayFields = new Set(
+            (template?.main?.inputs ?? [])
+                .filter(input => input.tag === "mpDays")
+                .map(input => input.name)
+        )
+
+        // Initialize multiple-day fields
+        for (const name of weekDayFields) {
+            data[name] = []
+        }
+
+        for (const [rawName, value] of formData.entries()) {
             const isArray = rawName.endsWith("[]")
             const name = isArray
                 ? rawName.slice(0, -2)
                 : rawName
 
-            if(isArray){
-                if(!Array.isArray(data[name])){
+            if (isArray) {
+                if (!Array.isArray(data[name])) {
                     data[name] = []
                 }
 
-                data[name].push(value)
+                data[name].push(
+                    weekDayFields.has(name)
+                        ? Number(value)
+                        : value
+                )
             } else {
                 data[name] = value
             }
@@ -149,6 +165,9 @@ export function useForm(){
 
             case "mpTime":
                 return MultipleTimeInput
+
+            case "mpDays":
+                return WeekDaysInput
 
             default:
                 return null
@@ -209,6 +228,12 @@ export function useForm(){
                     ? currentValue
                     : [date.getTime()]
             }
+
+            if (input.tag === "mpDays") {
+                currentValue = Array.isArray(currentValue)
+                    ? currentValue
+                    : [0, 1]
+            }
         }
 
         const title = getInputLabel(templateId, input)
@@ -267,6 +292,12 @@ export function useForm(){
                     modelValue: currentValue,
                     translate: "no",
                     readonly: popupConfig?.value?.readOnly ?? null,
+                }
+            case "mpDays":
+                return {
+                    label: title ?? "",
+                    name: input.name,
+                    modelValue: currentValue ?? [],
                 }
 
             default:

@@ -44,13 +44,11 @@
           v-if="!readonly"
           tag="button"
           variant="subtle"
-          :title="t(`utils.addSchedule`)"
-          padding="sm"
+          :description="t(`utils.addSchedule`)"
+          padding="xs"
           type="button"
           class="add-time-btn"
-          style="width: fit-content"
-          :leftIcon="icons['time-line']"
-          leftIconSize="15px"
+          style="width: fit-content; align-self: flex-end"
           @click.stop="addTime"
       />
     </div>

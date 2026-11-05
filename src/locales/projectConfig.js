@@ -6,6 +6,7 @@ import { PAGES } from "../constants/sysPages.js"
 import { UNITS } from "../constants/sysUnits.js"
 import { FORM_TYPES } from "../constants/formTypes.js"
 import { BUTTON_COLORS } from "../constants/btnColors.js"
+import { WEEK_DAYS } from "../constants/weekDays.js"
 
 const THEME_OPTIONS = [
     { id: THEME_PREFERENCES.LIGHT },
@@ -22,6 +23,16 @@ const LANGUAGE_OPTIONS = [
 const UNITS_OPTIONS = [
     { id: UNITS.METRIC },
     { id: UNITS.IMPERIAL }
+]
+
+export const weekDays = [
+    { value: 0, label: WEEK_DAYS.SUNDAY},
+    { value: 1, label: WEEK_DAYS.MONDAY },
+    { value: 2, label: WEEK_DAYS.TUESDAY },
+    { value: 3, label: WEEK_DAYS.WEDNESDAY },
+    { value: 4, label: WEEK_DAYS.THURSDAY },
+    { value: 5, label: WEEK_DAYS.FRIDAY },
+    { value: 6, label: WEEK_DAYS.SATURDAY },
 ]
 
 export const pages = {
@@ -725,6 +736,11 @@ export const formTemplates = [
         id: PAGES.MEDICINES,
         main: {
             inputs: [
+                {
+                    id: "administrationWeekDays",
+                    tag: "mpDays",
+                    name: "administrationWeekDays"
+                },
                 {
                     id: "name",
                     tag: "input",
