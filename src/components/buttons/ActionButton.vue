@@ -19,7 +19,10 @@
       />
 
       <span class="btn-content flex flex-column flex-grow-1 gap-03">
-        <span class="btn-content-title truncate-multi width-full">
+        <span
+            v-if="title || $slots.title"
+            class="btn-content-title truncate-multi width-full"
+        >
           <slot name="title">{{ title }}</slot>
         </span>
 

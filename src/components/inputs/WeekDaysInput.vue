@@ -9,17 +9,15 @@
     </p>
 
     <div class="week-days-wrapper flex gap-05">
-      <ActionButton
-        v-for="day in weekDays"
-        :key="day.value"
-        tag="button"
-        class="week-day-button"
-        :align-center="true"
-        :title="getDayLabel(day.value)"
-        :class="{ active: isSelected(day.value) }"
-        variant="subtle"
-        @click="toggleDayBtn(day.value)"
-      />
+      <div
+          v-for="day in weekDays"
+          :key="day.value"
+          class="week-day-button flex align-center justify-center"
+          :class="{ active: isSelected(day.value) }"
+          @click="toggleDayBtn(day.value)"
+      >
+        {{ getDayLabel(day.value) }}
+      </div>
     </div>
 
     <!-- Selected days for FormData -->
@@ -45,17 +43,24 @@
   .week-day-button {
     width: 35px;
     height: 35px;
+
+    border: 2px solid var(--color-border-default);
+    border-radius: var(--radius-full);
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
   }
-  .week-day-button.active {
+  .week-day-button.active,
+  .week-day-button:hover {
     background: var(--color-bg-blue);
+    border-color:transparent;
   }
 </style>
 
 <script setup>
   import { weekDays } from "../../locales/projectConfig.js"
   import { formatedLanguage } from "../../composables/useDate.js"
-
-  import ActionButton from "../buttons/ActionButton.vue"
 
   // MODEL
   const model = defineModel({
