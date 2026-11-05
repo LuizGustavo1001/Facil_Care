@@ -1,31 +1,38 @@
 <template>
-  <header class="flex justify-center align-center gap-05">
+  <header
+      class="app-header flex justify-center align-center gap-05 sticky"
+      :class="HEADER_TYPES[computedType] ?? undefined"
+  >
+    <!-- App Header -->
     <div class="flex align-center gap-05 flex-grow-1">
-
-      <template v-if="leftBtnIcon === icons['menu-left']">
+      <!-- Left Icon -->
+      <!-- 1. Return Button -->
+      <template v-if="computedType === HEADER_TYPES.default">
         <IconBtn
-            :ref="toggleBtnRef"
-            :icon="leftBtnIcon"
+            :icon="icons['chevron-left']"
             size="25px"
             variant="subtle"
-            @click.stop="$emit('sidebar-toggle')"
+            @click="navigation.handleReturn"
         />
       </template>
 
-      <template v-else>
-        <IconBtn
-            :icon="leftBtnIcon"
-            size="25px"
-            variant="subtle"
-            @click="$emit('return-page')"
+      <!-- 2. Page Icon -->
+      <template v-if="computedType === HEADER_TYPES.noButton">
+        <Icon
+          :icon="leftIcon"
+          size="25px"
         />
       </template>
 
+      <!-- Page Title -->
       <p class="title flex-grow-1 truncate-single">
-        <slot><strong>{{ props.title }}</strong></slot>
+        <slot>
+          <strong>{{ props.title }}</strong>
+        </slot>
       </p>
     </div>
 
+    <!-- Notifications Menu -->
     <div class="relative">
       <IconBtn
           v-if="hasNotifications"
@@ -44,8 +51,7 @@
 </template>
 
 <style scoped>
-  header{
-    position: sticky;
+  .app-header {
     top: 0;
     padding: var(--spacing-md);
     background: var(--color-bg-primary);
@@ -56,25 +62,40 @@
     z-index: 1;
   }
 
-  header p{
+  .app-header p {
     font-size: var(--font-heading-3);
   }
 </style>
 
 <script setup>
-  import { ref } from "vue"
-
+  import { computed, ref } from "vue"
   import { icons } from "../../assets/icons/icons.js"
+
+  import { useNavigation } from "../../composables/useNavigation.js"
 
   import IconBtn from "../buttons/IconBtn.vue"
   import NotificationsMenu from "./NotificationsMenu.vue"
+  import Icon from "../icons/Icon.vue"
+
+  // CONSTANTS
+  const HEADER_TYPES = {
+    default: "default",
+    noButton: "noButton"
+  }
+
+  // COMPOSABLES
+  const navigation = useNavigation()
 
   // PROPS
   const props = defineProps({
     title: String,
-    leftBtnIcon: {
+    leftIcon: {
       type: String,
-      default: icons["menu-left"]
+      default: icons["logo-fill-colorful"]
+    },
+    type: {
+      type: String,
+      default: null
     },
     hasNotifications: {
       type: Boolean,
@@ -91,6 +112,14 @@
     isNotificationsOpen.value = !isNotificationsOpen.value
   }
 
+  const computedType = computed(() => {
+    if(!Object.values(HEADER_TYPES).includes(props.type)) {
+      return HEADER_TYPES.default
+    }
+
+    return props.type
+  })
+
   /*
     <!-- Simple title -->
     <AppHeader title="Dashboard" />
@@ -98,6 +127,16 @@
     <!-- Greeting with bold username -->
     <AppHeader>
       {{ $t('greetings.hello') }}, <strong>{{ username }}</strong>!
+    </AppHeader>
+  */
+
+  /*
+    <AppHeader
+        toggleBtnRef="toggleBtnRef"
+        :hasNotifications="true"
+        @sidebarToggle="sidebar.toggle"
+    >
+      {{ t('utils.hello') }}, <strong>{{ patient.name }}</strong>!
     </AppHeader>
   */
 </script>

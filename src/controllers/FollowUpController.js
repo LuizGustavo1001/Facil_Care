@@ -1,6 +1,6 @@
 import PatientRecordController from "./PatientRecordController.js"
 import FollowUp from "../models/FollowUp.js"
-import { FOLLOW_UPS_PAGES } from "../composables/usePages.js"
+import { FOLLOW_UPS_PAGES } from "../constants/sysPages.js"
 
 const codeLabel = "FollowUp"
 

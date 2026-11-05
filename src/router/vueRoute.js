@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { i18n } from '../locales/i18n.js'
+import { PAGES } from "../constants/sysPages.js"
+
 // mapping routes
 const routes = [
     {
@@ -7,23 +9,39 @@ const routes = [
       name: 'home',
       component: () => import('/src/views/HomeView.vue'),
       meta: {
-          title: 'home'
+          title: PAGES.HOME
       }
+    },
+    {
+        path: "/services",
+        name: "services",
+        component: () => import('/src/views/ServiceView.vue'),
+        meta: {
+            title : PAGES.SERVICES
+        }
+    },
+    {
+        path: "/patientData",
+        name: "patientData",
+        component: () => import('/src/views/PatientDataView.vue'),
+        meta: {
+            title : PAGES.PATIENT_DATA
+        }
     },
     {
         path: '/monitoring/:category',
         name: 'monitoring',
         component: () => import('/src/views/MonitoringView.vue'),
         meta: {
-            title: 'monitoring'
+            title: PAGES.MONITORING
         }
     },
     {
-        path: '/monitoring/:category/:type',
+        path: '/monitoring/:category/:monitoring',
         name: 'monitoring-overview',
         component: () => import('/src/views/MonitoringOverview.vue'),
         meta: {
-            title: 'monitoring'
+            title: PAGES.MONITORING
         }
     },
     {
@@ -31,7 +49,7 @@ const routes = [
         name: 'manage-overview',
         component: () => import('/src/views/ManageView.vue'),
         meta: {
-            title: 'manage'
+            title: PAGES.MANAGE
         }
     },
     {
@@ -39,7 +57,7 @@ const routes = [
         name: "emergency-data",
         component: () => import('/src/views/EmergencyDataView.vue'),
         meta: {
-            title: 'emergencyData'
+            title: PAGES.EMERGENCY_DATA
         }
     },
     {
@@ -47,7 +65,7 @@ const routes = [
         name: 'preferences',
         component: () => import('/src/views/PreferencesView.vue'),
         meta: {
-            title: 'preferences'
+            title: PAGES.PREFERENCES
         }
     },
     {
@@ -55,7 +73,7 @@ const routes = [
       name: 'register-form',
       component: () => import('/src/views/RegisterView.vue'),
       meta: {
-          title: 'register'
+          title: PAGES.REGISTER
       }
     },
     {
@@ -63,7 +81,7 @@ const routes = [
         name: 'import-data',
         component: () => import('/src/views/ImportView.vue'),
         meta: {
-            title: "import"
+            title: PAGES.IMPORT
         }
     },
     {
@@ -71,15 +89,23 @@ const routes = [
         name: 'export-data',
         component: () => import('/src/views/ExportView.vue'),
         meta: {
-            title: "export"
+            title: PAGES.EXPORT
         }
+    },
+    {
+      path: "/backup/export/:type",
+      name: "export-data-type",
+      component: () => import('/src/views/ExportOptionView.vue'),
+      meta: {
+          title: PAGES.EXPORT
+      }
     },
     {
         path: '/userManual',
         name: 'manual',
         component: () => import('/src/views/ManualView.vue'),
         meta: {
-            title: "manual"
+            title: PAGES.USER_MANUAL
         }
     },
     {
@@ -87,15 +113,23 @@ const routes = [
         name: 'terms',
         component: () => import('/src/views/TermsView.vue'),
         meta: {
-            title: "terms"
+            title: PAGES.TERMS
         }
     },
     {
-        path: '/erase',
+        path: '/eraseData',
         name: 'erase',
         component: () => import('/src/views/EraseDataView.vue'),
         meta: {
-            title: "eraseData"
+            title: PAGES.ERASE
+        }
+    },
+    {
+        path: '/about',
+        name: 'aboutSystem',
+        component: () => import('/src/views/AboutView.vue'),
+        meta: {
+            title: PAGES.ABOUT
         }
     },
     {
@@ -117,7 +151,7 @@ const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes,
     scrollBehavior(to, from, savedPosition){
-        if(savedPosition){
+        if(savedPosition) {
             return savedPosition
         }
         return { top: 0 }

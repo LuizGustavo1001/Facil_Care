@@ -1,22 +1,25 @@
 <template>
-  <div class="input-wrapper flex flex-column" style="gap: var(--spacing-3xs)">
-    <label
+  <fieldset class="default-input-wrapper">
+    <!-- Select Input -->
+    <legend
         v-if="label"
-        :for="computedId"
         class="input-label text-muted"
     >
       {{ label }}
-    </label>
-
+    </legend>
     <select
         :id="computedId"
         v-model="model"
         :name="name"
         v-bind="$attrs"
-        class="cursor-pointer default-input-attr active-border"
+        class="cursor-pointer default-input-attr"
     >
-      <option value="" disabled hidden>{{t(`utils.selectOption`)}}...</option>
+      <!-- 1. Default Option -->
+      <option value="" disabled hidden>
+        {{t(`utils.selectOption`)}}...
+      </option>
 
+      <!-- 2. Specific Option(s) -->
       <slot>
         <!-- Fallback: render via Prop if slot not specified -->
         <template v-if="normalizedOptions.length">
@@ -30,12 +33,15 @@
         </template>
       </slot>
     </select>
-  </div>
+  </fieldset>
+
 </template>
 
 <style scoped>
-  .input-label{
+  .input-label {
     font-size: var(--font-label-md);
+    padding-inline: var(--spacing-sm);
+    margin-left: var(--spacing-sm);
   }
 </style>
 

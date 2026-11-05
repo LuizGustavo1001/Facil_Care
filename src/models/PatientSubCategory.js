@@ -3,8 +3,12 @@ export class PatientSubCategory {
      * @param { Object } db - Dexie database instance.
      * @param { string } tableName - Sub-category table name
      **/
-    constructor(db, tableName){
+    constructor(db, tableName) {
         this.table = db.table(tableName)
+    }
+
+    async getTable() {
+        return this.table
     }
 
     /**

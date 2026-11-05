@@ -1,5 +1,15 @@
 <template>
   <div class="view regular">
+    <!-- Manage View -->
+    <!--
+      Here you can manage patient's:
+        - Doctors
+        - Caregivers
+        - Medicines
+        - Allergies
+        - Health Plans
+        - Emergency Contacts
+    -->
     <template v-if="pageExists">
       <AppOverlay />
 
@@ -30,40 +40,35 @@
 
       <AppHeader
           :title="utils.getPageTitle(currentCategory)"
-          :leftBtnIcon="icons['chevron-left']"
-          @return-page="navigation.handleReturn"
       />
 
       <main class="main regular gap-2">
-        <section v-if="currentCategory === 'medicines'">
-          <ActionButtonAlt
-            tag="router"
-            :to="`/manage/${PAGES.MEDICINE_REGISTRIES}`"
-            :title="t('utils.viewAdministered') ?? ''"
-            :leftIcon="icons['medicine-bottle-fill']"
-          />
-        </section>
-
+        <!-- Registries List -->
         <section v-if="formattedData.length > 0" class="main-section regular gap-1">
           <div class="section-title-container">
-            <h2 class="section-title text-muted">{{ getSectionTitle(currentCategory) }}</h2>
+            <h2 class="section-title text-muted">{{ getCategoryTitle(currentCategory) }}</h2>
           </div>
 
-          <ul class="list flex flex-column gap-1">
+          <ul class="list buttons-wrapper">
             <li v-for="item in formattedData" :key="item.id" class="flex align-center gap-05">
               <ActionButton
                   tag="button"
                   :rightIcon="icons['pencil-line']"
+                  rightIconSize="23px"
                   :title="item.title"
                   :description="item.description"
                   variant="subtle"
-                  padding="lg"
+                  padding="md"
                   class="width-full"
                   @click.stop="handleButtonAction(item, $event)"
+                  :hasBorderRadius="false"
+                  style="border-radius: var(--radius-xs)"
               />
 
+              <!-- Delete Registry Icon -->
               <IconBtn
                   :icon="icons['delete-bin-line']"
+                  size="25px"
                   variant="destructive"
                   @click.stop="handleDelete(item)"
               />
@@ -88,14 +93,15 @@
   import { computed, ref, watch } from "vue"
   import { icons } from "../assets/icons/icons.js"
   import { formTemplates } from "../locales/projectConfig.js"
-  import { MANAGE_PAGES, PAGES } from "../composables/usePages.js"
+
+  import { MANAGE_PAGES, PAGES } from "../constants/sysPages.js"
+  import { FORM_TYPES } from "../constants/formTypes.js"
 
   import { useRoute } from "vue-router"
-  import { useNavigation } from "../composables/useNavigation.js"
   import { useUtils } from "../composables/useUtils.js"
   import { useI18n } from "vue-i18n"
   import { useSnackbar } from "../composables/useSnackbar.js"
-  import { FORM_TYPES, useForm } from "../composables/useForm.js"
+  import { useForm } from "../composables/useForm.js"
   import { useDate } from "../composables/useDate.js"
   import { useConfirmPopup } from "../composables/useConfirmPopup.js"
   import { useFormPopup } from "../composables/useFormPopup.js"
@@ -110,10 +116,8 @@
   import IconBtn from "../components/buttons/IconBtn.vue"
   import FormPopup from "../components/layout/popup/FormPopup.vue"
   import ConfirmPopup from "../components/layout/popup/ConfirmPopup.vue"
-  import ActionButtonAlt from "../components/buttons/ActionButtonAlt.vue"
 
   import MedicineController from "../controllers/MedicineController.js"
-  import MedicineRegistriesController from "../controllers/MedicineRegistriesController.js"
   import CaregiverController from "../controllers/CaregiverController.js"
   import HealthPlanController from "../controllers/HealthPlanController.js"
   import DoctorController from "../controllers/DoctorController.js"
@@ -124,7 +128,6 @@
   const { t, te } = useI18n()
   const route = useRoute()
   const form = useForm()
-  const navigation = useNavigation()
   const utils = useUtils()
   const snackbar = useSnackbar()
   const date = useDate()
@@ -142,25 +145,23 @@
   const confirmTitle = computed(() => confirmPopup.title.value)
   const confirmMessage = computed(() => confirmPopup.message.value)
 
-  // Retrieve page data
   const currentCategory = computed(() => route.params.category)
 
   // CONTROLLERS
   const medicineController = new MedicineController()
-  const medicineRegistryController = new MedicineRegistriesController()
   const caregiverController = new CaregiverController()
   const healthPlanController = new HealthPlanController()
   const doctorController = new DoctorController()
   const allergyController = new AllergyController()
   const emergencyContactController = new EmergencyContactController()
 
+  // STATES
   const caregivers = ref([])
   const healthPlans = ref([])
   const doctors = ref([])
   const allergies = ref([])
   const emergencyContacts = ref([])
   const medicines = ref([])
-  const medicineRegistries = ref([])
 
   // Verify if selected manage page exists
   const pageExists = computed(() => {
@@ -208,16 +209,9 @@
               )})`
               : ""
           ),
-          description: getDescription([medicine.observations, joinTimes(medicine.administrationTimes)])
-        }))
-
-      case PAGES.MEDICINE_REGISTRIES:
-        return medicineRegistries.value.map(registry => ({
-          id: registry._id,
-          title: `${registry.medicineName} (${registry.dosage})`,
           description: getDescription([
-            registry.observations,
-            date.getFormatted(registry.adminTime, true)
+              medicine.observations,
+            joinTimes(medicine.administrationTimes)
           ])
         }))
 
@@ -244,27 +238,6 @@
     }
   })
 
-  async function loadMedicineRegistries(registries) {
-    return Promise.all(
-        registries.map(async registry => {
-          const [medicineResult] = await Promise.all([
-            registry.medicineId
-                ? medicineController.getById(registry.medicineId)
-                : null
-          ])
-
-          const medicine = medicineResult?.success
-              ? medicineResult.data
-              : null
-
-          return {
-            ...registry,
-            medicineName: medicine?.name ?? registry.medicineId ?? ""
-          }
-        })
-    )
-  }
-
   // FUNCTIONS
   const loadCategoryData = async (category) => {
     let result = null
@@ -272,10 +245,6 @@
     switch(category) {
       case PAGES.MEDICINES:
         result = await medicineController.getAll()
-        break
-      case PAGES.MEDICINE_REGISTRIES:
-        result = await medicineRegistryController.getAll()
-        result.data = await loadMedicineRegistries(result.data)
         break
       case PAGES.CAREGIVERS:
         result = await caregiverController.getAll()
@@ -311,12 +280,12 @@
   const joinTimes = (parts = []) => {
     return parts
         .filter(Boolean)
-        .map(time => date.getFormatted(time))
+        .map(time => date.getNumericHour(date.timeToDate(time)))
         .join(", ")
   }
 
-  const getSectionTitle = (currentCategory) => {
-    const key = `views.${currentCategory}.sections.registers.title`
+  const getCategoryTitle = (currentCategory) => {
+    const key = `views.${currentCategory}.categories.registers.title`
     return te(key)
         ? t(key)
         : ""
@@ -333,9 +302,6 @@
     switch(currentCategory.value){
       case PAGES.MEDICINES:
         result = await medicineController.delete(item.id)
-        break
-      case PAGES.MEDICINE_REGISTRIES:
-        result = await medicineRegistryController.delete(item.id)
         break
       case PAGES.CAREGIVERS:
         result = await caregiverController.delete(item.id)
@@ -375,9 +341,6 @@
       case PAGES.MEDICINES:
         result = await form.executeDBSubmit(() => medicineController.update(itemId, formData))
         break
-      case PAGES.MEDICINE_REGISTRIES:
-        result = await form.executeDBSubmit(() => medicineRegistryController.update(itemId, formData))
-        break
       case PAGES.CAREGIVERS:
         result = await form.executeDBSubmit(() => caregiverController.update(itemId, formData))
         break
@@ -397,7 +360,7 @@
 
     if(!result) return
 
-    if(result && result.success){
+    if(result && result.success) {
       await updateData(currentCategory.value, result.data)
 
       formPopup.close()
@@ -410,9 +373,6 @@
     switch(categoryId){
       case PAGES.MEDICINES:
         medicines.value = updatedData
-        break
-      case PAGES.MEDICINE_REGISTRIES:
-        medicineRegistries.value = await loadMedicineRegistries(updatedData)
         break
       case PAGES.CAREGIVERS:
         caregivers.value = updatedData
@@ -436,7 +396,7 @@
    * - Triggers the current event target (Prevents the popup from closing unexpectedly)
    * - Defines the database data source
    * - Defines the template data (`popupTemplate`) to be displayed in the popup
-   * - Defines the popup context (`sectionId` and `fieldId`) needed to access the corret database table and attribute. Example: `sectionId` = "patient" and `fieldId` = "birthDate"
+   * - Defines the popup context (`sectionId` and `fieldId`) needed to access the corret database table and attribute. Example: `categoryId` = "patient" and `fieldId` = "birthDate"
    *
    * @param { Object } button
    * @param { Event } event
@@ -445,19 +405,16 @@
     formPopup.triggerRef.value = event.currentTarget
     const popupTemplate = formTemplates.find(item => item.id === currentCategory.value) ?? null
 
-    if(!popupTemplate){
+    if(!popupTemplate) {
       snackbar.open("ItemNotFound")
       return
     }
 
     let result = null
 
-    switch(currentCategory.value){
+    switch(currentCategory.value) {
       case PAGES.MEDICINES:
         result = await medicineController.getById(button.id)
-        break
-      case PAGES.MEDICINE_REGISTRIES:
-        result = await medicineRegistryController.getById(button.id)
         break
       case PAGES.CAREGIVERS:
         result = await caregiverController.getById(button.id)
@@ -512,19 +469,6 @@
     medicines: medicinesList.value
   }))
 
-  async function loadMedicinesList() {
-    try {
-      const response = await medicineController.getAll()
-
-      medicinesList.value = response?.success
-          ? response.data
-          : []
-    } catch (error) {
-      console.error("DB Error:", error)
-      medicinesList.value = []
-    }
-  }
-
   // Dynamic category data loading
   watch(
       currentCategory,
@@ -532,10 +476,6 @@
         if (!category || !pageExists.value) return
 
         await loadCategoryData(category)
-
-        if (category === PAGES.MEDICINE_REGISTRIES) {
-          await loadMedicinesList()
-        }
       },
       { immediate: true }
   )

@@ -1,20 +1,22 @@
 <template>
   <div class="not-found-card flex flex-column align-center justify-center gap-1">
+    <!-- Not Found Card -->
     <Icon
       :icon="currentIcon"
       :size="currentSize"
     />
-    <p>{{ currentText }}...</p>
+
+    <p class="text-center">{{ currentText }}</p>
   </div>
 </template>
 
 <style scoped>
-  .icon, p{
+  .icon, p {
     color: var(--color-text-primary-muted);
   }
 
-  p{
-    font-size: var(--font-heading-1);
+  p {
+    font-size: var(--font-heading-3);
     font-weight: var(--bolder-weight);
   }
 </style>
@@ -30,16 +32,18 @@
   // COMPOSABLES
   const { t, te } = useI18n()
 
-  // STATIC VARIABLES
+  // CONSTANTS
   const iconsMap = {
     "item": icons['item-not-found'],
     "notification": icons['no-notifications'],
+    "noMedicinesToday": icons['user-smile-line']
   }
 
   const sizesMap = {
     "small": "50px",
     "medium": "150px",
-    "large": "300px"
+    "large": "200px",
+    "xl": "300px"
   }
 
   // PROPS
@@ -51,12 +55,11 @@
     size: {
       type: String,
       default: "large",
-      validator: (value) => ["small", "medium", "large"].includes(value)
     }
   })
 
   // COMPUTED PROPERTIES
   const currentIcon = computed(() => iconsMap[props.type])
   const currentText = computed(() => te(`utils.notFoundCard.${props.type}`) ? t(`utils.notFoundCard.${props.type}`) : "" )
-  const currentSize = computed(() => sizesMap[props.size])
+  const currentSize = computed(() => sizesMap[props.size] ?? sizesMap.large)
 </script>

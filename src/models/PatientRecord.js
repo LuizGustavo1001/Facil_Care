@@ -26,9 +26,11 @@ export class PatientRecord {
      * @param { string } id - Records Id.
      *
      * @returns { Promise<Object|undefined> } - The matching record, or undefined if not found.
+     *
+     * @throws { Error } If a database operation fails.
      **/
     async getById(id){
-        try{
+        try {
             return await this.table
                 .where("_id")
                 .equals(id)

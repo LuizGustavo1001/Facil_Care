@@ -1,9 +1,5 @@
 import { ref } from "vue"
-
-export const LANGUAGES = {
-    PT_BR: "ptBR",
-    EN_US: "enUS"
-}
+import { LANGUAGES } from "../constants/sysLanguages.js"
 
 export const currentLanguage = ref(LANGUAGES.PT_BR)
 

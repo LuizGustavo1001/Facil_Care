@@ -1,5 +1,8 @@
 export const PAGES = {
     HOME: "home",
+    SERVICES: "services",
+    PATIENT_DATA: "patientData",
+
     MONITORING: "monitoring",
     MANAGE: "manage",
     REGISTER: "register",
@@ -39,7 +42,8 @@ export const PAGES = {
     HEART_RATE: "heartRate",
 
     NOTIFICATIONS: "notifications",
-    ERASE: "eraseData"
+    ERASE: "eraseData",
+    ABOUT: "about"
 }
 
 export const MANAGE_PAGES = [

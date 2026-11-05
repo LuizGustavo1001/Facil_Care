@@ -1,15 +1,5 @@
 import { ref } from "vue"
-
-export const THEMES = {
-    LIGHT: "light",
-    DARK: "dark",
-    HIGH_CONTRAST: "highContrast"
-}
-
-export const THEME_PREFERENCES = {
-    ...THEMES,
-    SYSTEM: "system"
-}
+import { THEME_PREFERENCES, THEMES } from "../constants/sysThemes.js"
 
 const currentTheme = ref(THEMES.LIGHT) // current applied theme
 const currentPreference = ref(THEME_PREFERENCES.SYSTEM) // user's preference selection

@@ -1,15 +1,20 @@
 <template>
   <AppPopup class="confirm-popup" :isOpen="isOpen" :popupRef="popupRef">
+    <!-- Confirm Popup -->
+
+    <!-- Header -->
     <template #header>
       <h2> {{ title }} </h2>
     </template>
 
+    <!-- Main Message -->
     <template v-if="message" #main>
       <div class="confirm-message">
         <p> {{ message }} </p>
       </div>
     </template>
 
+    <!-- Buttons -->
     <template #footer>
       <div class="popup-btns gap-1">
         <ActionButton
@@ -35,13 +40,14 @@
 </template>
 
 <style scoped>
-  .popup-btns{
+  .popup-btns {
     display: grid;
     grid-template-columns: auto 65%;
   }
 
-  .confirm-popup h2{
+  .confirm-popup h2 {
     font-size: var(--font-heading-2);
+    font-weight: var(--bold-weight);
   }
 </style>
 

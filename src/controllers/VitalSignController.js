@@ -1,6 +1,6 @@
 import PatientRecordController from "./PatientRecordController.js"
 import VitalSign from "../models/VitalSign.js"
-import { VITAL_SIGNS_PAGES } from "../composables/usePages.js"
+import { VITAL_SIGNS_PAGES } from "../constants/sysPages.js"
 
 const codeLabel = "VitalSign"
 

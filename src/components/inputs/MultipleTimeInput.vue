@@ -1,5 +1,6 @@
 <template>
   <div class="input-wrapper flex flex-column gap-05">
+    <!-- Multiple Time Input -->
     <label
         v-if="label"
         :for="computedId"
@@ -23,7 +24,7 @@
           :value="time"
           v-bind="$attrs"
           :readonly="readonly"
-          class="default-input-attr active-border flex-grow-1"
+          class="alt-input-attr active-border flex-grow-1"
           @input="updateTime(index, $event.target.value)"
         >
 
@@ -43,11 +44,13 @@
           v-if="!readonly"
           tag="button"
           variant="subtle"
-          title="Adicionar Horário"
-          padding="xs"
+          :title="t(`utils.addSchedule`)"
+          padding="sm"
           type="button"
           class="add-time-btn"
           style="width: fit-content"
+          :leftIcon="icons['time-line']"
+          leftIconSize="15px"
           @click.stop="addTime"
       />
     </div>
@@ -59,12 +62,15 @@
 <script setup>
   import { computed } from "vue"
   import { icons } from "../../assets/icons/icons.js"
+
+  import { useI18n } from "vue-i18n"
   import { useDate } from "../../composables/useDate.js"
 
   import IconBtn from "../buttons/IconBtn.vue"
   import ActionButton from "../buttons/ActionButton.vue"
 
   // COMPOSABLES
+  const { t } = useI18n()
   const date = useDate()
 
   defineOptions({
@@ -107,7 +113,7 @@
   }
 
   function addTime(){
-    model.value = [...timeValues.value, date.getTime()]
+    model.value = [...timeValues.value, date.getNumericHour()]
   }
 
   function removeTime(index){

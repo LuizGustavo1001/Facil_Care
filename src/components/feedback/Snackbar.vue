@@ -1,5 +1,6 @@
 <template>
   <transition name="fade-bounce" mode="out-in">
+    <!-- Snackbar -->
     <div
         v-if="isActive"
         class="snackbar flex gap-1 align-center justify-between cursor-pointer active-border fixed"
@@ -16,13 +17,16 @@
       </span>
     </span>
 
-      <Icon :icon="icons.close" class="right-icon"/>
+      <Icon
+          :icon="icons.close"
+          class="right-icon"
+      />
     </div>
   </transition>
 </template>
 
 <style scoped>
-  .snackbar{
+  .snackbar {
     padding: var(--spacing-md);
 
     bottom: 2em;
@@ -39,26 +43,26 @@
   }
 
   /* VARIANTS */
-  /* 1. success */
-  .snackbar.success{
+  /* 1. Success */
+  .snackbar.success {
     background: var(--color-bg-green);
     color: var(--color-text-green);
   }
 
-  /* 2. error */
-  .snackbar.error{
+  /* 2. Error */
+  .snackbar.error {
     background: var(--color-bg-red);
     color: var(--color-text-red);
   }
 
-  /* 3. warning */
-  .snackbar.warning{
+  /* 3. Warning */
+  .snackbar.warning {
     background: var(--color-bg-orange);
     color: var(--color-text-orange);
   }
 
-  /* 4. info */
-  .snackbar.info{
+  /* 4. Info */
+  .snackbar.info {
     background: var(--color-bg-blue);
     color: var(--color-text-blue);
   }

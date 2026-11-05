@@ -6,9 +6,9 @@
     :href="!isButton ? (to || undefined) : undefined"
     :target="!isButton ? parsedTarget : undefined"
     :rel="!isButton && parsedTarget === '_blank' ? 'noopener noreferrer' : undefined"
-    class="action-btn flex justify-between align-center gap-1 active-border"
     :class="[variantClass]"
-    :style="paddingStyle"
+    :style="[paddingStyle, computedBorderRadius]"
+    class="action-btn flex justify-between align-center gap-03 active-border"
   >
     <span class="flex align-center gap-05 width-full">
       <Icon
@@ -42,77 +42,76 @@
 </template>
 
 <style scoped>
-  .action-btn{
+  .action-btn {
     text-align: v-bind(textAlign);
 
-    border-radius: var(--radius-lg);
     border: none;
 
     cursor: pointer;
     transition: 0.2s ease-out;
   }
 
-  .btn-content .btn-content-title{
+  .btn-content .btn-content-title {
     font-size: var(--font-button-title);
     font-weight: var(--bold-weight);
   }
 
-  .btn-content .btn-content-description{
+  .btn-content .btn-content-description {
     font-size: var(--font-button-description);
     font-weight: var(--medium-weight);
   }
 
   /* VARIANTS */
   /* 1. Transparent */
-  .action-btn.transparent{
+  .action-btn.transparent {
     background: transparent;
     color: inherit;
   }
-  .action-btn.transparent:hover{
+  .action-btn.transparent:hover {
     background: var(--color-bg-hover);
   }
 
   /* 2. Subtle */
-  .action-btn.subtle{
+  .action-btn.subtle {
     border: 1px solid transparent;
     background: var(--color-bg-subtle);
     color: inherit;
   }
-  .action-btn.subtle:hover{
+  .action-btn.subtle:hover {
     background: var(--color-bg-hover);
   }
 
   /* 3. Destructive */
-  .action-btn.destructive{
+  .action-btn.destructive {
     color: var(--color-text-red);
     background: var(--color-bg-red);
   }
-  .action-btn.destructive:hover{
+  .action-btn.destructive:hover {
     background: var(--color-bg-red-hover);
   }
-  .action-btn.destructive .btn-content-description{
+  .action-btn.destructive .btn-content-description {
     color: var(--red-500);
   }
 
   /* 4. Highlight */
-  .action-btn.highlight{
+  .action-btn.highlight {
     background: var(--color-bg-brand);
     color: var(--color-text-inverse);
   }
-  .action-btn.highlight:hover{
+  .action-btn.highlight:hover {
     background: var(--color-bg-brand-hover);
   }
 
-  .action-btn.highlight .btn-content-description{
+  .action-btn.highlight .btn-content-description {
     color: var(--color-text-inverse-muted);
   }
 
   /* 5. Primary */
-  .action-btn.primary{
+  .action-btn.primary {
     background: var(--color-bg-primary);
     color: inherit;
   }
-  .action-btn.primary:hover{
+  .action-btn.primary:hover {
     background: var(--color-bg-hover);
   }
 </style>
@@ -164,19 +163,22 @@
     },
     variant: {
       type: String,
-      default: "highlight",
-      validator: (value) => ["highlight", "subtle", "destructive", "transparent", "primary"].includes(value)
+      default: "highlight"
     },
     alignCenter: {
       type: Boolean,
       default: false
+    },
+    hasBorderRadius: {
+      type: Boolean,
+      default: true
     },
     title: String,
     description: String
   })
 
   // COMPUTED PROPERTIES
-  // avoid invalid variant classes
+  // Verifies Action Button variant class
   const variantClass = computed(() => {
     return VARIANTS.includes(props.variant) ? props.variant : DEFAULT_VARIANT
   })
@@ -187,7 +189,7 @@
 
   const componentTag = computed(() => {
     // 1. Tag == RouterLink (Internal Link)
-    if(isRouterLink.value){
+    if(isRouterLink.value) {
       return RouterLink
     }
 
@@ -200,4 +202,6 @@
   const paddingStyle = computed(() => `padding: var(--spacing-${props.padding})`)
 
   const textAlign = computed(() => props.alignCenter ? 'center' : 'start' )
+
+  const computedBorderRadius = computed(() => props.hasBorderRadius ? "border-radius: var(--radius-2xl)" : "")
 </script>

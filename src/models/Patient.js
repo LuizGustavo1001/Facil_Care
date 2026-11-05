@@ -2,7 +2,7 @@ export default class Patient {
     /**
      * @param { Object } db - Dexie database instance.
      **/
-    constructor(db){
+    constructor(db) {
         this.table = db.table('patient')
     }
 

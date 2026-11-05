@@ -1,6 +1,11 @@
 <template>
-  <div class="chart-container">
-    <Line v-if="parsedRecords.length" :key="chartKey" :data="chartData" :options="chartOptions" />
+  <div class="chart-container width-full">
+    <Line
+        v-if="parsedRecords.length"
+        :key="chartKey"
+        :data="chartData"
+        :options="chartOptions"
+    />
 
     <p v-else>{{ t(`charts.${PAGES.VITAL_SIGNS}.fallback`) }}</p>
   </div>
@@ -8,7 +13,6 @@
 
 <style scoped>
   .chart-container {
-    width: 100%;
     height: 320px;
   }
 </style>
@@ -18,12 +22,13 @@
   import { Chart as ChartJS, LineController, LineElement, PointElement, CategoryScale, LinearScale, Tooltip, Legend, Title } from "chart.js"
   import { Line } from "vue-chartjs"
 
-  import { PAGES } from "../../../composables/usePages.js"
+  import { PAGES } from "../../../constants/sysPages.js"
   import { charts } from "../../../locales/projectConfig.js"
+  import { TRANSLATABLE_ITEMS } from "../../../constants/sysUnits.js"
 
   import { useI18n } from "vue-i18n"
   import { useDate } from "../../../composables/useDate.js"
-  import {TRANSLATABLE_ITEMS, useUnitSystem} from "../../../composables/useUnitSystem.js"
+  import { useUnitSystem } from "../../../composables/useUnitSystem.js"
 
   ChartJS.register(
       LineController,

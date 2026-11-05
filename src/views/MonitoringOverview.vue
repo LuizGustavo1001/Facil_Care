@@ -1,6 +1,8 @@
 <template>
   <div class="view regular">
-    <template v-if="pageExists(currentCategory)">
+    <!-- Monitoring Overview -->
+    <!-- Here you can manage a specific Follow Ups and Vital Signs monitoring, like body temperature, or sleep quality -->
+    <template v-if="pageExists()">
       <AppOverlay />
 
       <ConfirmPopup
@@ -19,50 +21,45 @@
           @click="snackbar.clear"
       />
 
-      <AppHeader
-          :title="utils.getPageTitle(currentType)"
-          :leftBtnIcon="icons['chevron-left']"
-          @return-page="navigation.handleReturn"
-      />
+      <AppHeader :title="utils.getPageTitle(currentMonitoring)" />
 
       <main class="main regular gap-2">
-        <template v-if="formattedData.length > 0">
-
-          <!-- Chart Section -->
-          <section v-if="currentCategory === PAGES.VITAL_SIGNS" class="chart-section flex flex-column gap-1">
-            <ul class="filter-list flex align-center gap-05 overflow-auto">
-              <li
-                  v-for="filter in charts.filters"
-                  :key="filter.label"
-                  class="filter-item"
-                  :class="{
+        <!-- Days Interval Filter -->
+        <ul class="filter-list flex align-center gap-05 overflow-auto">
+          <li
+              v-for="filter in charts.filters"
+              :key="filter.label"
+              class="filter-item capitalize-words"
+              :class="{
                     active: activeFilterDays === filter.days
                   }"
-                  @click="activeFilterDays = filter.days"
-              >
-                {{ t(`charts.filters.${filter.id}.title`) }}
-              </li>
+              @click="activeFilterDays = filter.days"
+          >
+            {{ t(`charts.filters.${filter.id}.title`) }}
+          </li>
 
-              <li>({{ filteredMonitoringData.length }} {{ t(`utils.measurements`) }})</li>
-            </ul>
+          <li>({{ filteredMonitoringData.length }} {{ t(`utils.measurements`) }})</li>
+        </ul>
 
+        <template v-if="formattedData.length > 0">
+          <!-- Chart Section -->
+          <section v-if="currentCategory === PAGES.VITAL_SIGNS" class="chart-section flex flex-column gap-1">
             <VitalSignsChart
-                :type="currentType"
+                :type="currentMonitoring"
                 :records="filteredMonitoringData"
             />
           </section>
 
           <!-- Monitoring Item List Section -->
           <section class="main-section regular gap-1">
-            <ul class="list flex flex-column gap-1">
-              <li v-for="item in formattedData" :key="item._id" class="flex align-center gap-05">
-
+            <ul class="buttons-wrapper overflow-hidden">
+              <li v-for="item in formattedData" :key="item.id" class="flex align-center gap-05">
                 <div class="item-info flex flex-column gap-03 flex-grow-1">
                   <h2>{{ item.value }}</h2>
 
                   <template v-for="(text, index) in item.description" :key="index">
                     <p v-if="text" class="text-muted"> {{ text }}</p>
-                  </template >
+                  </template>
                 </div>
 
                 <IconBtn
@@ -76,10 +73,11 @@
           </section>
         </template>
 
+        <!-- FallBack Section -->
         <NotFoundCard v-else class="main-section center"/>
       </main>
 
-      <AppFooter :page="currentType" />
+      <AppFooter :page="currentMonitoring" />
     </template>
 
     <template v-else>
@@ -89,51 +87,51 @@
 </template>
 
 <style scoped>
-  .item-info{
-    padding: var(--spacing-lg);
+  .item-info {
+    padding: var(--spacing-md);
     background: var(--color-bg-subtle);
-
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-xs);
   }
 
-  .item-info h2{
-    font-size: var(--font-body-lg);
+  .item-info h2 {
+    font-size: var(--font-body-md);
     font-weight: var(--bold-weight);
   }
-  .item-info p{
-    font-size: var(--font-body-md);
+  .item-info p {
+    font-size: var(--font-body-sm);
     font-weight: var(--medium-weight);
   }
 
-  .filter-list .filter-item{
-    padding: var(--spacing-sm);
-    background: var(--color-bg-subtle);
-    border: 1px solid var(--color-border-default);
-    font-weight: var(--bold-weight);
-
+  .filter-list .filter-item {
+    padding: var(--spacing-xs);
     min-width: fit-content;
 
-    border-radius: var(--radius-sm);
+    border: 2px solid var(--color-border-default);
+
+    font-size: var(--font-body-sm);
+    font-weight: var(--medium-weight);
+    border-radius: var(--radius-xs);
 
     cursor: pointer;
     transition: all 0.2s ease;
   }
-  .filter-list .filter-item:hover, .filter-list .filter-item:focus, .filter-list .filter-item.active{
+  .filter-list .filter-item:hover,
+  .filter-list .filter-item:focus,
+  .filter-list .filter-item.active {
     background: var(--color-bg-hover);
+    border-color: transparent;
   }
 </style>
 
 <script setup>
-  import { computed, onMounted, ref } from "vue"
+  import { computed, ref, watch } from "vue"
   import { icons } from "../assets/icons/icons.js"
 
-  import { PAGES, VITAL_SIGNS_PAGES, FOLLOW_UPS_PAGES } from "../composables/usePages.js"
+  import { PAGES, VITAL_SIGNS_PAGES, FOLLOW_UPS_PAGES } from "../constants/sysPages.js"
   import { charts } from "../locales/projectConfig.js"
 
   import { useRoute } from "vue-router"
   import { useI18n } from "vue-i18n"
-
-  import { useNavigation } from "../composables/useNavigation.js"
   import { useDate } from "../composables/useDate.js"
   import { useUtils } from "../composables/useUtils.js"
   import { useSnackbar } from "../composables/useSnackbar.js"
@@ -152,173 +150,220 @@
 
   import VitalSignController from "../controllers/VitalSignController.js"
   import FollowUpController from "../controllers/FollowUpController.js"
-  import CaregiverController from "../controllers/CaregiverController.js";
+  import CaregiverController from "../controllers/CaregiverController.js"
 
   // COMPOSABLES
   const { t } = useI18n()
   const route = useRoute()
   const confirmPopup = useConfirmPopup()
   const snackbar = useSnackbar()
-  const navigation = useNavigation()
   const date = useDate()
   const utils = useUtils()
   const unit = useUnitSystem()
 
+  // CONTROLLERS
   const caregiverController = new CaregiverController()
+  const vitalSignsController = new VitalSignController()
+  const followUpsController = new FollowUpController()
+
+  // STATES
+  const activeFilterDays = ref(charts.filters[2].days)
+  const filteredMonitoringData = ref([])
+  const formattedData = ref([])
+
+  const refreshKey = ref(0)
+
+  let fetchRequestId = 0
+  let formatRequestId = 0
 
   // COMPUTED PROPERTIES
-  const activeFilterDays = ref(7)
+  const currentCategory = computed(() => route.params.category || null)
+  const currentMonitoring = computed(() => route.params.monitoring || null)
 
   const isSnackbarOpen = computed(() => snackbar.isActive.value)
-
   const isConfirmOpen = computed(() => confirmPopup.isOpen.value)
   const confirmTitle = computed(() => confirmPopup.title.value)
   const confirmMessage = computed(() => confirmPopup.message.value)
 
-  // Returns selected monitoring type (Vital Sign or Follow Up)
-  const currentCategory = computed(() => {
-    return route.params.category || null
-  })
-
-  // Returns selected monitoring type item
-  const currentType = computed(() => {
-    return route.params.type || null
-  })
-
-  // filters monitoring by date interval
-  const filteredMonitoringData = computed(() => {
-    if(activeFilterDays.value === null) { // all data
-      return monitoringData.value
-    }
-
-    // min date
-    const limitDate = new Date()
-    limitDate.setDate(limitDate.getDate() - activeFilterDays.value)
-    const limitTimestamp = limitDate.getTime()
-
-    return monitoringData.value.filter(record => {
-      const recordTimestamp = new Date(record.dateTime).getTime()
-
-      // return only the registries within the interval
-      return recordTimestamp >= limitTimestamp
-    })
-  })
-
-  // FUNCTIONS
-  // Verify if selected monitoring overview page exists
+  // VALIDATION
   const pageExists = () => {
     if(currentCategory.value === PAGES['FOLLOW_UPS']){
-      return FOLLOW_UPS_PAGES.includes(currentType.value)
+      return FOLLOW_UPS_PAGES.includes(currentMonitoring.value)
     }
 
     if(currentCategory.value === PAGES['VITAL_SIGNS']){
-      return VITAL_SIGNS_PAGES.includes(currentType.value)
+      return VITAL_SIGNS_PAGES.includes(currentMonitoring.value)
     }
 
     return false
   }
 
-  const handleDelete = async (item) => {
-    const titleSlot = computed(() => {
-      return currentCategory.value === "vitalSigns" ? t(`utils.vitalSign`) : t(`utils.followUp`)
-    })
+  // DATA FETCHING
+  const getMonitoringRecords = async () => {
+    switch (currentCategory.value) {
+      case PAGES.FOLLOW_UPS:
+        return activeFilterDays.value === null
+            ? followUpsController.getByField(currentMonitoring.value)
+            : followUpsController.getByFieldAndDate(
+                currentMonitoring.value,
+                getLimitDate()
+            )
 
-    const title = t(`confirmPopupTemplates.deleteConfirm.title`, { item: titleSlot.value.toLowerCase() }) + "?"
+      case PAGES.VITAL_SIGNS:
+        return activeFilterDays.value === null
+            ? vitalSignsController.getByField(currentMonitoring.value)
+            : vitalSignsController.getByFieldAndDate(
+                currentMonitoring.value,
+                getLimitDate()
+            )
+
+      default:
+        return null
+    }
+  }
+
+  /*
+   * Returns the mininum date base in the active day filter.
+   * ex: new Date(today - 7 days).
+   **/
+  const getLimitDate = () => {
+    const limitDate = new Date()
+
+    limitDate.setDate(limitDate.getDate() - activeFilterDays.value)
+
+    limitDate.setHours(0, 0, 0, 0)
+
+    return limitDate
+  }
+
+  const loadMonitoringData = async () => {
+    const requestId = ++fetchRequestId
+
+    if(!pageExists()) {
+      filteredMonitoringData.value = []
+      return
+    }
+
+    try {
+      const result = await getMonitoringRecords()
+
+      // ignore outdated requests
+      if(requestId !== fetchRequestId) return
+
+      if(result?.success && Array.isArray(result.data)) {
+        filteredMonitoringData.value = result.data
+      } else {
+        filteredMonitoringData.value = []
+        snackbar.open(result?.code)
+      }
+    } catch (err) {
+      if (requestId !== fetchRequestId) return
+
+      filteredMonitoringData.value = []
+      console.error("Error loading monitoring records:", err)
+    }
+  }
+
+  // DATA FORMATTING
+  const formatMonitoringRecord = async (item) => {
+    const formattedDate = item.dateTime
+        ? date.getNumericDateTime(new Date(item.dateTime))
+        : null
+
+    const parsedValue = unit.getTranslatedUnit(item.record, item.value)
+
+    const description = []
+
+    if(item.caregiverId) {
+      const caregiver = await caregiverController.getById(Number(item.caregiverId))
+
+      if(caregiver?.data?.name) {
+        description.push(caregiver.data.name)
+      }
+    }
+
+    if(formattedDate) {
+      description.push(formattedDate)
+    }
+
+    return {
+      id: item._id,
+      value: [
+        parsedValue.value,
+        parsedValue.unit
+      ].filter(Boolean).join(" "),
+      description: [
+        description.join(" • "),
+        item.observations || null
+      ],
+      type: item.record,
+      originalRecord: { ...item }
+    }
+  }
+
+  const setFormattedData = async (records) => {
+    const requestId = ++formatRequestId
+
+    const result = await Promise.all(
+        records.map(formatMonitoringRecord)
+    )
+
+    // Prevent an older formatting operation from replacing newer data.
+    if (requestId === formatRequestId) {
+      formattedData.value = result
+    }
+  }
+
+  // DELETE
+  const handleDelete = (item) => {
+    const itemCategory = currentCategory.value === PAGES.VITAL_SIGNS
+        ? t("utils.vitalSign")
+        : t("utils.followUp")
+
+    const title = t("confirmPopupTemplates.deleteConfirm.title", { item: itemCategory.toLocaleLowerCase() }) + "?"
+
     confirmPopup.open(title, null, () => handleDeleteConfirmed(item))
   }
 
   const handleDeleteConfirmed = async (item) => {
-    let result = null
+    let result
 
-    if(currentCategory.value === "vitalSigns"){
-      result = await vitalSignsController.delete(item.id, currentType.value)
-    }else if(currentCategory.value === "followUps"){
-      result = await followUpsController.delete(item.id, currentType.value)
-    }
-
-    if(result && result.success){
-      monitoringData.value = result.data
-
-      // Formatting result
-      await setFormattedData(result.data)
-
-      snackbar.open(result.code)
-    }else if(result){
-      snackbar.open(result.code)
-    }
-  }
-
-  /**
-   * Formats the database data into information to be displayed on the screen
-   *
-   * @param { Object | Array } result - Database query result
-   **/
-  const setFormattedData = async (result) => {
-    formattedData.value = []
-
-    for(const item of result){
-      const formattedDate = item.dateTime ? date.getFormatted(new Date(item.dateTime)) : null
-      const parsedValue = unit.getTranslatedUnit(item.record, item.value)
-
-      let subTitleParts = []
-
-      if(item.caregiverId){
-        const caregiver = await caregiverController.getById(Number(item.caregiverId))
-
-        if(caregiver){
-          subTitleParts.push(caregiver?.data.name)
-        }
-      }
-
-      subTitleParts.push(formattedDate)
-
-      formattedData.value.push({
-        id: item._id,
-        value: `
-          ${parsedValue.value}
-          ${
-          parsedValue.unit
-            ? ` ${parsedValue.unit}`
-            : ""
-        }
-        `.trim(),
-        description: [
-          subTitleParts.join(' • '),
-          item.observations || null
-        ],
-        type: item.record,
-        originalRecord: {...item}
-      })
-    }
-  }
-
-  // CONTROLLERS
-  const vitalSignsController = new VitalSignController()
-  const followUpsController = new FollowUpController()
-
-  const monitoringData = ref([])
-  const formattedData = ref([])
-
-  // MOUNTED || UNMOUNTED
-  onMounted(async () => {
-    let result = []
-
-    switch(currentCategory.value){
-      case PAGES['FOLLOW_UPS']:
-        result = await followUpsController.getByField(currentType.value)
+    switch (currentCategory.value) {
+      case PAGES.VITAL_SIGNS:
+        result = await vitalSignsController.delete(
+            item.id,
+            currentMonitoring.value
+        )
         break
-      case PAGES['VITAL_SIGNS']:
-        result = await vitalSignsController.getByField(currentType.value)
+
+      case PAGES.FOLLOW_UPS:
+        result = await followUpsController.delete(
+            item.id,
+            currentMonitoring.value
+        )
         break
     }
+
+    if (!result) return
+
+    snackbar.open(result.code)
 
     if (result.success) {
-      monitoringData.value = result.data
-    } else {
-      snackbar.open(result.code)
+      // Trigger a new query using the currently selected filter.
+      refreshKey.value++
     }
+  }
 
-    // Formatting result
-    setFormattedData(result.data)
-  })
+  // WATCHERS
+  watch(
+      [currentCategory, currentMonitoring, activeFilterDays, refreshKey],
+      loadMonitoringData,
+      { immediate: true }
+  )
+
+  watch(
+      filteredMonitoringData,
+      setFormattedData,
+      { immediate: true }
+  )
 </script>

@@ -1,11 +1,15 @@
-import { PAGES } from "../composables/usePages.js"
-import { THEME_PREFERENCES as THEMES } from "../composables/useTheme.js"
-import { LANGUAGES } from "../composables/useLanguage.js"
-import { UNITS } from "../composables/useUnitSystem.js"
-import { FORM_TYPES } from "../composables/useForm.js"
+import { PAGES } from "../constants/sysPages.js"
+import { THEME_PREFERENCES as THEMES } from "../constants/sysThemes.js"
+import { LANGUAGES } from "../constants/sysLanguages.js"
+import { UNITS } from "../constants/sysUnits.js"
+import { FORM_TYPES } from "../constants/formTypes.js"
 
 export default {
     pageTitle: {
+        [PAGES.HOME]: "Página Inicial",
+        [PAGES.SERVICES]: "Gerenciar Dados Médicos",
+        [PAGES.PATIENT_DATA]: "Dados do Paciente",
+
         [PAGES.VITAL_SIGNS]: "Sinais Vitais",
         [PAGES.FOLLOW_UPS]: "Acompanhamento Fisiológico e Comportamental",
         [PAGES.REGISTER]: "Registrar",
@@ -13,7 +17,6 @@ export default {
         [PAGES.EMERGENCY_DATA]: "Dados de Emergência",
 
         [PAGES.MEDICINES]: "Medicamentos",
-        [PAGES.MEDICINE_REGISTRIES]: "Registros de Medicamentos",
         [PAGES.ALLERGIES]: "Alergias",
         [PAGES.DOCTORS]: "Médicos",
         [PAGES.CAREGIVERS]: "Cuidadores",
@@ -44,10 +47,13 @@ export default {
         [PAGES.ERASE]: "Apagar Dados",
         registries: "Registros",
         [PAGES.PREFERENCES]: "Preferências",
+        [PAGES.ABOUT]: "Sobre o FacilCare"
     },
 
     meta: {
         [PAGES.HOME]: "Início",
+        [PAGES.SERVICES]: "Serviços",
+        [PAGES.PATIENT_DATA]: "Dados do Paciente",
         [PAGES.MONITORING]: "Monitoramento",
         [PAGES.MANAGE]: "Gerenciamento",
         [PAGES.EMERGENCY_DATA]: "Dados de Emergência",
@@ -58,25 +64,29 @@ export default {
         notFound: 'Página não encontrada',
         [PAGES.ERASE]: "Apagar Dados",
         [PAGES.IMPORT]: "Importar Dados",
-        [PAGES.EXPORT]: "Exportar Dados"
+        [PAGES.EXPORT]: "Exportar Dados",
+        [PAGES.ABOUT]: "Sobre"
     },
 
     utils: {
         hello: "Olá",
+        developedBy: "Desenvolvido por",
+        addSchedule: "Adicionar Horário",
         confirm: "Confirmar",
         cancel: "Cancelar",
         deleteAccount: "Apagar Dados",
         homePage: "Voltar à página inicial",
         years: "anos",
-        back: "Voltar",
+        back: "Clique aqui para voltar",
         selectOption: "Selecione uma opção",
         pageFallback: {
             title: "Página não encontrada",
             button: "Clique aqui para voltar para a página inicial"
         },
         notFoundCard: {
-            item: "Nenhum item encontrado",
-            notification: "Nenhuma nova notificação encontrada"
+            item: "Nenhum item encontrado...",
+            notification: "Nenhuma nova notificação encontrada...",
+            noMedicinesToday: "Nenhum remédio a ser administrado hoje!"
         },
         vitalSign: "Sinal Vital",
         followUp: "Acompanhamento",
@@ -151,49 +161,36 @@ export default {
 
     views: {
         [PAGES.HOME]: {
-            subtitle: "Selecione uma das opções abaixo para visualizar as informações desejadas",
+            todaysMedicines: "Remédios de Hoje",
+            newMedicine: "Novo Medicamento"
+        },
 
-            buttons: {
-                [PAGES.VITAL_SIGNS]: {
-                    title: "Registros de Sinais Vitais",
-                    description: "Gerenciar medições diárias e visualizar estatísticas"
-                },
-                [PAGES.FOLLOW_UPS]: {
-                    title: "Acompanhamento Fisiológico e Comportamental",
-                    description: "Gerenciar dados comportamentais e fisiológicos e visualizar estatísticas"
-                },
-                [PAGES.MEDICINES]: {
-                    title: "Medicamentos",
-                    description: "Visualizar medicamentos do dia e gerenciar cadastrados"
-                },
-                [PAGES.CAREGIVERS]: {
-                    title: "Cuidadores",
-                    description: "Gerenciar cuidadores do paciente"
-                },
-                [PAGES.DOCTORS]: {
-                    title: "Médicos",
-                    description: "Gerenciar médicos do paciente"
-                },
-                [PAGES.ALLERGIES]: {
-                    title: "Alergias",
-                    description: "Gerenciar alergias do paciente"
-                },
-                [PAGES.HEALTH_PLANS]: {
-                    title: "Planos de Saúde",
-                    description: "Gerenciar planos de saúde que o paciente possui"
-                },
-                [PAGES.EMERGENCY_CONTACTS]: {
-                    title: "Contatos de Emergência",
-                    description: "Gerenciar contatos de emergência"
-                }
+        [PAGES.SERVICES]: {
+            registers: {
+              title: "Registros"
+            },
+            patient: {
+              title: "Paciente"
+            },
+            others: {
+              title: "Outros"
+            }
+        },
+
+        [PAGES.PATIENT_DATA]: {
+            general: {
+                title: "Geral"
+            },
+            manageData: {
+                title: "Gerenciar Dados"
+            },
+            others: {
+                title: "Outros"
             }
         },
 
         [PAGES.REGISTER]: {
             categories: {
-                [PAGES.MEDICINE_REGISTRIES]: {
-                    title: "Administração de Medicamento"
-                },
                 [PAGES.MEDICINES]: {
                     title: "Medicamento"
                 },
@@ -307,7 +304,7 @@ export default {
         },
 
         [PAGES.EMERGENCY_DATA]: {
-            sections: {
+            categories: {
                 patient: {
                     title: "Informações do Paciente",
                     subtitle: "Clique em um das opções abaixo para editar seus dados",
@@ -347,6 +344,9 @@ export default {
                         },
                         [PAGES.MEDICINES]: {
                             title: "Medicamentos Cadastrados"
+                        },
+                        [PAGES.CAREGIVERS]: {
+                            title: "Cuidadores Cadastrados"
                         }
                     }
                 }
@@ -356,7 +356,7 @@ export default {
         },
 
         [PAGES.MEDICINES]: {
-            sections: {
+            categories: {
                 registers: {
                     title: "Medicamentos Cadastrados"
                 }
@@ -364,23 +364,15 @@ export default {
         },
 
         [PAGES.ALLERGIES]: {
-            sections: {
+            categories: {
                 registers: {
                     title: "Alergias Cadastradas"
                 }
             }
         },
 
-        [PAGES.MEDICINE_REGISTRIES]: {
-            sections: {
-                medicines: {
-                    title: "Histórico de Medicamentos Administrados"
-                }
-            }
-        },
-
         [PAGES.DOCTORS]: {
-            sections: {
+            categories: {
                 registers: {
                     title: "Médicos Cadastrados"
                 }
@@ -388,7 +380,7 @@ export default {
         },
 
         [PAGES.CAREGIVERS]: {
-            sections: {
+            categories: {
                 registers: {
                     title: "Cuidadores Cadastrados"
                 }
@@ -396,7 +388,7 @@ export default {
         },
 
         [PAGES.HEALTH_PLANS]: {
-            sections: {
+            categories: {
                 registers: {
                     title: "Planos de Saúde Cadastrados"
                 }
@@ -404,7 +396,7 @@ export default {
         },
 
         [PAGES.EMERGENCY_CONTACTS]: {
-            sections: {
+            categories: {
                 registers: {
                     title: "Contatos de Emergência Cadastrados"
                 }
@@ -412,7 +404,7 @@ export default {
         },
 
         [PAGES.PREFERENCES]: {
-            sections: {
+            categories: {
                 general: {
                     title: "Geral",
                     items: {
@@ -431,74 +423,65 @@ export default {
         },
 
         [PAGES.IMPORT]: {
-            sections: {
+            categories: {
                 importing: {
                     title: "Conectando ao Emissor",
-                    actions: [
-                        "Localizando dispositivo emissor",
-                        "Recebendo e aplicando os dados no banco de dados local",
-                        "Dados do paciente restaurados com sucesso",
-                        "Voltar à página inicial",
-                        "Tentar via arquivo local"
-                    ]
+                    badges: {
+                        finding: "Localizando dipositivo emissor",
+                        receiving: "Recebendo e aplicando os dados no banco de dados local",
+                        done: "Dados do paciente restaurados com sucesso"
+                    },
                 },
 
                 localFile: {
                     title: "Importar Dados via Arquivo Local",
                     subtitle: "Selecione um arquivo de backup previamente exportado para restaurar as informações do paciente",
-                    actions: [
-                        "Restaurando Dados",
-                        "Selecionar Arquivo JSON"
-                    ]
+                    badges: {
+                        restoring: "Restaurando dados",
+                        selectFile: "Selecionar Arquivo de Recuperação"
+                    },
                 }
             }
         },
 
         [PAGES.EXPORT]: {
-            subtitle: "Selecione uma das opções abaixo para exportar dados do paciente",
-
-            sections: {
-                tabSelector: {
-                    qrCode: {
-                        title: "Via QR Code"
-                    },
-                    json: {
-                        title: "Arquivo de Backup"
-                    }
-                },
-                cardQR: {
-                    title: "Compartilhamento via QR Code (P2P)",
+            subtitle: "Selecione um dos métodos abaixo para exportar os dados do paciente",
+            categories: {
+                qrCode: {
+                    title: "Via QR Code",
+                    description: "Leitura de QR Code para conexão P2P entre 2 dispositivos",
                     regularSubtitles: [
-                        "Gere um QR Code para transferir os dados do paciente diretamente para outro dispositivo",
+                        "Leia o QR Code abaixo para transferir os dados do paciente do seu dispositivo para outro",
+                        "Os dispositivos não precisam estar conectados na mesma internet para o processo funcionar"
                     ],
                     destructiveSubtitles: [
                         "Observação: É necessário conexão com a internet para gerar o QR Code"
                     ],
-                    actions: [
-                        "Gerar QR Code de Transferência",
-                        "Criando QR Code",
-                        "Aguardando leitura de outro dispositivo",
-                        "Cancelar QR Code",
-                        "Conexão Estabelecida! Enviando dados",
-                        "Transferência dos dados concluída com sucesso",
-                        "Nova Tranferência",
-                    ]
+                    badges: {
+                        generate: "Gerar QR Code de Transferência",
+                        generating: "Craindo QR Code",
+                        awaiting: "Aguardando leitura de outro dispositivo",
+                        cancel: "Cancelar QR Code",
+                        conectionEstablished: "Conexão Estabelecida! Enviando Dados",
+                        done: "Transferência concluída com sucesso"
+                    },
                 },
-                cardJSON:{
-                    title: "Backup Local (.json)",
+                json: {
+                    title: "Via Arquivo de Backup",
+                    description: "Faça download de um arquivo no formato JSON para fazer backup de forma manual",
                     regularSubtitles: [
-                        "Baixe uma cópia bruta (arquivo) dos dados do paciente",
+                        "Baixe uma cópia bruta (arquivo) dos dados do paciente"
                     ],
-                    actions: [
-                        "Exportando",
-                        "Baixar Arquivo JSON"
-                    ]
+                    badges: {
+                        exporting: "Exportando",
+                        download: "Baixar arquivo de Backup"
+                    }
                 }
             }
         },
 
         [PAGES.ERASE]: {
-            sections: {
+            categories: {
                 erase: {
                     title: "Apagar Dados do Paciente",
 
@@ -522,7 +505,7 @@ export default {
         },
 
         [PAGES.TERMS]: {
-            sections: {
+            categories: {
                 consciousUse: {
                     title: "Isenção de Responsabilidade e Uso Consciente",
                     contents: [
@@ -587,7 +570,7 @@ export default {
                     subtitle: `Para oferecer uma experiência completa, nosso sistema solicita permissões específicas que operam estritamente no seu dispositivo`,
                     contents: [
                         {
-                            title: "Notificações",
+                            title: "Notificações (em desenvolvimento)",
                             regularSubtitles: [
                                 `Notificações são utilizadas exclusivamente para disparar alertas visuais e sonoros no horário exato de administração de cada medicamento 
                                 cadastrados, por exemplo`
@@ -636,47 +619,7 @@ export default {
                     ]
                 }
             }
-        }
-    },
-
-    sidebar: {
-        sections: {
-            general: {
-                title: "Geral",
-                items: {
-                    [PAGES.EMERGENCY_DATA]: {
-                        title: "Dados de Emergência"
-                    },
-                    [PAGES.PREFERENCES]: {
-                        title: "Preferências"
-                    }
-                }
-            },
-
-            backup: {
-                title: "Gerenciar Dados",
-                items: {
-                    [PAGES.EXPORT]: {
-                        title: "Exportar Dados"
-                    },
-                    [PAGES.IMPORT]: {
-                        title: "Importar Dados"
-                    }
-                }
-            },
-
-            others: {
-                title: "Outros",
-                items: {
-                    [PAGES.USER_MANUAL]: {
-                        title: "Manual do Usuário"
-                    },
-                    [PAGES.TERMS]: {
-                        title: "Termos"
-                    }
-                }
-            }
-        }
+        },
     },
 
     footer: {
@@ -778,14 +721,6 @@ export default {
             buttons: {
                 primary: {
                     title: "Registrar Novo Medicamento"
-                }
-            }
-        },
-
-        [PAGES.MEDICINE_REGISTRIES]: {
-            buttons: {
-                primary: {
-                    title: "Administrar Medicamento"
                 }
             }
         },
@@ -1231,7 +1166,7 @@ export default {
 
         [PAGES.NECESSITIES]: {
             header: {
-                title: "Registro de Controle de Evacuação e Diurese",
+                title: "Registro de Controle de Evacuação e Diurese"
             },
             main: {
                 inputs: {
@@ -1268,29 +1203,6 @@ export default {
                     },
                     administrationTimes: {
                         label: "Horários de Administração"
-                    },
-                    observations: {
-                        label: "Observações",
-                        placeholder: "Observações aqui"
-                    }
-                }
-            }
-        },
-        [PAGES.MEDICINE_REGISTRIES]: {
-            header: {
-                title: "Registro de Medicamento"
-            },
-            main: {
-                inputs: {
-                    medicineId: {
-                        label: "Nome do Medicamento"
-                    },
-                    dosage: {
-                        label: "Dosagem",
-                        placeholder: "ex: 1 comprimido"
-                    },
-                    adminTime: {
-                        label: "Horário de Administração"
                     },
                     observations: {
                         label: "Observações",
@@ -1614,31 +1526,6 @@ export default {
             title: "Erro ao tentar remover um medicamento, tente novamente mais tarde"
         },
 
-        NoMedicineRegistryFound: {
-            title:  "Nenhum registro de medicamento foi encontrado"
-        },
-        MedicineRegistryNotFound: {
-            title: "O registro do medicamento selecionado não foi encontrada"
-        },
-        MedicineRegistryUpdated: {
-            title: "Os dados do registro do medicamento selecionado foram atualizados com sucesso"
-        },
-        MedicineRegistryDeleted: {
-            title: "O registro do medicamento selecionado foi excluído com sucesso"
-        },
-        MedicineRegistryCreated: {
-            title: "Novo registro de medicamento adicionado com sucesso"
-        },
-        MedicineRegistryCreationFailed: {
-            title: "Erro ao tentar adicionar um registro de um medicamento, tente novamente mais tarde"
-        },
-        MedicineRegistryUpdateFailed: {
-            title: "Erro ao tentar atualizar dados de um registro de um medicamento, tente novamente mais tarde"
-        },
-        MedicineRegistryDeleteFailed: {
-            title: "Erro ao tentar remover um registro de um medicamento, tente novamente mais tarde"
-        },
-
         InvalidDateInterval: {
             title: "Intervalo de data inválido. Data mínima deve ser menor que a data máxima"
         },
@@ -1674,11 +1561,23 @@ export default {
             title: "Os dados importados com sucesso"
         },
         exportJSONSuccess: {
-            title: "os dados exportados com sucesso"
+            title: "Os dados exportados com sucesso"
         },
 
         generic: {
             title: "Um erro inesperado aconteceu. Tente novamente mais tarde"
+        }
+    },
+
+    mainNavigationBar: {
+        [PAGES.HOME]: {
+            title: "Início"
+        },
+        [PAGES.SERVICES]: {
+            title: "Serviços"
+        },
+        [PAGES.PATIENT_DATA]: {
+            title: "Paciente"
         }
     }
 }

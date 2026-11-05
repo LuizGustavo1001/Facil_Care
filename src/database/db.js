@@ -3,7 +3,7 @@ import { Dexie } from 'dexie'
 const db = new Dexie('facilCareDB')
 
 db.version(1).stores({
-    patient: '++_id, name, address, birthDate, bloodType, weight',
+    patient: '++_id, name, address, birthDate, bloodType',
 
     allergies: '++_id, patientId, name',
     healthPlans: '++_id, patientId, name',
@@ -19,6 +19,10 @@ db.version(1).stores({
 
     notifications: '++_id, read, dateTime'
 })
+db.version(2).stores({
+    medicineRegistries: null,
+    medicines: '++_id, active, administrationTimes, administrationWeekDays, patientId',
+})
 
 // Populate Event
 db.on("populate", async (transaction) => {
@@ -27,8 +31,7 @@ db.on("populate", async (transaction) => {
             name: 'João Carlos Esposito',
             address: 'Av. Afonso Pena, 1537 - Centro, Belo Horizonte',
             birthDate: '1953-03-10T00:00:00.000Z',
-            bloodType: 'o_negative',
-            weight: '65'
+            bloodType: 'o_negative'
         }
     ], { allKeys: true })
 
@@ -192,11 +195,12 @@ db.on("populate", async (transaction) => {
         }
     ])
 
-    const medicineIds = await transaction.table('medicines').bulkAdd([
+   transaction.table('medicines').bulkAdd([
         {
             name: 'Metformina 850mg',
             routeAdmin: 'oral',
             administrationTimes: ["08:00", "14:00", "20:00"],
+            administrationWeekDays: [0, 3, 5],
             observations: 'Tomar logo após as refeições',
             patientId: patientId,
             active: true
@@ -204,23 +208,15 @@ db.on("populate", async (transaction) => {
         {
             name: 'Dipirona Monossódica 1g',
             routeAdmin: 'oral',
-            administrationTimes: ["08:00", "14:00", "20:00"],
+            administrationTimes: ["06:00", "10:00", "18:00"],
+            administrationWeekDays: [0, 1, 2, 3, 4, 5, 6],
             observations: '',
             patientId: patientId,
             active: false
         }
     ], {allKeys: true})
 
-    transaction.table('medicineRegistries').bulkAdd([
-        {
-            patientId: patientId,
-            medicineId: medicineIds[0],
-            adminTime: new Date(),
-            dosage: '1 comprimido',
-            observations: 'Paciente tomou sem resistência'
-        }
-    ])
-
+    /*
     transaction.table('notifications').bulkAdd([
         {
             title: 'Horário de Medicamento',
@@ -230,6 +226,7 @@ db.on("populate", async (transaction) => {
             dateTime: new Date()
         }
     ])
+    */
 })
 
 // Open connection

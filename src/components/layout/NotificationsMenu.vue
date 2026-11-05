@@ -1,12 +1,18 @@
 <template>
   <transition name="fade" mode="out-in">
+    <!-- Notifications Menu -->
     <div v-if="isOpen" class="notifications-menu absolute overflow-auto flex flex-column gap-1">
       <div class="notifications-header flex align-center justify-between">
         <h1>{{ t("notifications.title") }}</h1>
 
-        <button class="mark-as-read" @click="handleMarkAllAsRead">
-          <span>{{ t("notifications.markAsRead") }}</span>
-        </button>
+        <!-- Mark Every Notification as Read Button -->
+        <IconBtn
+            v-if="hasNotifications"
+            :icon="icons['double-check']"
+            @click="handleMarkAllAsRead"
+            variant="bg-clr"
+            size="25px"
+        />
       </div>
 
       <!-- Notifications List -->
@@ -19,12 +25,10 @@
               class="notification flex align-center gap-05"
               @click="handleNotificationStatus(notification)"
           >
-          <span
-              v-if="!notification.read"
-              class="vertical-line"
-          />
 
-            <span class="flex flex-column">
+            <VerticalLine v-if="!notification.read" />
+
+          <span class="notification-text flex flex-column">
             <span class="title truncate-single">{{ notification.title }}</span>
             <span class="description text-muted">{{ notification.description }}</span>
           </span>
@@ -32,6 +36,7 @@
         </li>
       </ul>
 
+      <!-- FallBack -->
       <div v-else class="empty-state">
         <NotFoundCard type="notification" size="small"/>
       </div>
@@ -40,7 +45,7 @@
 </template>
 
 <style scoped>
-  .notifications-menu{
+  .notifications-menu {
     top: calc(100% + 8px);
     right: 0;
 
@@ -52,23 +57,23 @@
     border-radius: var(--radius-md);
     box-shadow: 0 0 4px 2px var(--color-shadow-subtle);
 
-    padding: var(--spacing-md);
+    padding: var(--spacing-sm);
     z-index: 10;
   }
 
-  .notifications-header{
+  .notifications-header {
     border-bottom: 1px solid var(--color-border-default);
     padding-bottom: var(--spacing-2xs);
   }
-  .notifications-header h1{
+  .notifications-header h1 {
     font-size: var(--font-heading-2);
   }
 
-  .notifications-list{
+  .notifications-list {
     max-height: 300px;
   }
 
-  .notification{
+  .notification {
     width: 100%;
 
     font-family: inherit;
@@ -82,49 +87,33 @@
     cursor: pointer;
     transition: 0.2s ease-out;
   }
-  .notification:hover{
+  .notification:hover {
     background: var(--color-bg-hover);
   }
 
-  .notification .title{
+  .notification-text .title {
     font-size: var(--font-body-md);
     font-weight: var(--bolder-weight);
     text-align: start;
   }
-  .notification .description{
+  .notification-text .description {
     font-size: var(--font-body-sm);
     font-weight: var(--medium-weight);
     text-align: start;
-  }
-
-  .vertical-line{
-    height: 25px;
-    width: 5px;
-
-    background: var(--color-border-brand);
-    border-radius: 0 var(--radius-md) var(--radius-md) 0;
-  }
-
-  .mark-as-read{
-    background: var(--color-bg-primary);
-    border: none;
-    padding: var(--spacing-2xs);
-    border-radius: var(--radius-xs);
-    font-weight: var(--bold-weight);
-    font-size: var(--font-caption);
-    cursor: pointer;
-
-    max-width: 100px;
-    color: inherit;
   }
 </style>
 
 <script setup>
   import { computed, onMounted, ref } from "vue"
+  import { icons } from "../../assets/icons/icons.js"
+
   import { useI18n } from "vue-i18n"
 
   import NotificationController from "../../controllers/NotificationController.js"
+
   import NotFoundCard from "../feedback/NotFoundCard.vue"
+  import VerticalLine from "../common/VerticalLine.vue"
+  import IconBtn from "../buttons/IconBtn.vue"
 
   // COMPOSABLES
   const { t } = useI18n()
@@ -152,7 +141,7 @@
 
     const result = await notificationController.markAsRead(notification._id)
 
-    if(result.success){
+    if(result.success) {
       notifications.value = result.data
     }
   }

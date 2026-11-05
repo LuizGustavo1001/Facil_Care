@@ -15,7 +15,7 @@
 </template>
 
 <style scoped>
-  .icon-btn{
+  .icon-btn {
     display: inline-flex;
 
     height: fit-content;
@@ -26,66 +26,66 @@
     cursor: pointer;
     transition: 0.2s ease-out;
   }
-  .icon-btn:active{
+  .icon-btn:active {
     transform: scale(0.9);
   }
 
   /* VARIANTS */
 
   /* 1. Brand */
-  .icon-btn.brand{
+  .icon-btn.brand {
     background: var(--color-bg-brand);
     color: var(--color-text-inverse-subtle);
   }
-  .icon-btn.brand:hover{
+  .icon-btn.brand:hover {
     background: var(--color-bg-brand-hover);
   }
 
   /* 2. Transparent */
-  .icon-btn.transparent{
+  .icon-btn.transparent {
     background: transparent;
     color: var(--color-text-primary-muted);
   }
-  .icon-btn.transparent:hover{
+  .icon-btn.transparent:hover {
     background: var(--color-bg-subtle);
   }
 
   /* 3. Transparent Border */
-  .icon-btn.border{
+  .icon-btn.border {
     background: transparent;
     color: var(--color-text-primary-muted);
     border: 2px solid var(--color-border-default);
   }
-  .icon-btn.border:hover{
+  .icon-btn.border:hover {
     background: var(--color-bg-hover);
   }
 
   /* 4. Background Color */
-  .icon-btn.bg-clr{
+  .icon-btn.bg-clr {
     background: var(--color-bg-primary);
     color: var(--color-text-primary-muted);
   }
-  .icon-btn.bg-clr:hover{
+  .icon-btn.bg-clr:hover {
     background: var(--color-bg-hover);
   }
 
   /* 5. Subtle */
-  .icon-btn.subtle{
+  .icon-btn.subtle {
     background: var(--color-bg-subtle);
     color: var(--color-text-primary-muted);
 
     border: 2px solid transparent;
   }
-  .icon-btn.subtle:hover{
+  .icon-btn.subtle:hover {
     border-color: var(--color-border-default);
   }
 
   /* 6. Destructive */
-  .icon-btn.destructive{
+  .icon-btn.destructive {
     background: var(--color-bg-red);
     color: var(--color-text-red);
   }
-  .icon-btn.destructive:hover{
+  .icon-btn.destructive:hover {
     background: var(--color-bg-red-hover);
   }
 </style>
@@ -129,8 +129,7 @@
     },
     variant: {
       type: String,
-      default: 'brand',
-      validator: (value) => ["brand", "border", "bg-clr", "transparent", "subtle", "destructive"].includes(value)
+      default: 'brand'
     }
   })
 

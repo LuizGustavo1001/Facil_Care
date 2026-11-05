@@ -1,6 +1,6 @@
 import { usePopup } from "./usePopup.js"
 import { ref } from "vue"
-import { FORM_TYPES } from "./useForm.js"
+import { FORM_TYPES } from "../constants/formTypes.js"
 
 export function useFormPopup() {
     const popup = usePopup()

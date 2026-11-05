@@ -1,12 +1,12 @@
 <template>
-  <div class="input-wrapper flex flex-column width-full" style="gap: var(--spacing-3xs)">
-    <label
+  <fieldset class="default-input-wrapper">
+    <!-- Text Area Input -->
+    <legend
         v-if="label"
-        :for="computedId"
         class="input-label text-muted"
     >
       {{ label }}
-    </label>
+    </legend>
 
     <textarea
         :id="computedId"
@@ -16,17 +16,19 @@
         class="custom-textarea width-full default-input-attr active-border"
         v-bind="$attrs"
     />
-  </div>
+  </fieldset>
 </template>
 
 <style scoped>
-  .custom-textarea{
+  .custom-textarea {
     resize: vertical;
     min-height: 80px;
   }
 
-  .input-label{
+  .input-label {
     font-size: var(--font-label-md);
+    padding-inline: var(--spacing-sm);
+    margin-left: var(--spacing-sm);
   }
 </style>
 

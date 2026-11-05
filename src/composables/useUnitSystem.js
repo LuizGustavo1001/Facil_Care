@@ -1,16 +1,6 @@
 import { computed, ref } from "vue"
-import { PAGES } from "./usePages.js"
-
-export const UNITS = {
-    METRIC: "metric",
-    IMPERIAL: "imperial"
-}
-
-export const TRANSLATABLE_ITEMS = [
-    PAGES.BODY_TEMPERATURE,
-    PAGES.WATER_INTAKE,
-    PAGES.WEIGHT
-]
+import { PAGES } from "../constants/sysPages.js"
+import { TRANSLATABLE_ITEMS, UNITS } from "../constants/sysUnits.js"
 
 export const currentUnit = ref(localStorage.getItem("unit") ?? UNITS.METRIC)
 export const isImperial = computed(() => currentUnit.value === UNITS.IMPERIAL)

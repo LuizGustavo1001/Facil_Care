@@ -1,5 +1,6 @@
 import db from "../database/db.js"
-import { TRANSLATABLE_ITEMS, isImperial, useUnitSystem } from "../composables/useUnitSystem.js"
+import { isImperial, useUnitSystem } from "../composables/useUnitSystem.js"
+import { TRANSLATABLE_ITEMS } from "../constants/sysUnits.js"
 
 const unit = useUnitSystem()
 

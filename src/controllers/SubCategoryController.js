@@ -44,10 +44,10 @@ export default class SubCategoryController {
      * @param { number } id
      **/
     async getById(id){
-        try{
+        try {
             const item = await this.model.getById(Number(id))
 
-            if(!item){
+            if(!item) {
                 return {
                     success: false,
                     code: `No${this.codeLabel}Found`,
@@ -55,7 +55,7 @@ export default class SubCategoryController {
                 }
             }
 
-            return{
+            return {
                 success: true,
                 code: `${this.codeLabel}Found`,
                 data: item
@@ -143,7 +143,7 @@ export default class SubCategoryController {
      * @param { Number } id - Item Id
      **/
     async delete(id){
-        try{
+        try {
             const deleted = await this.model.removeById(id)
 
             if(!deleted){

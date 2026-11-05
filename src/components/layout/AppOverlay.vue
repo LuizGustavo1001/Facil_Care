@@ -1,5 +1,6 @@
 <template>
   <transition name="fade" mode="out-in">
+    <!-- App Overlay -->
     <div
         v-if="isOverlayActive"
         class="overlay fixed"
@@ -15,12 +16,11 @@
 
     z-index: 9;
   }
-
 </style>
 
 <script setup>
-  import { useOverlay } from "../../composables/useOverlay.js"
   import { computed } from "vue"
+  import { useOverlay } from "../../composables/useOverlay.js"
 
   const overlay = useOverlay()
   const isOverlayActive = computed(() => overlay.isActive.value)

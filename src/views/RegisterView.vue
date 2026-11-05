@@ -1,5 +1,6 @@
 <template>
   <div class="view regular">
+    <!-- Register View -->
     <Snackbar
         :isActive="isSnakcbarOpen"
         :message="snackbar.data.message"
@@ -9,18 +10,17 @@
 
     <AppHeader
         :title="getPageTitle(PAGES.REGISTER)"
-        :leftBtnIcon="icons['chevron-left']"
-        @return-page="navigation.handleReturn"
     />
 
     <main class="main regular gap-1">
+      <!-- Form Section -->
       <section v-if="!addSuccess" class="main-section regular gap-15">
         <form
             v-if="template"
-            class="main-form flex flex-column gap-05"
+            class="main-form flex flex-column gap-1"
             @submit.prevent="handleSubmit"
         >
-          <div class="form-inputs flex flex-column gap-05">
+          <div class="form-inputs flex flex-column gap-1">
             <component
                 v-for="input in template.main.inputs"
                 :key="input.id || input.name"
@@ -37,13 +37,15 @@
                 :key="btn.id"
                 v-bind="form.getBtnProps(btn, FORM_TYPES.CREATE)"
                 :aria-disabled="form.isSubmitting"
+                style=" min-width: 200px; max-width: 80dvw; align-self: flex-end"
             />
           </div>
         </form>
       </section>
 
-      <section v-else class="success-section main-section center text-center align-center gap-15">
-        <Icon :icon="icons['check-circle-line']" size="50px" padding="sm"/>
+      <!-- Item Registred Successfully Section -->
+      <section v-else class=" main-section center text-center align-center gap-15" >
+        <Icon :icon="icons['user-smile-fill']" size="50px" padding="sm" :bgColor="BUTTON_COLORS.GREEN" style="border-radius: var(--radius-lg)" />
 
         <p>{{ successMessage }}!</p>
 
@@ -62,7 +64,7 @@
 </template>
 
 <style scoped>
-  .success-section .icon-wrapper{
+  .success-section .icon-wrapper {
     background: var(--green-400);
     border-radius: var(--radius-xl);
   }
@@ -70,11 +72,12 @@
 
 <script setup>
   import { computed, onMounted, ref } from "vue"
-  import { PAGES } from "../composables/usePages.js"
+  import { PAGES } from "../constants/sysPages.js"
   import { icons } from "../assets/icons/icons.js"
   import { formTemplates } from "../locales/projectConfig.js"
-  import { FORM_TYPES } from "../composables/useForm.js"
-  import { VITAL_SIGNS_PAGES, FOLLOW_UPS_PAGES } from "../composables/usePages.js"
+
+  import { FORM_TYPES } from "../constants/formTypes.js"
+  import { VITAL_SIGNS_PAGES, FOLLOW_UPS_PAGES } from "../constants/sysPages.js"
 
   import { useRoute } from "vue-router"
   import { useI18n } from "vue-i18n"
@@ -89,7 +92,6 @@
   import Icon from "../components/icons/Icon.vue"
 
   import MedicinesController from "../controllers/MedicineController.js"
-  import MedicineRegistriesController from "../controllers/MedicineRegistriesController.js"
   import HealthPlanController from "../controllers/HealthPlanController.js"
   import AllergyController from "../controllers/AllergyController.js"
   import CaregiverController from "../controllers/CaregiverController.js"
@@ -97,6 +99,7 @@
   import EmergencyContactController from "../controllers/EmergencyContactController.js"
   import FollowUpController from "../controllers/FollowUpController.js"
   import VitalSignController from "../controllers/VitalSignController.js"
+  import {BUTTON_COLORS} from "../constants/btnColors.js";
 
   // COMPOSABLES
   const navigation = useNavigation()
@@ -107,7 +110,6 @@
 
   // CONTROLLERS
   const medicineController = new MedicinesController()
-  const medicineRegistryController = new MedicineRegistriesController()
   const healthPlanController = new HealthPlanController()
   const allergyController = new AllergyController()
   const caregiverController = new CaregiverController()
@@ -117,7 +119,9 @@
   const vitalSignController = new VitalSignController()
 
   // COMPUTED PROPERTIES
-  // State for dynamic data
+  const isSnakcbarOpen = computed(() => snackbar.isActive.value)
+
+  // STATES
   const caregiversList = ref([])
   const addSuccess = ref(false)
   const successMessage = ref("")
@@ -127,7 +131,7 @@
     try {
       const response = await caregiverController.getAll()
       if (response) {
-        caregiversList.value = Array.isArray(response) ? response : (response.data || [])
+        caregiversList.value = response.data || []
       }
     } catch (error) {
       console.error("DB Error:", error)
@@ -149,15 +153,18 @@
     return formTemplates.find(item => item.id === currentCategory.value) ?? null
   })
 
-  const isSnakcbarOpen = computed(() => snackbar.isActive.value)
-
   // FUNCTIONS
   const getPageTitle = () => {
     const registerKey = `pageTitle.${PAGES.REGISTER}`
     const currentCategoryKey = `views.register.categories.${currentCategory.value}.title`
 
-    const registerLabel = te(registerKey) ? t(registerKey) : ""
-    const currentCategoryLabel = te(currentCategoryKey) ? t(currentCategoryKey) : ""
+    const registerLabel = te(registerKey)
+        ? t(registerKey)
+        : ""
+
+    const currentCategoryLabel = te(currentCategoryKey)
+        ? t(currentCategoryKey)
+        : ""
 
     return `${registerLabel} ${currentCategoryLabel}`
   }
@@ -172,7 +179,7 @@
     const data = form.extractData(event)
     let result
 
-    if(!formElement.checkValidity()){
+    if(!formElement.checkValidity()) {
       formElement.checkValidity()
       return
     }
@@ -189,15 +196,14 @@
       result = await emergencyContactController.create(data)
     } else if (currentCategory.value === PAGES.MEDICINES) {
       result = await medicineController.create(data)
-    } else if (currentCategory.value === PAGES.MEDICINE_REGISTRIES) {
-      result = await medicineRegistryController.create(data)
-    } else if (VITAL_SIGNS_PAGES.includes(currentCategory.value)) {
+    }
+    else if (VITAL_SIGNS_PAGES.includes(currentCategory.value)) {
       result = await vitalSignController.create(data, currentCategory.value)
     } else if (FOLLOW_UPS_PAGES.includes(currentCategory.value)) {
       result = await followUpController.create(data, currentCategory.value)
     }
 
-    if(result && result.success){
+    if(result && result.success) {
       formElement.reset()
       addSuccess.value = !addSuccess.value
       successMessage.value = snackbar.getWarningTitle(result.code)

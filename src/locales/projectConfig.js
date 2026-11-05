@@ -1,9 +1,11 @@
 import { icons } from "../assets/icons/icons.js"
-import { THEME_PREFERENCES } from "../composables/useTheme.js"
-import { LANGUAGES } from "../composables/useLanguage.js"
-import { PAGES } from "../composables/usePages.js"
-import { UNITS } from "../composables/useUnitSystem.js"
-import { FORM_TYPES } from "../composables/useForm.js"
+
+import { THEME_PREFERENCES } from "../constants/sysThemes.js"
+import { LANGUAGES } from "../constants/sysLanguages.js"
+import { PAGES } from "../constants/sysPages.js"
+import { UNITS } from "../constants/sysUnits.js"
+import { FORM_TYPES } from "../constants/formTypes.js"
+import { BUTTON_COLORS } from "../constants/btnColors.js"
 
 const THEME_OPTIONS = [
     { id: THEME_PREFERENCES.LIGHT },
@@ -22,61 +24,283 @@ const UNITS_OPTIONS = [
     { id: UNITS.IMPERIAL }
 ]
 
+export const pages = {
+    [PAGES.HOME]: {
+        id: PAGES.HOME,
+        iconFill: icons['hospital-fill'],
+        iconLine: icons['hospital-line'],
+        href: "/"
+    },
+    [PAGES.SERVICES]: {
+        id: PAGES.SERVICES,
+        iconFill: icons['servical-fill'],
+        iconLine: icons['service-line'],
+        href: `/${PAGES.SERVICES}`
+    },
+    [PAGES.PATIENT_DATA]: {
+        id: PAGES.PATIENT_DATA,
+        iconFill: icons['user-fill'],
+        iconLine: icons['user-line'],
+        href: `/${PAGES.PATIENT_DATA}`
+    },
+    [PAGES.VITAL_SIGNS]: {
+        id: PAGES.VITAL_SIGNS,
+        iconFill: icons['health-metrics-fill'],
+        iconLine: icons['health-metrics-line'],
+        href: `/${PAGES.MONITORING}/${PAGES.VITAL_SIGNS}`,
+        color: BUTTON_COLORS.RED
+    },
+    [PAGES.FOLLOW_UPS]: {
+        id: PAGES.FOLLOW_UPS,
+        iconFill: icons['mental-health-fill'],
+        iconLine: icons['mental-health-line'],
+        href: `/${PAGES.MONITORING}/${PAGES.FOLLOW_UPS}`,
+        color: BUTTON_COLORS.BLUE
+    },
+    [PAGES.MEDICINES]: {
+        id: PAGES.MEDICINES,
+        iconFill: icons['medicine-bottle-fill'],
+        iconLine: icons['medicine-bottle-line'],
+        href: `/${PAGES.MANAGE}/${PAGES.MEDICINES}`,
+        color: BUTTON_COLORS.GREEN
+    },
+    [PAGES.ALLERGIES]: {
+        id: PAGES.ALLERGIES,
+        iconFill: icons['virus-fill'],
+        iconLine: icons['virus-line'],
+        href: `/${PAGES.MANAGE}/${PAGES.ALLERGIES}`,
+        color: BUTTON_COLORS.PURPLE
+    },
+    [PAGES.HEALTH_PLANS]: {
+        id: PAGES.HEALTH_PLANS,
+        iconFill: icons['first-aid-fill'],
+        iconLine: icons['first-aid-line'],
+        href: `${PAGES.MANAGE}/${PAGES.HEALTH_PLANS}`,
+        color: BUTTON_COLORS.GREEN
+    },
+    [PAGES.EMERGENCY_CONTACTS]: {
+        id: PAGES.EMERGENCY_CONTACTS,
+        iconFill: icons['contacts-fill'],
+        iconLine: icons['contacts-line'],
+        href: `${PAGES.MANAGE}/${PAGES.EMERGENCY_CONTACTS}`,
+        color: BUTTON_COLORS.ORANGE
+    },
+    [PAGES.CAREGIVERS]: {
+        id: PAGES.CAREGIVERS,
+        iconFill: icons['nurse-fill'],
+        iconLine: icons['nurse-line'],
+        href: `${PAGES.MANAGE}/${PAGES.CAREGIVERS}`,
+        color: BUTTON_COLORS.YELLOW
+    },
+    [PAGES.DOCTORS]: {
+        id: PAGES.DOCTORS,
+        iconFill: icons['stethoscope-line'],
+        iconLine: icons['stethoscope-line'],
+        href: `${PAGES.MANAGE}/${PAGES.DOCTORS}`,
+        color: BUTTON_COLORS.BLUE
+    },
+    [PAGES.BODY_TEMPERATURE]: {
+        id: PAGES['BODY_TEMPERATURE'],
+        iconFill: icons["thermometer-line"],
+        iconLine: icons["thermometer-line"],
+        href: `/${PAGES['MONITORING']}/${PAGES['VITAL_SIGNS']}/${PAGES['BODY_TEMPERATURE']}`,
+        color: BUTTON_COLORS.RED
+    },
+    [PAGES.BLOOD_PRESSURE]: {
+        id: PAGES['BLOOD_PRESSURE'],
+        iconFill: icons["blood-pressure-fill"],
+        iconLine: icons["blood-pressure-line"],
+        href: `/${PAGES['MONITORING']}/${PAGES['VITAL_SIGNS']}/${PAGES['BLOOD_PRESSURE']}`,
+        color: BUTTON_COLORS.ORANGE
+    },
+    [PAGES.OXYGEN_SATURATION]: {
+        id: PAGES['OXYGEN_SATURATION'],
+        iconFill: icons["oxygen-fill"],
+        iconLine: icons["oxygen-line"],
+        href: `/${PAGES['MONITORING']}/${PAGES['VITAL_SIGNS']}/${PAGES['OXYGEN_SATURATION']}`,
+        color: BUTTON_COLORS.BLUE
+    },
+    [PAGES.BLOOD_GLUCOSE]: {
+        id: PAGES['BLOOD_GLUCOSE'],
+        iconFill: icons["glucose-fill"],
+        iconLine: icons["glucose-line"],
+        href: `/${PAGES['MONITORING']}/${PAGES['VITAL_SIGNS']}/${PAGES['BLOOD_GLUCOSE']}`,
+        color: BUTTON_COLORS.RED
+    },
+    [PAGES.HEART_RATE]: {
+        id: PAGES['HEART_RATE'],
+        iconFill: icons["heart-pulse-fill"],
+        iconLine: icons["heart-pulse-line"],
+        href: `/${PAGES['MONITORING']}/${PAGES['VITAL_SIGNS']}/${PAGES['HEART_RATE']}`,
+        color: BUTTON_COLORS.ORANGE
+    },
+    [PAGES.MOOD]: {
+        id: PAGES['MOOD'],
+        iconFill: icons["user-smile-fill"],
+        iconLine: icons["user-smile-line"],
+        href: `/${PAGES.MONITORING}/${PAGES['FOLLOW_UPS']}/${PAGES['MOOD']}`,
+        color: BUTTON_COLORS.BLUE
+    },
+    [PAGES.PAIN_LEVEL]: {
+        id: PAGES['PAIN_LEVEL'],
+        iconFill: icons["emotion-unhappy-fill"],
+        iconLine:  icons["emotion-unhappy-line"],
+        href: `/${PAGES['MONITORING']}/${PAGES['FOLLOW_UPS']}/${PAGES['PAIN_LEVEL']}`,
+        color: BUTTON_COLORS.RED
+    },
+    [PAGES.SLEEP]: {
+        id: PAGES['SLEEP'],
+        iconFill: icons["rest-time-fill"],
+        iconLine: icons["rest-time-line"],
+        href: `/${PAGES['MONITORING']}/${PAGES['FOLLOW_UPS']}/${PAGES['SLEEP']}`,
+        color: BUTTON_COLORS.PURPLE
+    },
+    [PAGES.WATER_INTAKE]: {
+        id: PAGES['WATER_INTAKE'],
+        iconFill: icons["drop-fill"],
+        iconLine: icons["drop-line"],
+        href: `/${PAGES['MONITORING']}/${PAGES['FOLLOW_UPS']}/${PAGES['WATER_INTAKE']}`,
+        color: BUTTON_COLORS.BLUE
+    },
+    [PAGES.MEAL_ACCEPTANCE]: {
+        id:PAGES['MEAL_ACCEPTANCE'],
+        iconFill: icons["restaurant"],
+        iconLine: icons["restaurant"],
+        href: `/${PAGES['MONITORING']}/${PAGES['FOLLOW_UPS']}/${PAGES['MEAL_ACCEPTANCE']}`,
+        color: BUTTON_COLORS.ORANGE
+    },
+    [PAGES.WEIGHT]: {
+        id: PAGES['WEIGHT'],
+        iconFill: icons["weight-fill"],
+        iconLine: icons["weight-line"],
+        href: `/${PAGES['MONITORING']}/${PAGES['FOLLOW_UPS']}/${PAGES['WEIGHT']}`,
+        color: BUTTON_COLORS.GREEN
+    },
+    [PAGES.NECESSITIES]: {
+        id: PAGES['NECESSITIES'],
+        iconFill: icons["drop-line"],
+        iconLine: icons["drop-fill"],
+        href: `/${PAGES['MONITORING']}/${PAGES['FOLLOW_UPS']}/${PAGES['NECESSITIES']}`,
+        color: BUTTON_COLORS.ORANGE
+    },
+    [PAGES.EMERGENCY_DATA]: {
+        id: PAGES['EMERGENCY_DATA'],
+        iconFill: icons["first-aid-fill"],
+        iconLine: icons["first-aid-line"],
+        href: `/${PAGES['EMERGENCY_DATA']}`,
+        color: BUTTON_COLORS.RED
+    },
+    [PAGES.PREFERENCES]: {
+        id: PAGES['PREFERENCES'],
+        iconFill: icons["settings-fill"],
+        iconLine: icons["settings-line"],
+        href: `/${PAGES.PREFERENCES}`,
+        color: BUTTON_COLORS.YELLOW
+    },
+    [PAGES.EXPORT]: {
+        id: PAGES['EXPORT'],
+        iconFill: icons["qr-code-fill"],
+        iconLine: icons["qr-code-line"],
+        href: `/backup/${PAGES.EXPORT}`,
+        color: BUTTON_COLORS.GREEN
+    },
+    [PAGES.IMPORT]: {
+        id: PAGES['IMPORT'],
+        iconFill: icons["qr-scan-fill"],
+        iconLine: icons["qr-scan-line"],
+        href: `/backup/${PAGES.IMPORT}`,
+        color: BUTTON_COLORS.YELLOW
+    },
+    [PAGES.USER_MANUAL]: {
+        id: PAGES['USER_MANUAL'],
+        iconFill: icons['book-read-fill'],
+        iconLine: icons["user-manual-line"],
+        href: `/${PAGES.USER_MANUAL}`,
+        color: BUTTON_COLORS.BLUE
+    },
+    [PAGES.TERMS]: {
+        id: PAGES['TERMS'],
+        iconFill: icons["shield-user-fill"],
+        iconLine: icons["shield-user-line"],
+        href: `/${PAGES.TERMS}`,
+        color: BUTTON_COLORS.PURPLE
+    },
+    [PAGES.ABOUT]: {
+        id: PAGES['ABOUT'],
+        iconFill: icons['information-circle-fill'],
+        iconLine: icons["information-circle-line"],
+        href: `/${PAGES.ABOUT}`,
+        color: BUTTON_COLORS.BLUE
+    },
+    [PAGES.ERASE]: {
+        id: PAGES['ERASE'],
+        iconFill: icons["delete-bin-fill"],
+        iconLine: icons["delete-bin-line"],
+        href: `/${PAGES.ERASE}`,
+        color: BUTTON_COLORS.RED
+    }
+}
+
 export const homeView = {
-    buttons: [
+
+}
+
+export const servicesView = [
+    {
+      id: "registers",
+      buttons: [
+          pages[PAGES.VITAL_SIGNS],
+          pages[PAGES.FOLLOW_UPS]
+      ]
+    },
+    {
+        id: "patient",
+        buttons: [
+            pages[PAGES.MEDICINES],
+            pages[PAGES.ALLERGIES],
+            pages[PAGES.HEALTH_PLANS],
+            pages[PAGES.EMERGENCY_CONTACTS]
+        ]
+    },
+    {
+        id: "others",
+        buttons: [
+            pages[PAGES.CAREGIVERS],
+            pages[PAGES.DOCTORS],
+        ]
+    }
+]
+
+export const patientDataView = {
+    categories: [
         {
-            id: PAGES['VITAL_SIGNS'],
-            color: "red",
-            icon: icons["heart-fill"],
-            route: `/${PAGES['MONITORING']}/${PAGES['VITAL_SIGNS']}`,
+            id: "general",
+            buttons: [
+                pages[PAGES.EMERGENCY_DATA],
+                pages[PAGES.PREFERENCES]
+            ]
         },
         {
-            id: PAGES['FOLLOW_UPS'],
-            color: "yellow",
-            icon: icons["mental-health-fill"],
-            route: `/${PAGES['MONITORING']}/${PAGES['FOLLOW_UPS']}`
+            id: "manageData",
+            buttons: [
+                pages[PAGES.EXPORT],
+                pages[PAGES.IMPORT],
+            ]
         },
         {
-            id: PAGES['MEDICINES'],
-            color: "green",
-            icon: icons["capsule-fill"],
-            route: `/${PAGES['MANAGE']}/${PAGES['MEDICINES']}`
-        },
-        {
-            id: PAGES['CAREGIVERS'],
-            color: "orange",
-            icon: icons["user-fill"],
-            route: `/${PAGES['MANAGE']}/${PAGES['CAREGIVERS']}`
-        },
-        {
-            id: PAGES['DOCTORS'],
-            color: "blue",
-            icon: icons["stethoscope-line"],
-            route: `/${PAGES['MANAGE']}/${PAGES['DOCTORS']}`
-        },
-        {
-            id: PAGES['ALLERGIES'],
-            color: "purple",
-            icon: icons["virus-fill"],
-            route: `/${PAGES['MANAGE']}/${PAGES['ALLERGIES']}`
-        },
-        {
-            id: PAGES['HEALTH_PLANS'],
-            color: "blue",
-            icon: icons["first-aid-fill"],
-            route: `/${PAGES['MANAGE']}/${PAGES['HEALTH_PLANS']}`
-        },
-        {
-            id: PAGES['EMERGENCY_CONTACTS'],
-            color: "green",
-            icon: icons['contacts-fill'],
-            route: `/${PAGES['MANAGE']}/${PAGES['EMERGENCY_CONTACTS']}`
+            id: "others",
+            buttons: [
+                pages[PAGES.USER_MANUAL],
+                pages[PAGES.TERMS],
+                pages[PAGES.ABOUT]
+            ]
         }
-    ]
+    ],
+    delete: pages[PAGES.ERASE]
 }
 
 export const preferencesView = {
-    sections: [
+    categories: [
         {
             id: "general",
             items: [
@@ -109,139 +333,29 @@ export const preferencesView = {
 export const monitoringViews = {
     vitalSigns: {
         items: [
-            {
-                id: PAGES['BODY_TEMPERATURE'],
-                icon: icons["thermometer-line"],
-                color: "red",
-                link: `/${PAGES['MONITORING']}/${PAGES['VITAL_SIGNS']}/${PAGES['BODY_TEMPERATURE']}`
-            },
-            {
-                id: PAGES['BLOOD_PRESSURE'],
-                icon: icons["blood-pressure-line"],
-                color: "orange",
-                link: `/${PAGES['MONITORING']}/${PAGES['VITAL_SIGNS']}/${PAGES['BLOOD_PRESSURE']}`
-            },
-            {
-                id: PAGES['OXYGEN_SATURATION'],
-                icon: icons["oxygen-line"],
-                color: "blue",
-                link: `/${PAGES['MONITORING']}/${PAGES['VITAL_SIGNS']}/${PAGES['OXYGEN_SATURATION']}`
-            },
-            {
-                id: PAGES['BLOOD_GLUCOSE'],
-                icon: icons["glucose-line"],
-                color: "red",
-                link: `/${PAGES['MONITORING']}/${PAGES['VITAL_SIGNS']}/${PAGES['BLOOD_GLUCOSE']}`
-            },
-            {
-                id: PAGES['HEART_RATE'],
-                icon: icons["heart-pulse-line"],
-                color: "orange",
-                link: `/${PAGES['MONITORING']}/${PAGES['VITAL_SIGNS']}/${PAGES['HEART_RATE']}`
-            }
+            pages[PAGES.BODY_TEMPERATURE],
+            pages[PAGES.BLOOD_PRESSURE],
+            pages[PAGES.OXYGEN_SATURATION],
+            pages[PAGES.BLOOD_GLUCOSE],
+            pages[PAGES.HEART_RATE]
         ]
     },
 
     followUps: {
         items: [
-            {
-                id: PAGES['MOOD'],
-                icon: icons["user-smile-line"],
-                color: "blue",
-                link: `/monitoring/${PAGES['FOLLOW_UPS']}/${PAGES['MOOD']}`
-            },
-            {
-                id: PAGES['PAIN_LEVEL'],
-                icon: icons["emotion-unhappy-line"],
-                color: "red",
-                link: `/${PAGES['MONITORING']}/${PAGES['FOLLOW_UPS']}/${PAGES['PAIN_LEVEL']}`
-            },
-            {
-                id: PAGES['SLEEP'],
-                icon: icons["zzz"],
-                color: "blue",
-                link: `/${PAGES['MONITORING']}/${PAGES['FOLLOW_UPS']}/${PAGES['SLEEP']}`
-            },
-            {
-                id: PAGES['WATER_INTAKE'],
-                icon: icons["drop-fill"],
-                color: "blue",
-                link: `/${PAGES['MONITORING']}/${PAGES['FOLLOW_UPS']}/${PAGES['WATER_INTAKE']}`
-            },
-            {
-                id:PAGES['MEAL_ACCEPTANCE'],
-                icon: icons["restaurant"],
-                color: "orange",
-                link: `/${PAGES['MONITORING']}/${PAGES['FOLLOW_UPS']}/${PAGES['MEAL_ACCEPTANCE']}`
-            },
-            {
-                id: PAGES['WEIGHT'],
-                icon: icons["weight-line"],
-                color: "green",
-                link: `/${PAGES['MONITORING']}/${PAGES['FOLLOW_UPS']}/${PAGES['WEIGHT']}`
-            },
-            {
-                id: PAGES['NECESSITIES'],
-                icon: icons["drop-line"],
-                color: "orange",
-                link: `/${PAGES['MONITORING']}/${PAGES['FOLLOW_UPS']}/${PAGES['NECESSITIES']}`
-            }
+            pages[PAGES.MOOD],
+            pages[PAGES.PAIN_LEVEL],
+            pages[PAGES.SLEEP],
+            pages[PAGES.WATER_INTAKE],
+            pages[PAGES.MEAL_ACCEPTANCE],
+            pages[PAGES.WEIGHT],
+            pages[PAGES.NECESSITIES]
         ]
     }
 }
 
-export const sidebar = {
-    sections: [
-        {
-            id: "general",
-            items: [
-                {
-                    id: PAGES['EMERGENCY_DATA'],
-                    icon: icons["first-aid-line"],
-                    route: `/${PAGES['EMERGENCY_DATA']}`
-                },
-                {
-                    id: PAGES['PREFERENCES'],
-                    icon: icons["settings-line"],
-                    route: `/${PAGES['PREFERENCES']}`
-                }
-            ]
-        },
-        {
-            id: "backup",
-            items: [
-                {
-                    id: PAGES['EXPORT'],
-                    icon: icons["qr-code-line"],
-                    route: `/backup/${PAGES['EXPORT']}`
-                },
-                {
-                    id: PAGES['IMPORT'],
-                    icon: icons["qr-scan-line"],
-                    route: `/backup/${PAGES['IMPORT']}`
-                }
-            ]
-        },
-        {
-            id: "others",
-            items: [
-                {
-                    id: PAGES['USER_MANUAL'],
-                    icon: icons["book-read-line"],
-                    route: `/${PAGES['USER_MANUAL']}`
-                },
-                {
-                    id: PAGES['TERMS'],
-                    icon: icons["shield-user-line"],
-                    route: `/${PAGES['TERMS']}`
-                }
-            ]
-        }
-    ]
-}
-
 export const emergencyDataView = {
-    sections: [
+    categories: [
         {
             id: "patient",
             icon: icons['user-fill'],
@@ -262,7 +376,7 @@ export const emergencyDataView = {
                 {
                     id: "bloodType",
                     color: "red",
-                    icon: icons["drop-fill"]
+                    icon: icons["blood-type-fill"]
                 },
                 {
                     id: "address",
@@ -273,51 +387,39 @@ export const emergencyDataView = {
         },
 
         {
-            id: PAGES['EMERGENCY_CONTACTS'],
-            icon: icons['contacts-fill'],
+            ...pages[PAGES.EMERGENCY_CONTACTS],
             component: "default",
             action: "none"
         },
 
         {
-            id: PAGES['ALLERGIES'],
-            icon: icons['virus-fill'],
+            ...pages[PAGES.ALLERGIES],
             component: "default",
             action: "none"
         },
 
         {
-            id: PAGES['HEALTH_PLANS'],
-            icon: icons['first-aid-fill'],
+            ...pages[PAGES.HEALTH_PLANS],
             component: "default",
             action: "none"
         },
 
         {
             id: "others",
-            icon: icons['book-read-fill'],
+            icon: icons['health-metrics-fill'],
             component: "alt",
             action: "internalLink",
             buttons: [
-                {
-                    id: PAGES['DOCTORS'],
-                    color: "blue",
-                    icon: icons["stethoscope-line"],
-                    route: `/${PAGES.MANAGE}/${PAGES['DOCTORS']}`
-                },
-                {
-                    id: PAGES['MEDICINES'],
-                    color: "green",
-                    icon: icons["medicine-bottle-fill"],
-                    route: `/${PAGES.MANAGE}/${PAGES['MEDICINES']}`
-                }
+                pages[PAGES.DOCTORS],
+                pages[PAGES.MEDICINES],
+                pages[PAGES.CAREGIVERS],
             ]
         }
     ]
 }
 
 export const termsView = {
-    sections: [
+    categories: [
         {
             id: "consciousUse",
             icon: icons['user-smile-fill'],
@@ -343,6 +445,26 @@ export const termsView = {
             icon: icons['delete-bin-fill']
         }
     ]
+}
+
+export const exportView = {
+    categories: {
+        buttons: [
+            {
+                id: "qrCode",
+                icon: icons['qr-code-line'],
+                color: BUTTON_COLORS.BLUE,
+                href: `/backup/${PAGES.EXPORT}/qrCode`
+            },
+            {
+                id: "json",
+                icon: icons['file-line'],
+                color: BUTTON_COLORS.YELLOW,
+                href: `/backup/${PAGES.EXPORT}/json`
+            }
+        ],
+
+    }
 }
 
 export const charts = {
@@ -467,15 +589,6 @@ export const warningMessages = {
     MedicineUpdateFailed: "error",
     MedicineDeleteFailed: "error",
 
-    NoMedicineRegistryFound: "error",
-    MedicineRegistryNotFound: "error",
-    MedicineRegistryUpdated: "success",
-    MedicineRegistryDeleted: "success",
-    MedicineRegistryCreated: "success",
-    MedicineRegistryCreationFailed: "error",
-    MedicineRegistryUpdateFailed: "error",
-    MedicineRegistryDeleteFailed: "error",
-
     InvalidDateInterval: "error",
 
     ExportFailed: "error",
@@ -489,7 +602,7 @@ export const warningMessages = {
     QRCodeGenFailed: "error",
 
     HostNotFound: "error",
-    OfflineDevice: "warning",
+    OfflineDevice: "warning"
 }
 
 export const formTemplates = [
@@ -644,57 +757,13 @@ export const formTemplates = [
                     inputType: "time",
                     name: "administrationTimes",
                     for: "administrationTimes",
-                    required: true,
+                    required: true
                 },
                 {
                     id: "observations",
                     tag: "textarea",
                     name: "observations",
                     for: "observations"
-                }
-            ],
-            buttons: [
-                {
-                    id: "submit"
-                }
-            ]
-        }
-    },
-    {
-        id: PAGES.MEDICINE_REGISTRIES,
-        main: {
-            inputs: [
-                {
-                    id: "medicineId",
-                    tag: "select",
-                    name: "medicineId",
-                    for: "medicineId",
-                    dynamicKey: PAGES.MEDICINES,
-                    required: true
-                },
-                {
-                    id: "dosage",
-                    tag: "input",
-                    name: "dosage",
-                    for: "dosage",
-                    autoCapitalize: "sentences",
-                    required: true
-                },
-                {
-                    id: "adminTime",
-                    tag: "input",
-                    name: "adminTime",
-                    for: "adminTime",
-                    required: true,
-                    inputType: "datetime-local",
-                    isDefaultNow: true
-                },
-                {
-                    id: "observations",
-                    tag: "textarea",
-                    name: "observations",
-                    for: "observations",
-                    autoCapitalize: "sentences"
                 }
             ],
             buttons: [
@@ -978,7 +1047,7 @@ export const formTemplates = [
                     mods: {
                         hasMeasurementUnit: true,
                         measurementUnitType: PAGES.BODY_TEMPERATURE
-                    },
+                    }
                 },
                 {
                     id: "dateTime",
@@ -1113,7 +1182,7 @@ export const formTemplates = [
                     mods: {
                         hasMeasurementUnit: true,
                         measurementUnitType: PAGES.BLOOD_GLUCOSE
-                    },
+                    }
                 },
                 {
                     id: "dateTime",
@@ -1159,7 +1228,7 @@ export const formTemplates = [
                     mods: {
                         hasMeasurementUnit: true,
                         measurementUnitType: PAGES.HEART_RATE
-                    },
+                    }
                 },
                 {
                     id: "dateTime",
@@ -1453,7 +1522,7 @@ export const formTemplates = [
                     mods: {
                         hasMeasurementUnit: true,
                         measurementUnitType: PAGES.WEIGHT
-                    },
+                    }
                 },
                 {
                     id: "dateTime",
@@ -1525,17 +1594,6 @@ export const formTemplates = [
 ]
 
 export const footers = [
-    {
-        id: "home",
-        buttons: [
-            {
-                id: "primary",
-                leftIcon: icons["medicine-bottle-fill"],
-                link: `/register/${PAGES['MEDICINE_REGISTRIES']}`
-            }
-        ]
-    },
-
     {
         id: PAGES.BODY_TEMPERATURE,
         buttons: [
@@ -1663,20 +1721,10 @@ export const footers = [
         buttons: [
             {
                 id: "primary",
-                leftIcon: icons["capsule-fill"],
+                leftIcon: icons["medicine-bottle-fill"],
                 link: `/register/${PAGES['MEDICINES']}`
             }
         ]
-    },
-    {
-      id: PAGES['MEDICINE_REGISTRIES'],
-      buttons: [
-          {
-              id: "primary",
-              leftIcon: icons["medicine-bottle-fill"],
-              link: `/register/${PAGES['MEDICINE_REGISTRIES']}`
-          }
-      ]
     },
     {
         id: PAGES['ALLERGIES'],
@@ -1744,4 +1792,45 @@ export const popupTypes = {
         readOnly: false,
         showSubmit: true
     }
+}
+
+export const mainNavigationBar = {
+    [PAGES.HOME]: {
+        id: PAGES.HOME,
+        icon: icons["hospital-line"],
+        iconActive: icons["hospital-fill"],
+        href: "/",
+        hasText: true
+    },
+    [PAGES.SERVICES]: {
+        id: PAGES.SERVICES,
+        icon: icons["service-line"],
+        iconActive: icons["service-fill"],
+        href: "/services",
+        hasText: true
+    },
+    [PAGES.PATIENT_DATA]: {
+        id: PAGES.PATIENT_DATA,
+        icon: icons["user-line"],
+        iconActive: icons["user-fill"],
+        href: "/patientData",
+        hasText: true
+    }
+}
+
+export const socialMedias = {
+    github: {
+        id: "github",
+        iconFill: icons["github-fill"],
+        iconLine: icons["github-line"],
+        href: "https://github.com/LuizGustavo1001",
+        name: "GitHub"
+    }
+}
+
+export const aboutView = {
+    social: [
+        socialMedias['github']
+    ],
+    version: "2.0.0"
 }

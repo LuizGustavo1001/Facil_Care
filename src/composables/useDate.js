@@ -1,131 +1,239 @@
-import { currentLanguage, LANGUAGES } from "./useLanguage.js"
+import { currentLanguage } from "./useLanguage.js"
+import { LANGUAGES } from "../constants/sysLanguages.js"
+import { computed } from "vue"
+import { DAY_PERIODS } from "../constants/dayPeriods.js"
+
+const language = computed(() => {
+    switch (currentLanguage.value) {
+        case LANGUAGES.PT_BR:
+            return "pt-BR"
+        default:
+            return "en-US"
+    }
+})
+
+const formatters = {
+    fullDate: computed(() => new Intl.DateTimeFormat(language.value, {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+    })),
+    numericDate: computed(() => new Intl.DateTimeFormat(language.value, {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric"
+    })),
+    numericTime: computed(() => new Intl.DateTimeFormat(language.value, {
+        hour: "2-digit",
+        minute: "2-digit",
+    })),
+    numericDateTime: computed(() => new Intl.DateTimeFormat(language.value, {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+    }))
+}
 
 export function useDate() {
-    const today = new Date()
 
     /**
      * Returns age based in `ISO` or `String` date
      *
      * @param { Date } birthDate - Birth date
      *
-     * @return { int }
+     * @return { int | null }
      **/
     const getAge = (birthDate) => {
+        const today = new Date()
         const time = new Date(birthDate)
 
-        let age = today.getFullYear() - time.getFullYear()
-        const monthDifference = today.getMonth() - time.getMonth()
+        if (Number.isNaN(today.getTime())) return null
 
-        if(monthDifference < 0 || (monthDifference === 0 && today.getDate() < today.getDate())){
-            age--
+        let age = today.getFullYear() - time.getFullYear()
+        const monthDiff = today.getMonth() - time.getMonth()
+
+        if(monthDiff < 0 || (monthDiff === 0 && today.getDate() < time.getDate())) {
+             age --
         }
 
         return age
     }
 
     /**
-     * Returns formatted date based in the **current application language**
+     * Returns formatted date based on the current application language.
      *
-     * @param { Date | String } dateInput - Patient birth date *(ISO or String)*
-     * @param { boolean } fullDate - Date format (Full or Short)
-     *
-     * @example
-     *  getFormatted("2026-09-19T14:24:36.172Z", true) -> "11h 24min - 19/09/2026"
-     *  getFormatted("2026-09-19T14:24:36.172Z", false) -> "19/09/2026"
-     **/
-    const getFormatted = (dateInput, fullDate = true) => {
-        // Handle standalone times (HH:mm)
-        if (typeof dateInput === 'string' &&
-            /^\d{2}:\d{2}$/.test(dateInput)) {
-
-            const [hour, minute] = dateInput.split(':').map(Number)
-
-            if (hour > 23 || minute > 59) {
-                return dateInput
-            }
-
-            return currentLanguage.value === LANGUAGES.PT_BR
-                ? `${String(hour).padStart(2, '0')}h ${String(minute).padStart(2, '0')}min`
-                : `${String(hour % 12 || 12).padStart(2, '0')}:${String(minute).padStart(2, '0')} ${hour >= 12 ? 'PM' : 'AM'}`
-        }
-
-        const time = new Date(dateInput)
-
-        const day = String(time.getDate()).padStart(2, '0')
-        const month = String(time.getMonth() + 1).padStart(2, '0')
-        const year = time.getFullYear()
-        const hour = String(time.getHours()).padStart(2, '0')
-        const minute = String(time.getMinutes()).padStart(2, '0')
-
-        let hoursFormatted = currentLanguage.value === LANGUAGES.PT_BR
-            ? `${hour}h ${minute}min`
-            : `${hour % 12}:${minute} ${hour > 12 ? "PM" : "AM"}`
-
-        let dateFormatted = currentLanguage.value === LANGUAGES.PT_BR
-            ? `${day}/${month}/${year}`
-            : `${month}/${day}/${year}`
-
-        return fullDate
-            ? `${hoursFormatted} - ${dateFormatted}`
-            : `${dateFormatted}`
-    }
-
-    /**
-     * Returns today's date formatted by `YYYY-MM-DD`.
-     *
-     * @returns { String } Formatted today's date.
-     * @example date.getToday() -> "2026-05-14"
-     **/
-    const getToday = () => {
-        const year = today.getFullYear()
-        const month = String(today.getMonth() + 1).padStart(2, "0")
-        const day = String(today.getDate()).padStart(2, "0")
-
-        return `${year}-${month}-${day}`
-    }
-
-    /**
-     * Returns today's time formatted by `HH:MM`.
-     *
-     * @returns { String } Formatted today's time.
-     * @example date.getTime() -> "14:30"
-     **/
-    const getTime = () => {
-        const hours = String(today.getHours()).padStart(2, "0")
-        const minutes = String(today.getMinutes()).padStart(2, "0")
-
-        return `${hours}:${minutes}`
-    }
-
-    /**
-     * Returns current local date and time formatted for `datetime-local` input (`YYYY-MM-DDTHH:mm`).
-     *
-     * @returns { String } Formatted current local date and time.
-     * @example getCurrentDateTimeLocal() -> "2026-05-10T08:10"
-     **/
-    const getCurrentDateTimeLocal = () => {
-        return formatToDateTimeLocal(new Date())
-    }
-
-    /**
-     * Parse any Date/ISO String to datetime-local formart by the local time zone.
+     * Accepts Date, ISO String or standalone time (HH:mm).
      *
      * @param { Date | String } dateInput
+     * @param { Boolean } fullDate - Include time in the result
+     * @returns { String }
      */
-    const formatToDateTimeLocal = (dateInput) => {
-        if (!dateInput) return ""
+    const getFormatted = (dateInput, fullDate = true) => {
+        if(!dateInput) return ""
 
-        const d = new Date(dateInput)
-        if (isNaN(d.getTime())) return ""
+        // 1. Handle standalone times (HH:mm)
+        if(typeof dateInput === "string" && /^\d{2}:\d{2}$/.test(dateInput)) {
+            formatters.numericTime.value.format(timeToDate(dateInput))
+        }
 
-        const year = d.getFullYear()
-        const month = String(d.getMonth() + 1).padStart(2, "0")
-        const day = String(d.getDate()).padStart(2, "0")
-        const hours = String(d.getHours()).padStart(2, "0")
-        const minutes = String(d.getMinutes()).padStart(2, "0")
+        const date = new Date(dateInput)
+
+        if(Number.isNaN(date.getTime())) return ""
+
+        return fullDate
+            ? formatters.numericDateTime.value.format(date)
+            : formatters.numericDate.value.format(date)
+    }
+
+    /**
+     * Returns today's date formatted by YYYY-MM-DD.
+     *
+     * @returns { String }
+     */
+    const getToday = () => {
+        const today = new Date()
+        return formatters.numericDate.value.format(today)
+    }
+
+    /**
+     * Returns a full date formatted based on the current application language.
+     *
+     * @param { Date } date
+     * @returns { String }
+     */
+    const getFullDate = (date = new Date()) => {
+        return formatters.fullDate.value.format(date)
+    }
+
+    /**
+     * Returns a numeric hour formatted based on the current application language.
+     *
+     * @param { Date } date
+     * @returns { String }
+     */
+    const getNumericHour = (date = new Date()) => {
+        return formatters.numericTime.value.format(date)
+    }
+
+    /**
+     * Returns a numeric date formatted based on the current application language.
+     *
+     * @param { Date } date
+     * @returns { String }
+     */
+    const getNumericDate = (date = new Date()) => {
+        return formatters.numericDate.value.format(date)
+    }
+
+    /**
+     * Returns a numeric date and time formatted based on the current application language.
+     *
+     * @param { Date } date
+     * @returns { String }
+     */
+    const getNumericDateTime = (date = new Date()) => {
+        return formatters.numericDateTime.value.format(date)
+    }
+
+    /**
+     * Returns the current local date and time in datetime-local format.
+     *
+     * @param {Date} date
+     * @returns {String}
+     *
+     * @example
+     * // 2026-11-04T18:26
+     */
+    const getCurrentDateTimeLocal = (date = new Date()) => {
+        if (!(date instanceof Date) || Number.isNaN(date.getTime())) {
+            return ""
+        }
+
+        const pad = (value) => String(value).padStart(2, "0")
+
+        const year = date.getFullYear()
+        const month = pad(date.getMonth() + 1)
+        const day = pad(date.getDate())
+        const hours = pad(date.getHours())
+        const minutes = pad(date.getMinutes())
 
         return `${year}-${month}-${day}T${hours}:${minutes}`
     }
 
-    return { getAge, getFormatted, getToday, formatToDateTimeLocal, getCurrentDateTimeLocal, getTime }
+    /**
+     * Formats a date into the datetime-local input format.
+     *
+     * @param {Date|string|number} value
+     * @returns {String}
+     *
+     * @example
+     * // Input: 2026-11-04T21:26:00.000Z
+     * // Output (UTC-3): 2026-11-04T18:26
+     */
+    const formatToDateTimeLocal = (value) => {
+        if (value === null || value === undefined || value === "") {
+            return ""
+        }
+
+        const parsedDate = value instanceof Date
+            ? value
+            : new Date(value)
+
+        if (Number.isNaN(parsedDate.getTime())) {
+            return ""
+        }
+
+        const pad = (number) => String(number).padStart(2, "0")
+
+        const year = parsedDate.getFullYear()
+        const month = pad(parsedDate.getMonth() + 1)
+        const day = pad(parsedDate.getDate())
+        const hours = pad(parsedDate.getHours())
+        const minutes = pad(parsedDate.getMinutes())
+
+        return `${year}-${month}-${day}T${hours}:${minutes}`
+    }
+
+    /**
+     * Converts `standalone times` (String) into `date`
+     *
+     * @param { String } time
+     *
+     * @example
+     * timetoDate("08:00")
+     * // Wed Nov 04 2026 08:00:00 GMT-0300 (Brasilia Standard Time)
+     **/
+    const timeToDate = (time) => {
+        const [hours, minutes] = time.split(":").map(Number)
+
+        if(hours > 23 || minutes > 59) return time
+
+        const date = new Date()
+        date.setHours(hours, minutes, 0, 0)
+
+        return date
+    }
+
+    /**
+     * Returns current day period based in the current hour of the `date`
+     *
+     * @param { Date } date
+     *
+     * @return { String } String that represents the current day period
+     **/
+    const getDayPeriod = (date) => {
+        const dayPeriod = date.toLocaleString("en-US", { dayPeriod: "short" })
+
+        if(dayPeriod.endsWith(DAY_PERIODS.MORNING)) return DAY_PERIODS.MORNING
+
+        if(dayPeriod.endsWith(DAY_PERIODS.EVENING)) return DAY_PERIODS.EVENING
+
+        else return DAY_PERIODS.AFTERNOON
+    }
+
+
+    return { getAge, getFormatted, getToday, getFullDate, getNumericDate, getNumericHour, getNumericDateTime, getCurrentDateTimeLocal, formatToDateTimeLocal, timeToDate, getDayPeriod }
 }

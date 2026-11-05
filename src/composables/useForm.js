@@ -4,15 +4,10 @@ import { useDate } from "./useDate.js"
 import { useI18n } from "vue-i18n"
 import { useUtils } from "./useUtils.js"
 
-import Input from "../components/forms/Input.vue"
-import TextArea from "../components/forms/TextArea.vue"
-import SelectInput from "../components/forms/SelectInput.vue"
-import MultipleTimeInput from "../components/forms/MultipleTimeInput.vue"
-
-export const FORM_TYPES = {
-    CREATE: "create",
-    EDIT: "edit"
-}
+import Input from "../components/inputs/Input.vue"
+import TextArea from "../components/inputs/TextArea.vue"
+import SelectInput from "../components/inputs/SelectInput.vue"
+import MultipleTimeInput from "../components/inputs/MultipleTimeInput.vue"
 
 export function useForm(){
     const isSubmitting = ref(false)
@@ -71,13 +66,6 @@ export function useForm(){
             }
 
             return values
-            /*
-            return convertFormValues(
-                values,
-                template,
-                (type, value) => unit.getMeasurementUnit(type, value).value
-            )
-             */
         }
 
         return Array.isArray(dataSource)
@@ -201,16 +189,15 @@ export function useForm(){
     const getInputProps = (input, popupConfig, templateId, inputValue = null, dynamicData = {}) => {
         if(!templateId) return
 
-        const title = getInputLabel(templateId, input)
-        const placeholder = getInputPlaceholder(templateId, input)
+        let currentValue = inputValue
+            ? inputValue[input.name]
+            : null
 
-        let currentValue = inputValue ? inputValue[input.name] : null
+        const isEmpty = currentValue === null || currentValue === undefined || currentValue === ""
 
-        if(!currentValue) {
-            if (input.inputType === 'datetime-local') {
-                if ((currentValue === null || currentValue === undefined || currentValue === "") && input.isDefaultNow) {
-                    currentValue = date.getCurrentDateTimeLocal()
-                }
+        if(isEmpty) {
+            if (input.inputType === 'datetime-local' && input.isDefaultNow) {
+                currentValue = date.getCurrentDateTimeLocal()
             } else if (input.inputType === 'date') {
                 currentValue = date.getToday()
             } else if (input.inputType === 'time') {
@@ -224,7 +211,10 @@ export function useForm(){
             }
         }
 
-        switch(input.tag){
+        const title = getInputLabel(templateId, input)
+        const placeholder = getInputPlaceholder(templateId, input)
+
+        switch(input.tag) {
             case "input":
                 return {
                     label: input.inputType === "hidden"

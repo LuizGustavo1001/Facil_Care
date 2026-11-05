@@ -1,5 +1,6 @@
 <template>
-  <footer class="footer flex flex-column gap-05">
+  <footer class="footer flex flex-column gap-05 fixed width-full">
+    <!-- App Footer -->
     <div v-if="currentPage">
       <template v-for="btn in currentPage.buttons" :key="btn.id">
         <ActionButton
@@ -19,10 +20,8 @@
 </template>
 
 <style scoped>
-  .footer{
-    position: fixed;
+  .footer {
     bottom: 0;
-    width: 100%;
 
     padding: var(--spacing-sm);
     background: var(--color-bg-primary);
@@ -30,7 +29,7 @@
 
     border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
   }
-  .footer .brand{
+  .footer .brand {
     text-align: center;
     font-size: var(--font-caption);
     font-weight: var(--bolder-weight);

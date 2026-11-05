@@ -4,12 +4,16 @@
       :isOpen="isOpen"
       :popupRef="popupRef"
   >
+    <!-- Form Popup -->
+
+    <!-- Header -->
     <template #header>
       <h2>
         {{ getPopupTitle() }}
       </h2>
     </template>
 
+    <!-- Form -->
     <template #main>
       <form
           class="main-form flex flex-column gap-05"
@@ -24,6 +28,7 @@
           />
         </div>
 
+        <!-- Submit Form Button -->
         <div
             v-if="popupConfig.showSubmit"
             class="popup-bts flex flex-column gap-05"
@@ -41,19 +46,20 @@
 </template>
 
 <style scoped>
-  .form-popup h2{
+  .form-popup h2 {
     font-size: var(--font-heading-2);
+    font-weight: var(--bold-weight);
   }
 </style>
 
 <script setup>
   import { computed } from "vue"
 
+  import { FORM_TYPES } from "../../../constants/formTypes.js"
+  import { popupTypes } from "../../../locales/projectConfig.js"
+
   import { useForm } from "../../../composables/useForm.js"
   import { useI18n } from "vue-i18n"
-
-  import { FORM_TYPES } from "../../../composables/useForm.js"
-  import { popupTypes } from "../../../locales/projectConfig.js"
 
   import AppPopup from "./AppPopup.vue"
   import ActionButton from "../../buttons/ActionButton.vue"

@@ -1,5 +1,6 @@
 <template>
   <div class="view regular">
+    <!-- Erase Data View -->
     <Snackbar
         :isActive="isSnackbarOpen"
         :message="snackbar.data.message"
@@ -18,25 +19,27 @@
         @confirm="confirmPopup.handleConfirm"
     />
 
-    <AppHeader
-        :title="utils.getPageTitle(PAGES['ERASE'])"
-        :leftBtnIcon="icons['chevron-left']"
-        :hasNotifications="false"
-        @return-page="navigation.handleReturn"
-    />
+    <AppHeader :title="utils.getPageTitle(PAGES['ERASE'])" />
 
     <main class="main regular">
+      <!-- Reset Confirmation Section -->
       <section v-if="!gotReset" class="main-section center text-center align-center gap-15">
+        <Icon
+            :icon="pages[PAGES.ERASE].iconFill"
+            size="40px"
+            padding="xs"
+            :bgColor="pages[PAGES.ERASE].color"
+            style="border-radius: var(--radius-md)"
+        />
+
         <div class="section-title-container flex flex-column gap-05">
-
-          <h1 class="section-title">{{ t(`views.eraseData.sections.erase.title`) }}</h1>
-
+          <h2 class="section-title">{{ t(`views.eraseData.categories.erase.title`)}}</h2>
           <div class="section-description flex flex-column gap-03">
-            <p v-for="(desc, index) in tm('views.eraseData.sections.erase.regularSubtitles')" :key="index" class="text-muted">
+            <p v-for="(desc, index) in tm('views.eraseData.categories.erase.regularSubtitles')" :key="index" class="text-muted">
               {{ desc }}.
             </p>
 
-            <p v-for="(desc, index) in tm('views.eraseData.sections.erase.destructiveSubtitles')" :key="index" class="text-destructive">
+            <p v-for="(desc, index) in tm('views.eraseData.categories.erase.destructiveSubtitles')" :key="index" class="text-destructive">
               {{ desc }}.
             </p>
           </div>
@@ -45,15 +48,22 @@
         <ActionButton
             tag="button"
             :leftIcon="icons['warning-circle-fill']"
-            :title="t('views.eraseData.sections.erase.buttons[0]')"
-            padding="lg"
+            :title="t('views.eraseData.categories.erase.buttons[0]')"
+            padding="md"
             variant="destructive"
             @click.stop="handleClick"
         />
       </section>
 
+      <!-- Reset Successfully Section -->
       <section v-else class="success-reset main-section center text-center align-center gap-15">
-        <Icon :icon="icons['check-circle-line']" size="50px" padding="sm"/>
+        <Icon
+            :icon="icons['user-smile-line']"
+            size="50px"
+            padding="xs"
+            :bgColor="BUTTON_COLORS.GREEN"
+            style="border-radius: var(--radius-sm)"
+        />
 
         <p>{{ t(`views.eraseData.sections.erase.successDelete`) }}!</p>
 
@@ -61,7 +71,7 @@
             tag="button"
             @click="navigation.handleReturn"
             :title="t(`utils.homePage`)"
-            padding="lg"
+            padding="md"
         />
       </section>
     </main>
@@ -74,12 +84,8 @@
   .success-reset p {
     font-weight: var(--bold-weight);
   }
-  .success-reset .icon-wrapper{
-    background: var(--green-400);
-    border-radius: var(--radius-xl);
-  }
 
-  .section-title-container .section-title{
+  .section-title-container .section-title {
     font-size: var(--font-heading-1);
   }
 </style>
@@ -87,8 +93,9 @@
 <script setup>
   import { computed, ref } from "vue"
   import { icons } from "../assets/icons/icons.js"
-
-  import { PAGES } from "../composables/usePages.js"
+  import { PAGES } from "../constants/sysPages.js"
+  import { pages } from "../locales/projectConfig.js"
+  import { BUTTON_COLORS } from "../constants/btnColors.js"
 
   import { useNavigation } from "../composables/useNavigation.js"
   import { useUtils } from "../composables/useUtils.js"
@@ -107,18 +114,17 @@
   import DatabaseController from "../controllers/DatabaseController.js"
 
   // COMPOSABLES
-  const { t, tm } = useI18n()
+  const { t, tm, te } = useI18n()
   const confirmPopup = useConfirmPopup()
   const navigation = useNavigation()
   const utils = useUtils()
   const snackbar = useSnackbar()
 
-  // VARIABLES
+  // STATES
   const gotReset = ref(false)
 
   // COMPUTED PROPERTIES
   const isSnackbarOpen = computed(() => snackbar.isActive.value)
-
   const isConfirmOpen = computed(() => confirmPopup.isOpen.value)
   const confirmTitle = computed(() => confirmPopup.title.value)
   const confirmMessage = computed(() => confirmPopup.message.value)
@@ -128,7 +134,13 @@
 
   // FUNCTIONS
   const handleClick = async () => {
-    const title = t(`confirmPopupTemplates.resetData.title`) + "?"
+    const titleKey = `confirmPopupTemplates.resetData.title`
+
+    let title = ""
+
+    if(te(titleKey)) {
+      title = t(titleKey) + "?"
+    }
 
     confirmPopup.open(title, null, () => resetData())
   }
@@ -141,5 +153,4 @@
       snackbar.open(result.code)
     }
   }
-
 </script>

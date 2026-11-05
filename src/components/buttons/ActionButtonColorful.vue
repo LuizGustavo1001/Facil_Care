@@ -6,8 +6,8 @@
       :href="!isButton ? (to || undefined) : undefined"
       :target="!isButton ? target : undefined"
       :rel="!isButton && target === '_blank' ? 'noopener noreferrer' : undefined"
-      class="action-btn-alt flex justify-between gap-1 active-border"
       :class="[colorVariant, variantClass]"
+      class="action-btn-colorful flex justify-between gap-1 active-border"
   >
     <span class="flex gap-05 align-center">
         <span v-if="leftIcon" class="left-icon-wrapper">
@@ -43,105 +43,102 @@
 </template>
 
 <style scoped>
-  .action-btn-alt{
-    padding: var(--spacing-2xs) var(--spacing-sm) var(--spacing-2xs) var(--spacing-2xs);
-    border-radius: var(--radius-lg);
+  .action-btn-colorful {
+    padding: var(--spacing-sm);
 
     border: 3px solid transparent;
 
     text-align: start;
     cursor: pointer;
     transition: 0.2s ease-out;
-
-    box-shadow: 0 0 2px 1px var(--color-shadow-subtle);
   }
 
-  .action-btn-alt .right-icon{
+  .action-btn-colorful .right-icon {
     color: var(--color-text-primary-muted);
   }
 
-  .action-btn-alt .left-icon-wrapper{
-    padding: 1.25rem 0.75rem;
-    border-radius: var(--radius-md);
+  .action-btn-colorful .left-icon-wrapper {
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-full);
 
     display: inline-flex;
     align-items: center;
     justify-content: center;
   }
 
-  .btn-content .btn-content-title{
+  .btn-content .btn-content-title {
     font-size: var(--font-button-title);
     font-weight: var(--bold-weight);
     color: var(--color-text-primary);
   }
 
-  .btn-content .btn-content-description{
+  .btn-content .btn-content-description {
     font-size: var(--font-button-description);
     font-weight: var(--medium-weight);
   }
 
   /* VARIANTS */
   /* 1. Subtle */
-  .action-btn-alt.subtle{
+  .action-btn-colorful.subtle {
     background: var(--color-bg-subtle);
   }
   /* 2. Primary */
-  .action-btn-alt.primary{
+  .action-btn-colorful.primary{
     background: var(--color-bg-primary);
   }
 
   /* COLOR VARIANTS */
   /* 1. Blue */
-  .action-btn-alt.blue .left-icon-wrapper{
+  .action-btn-colorful.blue .left-icon-wrapper {
     background-color: var(--color-bg-blue);
     color: var(--color-text-blue);
   }
-  .action-btn-alt.blue:hover{
+  .action-btn-colorful.blue:hover {
     border-color: var(--color-bg-blue);
   }
 
   /* 2. Orange */
-  .action-btn-alt.orange .left-icon-wrapper{
+  .action-btn-colorful.orange .left-icon-wrapper {
     background-color: var(--color-bg-orange);
     color: var(--color-text-orange);
   }
-  .action-btn-alt.orange:hover{
+  .action-btn-colorful.orange:hover {
     border-color: var(--color-bg-orange);
   }
 
   /* 3. Red */
-  .action-btn-alt.red .left-icon-wrapper{
+  .action-btn-colorful.red .left-icon-wrapper {
     background-color: var(--color-bg-red);
     color: var(--color-text-red);
   }
-  .action-btn-alt.red:hover{
+  .action-btn-colorful.red:hover {
     border-color: var(--color-bg-red);
   }
 
   /* 4. Green */
-  .action-btn-alt.green .left-icon-wrapper{
+  .action-btn-colorful.green .left-icon-wrapper {
     background-color: var(--color-bg-green);
     color: var(--color-text-green);
   }
-  .action-btn-alt.green:hover{
+  .action-btn-colorful.green:hover {
     border-color: var(--color-bg-green);
   }
 
   /* 5. Yellow */
-  .action-btn-alt.yellow .left-icon-wrapper{
+  .action-btn-colorful.yellow .left-icon-wrapper {
     background-color: var(--color-bg-yellow);
     color: var(--color-text-yellow);
   }
-  .action-btn-alt.yellow:hover{
+  .action-btn-colorful.yellow:hover {
     border-color: var(--color-bg-yellow);
   }
 
   /* 6. Purple */
-  .action-btn-alt.purple .left-icon-wrapper{
+  .action-btn-colorful.purple .left-icon-wrapper {
     background-color: var(--color-bg-purple);
     color: var(--color-text-purple);
   }
-  .action-btn-alt.purple:hover{
+  .action-btn-colorful.purple:hover{
     border-color: var(--color-bg-purple);
   }
 </style>
@@ -151,12 +148,11 @@
   import { RouterLink } from "vue-router"
 
   import Icon from "../icons/Icon.vue"
+  import { BUTTON_COLORS } from "../../constants/btnColors.js"
 
   // STATIC VARIABLES
   const VARIANTS = ["subtle", "primary"]
   const DEFAULT_VARIANT = "subtle"
-  const COLORS_LIST = ["blue", "orange", "red", "green", "purple", "yellow"]
-  const DEFAULT_COLOR = "blue"
 
   // PROPS
   const props = defineProps({
@@ -170,7 +166,7 @@
     },
     leftIconSize: {
       type: String,
-      default: "25px"
+      default: "20px"
     },
     rightIcon: {
       type: String,
@@ -178,7 +174,7 @@
     },
     rightIconSize: {
       type: String,
-      default: "25px"
+      default: "23px"
     },
     to: {
       type: String,
@@ -190,13 +186,11 @@
     },
     variant: {
       type: String,
-      default: "subtle",
-      validator: (value) => ["subtle", "primary"].includes(value)
+      default: "subtle"
     },
     color: {
       type: String,
-      default: 'blue',
-      validator: (value) => ["blue", "orange", "red", "green", "purple", "yellow"].includes(value)
+      default: 'blue'
     },
     title: String,
     description: String
@@ -224,6 +218,6 @@
 
   // avoid invalid color variant
   const colorVariant = computed(() => {
-    return COLORS_LIST.includes(props.color) ? props.color : DEFAULT_COLOR
+    return Object.values(BUTTON_COLORS).includes(props.color) ? props.color : BUTTON_COLORS.BLUE
   })
 </script>

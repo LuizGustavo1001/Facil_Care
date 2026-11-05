@@ -1,27 +1,30 @@
 <template>
-  <div class="input-wrapper flex flex-column gap-05">
-    <label
+  <fieldset class="default-input-wrapper">
+    <!-- Regular Input -->
+    <legend
         v-if="label"
-        :for="computedId"
         class="input-label text-muted"
     >
       {{ label }}
-    </label>
+    </legend>
 
     <input
-        :id="computedId"
-        v-model="formattedModel"
-        :type="inputType"
-        :name="name"
-        v-bind="$attrs"
-        class="default-input-attr active-border"
+      :id="computedId"
+      v-model="formattedModel"
+      :type="inputType"
+      :name="name"
+      v-bind="$attrs"
+      class="default-input-attr"
     >
-  </div>
+  </fieldset>
+
 </template>
 
 <style scoped>
-  .input-label{
+  .input-label {
     font-size: var(--font-label-md);
+    padding-inline: var(--spacing-sm);
+    margin-left: var(--spacing-sm);
   }
 </style>
 
@@ -63,44 +66,34 @@
 
   // V-model interceptor - format input value
   const formattedModel = computed( {
-    get(){
+    get() {
       const value = model.value ?? ""
 
-      if(props.inputType === "datetime-local" && value){
-        return date.formatToDateTimeLocal(value)
+      if(props.inputType === "datetime-local" && value) {
+        return date.getCurrentDateTimeLocal(new Date(value))
       }
 
-      if(props.inputType === "date"){
+      if(props.inputType === "date") {
         return String(value).split("T")[0]
       }
 
-      if(props.inputType === "tel"){
+      if(props.inputType === "tel") {
         return utils.formatPhone(value)
       }
 
       return value
     },
-    set(newValue){
+    set(newValue) {
       if(props.inputType === "datetime-local" || props.inputType === "date"){
         model.value = newValue
-            ? model.value = newValue ? new Date(newValue).toISOString() : ""
+            ? new Date(newValue).toISOString()
             : ""
 
         return
       }
-
-      /*
-      if(props.inputType === 'date'){ // Store date + time
-        model.value = newValue
-            ? `${newValue}T00:00:00.000Z`
-            : ""
-        return
-      }
-       */
 
       if(props.inputType === "tel"){ // Store only phone digits
-        model.value = String(newValue ?? "")
-            .replace(/\D/g, "")
+        model.value = String(newValue ?? "").replace(/\D/g, "")
 
         return
       }
