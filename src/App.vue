@@ -10,12 +10,12 @@
 <script setup>
   import { RouterView } from 'vue-router'
   import { onMounted } from "vue"
-  import { useTheme } from "./composables/useTheme.js"
-  import { useLanguage } from "./composables/useLanguage.js"
-  import { usePersistentStorage } from "./composables/usePersistentStorage.js"
-  import { useUnitSystem } from "./composables/useUnitSystem.js"
+  import { useTheme } from "./composables/useTheme"
+  import { useLanguage } from "./composables/useLanguage"
+  import { usePersistentStorage } from "./composables/usePersistentStorage"
+  import { useUnitSystem } from "./composables/useUnitSystem"
 
-  import NotificationController from "./controllers/NotificationController.js"
+  import NotificationController from "./controllers/NotificationController"
 
   // CONTROLLERS
   const notificationsController = new NotificationController()

@@ -45,46 +45,67 @@
   }
 </style>
 
-<script setup>
+<script setup lang="ts">
   import { computed } from "vue"
   import { useI18n } from "vue-i18n"
 
-  const { t } = useI18n()
-
-  // MODEL
+  // OPTIONS
   defineOptions({
     inheritAttrs: false
   })
 
-  const model = defineModel({ type: [String, Number], default: "" })
+  // TYPES & INTERFACES
+  export interface SelectOptionObj {
+    placeholder?: string | number
+    label?: string | number
+    value: string | number
+  }
 
-  // PROPS
-  const props = defineProps({
-    label: String,
-    for: String,
-    name: String,
-    options: {
-      type: [Array, Object],
-      default: () => ([])
-    }
+  export type SelectOptionPrimitive = string | number
+  export type SelectOptionItem = SelectOptionObj | SelectOptionPrimitive
+
+  interface Props {
+    label?: string
+    for?: string
+    name?: string
+    options?: SelectOptionItem[] | Record<string, string | number>
+  }
+
+  interface NormalizedOption {
+    label: string | number
+    value: string | number
+  }
+
+  // MODEL
+  const model = defineModel<string | number>({
+    default: "",
   })
 
+  // PROPS DEFAULT VALUES
+  const props = withDefaults(defineProps<Props>(), {
+    options: () => []
+  })
+
+  // COMPOSABLES
+  const { t } = useI18n()
+
   // COMPUTED PROPERTIES
-  const computedId = computed(() => {
-    return props.id || (props.name ? `input-${props.name}` : undefined)
+  const computedId = computed<string | undefined>(() => {
+    return props.for || (props.name ? `input-${props.name}` : undefined)
   })
 
   // Normalize Objects and Arrays [{ label, value }]
-  const normalizedOptions = computed(() => {
+  const normalizedOptions = computed<NormalizedOption[]>(() => {
     if (Array.isArray(props.options)) {
       return props.options.map(opt => {
         if (typeof opt === 'object' && opt !== null) {
           return {
-            label: opt.placeholder,
+            label: opt.placeholder ?? opt.label ?? opt.value,
             value: opt.value
           }
         }
 
+        // String or number
         return {
           label: opt,
           value: opt
@@ -92,6 +113,7 @@
       })
     }
 
+    // Object Record (key: value)
     if (props.options && typeof props.options === 'object') {
       return Object.entries(props.options).map(([value, label]) => ({
         label,

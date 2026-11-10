@@ -23,7 +23,7 @@
 
     <main class="main regular">
       <!-- Reset Confirmation Section -->
-      <section v-if="!gotReset" class="main-section center text-center align-center gap-15">
+      <section v-if="!dataGotReset" class="main-section center text-center align-center gap-15">
         <Icon
             :icon="pages[PAGES.ERASE].iconFill"
             size="40px"
@@ -90,18 +90,16 @@
   }
 </style>
 
-<script setup>
+<script setup lang="ts">
   import { computed, ref } from "vue"
   import { icons } from "../assets/icons/icons.js"
-  import { PAGES } from "../constants/sysPages.js"
-  import { pages } from "../locales/projectConfig.js"
-  import { BUTTON_COLORS } from "../constants/btnColors.js"
+  import { pages } from "../locales/projectConfig"
 
-  import { useNavigation } from "../composables/useNavigation.js"
-  import { useUtils } from "../composables/useUtils.js"
-  import { useSnackbar } from "../composables/useSnackbar.js"
   import { useI18n } from "vue-i18n"
-  import { useConfirmPopup } from "../composables/useConfirmPopup.js"
+  import { useNavigation } from "../composables/useNavigation"
+  import { useUtils } from "../composables/useUtils"
+  import { useSnackbar } from "../composables/useSnackbar"
+  import { useConfirmPopup } from "../composables/useConfirmPopup"
 
   import AppHeader from "../components/layout/AppHeader.vue"
   import AppFooter from "../components/layout/AppFooter.vue"
@@ -111,46 +109,49 @@
   import ConfirmPopup from "../components/layout/popup/ConfirmPopup.vue"
   import AppOverlay from "../components/layout/AppOverlay.vue"
 
-  import DatabaseController from "../controllers/DatabaseController.js"
+  import DatabaseController from "../controllers/DatabaseController"
+
+  import type { WarningCode } from "../types/snackbar"
+  import { BUTTON_COLORS } from "../constants/buttonComponent"
+  import { PAGES } from "../constants/sysPages"
 
   // COMPOSABLES
-  const { t, tm, te } = useI18n()
+  const { t, tm } = useI18n()
   const confirmPopup = useConfirmPopup()
   const navigation = useNavigation()
   const utils = useUtils()
   const snackbar = useSnackbar()
 
   // STATES
-  const gotReset = ref(false)
+  const dataGotReset = ref<boolean>(false)
 
   // COMPUTED PROPERTIES
-  const isSnackbarOpen = computed(() => snackbar.isActive.value)
-  const isConfirmOpen = computed(() => confirmPopup.isOpen.value)
-  const confirmTitle = computed(() => confirmPopup.title.value)
-  const confirmMessage = computed(() => confirmPopup.message.value)
+  const isSnackbarOpen = computed<boolean>(() => snackbar.isActive.value)
+  const isConfirmOpen = computed<boolean>(() => confirmPopup.isOpen.value)
+  const confirmTitle = computed<string | undefined>(() => confirmPopup.title.value)
+  const confirmMessage = computed<string | null>(() => confirmPopup.message.value)
 
   // CONTROLLERS
   const databaseController = new DatabaseController()
 
   // FUNCTIONS
-  const handleClick = async () => {
+  const handleClick = async (): Promise<void> => {
     const titleKey = `confirmPopupTemplates.resetData.title`
 
-    let title = ""
-
-    if(te(titleKey)) {
-      title = t(titleKey) + "?"
-    }
+    let title = utils.getTranslate(titleKey) + "?"
 
     confirmPopup.open(title, null, () => resetData())
   }
 
-  const resetData = async () => {
+  const resetData = async (): Promise<void> => {
     const result = await databaseController.resetAllData()
 
-    if(result.success){
-      gotReset.value = true
-      snackbar.open(result.code)
+    if(result.success) {
+      dataGotReset.value = true
+    }
+
+    if(result.code) {
+      snackbar.open(result.code as WarningCode)
     }
   }
 </script>

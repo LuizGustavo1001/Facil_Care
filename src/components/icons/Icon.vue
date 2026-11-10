@@ -51,37 +51,34 @@
   }
 </style>
 
-<script setup>
+<script setup lang="ts">
   import { computed } from "vue"
-  import { BUTTON_COLORS } from "../../constants/btnColors.js"
+  import { BUTTON_COLORS } from "../../constants/buttonComponent"
 
-  // PROPS
-  const props = defineProps({
-    icon: {
-      type: String,
-      required: true
-    },
-    padding: {
-      type: String,
-      default: 'none',
-      validator: (value) => ["none", "2xs", "xs", "sm", "md"].includes(value)
-    },
-    size: {
-      type: String,
-      default: "20px"
-    },
-    bgColor: {
-      type: String,
-      default: "transparent"
-    }
+  import type { PaddingSize } from "../../types/paddingSizes"
+  import type { ButtonColor } from "../../types/buttonComponent"
+
+  // TYPES & INTERFACES
+  interface Props {
+    icon: string
+    padding?: PaddingSize | string
+    size?: string
+    bgColor?: ButtonColor | string
+  }
+
+  // PROPS DEFAULT VALUES
+  const props = withDefaults(defineProps<Props>(), {
+    padding: "none",
+    size: "20px",
+    bgColor: "transparent",
   })
 
   // Defines the icon and the icon background color set
-  const computedBgColor = computed(() => {
-    if(!Object.values(BUTTON_COLORS).includes(props.bgColor)) {
+  const computedBgColor = computed<ButtonColor | string>(() => {
+    if(!Object.values(BUTTON_COLORS).includes(props.bgColor as ButtonColor)) {
       return "transparent"
     }
 
-    return props.bgColor
+    return props.bgColor as ButtonColor
   })
 </script>

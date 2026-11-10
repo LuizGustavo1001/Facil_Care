@@ -68,20 +68,22 @@
   }
 </style>
 
-<script setup>
+<script setup lang="ts">
   import { icons } from "../../assets/icons/icons.js"
   import Icon from "../icons/Icon.vue"
+  import { SNACKBAR_TYPES } from "../../constants/snackbar"
+  import type { SnackbarType } from "../../types/snackbar"
 
-  // PROPS
-  const props = defineProps({
-    message: String,
-    type: {
-      type: String,
-      default: 'success'
-    },
-    isActive: {
-      type: Boolean,
-      required: true
-    }
+  // TYPES & INTERFACES
+  interface Props {
+    message?: string | null
+    type?: SnackbarType | string
+    isActive: boolean
+  }
+
+  // PROPS DEFAULT VALUES
+  const props = withDefaults(defineProps<Props>(), {
+    message: null,
+    type: SNACKBAR_TYPES.SUCCESS,
   })
 </script>

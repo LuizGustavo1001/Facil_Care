@@ -1,4 +1,4 @@
-<template>
+q<template>
   <div class="view regular">
     <!-- System User's Manual View -->
     <AppHeader :title="utils.getPageTitle(PAGES['USER_MANUAL'])" />
@@ -7,16 +7,16 @@
       <section class="main-section regular gap-05"></section>
     </main>
 
-    <AppFooter page="manual" />
+    <AppFooter :page="PAGES.USER_MANUAL" />
   </div>
 </template>
 
 <style scoped></style>
 
-<script setup>
-  import { PAGES } from "../constants/sysPages.js"
+<script setup lang="ts">
+  import { PAGES } from "../constants/sysPages"
 
-  import { useUtils } from "../composables/useUtils.js"
+  import { useUtils } from "../composables/useUtils"
 
   import AppHeader from "../components/layout/AppHeader.vue"
   import AppFooter from "../components/layout/AppFooter.vue"

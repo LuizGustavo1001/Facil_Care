@@ -77,13 +77,13 @@
 
 </style>
 
-<script setup>
-  import { termsView } from "../locales/projectConfig.js"
+<script setup lang="ts">
+  import { termsView } from "../locales/projectConfig"
 
-  import { PAGES } from "../constants/sysPages.js"
+  import { PAGES } from "../constants/sysPages"
 
   import { useI18n } from "vue-i18n"
-  import { useUtils } from "../composables/useUtils.js"
+  import { useUtils } from "../composables/useUtils"
 
   import AppHeader from "../components/layout/AppHeader.vue"
   import AppFooter from "../components/layout/AppFooter.vue"

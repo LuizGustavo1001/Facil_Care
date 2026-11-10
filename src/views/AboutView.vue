@@ -67,12 +67,12 @@
   }
 </style>
 
-<script setup>
-  import { PAGES } from "../constants/sysPages.js"
+<script setup lang="ts">
+  import { PAGES } from "../constants/sysPages"
   import { icons } from "../assets/icons/icons.js"
-  import { aboutView } from "../locales/projectConfig.js"
+  import { aboutView } from "../locales/projectConfig"
 
-  import { useUtils } from "../composables/useUtils.js"
+  import { useUtils } from "../composables/useUtils"
   import { useI18n } from "vue-i18n"
 
   import AppHeader from "../components/layout/AppHeader.vue"

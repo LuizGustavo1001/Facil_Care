@@ -1,7 +1,7 @@
 <template>
   <header
       class="app-header flex justify-center align-center gap-05 sticky"
-      :class="HEADER_TYPES[computedType] ?? undefined"
+      :class="computedType"
   >
     <!-- App Header -->
     <div class="flex align-center gap-05 flex-grow-1">
@@ -67,57 +67,56 @@
   }
 </style>
 
-<script setup>
+<script setup lang="ts">
   import { computed, ref } from "vue"
   import { icons } from "../../assets/icons/icons.js"
 
-  import { useNavigation } from "../../composables/useNavigation.js"
+  import { useNavigation } from "../../composables/useNavigation"
 
   import IconBtn from "../buttons/IconBtn.vue"
   import NotificationsMenu from "./NotificationsMenu.vue"
   import Icon from "../icons/Icon.vue"
 
   // CONSTANTS
-  const HEADER_TYPES = {
+  const HEADER_TYPES: Record<string, string> = {
     default: "default",
     noButton: "noButton"
   }
 
+  // TYPES & INTERFACES
+  type HeaderType = typeof HEADER_TYPES[keyof typeof HEADER_TYPES]
+
+  interface Props {
+    title?: string
+    leftIcon?: string
+    type?: HeaderType | string
+    hasNotifications?: boolean
+  }
+
+  // PROPS DEFAULT VALUES
+  const props = withDefaults(defineProps<Props>(), {
+    leftIcon: icons["logo-fill-colorful"],
+    type: "",
+    hasNotifications: false
+  })
+
   // COMPOSABLES
   const navigation = useNavigation()
 
-  // PROPS
-  const props = defineProps({
-    title: String,
-    leftIcon: {
-      type: String,
-      default: icons["logo-fill-colorful"]
-    },
-    type: {
-      type: String,
-      default: null
-    },
-    hasNotifications: {
-      type: Boolean,
-      default: false
-    },
-    toggleBtnRef: String
-  })
-
   // REF PROPERTIES
-  const isNotificationsOpen = ref(false)
+  const isNotificationsOpen = ref<boolean>(false)
 
   // FUNCTIONS
-  const toggleNotifications = () => {
+  const toggleNotifications = (): void => {
     isNotificationsOpen.value = !isNotificationsOpen.value
   }
 
-  const computedType = computed(() => {
+  const computedType = computed<HeaderType>(() => {
     if(!Object.values(HEADER_TYPES).includes(props.type)) {
       return HEADER_TYPES.default
     }
 
-    return props.type
+    return HEADER_TYPES[props.type]
   })
 
   /*

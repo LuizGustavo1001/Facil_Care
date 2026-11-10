@@ -17,7 +17,7 @@
           class="flex flex-column gap-05"
         >
           <!-- Category -->
-          <h2 class="category-title text-uppercase"> {{ getCategoryTitle(category) }} </h2>
+          <h2 class="category-title text-uppercase"> {{ getCategoryTitle(category.id) }} </h2>
 
           <div class="buttons-wrapper">
             <template
@@ -28,7 +28,7 @@
               <ActionButtonColorful
                 tag="router"
                 :to="button.href"
-                :title="getButtonTitle(button)"
+                :title="getButtonTitle(button.id)"
                 :leftIcon="button.iconFill"
                 leftIconSize="25px"
                 :rightIcon="icons['chevron-right']"
@@ -41,7 +41,6 @@
     </main>
 
     <NavigationBar
-        :items="mainNavigationBar"
         :activeItem="mainNavigationBar[PAGES.SERVICES].id"
     />
   </div>
@@ -54,32 +53,28 @@
   }
 </style>
 
-<script setup>
-  import { PAGES } from "../constants/sysPages.js"
+<script setup lang="ts">
+  import { PAGES } from "../constants/sysPages"
   import { icons } from "../assets/icons/icons.js"
-  import { mainNavigationBar, servicesView } from "../locales/projectConfig.js"
+  import { mainNavigationBar, servicesView } from "../locales/projectConfig"
 
-  import { useUtils } from "../composables/useUtils.js"
-  import { useI18n } from "vue-i18n"
+  import { useUtils } from "../composables/useUtils"
 
   import NavigationBar from "../components/layout/NavigationBar.vue"
   import AppHeader from "../components/layout/AppHeader.vue"
   import ActionButtonColorful from "../components/buttons/ActionButtonColorful.vue"
 
   // COMPOSABLES
-  const { t, te } = useI18n()
   const utils = useUtils()
 
   // FUNCTIONS
-  const getButtonTitle = (button) => {
-    const key = `pageTitle.${button?.id}`
-
-    return te(key) ? t(key) : ""
+  const getButtonTitle = (buttonId: string): string => {
+    const key = `pageTitle.${buttonId}`
+    return utils.getTranslate(key)
   }
 
-  const getCategoryTitle = (category) => {
-    const key = `views.${PAGES.SERVICES}.${category.id}.title`
-
-    return te(key) ? t(key) : ""
+  const getCategoryTitle = (categoryId: string): string => {
+    const key = `views.${PAGES.SERVICES}.${categoryId}.title`
+    return utils.getTranslate(key)
   }
 </script>

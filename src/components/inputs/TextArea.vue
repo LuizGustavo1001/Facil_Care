@@ -32,29 +32,32 @@
   }
 </style>
 
-<script setup>
+<script setup lang="ts">
   import { computed } from "vue"
 
-  // MODEL
+  // OPTIONS
   defineOptions({
     inheritAttrs: false
   })
 
-  const model = defineModel({ type: [String, Number], default: "" })
+  // MODEL
+  const model = defineModel<string | number>({ default: "" })
 
-  // PROPS
-  const props = defineProps({
-    label: String,
-    id: String,
-    name: String,
-    rows: { // initial visible lines amount
-      type: String,
-      default: "2"
-    }
+  // TYPES & INTERFACES
+  interface Props {
+    label?: string
+    id?: string
+    name?: string
+    rows?: string // number of lines within textarea
+  }
+
+  // PROPS DEFAULT VALUES
+  const props = withDefaults(defineProps<Props>(), {
+    rows: "2"
   })
 
   // COMPUTED PROPERTIES
-  const computedId = computed(() => {
+  const computedId = computed<string | undefined>(() => {
     return props.id || (props.name ? `input-${props.name}` : undefined)
   })
 </script>

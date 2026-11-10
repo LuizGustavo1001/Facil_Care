@@ -51,15 +51,14 @@
   }
 </style>
 
-<script setup>
-  defineProps({
-    isOpen: {
-      type: Boolean,
-      required: true
-    },
-    popupRef: {
-      type: Object,
-      required: true
-    }
-  })
+<script setup lang="ts">
+  import type { Ref } from "vue"
+  import type { DOMReference } from "../../../types/formPopup"
+
+  interface Props {
+    isOpen: boolean
+    popupRef: Ref<DOMReference>
+  }
+
+  defineProps<Props>()
 </script>

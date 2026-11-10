@@ -143,73 +143,66 @@
   }
 </style>
 
-<script setup>
+<script setup lang="ts">
   import { computed } from "vue"
+  import type { Component } from "vue"
   import { RouterLink } from "vue-router"
+  import { BUTTON_COLORS } from "../../constants/buttonComponent"
+
+  import type { ButtonColor, ButtonTag } from "../../types/buttonComponent"
 
   import Icon from "../icons/Icon.vue"
-  import { BUTTON_COLORS } from "../../constants/btnColors.js"
 
   // STATIC VARIABLES
   const VARIANTS = ["subtle", "primary"]
-  const DEFAULT_VARIANT = "subtle"
+  const DEFAULT_VARIANT: VariantType = VARIANTS[0]
 
-  // PROPS
-  const props = defineProps({
-    tag: {
-      type: String,
-      default: 'a'
-    },
-    leftIcon: {
-      type: String,
-      default: null
-    },
-    leftIconSize: {
-      type: String,
-      default: "20px"
-    },
-    rightIcon: {
-      type: String,
-      default: null
-    },
-    rightIconSize: {
-      type: String,
-      default: "23px"
-    },
-    to: {
-      type: String,
-      default: "#"
-    },
-    target: {
-      type: String,
-      default: 'external'
-    },
-    variant: {
-      type: String,
-      default: "subtle"
-    },
-    color: {
-      type: String,
-      default: 'blue'
-    },
-    title: String,
-    description: String
+  // TYPES & INTERFACES
+  type VariantType = typeof VARIANTS[number]
+
+  interface ActionButtonColorfulProps {
+    tag?: ButtonTag | string
+    leftIcon?: string | null
+    leftIconSize?: string
+    rightIcon?: string | null
+    rightIconSize?: string
+    to?: string
+    target?: string
+    variant?: VariantType | string
+    color?: ButtonColor | string
+    title?: string | null
+    description?: string | null
+  }
+
+  // PROPS DEFAULT VALUES
+  const props = withDefaults(defineProps<ActionButtonColorfulProps>(), {
+    tag: "button",
+    leftIcon: null,
+    leftIconSize: "20px",
+    rightIcon: null,
+    rightIconSize: "23px",
+    to: "#",
+    target: "external",
+    variant: "",
+    color: "",
+    title: null,
+    description: null,
   })
 
   // COMPUTED PROPERTIES
-  // avoid invalid variant classes
-  const variantClass = computed(() => {
-    return VARIANTS.includes(props.variant) ? props.variant : DEFAULT_VARIANT
+  const isButton = computed<boolean>(() => props.tag === 'button')
+  const isRouterLink = computed<boolean>(() => props.tag === "router")
+
+  const variantClass = computed<VariantType>(() => {
+    return VARIANTS.includes(props.variant)
+        ? props.variant
+        : DEFAULT_VARIANT
   })
 
-  const isButton = computed(() => props.tag === 'button')
-
-  const isRouterLink = computed(() => props.tag === "router")
-
-  const componentTag = computed(() => {
+  const componentTag = computed<string | Component>(() => {
     // 1. Tag == RouterLink (Internal Link)
-    if(isRouterLink.value){
-      return RouterLink
+    if(isRouterLink.value) {
+      return RouterLink as Component
     }
 
     // 2. Other Tag
@@ -218,6 +211,8 @@
 
   // avoid invalid color variant
   const colorVariant = computed(() => {
-    return Object.values(BUTTON_COLORS).includes(props.color) ? props.color : BUTTON_COLORS.BLUE
+    return Object.values(BUTTON_COLORS).includes(props.color as ButtonColor)
+        ? props.color
+        : BUTTON_COLORS.BLUE
   })
 </script>

@@ -47,34 +47,34 @@
   }
 </style>
 
-<script setup>
+<script setup lang="ts">
   import { computed } from "vue"
-  import { BUTTON_COLORS } from "../../constants/btnColors.js"
+  import { BUTTON_COLORS } from "../../constants/buttonComponent"
+  import { PADDING_SIZE } from "../../constants/paddindSizes"
+
+  import type { ButtonColor } from "../../types/buttonComponent"
+  import type { PaddingSize } from "../../types/paddingSizes"
+
   import Icon from "../icons/Icon.vue"
 
-  const props = defineProps({
-    spacing: {
-      type: String,
-      default: '2xs',
-      validator: (value) => ["2xs", "xs", "sm", "md", "lg"].includes(value)
-    },
-    text: {
-      type: String,
-      required: true,
-      default: ""
-    },
-    color: {
-      type: String,
-      default: "blue"
-    },
-    icon: {
-      type: String,
-      default: null
-    }
+  // TYPES & INTERFACES
+  interface Props {
+    text: string
+    color?: ButtonColor | string
+    spacing?: PaddingSize | string
+    icon?: string | null
+  }
+
+  // PROPS DEFAULT VALUES
+  const props = withDefaults(defineProps<Props>(), {
+    text: "",
+    color: BUTTON_COLORS.BLUE,
+    spacing: PADDING_SIZE.EXTRA_SMALL_2,
+    icon: null
   })
 
   const computedColor = computed(() => {
-    if(!Object.values(BUTTON_COLORS).includes(props.color)) {
+    if(!Object.values(BUTTON_COLORS).includes(props.color as ButtonColor)) {
       return BUTTON_COLORS.BLUE
     }
 

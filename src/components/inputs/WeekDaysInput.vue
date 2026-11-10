@@ -58,37 +58,42 @@
   }
 </style>
 
-<script setup>
-  import { weekDays } from "../../locales/projectConfig.js"
-  import { formatedLanguage } from "../../composables/useDate.js"
+<script setup lang="ts">
+  import { weekDays } from "../../locales/projectConfig"
+  import { formatedLanguage } from "../../composables/useDate"
+
+  // OPTIONS
+  defineOptions({
+    inheritAttrs: false
+  })
 
   // MODEL
-  const model = defineModel({
-    type: Array,
-    default: () => []
-  })
+  const model = defineModel<number[]>({ default: () => [] })
+
+  // TYPES & INTERFACES
+  interface WeekDaysInputProps {
+    label?: string
+    name?: string
+  }
 
   // PROPS
-  const props = defineProps({
-    label: String,
-    name: String
-  })
+  const props = defineProps<WeekDaysInputProps>()
 
   // FUNCTIONS
-  const getDayLabel = (dayNumber) => {
+  const getDayLabel = (dayNumber: number): string => {
     // 05/01/2025 it's a sunday
     const date = new Date(2025, 0, 5 + dayNumber)
 
-    return date.toLocaleString(formatedLanguage, {
+    return date.toLocaleString(formatedLanguage.value, {
       weekday: "narrow"
     })
   }
 
-  const isSelected = (dayValue) => {
+  const isSelected = (dayValue: number): boolean => {
     return model.value.includes(dayValue)
   }
 
-  function toggleDayBtn(day) {
+  function toggleDayBtn(day: number): void {
     if(isSelected(day)) {
       model.value = model.value.filter(item => item !== day)
       return

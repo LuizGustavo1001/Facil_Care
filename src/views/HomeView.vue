@@ -25,7 +25,7 @@
 
             <!-- Patient's Name -->
             <p class="main-card-patient-name">
-              {{ t(`utils.hello`) }}, <span class="bolder-weight">{{ patient.name }}</span>!
+              {{ t(`utils.hello`) }}, <span class="bolder-weight">{{ patient?.name ?? "" }}</span>!
             </p>
           </div>
 
@@ -96,7 +96,6 @@
     </main>
 
     <NavigationBar
-        :items="mainNavigationBar"
         :activeItem="mainNavigationBar[PAGES.HOME].id"
     />
   </div>
@@ -110,9 +109,7 @@
     height: 100%;
     width: 100%;
     inset: 0;
-    background:
-        linear-gradient(to top, var(--color-shadow-default), transparent),
-        var(--color-bg-blue);
+    background: var(--color-bg-blue);
 
     z-index: -1;
   }
@@ -163,19 +160,15 @@
   }
 </style>
 
-<script setup>
+<script setup lang="ts">
   import { computed, onMounted, ref } from "vue"
-
-  import { mainNavigationBar, pages } from "../locales/projectConfig.js"
+  import { mainNavigationBar, pages } from "../locales/projectConfig"
   import { icons } from "../assets/icons/icons.js"
-  import { PAGES } from "../constants/sysPages.js"
-  import { DAY_PERIODS } from "../constants/dayPeriods.js"
-  import { BUTTON_COLORS } from "../constants/btnColors.js"
 
   import { useI18n } from "vue-i18n"
-  import { useSnackbar } from "../composables/useSnackbar.js"
-  import { useUtils } from "../composables/useUtils.js"
-  import { useDate } from "../composables/useDate.js"
+  import { useSnackbar } from "../composables/useSnackbar"
+  import { useUtils } from "../composables/useUtils"
+  import { useDate } from "../composables/useDate"
 
   import AppHeader from "../components/layout/AppHeader.vue"
   import Snackbar from "../components/feedback/Snackbar.vue"
@@ -185,31 +178,42 @@
   import ActionButton from "../components/buttons/ActionButton.vue"
   import NotFoundCard from "../components/feedback/NotFoundCard.vue"
 
-  import PatientController from "../controllers/PatientController.js"
-  import MedicineController from "../controllers/MedicineController.js"
+  import PatientController from "../controllers/PatientController"
+  import MedicineController from "../controllers/MedicineController"
+
+  import { PAGES } from "../constants/sysPages"
+  import { DAY_PERIODS } from "../constants/dayPeriods"
+  import { BUTTON_COLORS } from "../constants/buttonComponent"
+
+  import type { Medicine } from "../interfaces/Medicine"
+  import type { Patient } from "../interfaces/Patient"
+
+  import type { WarningCode } from "../types/snackbar"
+  import type { DayPeriod } from "../types/date"
 
   // COMPOSABLES
-  const { t, te } = useI18n()
+  const { t } = useI18n()
   const snackbar = useSnackbar()
   const utils = useUtils()
   const date = useDate()
 
   // COMPUTED PROPERTIES
-  const isSnackbarOpen = computed(() => snackbar.isActive.value)
+  const isSnackbarOpen = computed<boolean>(() => snackbar.isActive.value)
 
   // CONTROLLERS
   const patientController = new PatientController()
   const medicineController = new MedicineController()
 
   // STATES
-  const medicines = ref([])
-  const patient = ref({})
+  const patient = ref<Patient | null>(null)
+  const medicines = ref<Medicine[]>([])
 
   // FUNCTIONS
-  const getBadgeColor = (schedule) => {
-    const formattedTime = date.timeToDate(schedule)
+  // Returns the time badge color based at the current day period
+  const getBadgeColor = (schedule: string): string => {
+    const formattedTime = date.timeToDate(schedule) as Date
 
-    const dayPeriod = date.getDayPeriod(formattedTime)
+    const dayPeriod: DayPeriod = date.getDayPeriod(formattedTime)
 
     switch (dayPeriod) {
       case DAY_PERIODS.AFTERNOON:
@@ -223,10 +227,11 @@
     }
   }
 
-  const getRouteAdminLabel = (route) => {
+  // Returns the translated route admin
+  const getRouteAdminLabel = (route: string): string => {
     const key = `options.routeAdmin.${route}`
 
-    return te(key) ? t(key) : ""
+    return utils.getTranslate(key)
   }
 
   // MOUNTED || UNMOUNTED
@@ -242,11 +247,11 @@
     ] = results
 
     if(medicineData.success) {
-      medicines.value = medicineData.data
+      medicines.value = medicineData.data as Medicine[]
     }
 
     patientData.success
-        ? patient.value = patientData.data
-        : snackbar.open(patientData.code)
+        ? patient.value = patientData.data as Patient
+        : snackbar.open(patientData.code as WarningCode)
   })
 </script>

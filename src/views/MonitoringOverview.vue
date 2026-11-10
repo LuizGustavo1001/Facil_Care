@@ -21,14 +21,14 @@
           @click="snackbar.clear"
       />
 
-      <AppHeader :title="utils.getPageTitle(currentMonitoring)" />
+      <AppHeader :title="utils.getPageTitle(currentMonitoring as string)" />
 
       <main class="main regular gap-2">
         <!-- Days Interval Filter -->
         <ul class="filter-list flex align-center gap-05 overflow-auto">
           <li
               v-for="filter in charts.filters"
-              :key="filter.label"
+              :key="filter.id"
               class="filter-item capitalize-words"
               :class="{
                     active: activeFilterDays === filter.days
@@ -45,8 +45,8 @@
           <!-- Chart Section -->
           <section v-if="currentCategory === PAGES.VITAL_SIGNS" class="chart-section flex flex-column gap-1">
             <VitalSignsChart
-                :type="currentMonitoring"
-                :records="filteredMonitoringData"
+                :type="currentMonitoring as string"
+                :records="filteredMonitoringData as MonitoringRecord[]"
             />
           </section>
 
@@ -77,7 +77,7 @@
         <NotFoundCard v-else class="main-section center"/>
       </main>
 
-      <AppFooter :page="currentMonitoring" />
+      <AppFooter :page="currentMonitoring as string" />
     </template>
 
     <template v-else>
@@ -123,20 +123,18 @@
   }
 </style>
 
-<script setup>
+<script setup lang="ts">
   import { computed, ref, watch } from "vue"
   import { icons } from "../assets/icons/icons.js"
-
-  import { PAGES, VITAL_SIGNS_PAGES, FOLLOW_UPS_PAGES } from "../constants/sysPages.js"
-  import { charts } from "../locales/projectConfig.js"
+  import { charts } from "../locales/projectConfig"
 
   import { useRoute } from "vue-router"
   import { useI18n } from "vue-i18n"
-  import { useDate } from "../composables/useDate.js"
-  import { useUtils } from "../composables/useUtils.js"
-  import { useSnackbar } from "../composables/useSnackbar.js"
-  import { useConfirmPopup } from "../composables/useConfirmPopup.js"
-  import { useUnitSystem } from "../composables/useUnitSystem.js"
+  import { useDate } from "../composables/useDate"
+  import { useUtils } from "../composables/useUtils"
+  import { useSnackbar } from "../composables/useSnackbar"
+  import { useConfirmPopup } from "../composables/useConfirmPopup"
+  import { useUnitSystem } from "../composables/useUnitSystem"
 
   import AppHeader from "../components/layout/AppHeader.vue"
   import AppFallback from "./AppFallback.vue"
@@ -148,9 +146,30 @@
   import AppOverlay from "../components/layout/AppOverlay.vue"
   import VitalSignsChart from "../components/dashboard/charts/VitalSignsChart.vue"
 
-  import VitalSignController from "../controllers/VitalSignController.js"
-  import FollowUpController from "../controllers/FollowUpController.js"
-  import CaregiverController from "../controllers/CaregiverController.js"
+  import VitalSignController from "../controllers/VitalSignController"
+  import FollowUpController from "../controllers/FollowUpController"
+  import CaregiverController from "../controllers/CaregiverController"
+
+  import type { FollowUp } from "../interfaces/FollowUp"
+  import type { VitalSign } from "../interfaces/VitalSign"
+
+  import { PAGES, VITAL_SIGNS_PAGES, FOLLOW_UPS_PAGES } from "../constants/sysPages"
+
+  import type { WarningCode } from "../types/snackbar"
+  import type { TranslatableUnitItem }  from "../types/sysUnits"
+  import type { FollowUpType, VitalSignType } from "../types/sysPages"
+  import type { ConfirmPopupMessage, ConfirmPopupTitle } from "../types/confirmPopup"
+
+  // TYPES & INTERFACES
+  export type MonitoringRecord = VitalSign | FollowUp
+
+  interface FormattedMonitoringItem {
+    id: number | undefined
+    value: string
+    description: (string | null | undefined)[]
+    type: string
+    originalRecord: MonitoringRecord
+  }
 
   // COMPOSABLES
   const { t } = useI18n()
@@ -167,32 +186,46 @@
   const followUpsController = new FollowUpController()
 
   // STATES
-  const activeFilterDays = ref(charts.filters[2].days)
-  const filteredMonitoringData = ref([])
-  const formattedData = ref([])
+  const activeFilterDays = ref<number | null>(charts.filters[2].days)
+  const filteredMonitoringData = ref<MonitoringRecord[]>([])
+  const formattedData = ref<FormattedMonitoringItem[]>([])
 
-  const refreshKey = ref(0)
+  const refreshKey = ref<number>(0)
 
-  let fetchRequestId = 0
-  let formatRequestId = 0
+  let fetchRequestId: number = 0
+  let formatRequestId: number = 0
 
   // COMPUTED PROPERTIES
-  const currentCategory = computed(() => route.params.category || null)
-  const currentMonitoring = computed(() => route.params.monitoring || null)
+  const currentCategory = computed<string | null>(() => {
+    const category = route.params.category
 
-  const isSnackbarOpen = computed(() => snackbar.isActive.value)
-  const isConfirmOpen = computed(() => confirmPopup.isOpen.value)
-  const confirmTitle = computed(() => confirmPopup.title.value)
-  const confirmMessage = computed(() => confirmPopup.message.value)
+    if (typeof category !== "string") return null
+
+    return category !== "string" ? category : null
+  })
+
+  const currentMonitoring = computed<string | null>(() => {
+    const category = route.params.monitoring
+
+    if (typeof category !== "string") return null
+
+    return category !== "string" ? category : null
+  })
+
+  const isSnackbarOpen = computed<boolean>(() => snackbar.isActive.value)
+
+  const isConfirmOpen = computed<boolean>(() => confirmPopup.isOpen.value)
+  const confirmTitle = computed<ConfirmPopupTitle>(() => confirmPopup.title.value)
+  const confirmMessage = computed<ConfirmPopupMessage>(() => confirmPopup.message.value)
 
   // VALIDATION
-  const pageExists = () => {
-    if(currentCategory.value === PAGES['FOLLOW_UPS']){
-      return FOLLOW_UPS_PAGES.includes(currentMonitoring.value)
+  const pageExists = (): boolean => {
+    if(currentCategory.value === PAGES['FOLLOW_UPS']) {
+      return FOLLOW_UPS_PAGES.includes(currentMonitoring.value as FollowUpType)
     }
 
-    if(currentCategory.value === PAGES['VITAL_SIGNS']){
-      return VITAL_SIGNS_PAGES.includes(currentMonitoring.value)
+    if(currentCategory.value === PAGES['VITAL_SIGNS']) {
+      return VITAL_SIGNS_PAGES.includes(currentMonitoring.value as VitalSignType)
     }
 
     return false
@@ -200,20 +233,22 @@
 
   // DATA FETCHING
   const getMonitoringRecords = async () => {
+    const days = activeFilterDays.value as number
+
     switch (currentCategory.value) {
       case PAGES.FOLLOW_UPS:
-        return activeFilterDays.value === null
-            ? followUpsController.getByField(currentMonitoring.value)
+        return days === null
+            ? followUpsController.getByField(currentMonitoring.value as FollowUpType)
             : followUpsController.getByFieldAndDate(
-                currentMonitoring.value,
+                currentMonitoring.value as FollowUpType,
                 getLimitDate()
             )
 
       case PAGES.VITAL_SIGNS:
-        return activeFilterDays.value === null
-            ? vitalSignsController.getByField(currentMonitoring.value)
+        return days === null
+            ? vitalSignsController.getByField(currentMonitoring.value as VitalSignType)
             : vitalSignsController.getByFieldAndDate(
-                currentMonitoring.value,
+                currentMonitoring.value as VitalSignType,
                 getLimitDate()
             )
 
@@ -229,14 +264,15 @@
   const getLimitDate = () => {
     const limitDate = new Date()
 
-    limitDate.setDate(limitDate.getDate() - activeFilterDays.value)
+    const days = activeFilterDays.value as number
 
+    limitDate.setDate(limitDate.getDate() - (days ?? 0))
     limitDate.setHours(0, 0, 0, 0)
 
     return limitDate
   }
 
-  const loadMonitoringData = async () => {
+  const loadMonitoringData = async (): Promise<void> => {
     const requestId = ++fetchRequestId
 
     if(!pageExists()) {
@@ -247,14 +283,14 @@
     try {
       const result = await getMonitoringRecords()
 
-      // ignore outdated requests
+      // Ignore outdated requests
       if(requestId !== fetchRequestId) return
 
       if(result?.success && Array.isArray(result.data)) {
-        filteredMonitoringData.value = result.data
+        filteredMonitoringData.value = result.data as MonitoringRecord[]
       } else {
         filteredMonitoringData.value = []
-        snackbar.open(result?.code)
+        snackbar.open(result?.code as WarningCode)
       }
     } catch (err) {
       if (requestId !== fetchRequestId) return
@@ -265,12 +301,12 @@
   }
 
   // DATA FORMATTING
-  const formatMonitoringRecord = async (item) => {
+  const formatMonitoringRecord = async (item: MonitoringRecord): Promise<FormattedMonitoringItem> => {
     const formattedDate = item.dateTime
         ? date.getNumericDateTime(new Date(item.dateTime))
         : null
 
-    const parsedValue = unit.getTranslatedUnit(item.record, item.value)
+    const parsedValue = unit.getTranslatedUnit(item.record as TranslatableUnitItem, item.value)
 
     const description = []
 
@@ -294,14 +330,14 @@
       ].filter(Boolean).join(" "),
       description: [
         description.join(" • "),
-        item.observations || null
+        "observations" in item && item?.observations || null
       ],
       type: item.record,
       originalRecord: { ...item }
     }
   }
 
-  const setFormattedData = async (records) => {
+  const setFormattedData = async (records: MonitoringRecord[]): Promise<void> => {
     const requestId = ++formatRequestId
 
     const result = await Promise.all(
@@ -315,7 +351,8 @@
   }
 
   // DELETE
-  const handleDelete = (item) => {
+  // Opens the confirm popup to delete an item
+  const handleDelete = (item: FormattedMonitoringItem): void => {
     const itemCategory = currentCategory.value === PAGES.VITAL_SIGNS
         ? t("utils.vitalSign")
         : t("utils.followUp")
@@ -325,31 +362,28 @@
     confirmPopup.open(title, null, () => handleDeleteConfirmed(item))
   }
 
-  const handleDeleteConfirmed = async (item) => {
+  // Executes the database query to delete an item
+  const handleDeleteConfirmed = async (item: FormattedMonitoringItem): Promise<void> => {
     let result
+
+    const itemId = item.id as number
 
     switch (currentCategory.value) {
       case PAGES.VITAL_SIGNS:
-        result = await vitalSignsController.delete(
-            item.id,
-            currentMonitoring.value
-        )
+        result = await vitalSignsController.delete(itemId)
         break
 
       case PAGES.FOLLOW_UPS:
-        result = await followUpsController.delete(
-            item.id,
-            currentMonitoring.value
-        )
+        result = await followUpsController.delete(itemId)
         break
     }
 
     if (!result) return
 
-    snackbar.open(result.code)
+    snackbar.open(result.code as WarningCode)
 
     if (result.success) {
-      // Trigger a new query using the currently selected filter.
+      // Trigger a new query using the currently selected filter
       refreshKey.value++
     }
   }

@@ -18,10 +18,10 @@
   }
 </style>
 
-<script setup>
+<script setup lang="ts">
   import { computed } from "vue"
-  import { useOverlay } from "../../composables/useOverlay.js"
+  import { useOverlay } from "../../composables/useOverlay"
 
   const overlay = useOverlay()
-  const isOverlayActive = computed(() => overlay.isActive.value)
+  const isOverlayActive = computed<boolean>(() => overlay.isActive.value)
 </script>

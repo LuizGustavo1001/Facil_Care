@@ -16,25 +16,25 @@
   </div>
 </template>
 
-<script setup>
-  import { useI18n } from "vue-i18n"
+<script setup lang="ts">
+  import { useUtils } from "../composables/useUtils"
 
   import ActionButton from "../components/buttons/ActionButton.vue"
   import AppFooter from "../components/layout/AppFooter.vue"
 
   // COMPOSABLES
-  const { t, te } = useI18n()
+  const utils = useUtils()
 
   // FUNCTIONS
-  const getFallbackMessage = () => {
+  const getFallbackMessage = (): string => {
     const key = `utils.pageFallback.title`
 
-    return te(key) ? t (key) : ""
+    return utils.getTranslate(key)
   }
 
-  const getFallbackBtnMessage = () => {
+  const getFallbackBtnMessage = (): string => {
     const key = `utils.pageFallback.button`
 
-    return te(key) ? t (key) : ""
+    return utils.getTranslate(key)
   }
 </script>

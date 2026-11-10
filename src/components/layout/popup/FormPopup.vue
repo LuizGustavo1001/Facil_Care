@@ -21,7 +21,7 @@
       >
         <div class="form-inputs flex flex-column gap-05">
           <component
-              v-for="input in template.main.inputs"
+              v-for="input in template.main?.inputs"
               :key="input.id || input.name"
               :is="form.getInputComponent(input.tag)"
               v-bind="form.getInputProps(input, popupConfig, template.id, inputValue, dynamicData)"
@@ -53,56 +53,59 @@
   }
 </style>
 
-<script setup>
+<script setup lang="ts">
   import { computed } from "vue"
+  import type { Ref } from "vue"
 
-  import { FORM_TYPES } from "../../../constants/formTypes.js"
-  import { popupTypes } from "../../../locales/projectConfig.js"
+  import { popupTypes } from "../../../locales/projectConfig"
 
-  import { useForm } from "../../../composables/useForm.js"
+  import { useForm } from "../../../composables/useForm"
   import { useI18n } from "vue-i18n"
 
   import AppPopup from "./AppPopup.vue"
   import ActionButton from "../../buttons/ActionButton.vue"
 
+  import type { FormRegularTemplate } from "../../../interfaces/Form"
+  import type { FormButton } from "../../../interfaces/Form"
+
+  import { FORM_TYPES } from "../../../constants/form"
+
+  import type { DOMReference } from "../../../types/formPopup"
+  import type { FormType } from "../../../types/genericForm"
+
+  // TYPES & INTERFACES
+  interface Props {
+    template: FormRegularTemplate & { main?: { buttons?: FormButton[], inputs?: any[] } }
+    inputValue?: Record<string, unknown> | null
+    isOpen: boolean
+    popupRef: Ref<DOMReference>
+    type?: FormType
+    dynamicData?: Record<string, unknown>
+  }
+
+  // PROPS DEFAULT VALUES
+  const props = withDefaults(defineProps<Props>(), {
+    inputValue: null,
+    type: FORM_TYPES.EDIT,
+    dynamicData: () => ({}),
+    popupRef: undefined
+  })
+
+  // EMITS
+  const emit = defineEmits<{
+    submitForm: [data: Record<string, unknown>]
+  }>()
+
   // COMPOSABLES
   const { t, te } = useI18n()
   const form = useForm()
 
-  // PROPS
-  const props = defineProps({
-    template: {
-      type: Object,
-      required: true
-    },
-    inputValue: {
-      type: Object,
-      default: null
-    },
-    isOpen: {
-      type: Boolean,
-      required: true
-    },
-    popupRef: {
-      type: Object,
-      required: true
-    },
-    type: {
-      type: String,
-      default: FORM_TYPES.EDIT,
-      validator: (value) => Object.values(FORM_TYPES).includes(value)
-    },
-    dynamicData: {
-      type: Object,
-      default: () => ({})
-    }
-  })
-
-  // EMITS
-  const emit = defineEmits(["submitForm"])
+  // COMPUTED PROPERTIES
+  // Returns current popupConfig based on the selected popup type
+  const popupConfig = computed(() => popupTypes[props.type as keyof typeof popupTypes] || {})
 
   // FUNCTIONS
-  const getPopupTitle = () => {
+  const getPopupTitle = (): string => {
     const typeKey = `formPopupTypes.${props.type}.title` // type label
 
     const templateKey = `formTemplates.${props.template.id}.header.title`
@@ -114,27 +117,24 @@
   }
 
   // Returns the form buttons based on the selected template, verifing if there's submit button
-  const getButtons = () => {
+  const getButtons = (): FormButton[] => {
     if(!popupConfig.value.showSubmit) return []
 
-    return props.template.main.buttons ?? []
+    return props.template.main?.buttons ?? []
   }
 
-  // Returns current popupConfig based on the selected popup type
-  const popupConfig = computed(() => popupTypes[props.type])
-
   // Emits the form submit
-  const handleSubmit = (event) => {
-    const formElement = event.currentTarget
+  const handleSubmit = (event: Event): void => {
+    const formElement = event.currentTarget as HTMLFormElement
 
-    if(!formElement.checkValidity()){
-      formElement.checkValidity()
+    if(!formElement.checkValidity()) {
+      formElement.reportValidity()
       return
     }
 
     if (popupConfig.value.readOnly) return
 
-    const data = form.extractData(event, props.template)
-    emit("submitForm", data)
+    const data = form.extractData(event as SubmitEvent, props.template)
+    emit("submitForm", data as Record<string, unknown>)
   }
 </script>

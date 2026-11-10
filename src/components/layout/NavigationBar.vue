@@ -2,16 +2,16 @@
   <nav class="main-navigation-bar flex gap-15 align-center justify-center fixed">
     <!-- Main Navigation Bar -->
     <RouterLink
-        v-for="item in items"
+        v-for="item in mainNavigationBar"
         :key="item.id"
         :to="item.href"
-        :class="{ active: isItemActive(item) }"
+        :class="[{ active: isItemActive(item.id) }]"
         class="nav-item flex align-center"
     >
       <div class="wrapper flex align-center justify-center">
         <Icon
           :icon="
-            isItemActive(item)
+            isItemActive(item.id)
                 ? item.iconActive
                 : item.icon
           "
@@ -77,7 +77,7 @@
 
     .nav-item.active .wrapper,
     .nav-item:hover .wrapper {
-      background-color: var(--color-bg-hover);
+      background-color: var(--color-bg-subtle);
     }
   }
 
@@ -96,7 +96,7 @@
     }
     .nav-item.active,
     .nav-item:hover {
-      background-color: var(--color-bg-hover);
+      background-color: var(--color-bg-subtle);
     }
   }
 
@@ -110,39 +110,47 @@
       width: fit-content;
       gap: 1em;
 
-      border-radius: var(--radius-md);
+      border-radius: var(--radius-full);
       border: 1px solid var(--color-border-default-subtle);
+    }
+
+    .nav-item {
+      border-radius: var(--radius-full);
     }
   }
 </style>
 
-<script setup>
+<script setup lang="ts">
   import { computed } from "vue"
+  import { mainNavigationBar } from "../../locales/projectConfig"
   import { useI18n } from "vue-i18n"
   import Icon from "../icons/Icon.vue"
+
+  // TYPES & INTERFACES
+  interface Props { activeItem?: string | null }
+
+  interface NavItem {
+      id: string
+      icon: string
+      iconActive: string
+      href: string
+      hasText: boolean
+  }
+
+  // PROPS DEFAULT VALUES
+  const props = withDefaults(defineProps<Props>(), { activeItem: null })
 
   // COMPOSABLES
   const { t, te } = useI18n()
 
-  // PROPS
-  const props = defineProps({
-    items: {
-      type: Object,
-      required: true
-    },
-    activeItem: {
-      type: String,
-      default: null
-    }
-  })
-
-  const computedActiveItem = computed(() => {
+  // COMPUTED PROPERTIES
+  const computedActiveItem = computed<string | null>(() => {
     return props.activeItem
-        ?? props.items[0]?.id
+        ?? mainNavigationBar.home.id
         ?? null
   })
 
-  const getItemTitle = (item) => {
+  const getItemTitle = (item: NavItem): string => {
     const key = `mainNavigationBar.${item.id}.title`
 
     return te(key)
@@ -150,7 +158,7 @@
         : ""
   }
 
-  const isItemActive = (item) => {
-    return item?.id === computedActiveItem.value
+  const isItemActive = (itemId: string): boolean => {
+    return itemId === computedActiveItem.value
   }
 </script>

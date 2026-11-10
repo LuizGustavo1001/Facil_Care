@@ -25,7 +25,7 @@
           v-bind="$attrs"
           :readonly="readonly"
           class="alt-input-attr active-border flex-grow-1"
-          @input="updateTime(index, $event.target.value)"
+          @input="updateTime(index, ($event.target as HTMLInputElement).value)"
         >
 
         <IconBtn
@@ -57,64 +57,66 @@
 
 <style scoped></style>
 
-<script setup>
+<script setup lang="ts">
   import { computed } from "vue"
   import { icons } from "../../assets/icons/icons.js"
 
   import { useI18n } from "vue-i18n"
-  import { useDate } from "../../composables/useDate.js"
+  import { useDate } from "../../composables/useDate"
 
   import IconBtn from "../buttons/IconBtn.vue"
   import ActionButton from "../buttons/ActionButton.vue"
+
+  // OPTIONS
+  defineOptions({
+    inheritAttrs: false
+  })
+
+  // TYPES & INTERFACES
+  interface Props {
+    label?: string
+    for?: string
+    name?: string
+    readonly?: boolean
+  }
+
+  // MODEL
+  const model = defineModel<string[]>({
+    default: () => [""]
+  })
 
   // COMPOSABLES
   const { t } = useI18n()
   const date = useDate()
 
-  defineOptions({
-    inheritAttrs: false
-  })
-
-  // MODEL
-  const model = defineModel({
-    type: Array,
-    default: () => [""]
-  })
-
-  // PROPS
-  const props = defineProps({
-    label: String,
-    for: String,
-    name: String,
-    readonly: {
-      type: Boolean,
-      default: false
-    }
+  // PROPS DEFAULT VALUES
+  const props = withDefaults(defineProps<Props>(), {
+    readonly: false
   })
 
   // COMPUTED
-  const computedId = computed(() => {
+  const computedId = computed<string | undefined>(() => {
     return props.for || (props.name ? `input-${props.name}` : undefined)
   })
 
   // Keep at least one input visible
-  const timeValues = computed(() => {
+  const timeValues = computed<string[]>(() => {
     return model.value.length ? model.value : [""]
   })
 
   // METHODS
-  function updateTime(index, value){
+  function updateTime(index: number, value: string): void {
     const updatedTimes = [...timeValues.value]
     updatedTimes[index] = value
 
     model.value = updatedTimes
   }
 
-  function addTime(){
+  function addTime(): void {
     model.value = [...timeValues.value, date.getNumericHour()]
   }
 
-  function removeTime(index){
+  function removeTime(index: number): void {
     if(timeValues.value.length <= 1){
       model.value = [""]
       return

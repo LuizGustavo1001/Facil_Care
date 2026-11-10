@@ -51,49 +51,48 @@
   }
 </style>
 
-<script setup>
+<script setup lang="ts">
   import { useI18n } from 'vue-i18n'
   import { computed } from "vue"
+  import type { Ref } from "vue"
 
   import AppPopup from "./AppPopup.vue"
   import ActionButton from "../../buttons/ActionButton.vue"
+  import type { DOMReference } from "../../../types/formPopup"
 
+  // TYPES & INTERFACES
+  interface Props {
+    isOpen: boolean
+    title?: string
+    message?: string | null
+    confirmLabel?: string
+    cancelLabel?: string
+    popupRef: Ref<DOMReference>
+  }
+
+  // COMPOSABLES
   const { t } = useI18n()
 
-  const props = defineProps({
-    isOpen: {
-      type: Boolean,
-      required: true
-    },
-    title: {
-      type: String,
-      default: ""
-    },
-    message: {
-      type: String,
-      default: null
-    },
-    confirmLabel: {
-      type: String,
-      default: ""
-    },
-    cancelLabel: {
-      type: String,
-      default: ""
-    },
-    popupRef: {
-      type: Object,
-      required: true
-    }
+  // PROPS DEFAULT VALUES
+  const props = withDefaults(defineProps<Props>(), {
+    title: "",
+    message: null,
+    confirmLabel: "",
+    cancelLabel: ""
   })
 
-  const emit = defineEmits(["confirm", "cancel"])
+  // EMITS
+  const emit = defineEmits<{
+    confirm: [event: MouseEvent]
+    cancel: []
+  }>()
 
-  const handleCancel = () => {
+  // FUNCTIONS
+  const handleCancel = (): void => {
     emit("cancel")
   }
 
-  const handleConfirm = (event) => {
+  const handleConfirm = (event: MouseEvent): void => {
     emit("confirm", event)
   }
 

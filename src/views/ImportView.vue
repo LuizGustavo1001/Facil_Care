@@ -154,20 +154,20 @@
   }
 </style>
 
-<script setup>
+<script setup lang="ts">
   import { computed, onMounted, ref, watch } from "vue"
   import { icons } from "../assets/icons/icons.js"
 
-  import { PAGES } from "../constants/sysPages.js"
-  import { BUTTON_COLORS } from "../constants/btnColors.js"
+  import { PAGES } from "../constants/sysPages"
+  import { BUTTON_COLORS } from "../constants/buttonComponent"
 
-  import { useRoute } from "vue-router"
-  import { useUtils } from "../composables/useUtils.js"
-  import { useSnackbar } from "../composables/useSnackbar.js"
-  import { useDexieBackup } from "../composables/useDexieBackup.js"
-  import { usePeerSync } from "../composables/usePeerSync.js"
   import { useI18n } from "vue-i18n"
-  import { useNavigation } from "../composables/useNavigation.js"
+  import { useRoute } from "vue-router"
+  import { useUtils } from "../composables/useUtils"
+  import { useSnackbar } from "../composables/useSnackbar"
+  import { useDexieBackup } from "../composables/useDexieBackup"
+  import { usePeerSync } from "../composables/usePeerSync"
+  import { useNavigation } from "../composables/useNavigation"
 
   import Snackbar from "../components/feedback/Snackbar.vue"
   import AppHeader from "../components/layout/AppHeader.vue"
@@ -176,8 +176,12 @@
   import ActionButton from "../components/buttons/ActionButton.vue"
   import Badge from "../components/common/Badge.vue"
 
+  import type { PeerSyncError } from "../types/peerSync"
+  import type { DexieError } from "../types/dexie"
+  import type { WarningCode } from "../types/snackbar"
+
   // COMPOSABLES
-  const { t, te } = useI18n()
+  const { t } = useI18n()
   const route = useRoute()
   const utils = useUtils()
   const snackbar = useSnackbar()
@@ -186,42 +190,52 @@
   const navigation = useNavigation()
 
   // STATES
-  const fileInput = ref(null)
-  const importDone = ref(false)
+  const fileInput = ref<HTMLElement | null>(null)
+  const importDone = ref<boolean>(false)
 
   // COMPUTED PROPERTIES
-  const peerStatus = computed(() => p2p.peerStatus.value)
-  const peerError = computed(() => p2p.peerError.value)
-  const isDexieImporting = computed(() => dexieBackup.isImporting.value)
-  const dexieError = computed(() => dexieBackup.error.value)
-  const isSnackbarOpen = computed(() => snackbar.isActive.value)
+  const peerStatus = computed<string>(() => p2p.peerStatus.value)
+  const peerError = computed<PeerSyncError>(() => p2p.peerError.value)
+
+  const isDexieImporting = computed<boolean>(() => dexieBackup.isImporting.value)
+  const dexieError = computed<DexieError>(() => dexieBackup.error.value)
+
+  const isSnackbarOpen = computed<boolean>(() => snackbar.isActive.value)
 
   // FUNCTIONS
-  const getActionLabel = (category, action) => {
+  // Returns the current translated import status
+  const getActionLabel = (category: string, action: string): string => {
     const key = `views.${PAGES.IMPORT}.categories.${category}.badges.${action}`
 
-    return te(key) ? t(key) : ""
+    return utils.getTranslate(key)
   }
 
-  const getCategoryTitle = (category) => {
+  // Returns the translated title of the selected import way (title & subtitle)
+  const getCategoryTitle = (category: string): Record<string, string> => {
     const key = `views.import.categories.${category}`
 
     return {
-      title: te(`${key}.title`) ? t(`${key}.title`) : "",
-      subtitle: te(`${key}.subtitle`) ? t(`${key}.subtitle`) : "",
+      title: utils.getTranslate(`${key}.title`),
+      subtitle: utils.getTranslate(`${key}.subtitle`),
     }
   }
 
-  // Manual Import (.json file via input)
-  const handleFileSelect = async (event) => {
-    const file = event.target.files?.[0]
+  // Handles manual import (.json file via input)
+  const handleFileSelect = async (event: Event): Promise<void> => {
+    const target = event.target as HTMLInputElement
+    const file = target.files?.[0]
 
     if(!file) return
 
-    importDone.value = await dexieBackup.importFromJSON(file)
-    snackbar.open('JSONImportSuccess')
+    const success = await dexieBackup.importFromJSON(file)
+    importDone.value = success
+
+    if(success) {
+      snackbar.open('JSONImportSuccess' as WarningCode)
+    }
   }
 
+  // Triggers manually the file input
   const triggerFileInput = () => {
     fileInput.value?.click()
   }
@@ -230,15 +244,16 @@
   onMounted(() => {
     // Automaticly connects to emitter peerId via URL
     const hostPeerId = route.query.peerId
-    if(hostPeerId) {
+
+    if(hostPeerId && typeof hostPeerId === "string") {
       p2p.connectToHostAndImport(hostPeerId)
     }
   })
 
   // WATCHERS
   watch([dexieBackup.error, p2p.peerError], ([newBackupError, newPeerError]) => {
-    if (newBackupError) snackbar.open(newBackupError)
+    if (newBackupError) snackbar.open(newBackupError as WarningCode)
 
-    if (newPeerError) snackbar.open(newPeerError)
+    if (newPeerError) snackbar.open(newPeerError as WarningCode)
   })
 </script>

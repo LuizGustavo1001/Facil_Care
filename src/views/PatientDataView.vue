@@ -39,7 +39,7 @@
             :key="category.id"
             class="flex flex-column gap-05"
         >
-          <h2 class="category-title text-uppercase"> {{ getCategoryTitle(category) }} </h2>
+          <h2 class="category-title text-uppercase"> {{ getCategoryTitle(category.id) }} </h2>
 
           <!-- List Category -->
           <div class="buttons-wrapper">
@@ -51,7 +51,7 @@
               <ActionButtonColorful
                   tag="router"
                   :to="button.href"
-                  :title="getButtonTitle(button)"
+                  :title="getButtonTitle(button.id)"
                   :leftIcon="button.iconFill"
                   :rightIcon="icons['chevron-right']"
                   :color="button?.color ?? null"
@@ -81,7 +81,6 @@
     </main>
 
     <NavigationBar
-        :items="mainNavigationBar"
         :activeItem="mainNavigationBar[PAGES.PATIENT_DATA].id"
     />
   </div>
@@ -109,16 +108,16 @@
   }
 </style>
 
-<script setup>
+<script setup lang="ts">
   import { computed, onMounted, ref } from "vue"
-  import { PAGES } from "../constants/sysPages.js"
+  import { PAGES } from "../constants/sysPages"
   import { icons } from "../assets/icons/icons.js"
-  import { mainNavigationBar, patientDataView } from "../locales/projectConfig.js"
+  import { mainNavigationBar, patientDataView } from "../locales/projectConfig"
 
-  import { useUtils } from "../composables/useUtils.js"
+  import { useUtils } from "../composables/useUtils"
   import { useI18n } from "vue-i18n"
-  import { useSnackbar } from "../composables/useSnackbar.js"
-  import { useDate } from "../composables/useDate.js"
+  import { useSnackbar } from "../composables/useSnackbar"
+  import { useDate } from "../composables/useDate"
 
   import AppHeader from "../components/layout/AppHeader.vue"
   import NavigationBar from "../components/layout/NavigationBar.vue"
@@ -127,37 +126,40 @@
   import Icon from "../components/icons/Icon.vue"
   import Snackbar from "../components/feedback/Snackbar.vue"
 
-  import PatientController from "../controllers/PatientController.js"
+  import PatientController from "../controllers/PatientController"
+
+  import type { Patient } from "../interfaces/Patient"
+  import type { WarningCode } from "../types/snackbar"
 
   // COMPOSABLES
-  const { t, te } = useI18n()
+  const { t } = useI18n()
   const utils = useUtils()
   const snackbar = useSnackbar()
   const date = useDate()
 
-  // COMPUTED PROPERTIES
-  const isSnackbarOpen = computed(() => snackbar.isActive.value)
+  // CONTROLLERS
+  const patientController = new PatientController()
+  const patient = ref<Patient | null>(null)
 
-  const age = computed(() => {
-    return date.getAge(new Date(patient.value.birthDate))
+  // COMPUTED PROPERTIES
+  const isSnackbarOpen = computed<boolean>(() => snackbar.isActive.value)
+
+  const age = computed<number | null>(() => { // Patient age
+    return date.getAge(new Date((patient.value as Patient).birthDate))
   })
 
   // FUNCTIONS
-  const getButtonTitle = (button) => {
-    const key = `pageTitle.${button?.id}`
+  const getButtonTitle = (buttonId: string): string => {
+    const key = `pageTitle.${buttonId}`
 
-    return te(key) ? t(key) : ""
+    return utils.getTranslate(key)
   }
 
-  const getCategoryTitle = (category) => {
-    const key = `views.${PAGES.PATIENT_DATA}.${category.id}.title`
+  const getCategoryTitle = (categoryId: string): string => {
+    const key = `views.${PAGES.PATIENT_DATA}.${categoryId}.title`
 
-    return te(key) ? t(key) : ""
+    return utils.getTranslate(key)
   }
-
-  // CONTROLLERS
-  const patientController = new PatientController()
-  const patient = ref({})
 
   // MOUNTED || UNMOUNTED
   onMounted(async () => {
@@ -165,9 +167,9 @@
 
     // Update frontend patient data
     if(result.success) {
-      patient.value = result.data
+      patient.value = result.data as Patient
     } else {
-      snackbar.open(result.code)
+      snackbar.open(result.code as WarningCode)
     }
   })
 </script>

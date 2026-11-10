@@ -8,7 +8,7 @@
             :to="btn.link"
             :leftIcon="btn.leftIcon"
             padding="md"
-            :rightIcon="btn.rightIcon || icons['chevron-right']"
+            :rightIcon="btn?.rightIcon || icons['chevron-right']"
             :title="t(`footer.${props.page}.buttons.${btn.id}.title`)"
             style="border-radius: var(--radius-2xl)"
         />
@@ -36,30 +36,45 @@
   }
 </style>
 
-<script setup>
+<script setup lang="ts">
   import { computed } from "vue"
   import { icons } from "../../assets/icons/icons.js"
-  import { footers } from "../../locales/projectConfig.js"
+  import { footers } from "../../locales/projectConfig"
+  import { PAGES } from "../../constants/sysPages"
 
   import { useI18n } from "vue-i18n"
 
   import ActionButton from "../buttons/ActionButton.vue"
 
+  // TYPES & INTERFACES
+  interface FooterButton {
+    id: string
+    leftIcon: string
+    rightIcon?: string
+    link: string
+  }
+
+  interface FooterPage {
+    id: string
+    buttons: FooterButton[]
+  }
+
+  interface Props {
+    page?: string
+  }
+
+  // PROPS DEFAULT VALUES
+  const props = withDefaults(defineProps<Props>(), {
+    page: PAGES.HOME
+  })
+
   // COMPOSABLES
   const { t } = useI18n()
 
-  // PROPS
-  const props = defineProps({
-    page: {
-      type: String,
-      default: "home"
-    }
-  })
-
   // COMPUTED PROPERTIES
-  const currentPage = computed(() => {
-    const pageExists = footers.find(footer => footer.id === props.page)
+  const currentPage = computed<FooterPage | null>(() => {
+    const foundPage = (footers as FooterPage[]).find(footer => footer.id === props.page)
 
-    return pageExists ? footers.find(footer => footer.id === props.page) : null
+    return foundPage || null
   })
 </script>

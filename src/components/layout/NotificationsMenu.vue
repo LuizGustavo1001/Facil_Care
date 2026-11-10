@@ -5,12 +5,12 @@
       <div class="notifications-header flex align-center justify-between">
         <h1>{{ t("notifications.title") }}</h1>
 
-        <!-- Mark Every Notification as Read Button -->
+        <!-- Mark Every INotification as Read Button -->
         <IconBtn
             v-if="hasNotifications"
             :icon="icons['double-check']"
             @click="handleMarkAllAsRead"
-            variant="bg-clr"
+            variant="primary"
             size="25px"
         />
       </div>
@@ -103,32 +103,36 @@
   }
 </style>
 
-<script setup>
+<script setup lang="ts">
   import { computed, onMounted, ref } from "vue"
   import { icons } from "../../assets/icons/icons.js"
 
   import { useI18n } from "vue-i18n"
 
-  import NotificationController from "../../controllers/NotificationController.js"
+  import NotificationController from "../../controllers/NotificationController"
 
   import NotFoundCard from "../feedback/NotFoundCard.vue"
   import VerticalLine from "../common/VerticalLine.vue"
   import IconBtn from "../buttons/IconBtn.vue"
 
+  import type { INotification } from "../../interfaces/INotification"
+
+  // TYPES & INTERFACES
+  interface Props {
+    isOpen: boolean
+  }
+
+  // PROPS DEFAULT VALUES
+  const props = withDefaults(defineProps<Props>(), {
+    isOpen: true,
+  })
+
   // COMPOSABLES
   const { t } = useI18n()
 
-  // PROPS
-  const props = defineProps({
-    isOpen: {
-      type: Boolean,
-      required: true
-    }
-  })
-
   // CONTROLLERS
   const notificationController = new NotificationController()
-  const notifications = ref([])
+  const notifications = ref<INotification[]>([])
 
   // COMPUTED PROPERTIES
   const hasNotifications = computed(() => {
@@ -136,13 +140,20 @@
   })
 
   // FUNCTIONS
-  const handleNotificationStatus = async (notification) => {
+  const fetchNotifications = async (): Promise<void> => {
+    const result = await notificationController.getAll()
+    if (result.success && result.data) {
+      notifications.value = result.data
+    }
+  }
+
+  const handleNotificationStatus = async (notification: INotification): Promise<void> => {
     if(notification.read) return
 
     const result = await notificationController.markAsRead(notification._id)
 
     if(result.success) {
-      notifications.value = result.data
+      await fetchNotifications()
     }
   }
 
@@ -151,18 +162,13 @@
 
     const result = await notificationController.markAllAsRead()
 
-    if(result.success){
-      notifications.value = result.data
+    if(result.success) {
+      await fetchNotifications()
     }
   }
 
   // MOUNTED || UNMOUNTED
   onMounted(async () => {
-    const result = await notificationController.getAll()
-
-    // Update frontend notifications data
-    if(result.success){
-      notifications.value = result.data
-    }
+    await fetchNotifications()
   })
 </script>

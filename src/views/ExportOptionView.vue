@@ -130,7 +130,7 @@
             </p>
 
             <p
-                v-for="(text, index) of getSubTypeDescription('json').destructives"
+                v-for="(text, index) of getSubTypeDescription().destructives"
                 :key="index"
                 class="section-description text-destructive"
             >
@@ -193,20 +193,18 @@
   }
 </style>
 
-<script setup>
+<script setup lang="ts">
   import { computed, watch } from "vue"
-  import { PAGES } from "../constants/sysPages.js"
-  import { icons } from "../assets/icons/icons.js"
-  import { BUTTON_COLORS } from "../constants/btnColors.js"
+  import { icons } from "../assets/icons/icons"
 
-  import { useDexieBackup } from "../composables/useDexieBackup.js"
+  import { useDexieBackup } from "../composables/useDexieBackup"
   import { useRoute } from "vue-router"
-  import { useSnackbar } from "../composables/useSnackbar.js"
-  import { useQRCode } from "../composables/useQRCode.js"
-  import { usePeerSync } from "../composables/usePeerSync.js"
+  import { useSnackbar } from "../composables/useSnackbar"
+  import { useQRCode } from "../composables/useQRCode"
+  import { usePeerSync } from "../composables/usePeerSync"
   import { useI18n } from "vue-i18n"
-  import { useUtils } from "../composables/useUtils.js"
-  import { useNavigation } from "../composables/useNavigation.js"
+  import { useUtils } from "../composables/useUtils"
+  import { useNavigation } from "../composables/useNavigation"
 
   import AppHeader from "../components/layout/AppHeader.vue"
   import Snackbar from "../components/feedback/Snackbar.vue"
@@ -214,8 +212,16 @@
   import Icon from "../components/icons/Icon.vue"
   import ActionButton from "../components/buttons/ActionButton.vue"
 
+  import { PAGES } from "../constants/sysPages"
+  import { BUTTON_COLORS } from "../constants/buttonComponent"
+
+  import type { WarningCode } from "../types/snackbar"
+  import type { QRCodeError, QRCodeURL } from "../types/qrCode"
+  import type { PeerStatus, PeerSyncError } from "../types/peerSync"
+  import type { DexieError } from "../types/dexie"
+
   // COMPOSABLES
-  const { t, tm, te } = useI18n()
+  const { t, tm } = useI18n()
   const utils = useUtils()
   const snackbar = useSnackbar()
   const qrCode = useQRCode()
@@ -225,28 +231,37 @@
   const navigation = useNavigation()
 
   // COMPUTED PROPERTIES
-  const isSnackbarOpen = computed(() => snackbar.isActive.value)
-  const isQRCodeGenerating = computed(() => qrCode.isGenerating.value)
-  const peerStatus = computed(() => p2p.peerStatus.value)
-  const qrCodeError = computed(() => qrCode.error.value)
-  const peerError = computed(() => p2p.peerError.value)
-  const qrCodeURL = computed(() => qrCode.URL.value)
-  const isDexieExporting = computed(() => dexieBackup.isExporting.value)
-  const dexieError = computed(() => dexieBackup.error.value)
+  const isSnackbarOpen = computed<boolean>(() => snackbar.isActive.value)
+
+  const isQRCodeGenerating = computed<boolean>(() => qrCode.isGenerating.value)
+  const qrCodeError = computed<QRCodeError>(() => qrCode.error.value)
+  const qrCodeURL = computed<QRCodeURL>(() => qrCode.URL.value)
+
+  const peerStatus = computed<PeerStatus>(() => p2p.peerStatus.value)
+  const peerError = computed<PeerSyncError>(() => p2p.peerError.value)
+
+  const isDexieExporting = computed<boolean>(() => dexieBackup.isExporting.value)
+  const dexieError = computed<DexieError>(() => dexieBackup.error.value)
 
   // COMPUTED PROPERTIES
-  const currentExportType = computed(() => {
-    return route.params.type || null
+  const currentExportType = computed<string | null>(() => {
+    const category = route.params.type
+
+    if (typeof category !== "string") return null
+
+    return category !== "string" ? category : null
   })
 
   // FUNCTIONS
-  const getSubTypeTitle = () => {
+  // Returns selected export option title
+  const getSubTypeTitle = (): string => {
     const key = `views.${PAGES.EXPORT}.categories.${currentExportType.value}.title`
 
-    return te(key) ? t(key) : ""
+    return utils.getTranslate(key)
   }
 
-  const getSubTypeDescription = () => {
+  // Returns selected export option description
+  const getSubTypeDescription = ():  Record<string, any> => {
     const regularKeys = `views.${PAGES.EXPORT}.categories.${currentExportType.value}.regularSubtitles`
     const destructiveKeys = `views.${PAGES.EXPORT}.categories.${currentExportType.value}.destructiveSubtitles`
 
@@ -259,44 +274,45 @@
     }
   }
 
-  const getActionLabel = (action) => {
+  // Returns the current translated export status
+  const getActionLabel = (action: string): string => {
     const key = `views.${PAGES.EXPORT}.categories.${currentExportType.value}.badges.${action}`
 
-    return te(key) ? t(key) : ""
+    return utils.getTranslate(key)
   }
 
-  // Start P2P session and generate QR Code
-  const handleStartP2PSession = async () => {
-    try{
+  // Starts P2P session and generate QR Code
+  const handleStartP2PSession = async (): Promise<void> => {
+    try {
       qrCode.clear()
       const id = await p2p.startHostSession()
       const importURL = `${window.location.origin}/backup/import?peerId=${id}`
 
       await qrCode.generate(importURL)
-    }catch(err){
+    } catch(err) {
       console.error('Error starting P2P:', err);
     }
   }
 
-  // Cancel active P2P session
-  const handleCancelP2P = () => {
+  // Cancels active P2P session
+  const handleCancelP2P = (): void => {
     p2p.closeSession()
     qrCode.clear()
   }
 
-  // Manual JSON file download
-  const handleDownloadJSON = async() => {
+  // Handles manual JSON file download
+  const handleDownloadJSON = async(): Promise<void> => {
     const exportSuccess = await dexieBackup.exportToJSON()
 
-    if(exportSuccess){
-      snackbar.open("exportJSONSuccess")
+    if(exportSuccess) {
+      snackbar.open("exportJSONSuccess" as WarningCode)
     }
   }
 
   // WATCHERS
   watch([qrCode.error, p2p.peerError], ([newQrCodeError, newPeerError]) => {
-    if (newQrCodeError) snackbar.open(newQrCodeError)
+    if (newQrCodeError) snackbar.open(newQrCodeError as WarningCode)
 
-    if (newPeerError) snackbar.open(newPeerError)
+    if (newPeerError) snackbar.open(newPeerError as WarningCode)
   })
 </script>

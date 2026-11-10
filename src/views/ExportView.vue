@@ -21,8 +21,8 @@
             <ActionButtonColorful
                 tag="router"
                 :to="button.href"
-                :title="getButtonTitle(button)"
-                :description="getButtonDescription(button)"
+                :title="getButtonTitle(button.id)"
+                :description="getButtonDescription(button.id)"
                 :leftIcon="button.icon"
                 leftIconSize="25px"
                 :rightIcon="icons['chevron-right']"
@@ -40,32 +40,32 @@
 <style scoped>
 </style>
 
-<script setup>
+<script setup lang="ts">
   import { icons } from "../assets/icons/icons.js"
-  import { PAGES } from "../constants/sysPages.js"
-  import { exportView } from "../locales/projectConfig.js"
+  import { PAGES } from "../constants/sysPages"
+  import { exportView } from "../locales/projectConfig"
 
   import { useI18n } from "vue-i18n"
-  import { useUtils } from "../composables/useUtils.js"
+  import { useUtils } from "../composables/useUtils"
 
   import AppHeader from "../components/layout/AppHeader.vue"
   import AppFooter from "../components/layout/AppFooter.vue"
   import ActionButtonColorful from "../components/buttons/ActionButtonColorful.vue"
 
   // COMPOSABLES
-  const { t, te } = useI18n()
+  const { t } = useI18n()
   const utils = useUtils()
 
   // FUNCTIONS
-  const getButtonTitle = (button) => {
-    const key = `views.${PAGES.EXPORT}.categories.${button.id}.title`
+  const getButtonTitle = (buttonId: string): string => {
+    const key = `views.${PAGES.EXPORT}.categories.${buttonId}.title`
 
-    return te(key) ? t(key) : t(key)
+    return utils.getTranslate(key)
   }
 
-  const getButtonDescription = (button) => {
-    const key = `views.${PAGES.EXPORT}.categories.${button.id}.description`
+  const getButtonDescription = (buttonId: string): string => {
+    const key = `views.${PAGES.EXPORT}.categories.${buttonId}.description`
 
-    return te(key) ? t(key) : ""
+    return utils.getTranslate(key)
   }
 </script>

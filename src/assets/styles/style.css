@@ -551,6 +551,14 @@ main {
     text-transform: capitalize;
 }
 
+.edit-link {
+    color: var(--color-text-blue);
+    display: flex;
+    align-items: center;
+    gap: 0.3em;
+    text-decoration: underline;
+}
+
 .truncate-single {
     display: -webkit-box;
     -webkit-line-clamp: 1;

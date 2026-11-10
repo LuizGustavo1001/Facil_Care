@@ -28,30 +28,32 @@
   }
 </style>
 
-<script setup>
+<script setup lang="ts">
   import { computed } from "vue"
-  import { useUtils } from "../../composables/useUtils.js"
-  import { useDate } from "../../composables/useDate.js"
+  import { useUtils } from "../../composables/useUtils"
+  import { useDate } from "../../composables/useDate"
 
-  // MODEL
+  // OPTIONS
   defineOptions({
     inheritAttrs: false
   })
 
-  const model = defineModel({
-    type: [String, Number],
+  // TYPES & INTERFACES
+  interface InputProps {
+    label?: string
+    for?: string
+    inputType?: string
+    name?: string
+  }
+
+  // MODEL
+  const model = defineModel<string | number>({
     default: ""
   })
 
   // PROPS
-  const props = defineProps({
-    label: String,
-    for: String,
-    inputType: {
-      type: String,
-      default: "text"
-    },
-    name: String
+  const props = withDefaults(defineProps<InputProps>(), {
+    inputType: "text"
   })
 
   // COMPOSABLES
@@ -59,14 +61,15 @@
   const date = useDate()
 
   // COMPUTED PROPERTIES
+
   // Make sure that input ID matches label Id
-  const computedId = computed(() => {
+  const computedId = computed<string | undefined>(() => {
     return props.for || (props.name ? `input-${props.name}` : undefined)
   })
 
   // V-model interceptor - format input value
   const formattedModel = computed( {
-    get() {
+    get(): string | number {
       const value = model.value ?? ""
 
       if(props.inputType === "datetime-local" && value) {
@@ -78,12 +81,12 @@
       }
 
       if(props.inputType === "tel") {
-        return utils.formatPhone(value)
+        return utils.formatPhone(String(value))
       }
 
       return value
     },
-    set(newValue) {
+    set(newValue: string | number) {
       if(props.inputType === "datetime-local" || props.inputType === "date"){
         model.value = newValue
             ? new Date(newValue).toISOString()
@@ -94,7 +97,6 @@
 
       if(props.inputType === "tel"){ // Store only phone digits
         model.value = String(newValue ?? "").replace(/\D/g, "")
-
         return
       }
 
