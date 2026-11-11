@@ -1,0 +1,1 @@
+export type DexieError = string | null

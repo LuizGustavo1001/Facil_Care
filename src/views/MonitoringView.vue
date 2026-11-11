@@ -1,34 +1,33 @@
 <template>
   <div class="view regular">
+    <!-- Monitoring View -->
     <template v-if="pageExists">
-      <AppHeader
-          :title="utils.getPageTitle(currentCategory)"
-          :leftBtnIcon="icons['chevron-left']"
-          @return-page="navigation.handleReturn"
-      />
+      <AppHeader :title="utils.getPageTitle(currentCategory as string)"/>
 
       <main class="main regular">
-        <section class="main-section regular gap-15">
+        <!-- Page Title -->
+        <section class="main-section regular gap-1">
           <div class="section-title-container">
             <p class="section-description text-muted">{{ getPageSubtitle() }}:</p>
           </div>
 
-          <ul class="flex flex-column gap-1">
-            <li
+          <!-- Monitorings List -->
+          <div class="flex flex-column gap-1 buttons-wrapper">
+            <template
                 v-for="item in currentTemplate.items"
                 :key="item.id"
             >
-              <ActionButtonAlt
+              <ActionButtonColorful
                   tag="router"
-                  :to="item.link"
-                  :color="item.color"
+                  :to="item.href"
                   :title="getItemTitle(item.id)"
-                  :leftIcon="item.icon"
-                  leftIconSize="30px"
+                  :leftIcon="item.iconLine"
+                  leftIconSize="25px"
                   :rightIcon="icons['chevron-right']"
+                  :color="item.color"
               />
-            </li>
-          </ul>
+            </template>
+          </div>
         </section>
       </main>
 
@@ -43,55 +42,61 @@
 
 <style scoped></style>
 
-<script setup>
+<script setup lang="ts">
   import { computed } from "vue"
   import { icons } from "../assets/icons/icons.js"
+  import { monitoringViews } from "../locales/projectConfig"
+
+  import { MONITORING_PAGES } from "../constants/sysPages"
+
+  import type { MonitoringPageType } from "../types/sysPages"
 
   import { useRoute } from "vue-router"
-  import { useI18n } from "vue-i18n"
-  import { useNavigation } from "../composables/useNavigation.js"
-  import { useUtils } from "../composables/useUtils.js"
-  import { MONITORING_PAGES } from "../composables/usePages.js"
+  import { useUtils } from "../composables/useUtils"
 
   import AppHeader from "../components/layout/AppHeader.vue"
-  import ActionButtonAlt from "../components/buttons/ActionButtonAlt.vue"
+  import ActionButtonColorful from "../components/buttons/ActionButtonColorful.vue"
   import AppFallback from "./AppFallback.vue"
   import AppFooter from "../components/layout/AppFooter.vue"
 
-  import { monitoringViews } from "../locales/projectConfig.js"
-
   // COMPOSABLES
-  const { t } = useI18n()
   const route = useRoute()
-  const navigation = useNavigation()
   const utils = useUtils()
 
   // COMPUTED PROPERTIES
-  // Retrieve page data
-  const currentCategory = computed(() => route.params.category)
+  // Returns page data
+  const currentCategory = computed<MonitoringPageType | null>(() => {
+    const category = route.params.category
 
-  const currentTemplate = computed(() => {
-    const id = currentCategory.value
+    if (typeof category !== "string") return null
 
-    return monitoringViews[id] || null
+    return MONITORING_PAGES.find(page => page === category) ?? null
   })
 
-  // Verify if monitoring page exists
-  const pageExists = computed(() => {
-    const rawId = currentCategory.value
+  // Current template from "projectConfig"
+  const currentTemplate = computed<any>(() => {
+    const id = currentCategory.value
 
-    if(!rawId) return null
+    if (!id) return null
 
-    return MONITORING_PAGES.includes(rawId)
+    return monitoringViews[id] ?? null
+  })
+
+  const pageExists = computed<boolean>(() => {
+    return currentTemplate.value !== null
   })
 
   // FUNCTIONS
   // Returns button label
-  const getItemTitle = (id) => {
-    return t(`views.monitoring.${currentCategory.value}.items.${id}.title`)
+  const getItemTitle = (id: string): string => {
+    const key = `views.monitoring.${currentCategory.value}.items.${id}.title`
+
+    return utils.getTranslate(key)
   }
 
-  const getPageSubtitle = () => {
-    return t(`views.monitoring.${currentCategory.value}.subtitle`)
+  const getPageSubtitle = (): string => {
+    const key = `views.monitoring.${currentCategory.value}.subtitle`
+
+    return utils.getTranslate(key)
   }
 </script>

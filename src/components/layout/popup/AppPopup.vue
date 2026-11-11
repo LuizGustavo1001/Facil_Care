@@ -1,5 +1,6 @@
 <template>
   <transition name="fade-bounce" mode="out-in">
+    <!-- App Popup Template -->
     <div
       v-if="isOpen"
       :ref="popupRef"
@@ -12,26 +13,26 @@
         v-if="$slots.header"
         class="popup-header"
       >
-        <slot name="header"></slot>
+        <slot name="header" />
       </header>
 
       <!-- Main -->
       <div
           v-if="$slots.main"
           class="popup-main flex flex-column gap-1" >
-        <slot name="main"></slot>
+        <slot name="main" />
       </div>
 
       <!-- Footer -->
       <template v-if="$slots.footer">
-        <slot name="footer"></slot>
+        <slot name="footer" />
       </template>
     </div>
   </transition>
 </template>
 
 <style scoped>
-  .popup{
+  .popup {
     z-index: 10;
 
     top: 50%;
@@ -50,15 +51,14 @@
   }
 </style>
 
-<script setup>
-  defineProps({
-    isOpen: {
-      type: Boolean,
-      required: true
-    },
-    popupRef: {
-      type: Object,
-      required: true
-    }
-  })
+<script setup lang="ts">
+  import type { Ref } from "vue"
+  import type { DOMReference } from "../../../types/formPopup"
+
+  interface Props {
+    isOpen: boolean
+    popupRef: Ref<DOMReference>
+  }
+
+  defineProps<Props>()
 </script>

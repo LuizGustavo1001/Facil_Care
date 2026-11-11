@@ -1,140 +1,34 @@
 <template>
   <div class="view regular">
-    <Snackbar
-        :isActive="isSnackbarOpen"
-        :message="snackbar.data.message"
-        :type="snackbar.data.type || undefined"
-        @click="snackbar.clear"
-    />
-
+    <!-- Export Data View -->
     <AppHeader
         :title="utils.getPageTitle(PAGES['EXPORT'])"
-        :leftBtnIcon="icons['chevron-left']"
-        @return-page="navigation.handleReturn"
     />
 
     <main class="main regular">
-      <section class="export-container main-section center gap-2">
-        <nav class="tab-selector">
-          <ActionButtonAlt
-              tag="button"
-              color="blue"
-              :leftIcon="icons['qr-code-fill']"
-              :title="t(`views.export.sections.tabSelector.qrCode.title`)"
-              :class="{ active: activeTab === 'qr' }"
-              @click="activeTab = 'qr'"
-          />
-
-          <ActionButtonAlt
-              tag="button"
-              color="yellow"
-              :leftIcon="icons['file-fill']"
-              :title="t(`views.export.sections.tabSelector.json.title`)"
-              :class="{ active: activeTab === 'json' }"
-              @click="activeTab = 'json'"
-          />
-        </nav>
-
-        <!-- 1. QR Code (P2P) -->
-        <div v-if="activeTab === 'qr'" class="card">
-          <div class="section-title-container flex flex-column gap-05">
-            <h2 class="section-title">{{ t(`views.export.sections.cardQR.title`) }}</h2>
-
-            <span class="section-description flex flex-column gap-03">
-              <span v-for="(desc, index) in tm('views.export.sections.cardQR.regularSubtitles')" :key="index" class="text-muted">
-                {{ desc }}.
-              </span>
-
-              <span v-for="(desc, index) in tm('views.export.sections.cardQR.destructiveSubtitles')" :key="index" class="text-destructive">
-                {{ desc }}.
-              </span>
-          </span>
-          </div>
-
-          <!-- Generate Button/Restart -->
-          <div v-if="peerStatus === 'idle'" class="actions">
-            <ActionButton
-                tag="button"
-                variant="highlight"
-                padding="lg"
-                :leftIcon="icons['qr-code-fill']"
-                :title="t('views.export.sections.cardQR.actions[0]')"
-                @click="handleStartP2PSession"
-            />
-          </div>
-
-          <div class="flex-grow-1">
-            <!-- Status: Waiting Conection -->
-            <div v-if="peerStatus === 'waiting' || isQRCodeGenerating" class="qr-wrapper flex flex-column gap-1 align-center">
-              <div v-if="isQRCodeGenerating" class="loading"> {{ t('views.export.sections.cardQR.actions[1]') }}...</div>
-
-              <template v-else-if="qrCodeURL">
-                <img :src="qrCodeURL" alt="QR Code" class="qr-image">
-                <p class="status-badge waiting">{{ t('views.export.sections.cardQR.actions[2]') }}...</p>
-              </template>
-
-              <ActionButton
-                  tag="button"
-                  padding="lg"
-                  variant="subtle"
-                  :leftIcon="icons['indeterminate-circle-fill']"
-                  :title="t('views.export.sections.cardQR.actions[3]')"
-                  @click="handleCancelP2P"
-              />
-            </div>
-
-            <!-- Status: Transferring -->
-            <div v-if="peerStatus === 'transferring'" class="status-wrapper">
-              <div class="spinner"></div>
-              <p class="status-badge transferring">{{ t('views.export.sections.cardQR.actions[4]') }}...</p>
-            </div>
-
-            <!-- Status: Done -->
-            <div v-if="peerStatus === 'done'" class="status-wrapper">
-              <p class="status-badge success">{{ t('views.export.sections.cardQR.actions[5]') }}!</p>
-
-              <ActionButton
-                  tag="button"
-                  variant="subtle"
-                  padding="lg"
-                  :title="t('views.export.sections.cardQR.actions[6]')"
-                  @click="handleStartP2PSession()"
-              />
-            </div>
-
-            <!-- Errors -->
-            <div v-if="qrCodeError || peerError" class="error-message">
-              {{ qrCodeError || peerError }}.
-            </div>
-          </div>
+      <section class="main-section regular gap-1">
+        <!-- View Main Title -->
+        <div class="section-title-container">
+          <p class="section-description text-muted">{{ t(`views.${PAGES.EXPORT}.subtitle`) }}:</p>
         </div>
 
-        <!-- 2. JSON File (Offline) -->
-        <div v-if="activeTab === 'json'" class="card">
-          <div class="section-title-container flex flex-column gap-05">
-            <h2 class="section-title">{{ t(`views.export.sections.cardJSON.title`) }}.</h2>
-
-            <span class="section-description flex flex-column gap-05">
-              <span v-for="(desc, index) in tm('views.export.sections.cardJSON.regularSubtitles')" :key="index" class="text-muted">
-                {{ desc }}.
-              </span>
-            </span>
-          </div>
-
-          <ActionButton
-              tag="button"
-              padding="lg"
-              :title="isDexieExporting
-                ? t('views.export.sections.cardJSON.actions[0]')
-                : t('views.export.sections.cardJSON.actions[1]')"
-              :leftIcon="isDexieExporting
-                ? ''
-                : icons['download']"
-              :aria-disabled="isDexieExporting"
-              @click="handleDownloadJSON"
-          />
-
-          <p v-if="dexieError" class="error-message"> {{ dexieError }}.</p>
+        <!-- Export Options -->
+        <div class="buttons-wrapper">
+          <template
+              v-for="button in exportView.categories.buttons"
+              :key="button.id"
+          >
+            <ActionButtonColorful
+                tag="router"
+                :to="button.href"
+                :title="getButtonTitle(button.id)"
+                :description="getButtonDescription(button.id)"
+                :leftIcon="button.icon"
+                leftIconSize="25px"
+                :rightIcon="icons['chevron-right']"
+                :color="button?.color ?? null"
+            />
+          </template>
         </div>
       </section>
     </main>
@@ -144,148 +38,34 @@
 </template>
 
 <style scoped>
-  .tab-selector{
-    display: flex;
-    flex-direction: column;
-    gap: 0.5em;
-
-    margin: 0 auto;
-
-    box-shadow: 0 0 2px 2px var(--color-shadow-subtle);
-    padding: var(--spacing-sm);
-    border-radius: var(--radius-2xl);
-
-    max-width: 600px;
-  }
-
-  .card{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1em;
-  }
-
-  .status-wrapper{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5em;
-  }
-
-  .section-title-container{
-    text-align: center;
-  }
-
-  .status-badge{
-    font-size: var(--font-caption);
-    padding: var(--spacing-sm);
-    border-radius: var(--radius-2xl);
-    font-weight: var(--bolder-weight);
-  }
-
-  .status-badge.waiting{
-    background: var(--color-bg-yellow);
-    color: var(--color-text-yellow);
-  }
-  .status-badge.transferring{
-    background: var(--color-bg-blue);
-    color: var(--color-text-blue);
-  }
-  .status-badge.success{
-    background: var(--color-bg-green);
-    color: var(--color-text-green);
-  }
-
-  @media (min-width: 768px){
-    .tab-selector{
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1em;
-    }
-  }
 </style>
 
-<script setup>
-  import { computed, ref, watch } from "vue"
+<script setup lang="ts">
   import { icons } from "../assets/icons/icons.js"
-
-  import { PAGES } from "../composables/usePages.js"
+  import { PAGES } from "../constants/sysPages"
+  import { exportView } from "../locales/projectConfig"
 
   import { useI18n } from "vue-i18n"
-  import { useUtils } from "../composables/useUtils.js"
-  import { useNavigation } from "../composables/useNavigation.js"
-  import { useSnackbar } from "../composables/useSnackbar.js"
-  import { useDexieBackup } from "../composables/useDexieBackup.js"
-  import { useQRCode } from "../composables/useQRCode.js"
-  import { usePeerSync } from "../composables/usePeerSync.js"
+  import { useUtils } from "../composables/useUtils"
 
-  import Snackbar from "../components/feedback/Snackbar.vue"
   import AppHeader from "../components/layout/AppHeader.vue"
   import AppFooter from "../components/layout/AppFooter.vue"
-  import ActionButtonAlt from "../components/buttons/ActionButtonAlt.vue"
-  import ActionButton from "../components/buttons/ActionButton.vue"
+  import ActionButtonColorful from "../components/buttons/ActionButtonColorful.vue"
 
   // COMPOSABLES
-  const { t, tm } = useI18n()
+  const { t } = useI18n()
   const utils = useUtils()
-  const navigation = useNavigation()
-  const snackbar = useSnackbar()
-  const qrCode = useQRCode()
-  const p2p = usePeerSync()
-  const dexieBackup = useDexieBackup()
-
-  // VARIABLES
-  const activeTab = ref('qr') // 'qr' or 'json'
-
-  // COMPUTED PROPERTIES
-  const isSnackbarOpen = computed(() => snackbar.isActive.value)
-  const isQRCodeGenerating = computed(() => qrCode.isGenerating.value)
-  const isDexieExporting = computed(() => dexieBackup.isExporting.value)
-  const peerStatus = computed(() => p2p.peerStatus.value)
-  const dexieError = computed(() => dexieBackup.error.value)
-  const qrCodeError = computed(() => qrCode.error.value)
-  const peerError = computed(() => p2p.peerError.value)
-  const qrCodeURL = computed(() => qrCode.URL.value)
 
   // FUNCTIONS
-  /**
-  * Start P2P session and generate QR Code
-  **/
-  const handleStartP2PSession = async () => {
-    try{
-      qrCode.clear()
-      const id = await p2p.startHostSession()
-      const importURL = `${window.location.origin}/backup/import?peerId=${id}`
+  const getButtonTitle = (buttonId: string): string => {
+    const key = `views.${PAGES.EXPORT}.categories.${buttonId}.title`
 
-      await qrCode.generate(importURL)
-    }catch(err){
-      console.error('Error starting P2P:', err);
-    }
+    return utils.getTranslate(key)
   }
 
-  /**
-   * Cancel active P2P session
-   **/
-  const handleCancelP2P = () => {
-    p2p.closeSession()
-    qrCode.clear()
+  const getButtonDescription = (buttonId: string): string => {
+    const key = `views.${PAGES.EXPORT}.categories.${buttonId}.description`
+
+    return utils.getTranslate(key)
   }
-
-  /**
-   * Manual JSON file download
-   **/
-  const handleDownloadJSON = async() => {
-    const exportSuccess = await dexieBackup.exportToJSON()
-
-    if(exportSuccess){
-      snackbar.open("exportJSONSuccess")
-    }
-  }
-
-  // WATCHERS
-  watch([qrCode.error, p2p.peerError], ([newQrCodeError, newPeerError]) => {
-    if (newQrCodeError) snackbar.open(newQrCodeError)
-
-    if (newPeerError) snackbar.open(newPeerError)
-  })
 </script>

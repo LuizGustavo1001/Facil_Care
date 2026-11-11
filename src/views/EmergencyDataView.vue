@@ -1,5 +1,6 @@
 <template>
   <div class="view regular">
+    <!-- Emergency Data View -->
     <AppOverlay />
 
     <Snackbar
@@ -17,46 +18,48 @@
         @submitForm="handleSubmit"
     />
 
-    <AppHeader
-        :title="utils.getPageTitle(PAGES['EMERGENCY_DATA'])"
-        :leftBtnIcon="icons['chevron-left']"
-        :hasNotifications="false"
-        @return-page="navigation.handleReturn"
-    />
+    <AppHeader :title="utils.getPageTitle(PAGES['EMERGENCY_DATA'])"/>
 
     <main class="main regular gap-2">
+      <!-- Category -->
       <section
-          v-for="content in dynamicSections"
-          :key="content.id"
-          class="main-section regular gap-1"
+          v-for="category in dynamicCategories"
+          :key="category.id"
+          class="main-section regular gap-05"
       >
-        <div class="section-title-container">
-          <div class="flex gap-03 align-center">
-            <Icon :icon="content.icon" size="25px" />
-            <h2 class="section-title">{{ getSectionTitle(content) }}</h2>
+        <!-- Category Title -->
+        <div class="section-title-container flex">
+          <div class="flex-grow-1">
+            <h2 class="section-title">{{ getCategoryTitle(category) }}</h2>
+            <p
+                v-if="getCategoryTitle(category)"
+                class="section-description text-muted"
+            >
+              {{ getCategorySubtitle(category) }}
+            </p>
           </div>
 
-          <p
-              v-if="getSectionTitle(content)"
-              class="section-description text-muted"
+          <router-link
+              v-if="category.edit"
+              :to="category.href as string"
+              class="edit-link"
           >
-            {{ getSectionSubtitle(content) }}
-          </p>
+            {{ t(`utils.edit`) }}
+            <Icon :icon="icons['pencil-fill']"/>
+          </router-link>
         </div>
 
-        <ul class="item-list flex flex-column gap-1">
-          <template v-if="content.buttons?.length">
-            <li v-for="btn in content.buttons" :key="btn.id">
-              <component
-                  :is="buttonComponent(content)"
-                  v-bind="getButtonProps(content, btn)"
-                  variant="primary"
-                  class="width-full"
-                  @click="handleButtonAction(content, btn, $event)"
-              />
-            </li>
-          </template>
-        </ul>
+        <!-- Category Item List -->
+        <div class="item-list buttons-wrapper">
+            <component
+                :is="buttonComponent(category)"
+                v-for="btn in category.buttons"
+                :key="btn.id"
+                v-bind="getButtonProps(category, btn)"
+                class="width-full"
+                @click="handleButtonAction(category, btn, $event)"
+            />
+        </div>
       </section>
     </main>
 
@@ -64,344 +67,385 @@
   </div>
 </template>
 
-<style scoped>
-.item-list{
-  background: var(--color-bg-subtle);
-  padding: var(--spacing-md);
-  border-radius: var(--radius-lg);
-}
+<style scoped></style>
 
-</style>
+<script setup lang="ts">
+  import { computed, onMounted, ref } from "vue"
+  import type { Component } from "vue"
+  import { icons } from "../assets/icons/icons.js"
+  import { emergencyDataView , formTemplates } from "../locales/projectConfig"
 
-<script setup>
-import { computed, onMounted, ref } from "vue"
-import { icons } from "../assets/icons/icons.js"
+  import { useUtils } from "../composables/useUtils"
+  import { useSnackbar } from "../composables/useSnackbar"
+  import { useDate } from "../composables/useDate"
+  import { useForm } from "../composables/useForm"
+  import { useFormPopup } from "../composables/useFormPopup"
 
-import { emergencyDataView , formTemplates } from "../locales/projectConfig.js"
-import { PAGES } from "../composables/usePages.js"
+  import AppHeader from "../components/layout/AppHeader.vue"
+  import AppFooter from "../components/layout/AppFooter.vue"
+  import ActionButton from "../components/buttons/ActionButton.vue"
+  import ActionButtonColorful from "../components/buttons/ActionButtonColorful.vue"
+  import Snackbar from "../components/feedback/Snackbar.vue"
+  import AppOverlay from "../components/layout/AppOverlay.vue"
+  import FormPopup from "../components/layout/popup/FormPopup.vue"
 
-import { useI18n } from "vue-i18n"
-import { useNavigation } from "../composables/useNavigation.js"
-import { useUtils } from "../composables/useUtils.js"
-import { useSnackbar } from "../composables/useSnackbar.js"
-import { useDate } from "../composables/useDate.js"
-import { useForm } from "../composables/useForm.js"
-import { useFormPopup } from "../composables/useFormPopup.js"
-import { useUnitSystem } from "../composables/useUnitSystem.js"
+  import PatientController from "../controllers/PatientController"
+  import MedicineController from "../controllers/MedicineController"
+  import EmergencyContactController from "../controllers/EmergencyContactController"
+  import AllergyController from "../controllers/AllergyController"
+  import HealthPlanController from "../controllers/HealthPlanController"
+  import DoctorController from "../controllers/DoctorController"
+  import CaregiverController from "../controllers/CaregiverController"
 
-import AppHeader from "../components/layout/AppHeader.vue"
-import AppFooter from "../components/layout/AppFooter.vue"
-import ActionButton from "../components/buttons/ActionButton.vue"
-import ActionButtonAlt from "../components/buttons/ActionButtonAlt.vue"
-import Snackbar from "../components/feedback/Snackbar.vue"
-import AppOverlay from "../components/layout/AppOverlay.vue"
-import FormPopup from "../components/layout/popup/FormPopup.vue"
-import Icon from "../components/icons/Icon.vue"
+  import type { Patient } from "../interfaces/Patient"
+  import type { Caregiver } from "../interfaces/Caregiver"
+  import type { HealthPlan } from "../interfaces/HealthPlan"
+  import type { Doctor } from "../interfaces/Doctor"
+  import type { Allergy } from "../interfaces/Allergy"
+  import type { EmergencyContact } from "../interfaces/EmergencyContact"
+  import type { Medicine } from "../interfaces/Medicine"
+  import type { FormPopupTemplate } from "../interfaces/Form"
 
-import PatientController from "../controllers/PatientController.js"
-import MedicineController from "../controllers/MedicineController.js"
-import EmergencyContactController from "../controllers/EmergencyContactController.js";
-import AllergyController from "../controllers/AllergyController.js";
-import HealthPlanController from "../controllers/HealthPlanController.js";
-import DoctorController from "../controllers/DoctorController.js";
+  import type { WarningCode } from "../types/snackbar"
+  import type { FormValues } from "../types/genericForm"
+  import type { FormContext } from "../types/formPopup"
 
-// COMPOSABLES
-const { t, te } = useI18n()
-const navigation = useNavigation()
-const utils = useUtils()
-const snackbar = useSnackbar()
-const date = useDate()
-const form = useForm()
-const formPopup = useFormPopup()
-const unit = useUnitSystem()
+  import { PAGES } from "../constants/sysPages"
+  import Icon from "../components/icons/Icon.vue"
+  import {useI18n} from "vue-i18n";
 
-// COMPUTED PROPERTIES
-const isSnackbarOpen = computed(() => snackbar.isActive.value)
+  // TYPES & INTERFACES
+  // Emegergency data button template
+  interface ButtonConfig {
+    id: string
+    title?: string
+    subtitle?: string
+    icon?: string
+    iconFill?: string
+    color?: string
+    href?: string
+  }
 
-const isFormOpen = computed(() => formPopup.isOpen.value)
-const formTemplate = computed(() => formPopup.template.value)
-const formValues = computed(() => formPopup.values.value)
+  // Emegergency data category template
+  interface CategoryConfig {
+    id: string
+    action?: string
+    component?: string
+    buttons?: ButtonConfig[]
+    edit?: boolean
+    href?: string
+  }
 
-// CONTROLLERS
-const patientController = new PatientController()
-const medicineController = new MedicineController()
-const emergencyContactController = new EmergencyContactController()
-const allergyController = new AllergyController()
-const healthPlanController = new HealthPlanController()
-const doctorController = new DoctorController()
+  // COMPOSABLES
+  const { t } = useI18n()
+  const utils = useUtils()
+  const snackbar = useSnackbar()
+  const date = useDate()
+  const form = useForm()
+  const formPopup = useFormPopup()
 
-const patient = ref(null)
-const caregivers = ref([])
-const healthPlans = ref([])
-const doctors = ref([])
-const allergies = ref([])
-const emergencyContacts = ref([])
-const medicines = ref([])
+  // COMPUTED PROPERTIES
+  const isSnackbarOpen = computed<boolean>(() => snackbar.isActive.value)
+  const isFormOpen = computed<boolean>(() => formPopup.isOpen.value)
+  const formTemplate = computed(() => formPopup.template.value as FormPopupTemplate)
+  const formValues = computed(() => formPopup.values.value as FormValues)
 
-// FUNCTIONS
-// Dynamic map of emergency data sections, based at database and translate data (i18n)
-const dynamicSections = computed(() => {
-  if(!patient.value) return []
+  // CONTROLLERS
+  const patientController = new PatientController()
+  const medicineController = new MedicineController()
+  const emergencyContactController = new EmergencyContactController()
+  const allergyController = new AllergyController()
+  const healthPlanController = new HealthPlanController()
+  const doctorController = new DoctorController()
+  const caregiverController = new CaregiverController()
 
-  return emergencyDataView.sections.map((section) => {
-    let dbButtons = [] // Stores all buttons from section
+  const patient = ref<Patient | null>(null)
+  const caregivers = ref<Caregiver[]>([])
+  const healthPlans = ref<HealthPlan[]>([])
+  const doctors = ref<Doctor[]>([])
+  const allergies = ref<Allergy[]>([])
+  const emergencyContacts = ref<EmergencyContact[]>([])
+  const medicines = ref<Medicine[]>([])
 
-    section.buttons = section.buttons || []
+  // FUNCTIONS
+  // Dynamic map of emergency data categories, based at database and translate data (i18n)
+  const dynamicCategories = computed<CategoryConfig[]>(() => {
+    const currentPatient = patient.value
+    if(!currentPatient) return []
 
-    switch(section.id){
-      case "patient":
-        dbButtons = (section.buttons).map((button) => {
-          let dbValue = patient.value[button.id]
+    const baseCategories = emergencyDataView.categories as CategoryConfig[]
 
-          if(button.id === 'birthDate'){
-            dbValue = date.getFormatted(patient.value[button.id], false)
-          }
+    return baseCategories.map((category) => {
+      let dbButtons: ButtonConfig[] = [] // stores all buttons from each category
 
-          if(button.id === 'bloodType'){
-            dbValue = utils.getOptionTranslate("bloodType",`${patient.value[button.id]}`)
-          }
+      const currentButtons = category.buttons || []
 
-          return {
-            ...button,
-            subtitle: dbValue !== undefined && dbValue !== null
-                ? String(dbValue)
-                : "--"
-          }
-        })
-        break
+      switch(category.id) {
+        case "patient":
+          dbButtons = currentButtons.map((button) => {
+            let dbValue = currentPatient[button.id as keyof Patient]
 
-      case PAGES.EMERGENCY_CONTACTS:
+            if(button.id === "birthDate") {
+              dbValue = date.getFormatted(currentPatient.birthDate, false)
+            }
+
+            if(button.id === "bloodType") {
+              dbValue = utils.getOptionTranslate("bloodType", currentPatient.bloodType)
+            }
+
+            return {
+              ...button,
+              subtitle: dbValue !== undefined && dbValue !== null
+                  ? String(dbValue)
+                  : "---"
+            }
+          })
+              break
+
+        case PAGES.EMERGENCY_CONTACTS:
           dbButtons = [
             ...emergencyContacts.value.map((contact) => ({
-              id: contact._id,
+              id: String(contact._id),
               title: contact.name,
-              subtitle: `${utils.getOptionTranslate("kinship", contact.kinship)} • ${contact.phone || ""}`
+              subtitle: `${utils.getOptionTranslate("kinship", String(contact.kinship))} • ${contact.phone || ""}`
             })),
-            ...section.buttons
+            ...currentButtons
           ]
-        break
+              break
 
-      case PAGES.ALLERGIES:
-        dbButtons = [
-          ...allergies.value.map((allergy) => ({
-            id: allergy._id,
-            title: allergy.name
-          })),
-          ...section.buttons
-        ]
-        break
+        case PAGES.ALLERGIES:
+          dbButtons = [
+            ...allergies.value.map((allergy) => ({
+              id: String(allergy._id),
+              title: allergy.name,
+            })),
+            ...currentButtons
+          ]
+              break
 
-      case PAGES.HEALTH_PLANS:
-        dbButtons = [
-          ...healthPlans.value.map((plan) => ({
-            id: plan._id,
-            title: plan.name
-          })),
-          ...section.buttons
-        ]
-        break
+        case PAGES.HEALTH_PLANS:
+          dbButtons = [
+              ...healthPlans.value.map((plan) => ({
+                id: String(plan._id),
+                title: plan.name
+              })),
+              ...currentButtons
+          ]
+              break
+        case "others":
+          dbButtons = currentButtons.map((button) => {
+            let count = 0
 
-      case "others": {
-        dbButtons = section.buttons.map((button) => {
-          let count = 0
+            if (button.id === PAGES.DOCTORS) {
+              count = doctors.value.length
+            } else if (button.id === PAGES.MEDICINES) {
+              count = medicines.value.length
+            } else if (button.id === PAGES.CAREGIVERS) {
+              count = caregivers.value.length
+            }
 
-          if (button.id === "doctors") {
-            count = doctors.value.length
-          } else if (button.id === "medicines") {
-            count = medicines.value.length
-          }
+            return {
+              ...button,
+              subtitle: String(count)
+            }
+          })
+          break
+      }
 
-          return {
-            ...button,
-            subtitle: String(count)
-          }
-        })
-        break
+      return {
+        ...category,
+        buttons: dbButtons
+      }
+    })
+  })
+
+  /**
+   * Popup:
+   * - Triggers the current event target (Prevents the popup from closing unexpectedly)
+   * - Defines the template data (`popupTemplate`) to be displayed in the popup
+   * - Defines the popup context (`sectionId` and `fieldId`) needed to access the corret database table and attribute. Example: `categoryId` = "patient" and `fieldId` = "birthDate"
+   **/
+  const handleButtonAction = (category: CategoryConfig, button: ButtonConfig, event: Event) => {
+    formPopup.triggerRef.value = event.currentTarget as HTMLElement
+
+    if(category.action === "popup") {
+      const popupTemplate = (formTemplates as FormPopupTemplate[])
+          .find(item => item.id === button.id) ?? null
+
+      let currentInputValues: FormValues | null = null
+
+      if(category.id === "patient" && popupTemplate && patient.value) {
+        currentInputValues = form.getInputValue(patient.value, popupTemplate as FormPopupTemplate) as FormValues
+      }
+
+      const context: FormContext = {
+        sectionId: category.id,
+        fieldId: button.id
+      }
+
+      if(popupTemplate) {
+        formPopup.open(popupTemplate, currentInputValues ?? undefined, context)
+      }
+    }
+  }
+
+  // Returns the current button component
+  const buttonComponent = (category: CategoryConfig): Component => {
+    return category.component === "alt"
+        ? ActionButtonColorful
+        : ActionButton
+  }
+
+  // Returns the current button properties
+  const getButtonProps = (category: CategoryConfig, button: ButtonConfig): Record<string, unknown> => {
+    return {
+      ...getButtonPropsAction(category),
+      ...getButtonPropsComponent(category, button)
+    }
+  }
+
+  // Returns the current button component properties
+  const getButtonPropsComponent = (category: CategoryConfig, button: ButtonConfig): Record<string, unknown> => {
+    if(category.component === "alt") {
+      const title = category.action === "popup"
+          ? form.getInputLabel(button.id, button as any)
+          : getButtonTitle(category, button)
+
+      return {
+        leftIcon: button.icon ?? button.iconFill ?? null,
+        color: button.color,
+        title: title,
+        description: getButtonSubtitle(category, button),
+        to: button.href || "#"
       }
     }
 
+    // category.component === "default"
     return {
-      ...section,
-      buttons: dbButtons
+      title: getButtonTitle(category, button),
+      description: getButtonSubtitle(category, button),
+      padding: "md",
+      variant: "subtle",
+      hasBorderRadius: false,
     }
-  })
-})
-
-/**
- * Popup:
- * - Triggers the current event target (Prevents the popup from closing unexpectedly)
- * - Defines the template data (`popupTemplate`) to be displayed in the popup
- * - Defines the popup context (`sectionId` and `fieldId`) needed to access the corret database table and attribute. Example: `sectionId` = "patient" and `fieldId` = "birthDate"
- *
- * @param { Object } section
- * @param { Object } button
- * @param { Event } event
- **/
-const handleButtonAction = (section, button, event) => {
-  formPopup.triggerRef.value = event.currentTarget
-
-  if(section.action === "popup") {
-    const popupTemplate = formTemplates.find(item => item.id === button.id) ?? null
-
-    let currentInputValues = null
-    if(section.id === "patient") {
-      currentInputValues = form.getInputValue(patient.value, popupTemplate)
-    }
-
-    const context = {
-      sectionId: section.id,
-      fieldId: button.id
-    }
-
-    formPopup.open(popupTemplate, currentInputValues, context)
   }
-}
 
-const buttonComponent = (section) => {
-  return section.component === "alt"
-      ? ActionButtonAlt
-      : ActionButton
-}
+  // Returns the current button action type
+  const getButtonPropsAction = (category: CategoryConfig): Record<string, unknown> => {
+    if(category.action === "popup") {
+      return {
+        rightIcon: icons["pencil-line"],
+        tag: "button",
+        ref: formPopup.triggerRef
+      }
+    }
 
-const getButtonProps = (section, button) => {
-  return {
-    ...getButtonPropsAction(section),
-    ...getButtonPropsComponent(section, button)
-  }
-}
+    if(category.action === "externalLink") {
+      return {
+        rightIcon: icons["external-link"],
+        target: "_blank"
+      }
+    }
 
-const getButtonPropsComponent = (section, button) => {
-  if(section.component === "alt"){
-    const title = section.action === "popup"
-        ? form.getInputLabel(button.id, button)
-        : getButtonTitle(section, button)
+    if(category.action === "internalLink") {
+      return {
+        rightIcon: icons["chevron-right"],
+        tag: "router"
+      }
+    }
 
+    // category.action === "none" or nothing
     return {
-      leftIcon: button.icon,
-      color: button.color,
-      title: title,
-      description: getButtonSubtitle(section, button),
-      to: button.route || undefined
+      tag: "button"
     }
   }
 
-  return { // section.component === "default"
-    title: getButtonTitle(section, button),
-    description: getButtonSubtitle(section, button),
-    padding: "lg"
+  // Returns the translated button title
+  const getButtonTitle = (category: CategoryConfig, button: ButtonConfig): string => {
+    return button.title
+        ? button.title
+        : utils.getTranslate(`views.emergencyData.categories.${category.id}.buttons.${button.id}.title`)
   }
-}
 
-const getButtonPropsAction = (section) => {
-  if(section.action === "popup"){
-    return {
-      rightIcon: icons["pencil-line"],
-      tag: "button",
-      ref: formPopup.triggerRef
+  // Returns the translated button subtitle
+  const getButtonSubtitle = (category: CategoryConfig, button: ButtonConfig): string => {
+    // 1. Gets from database
+    if(button.subtitle) return button.subtitle
+
+    // 2. Gets from translate or Fallback
+    const key = `views.emergencyData.categories.${category.id}.buttons.${button.id}.subtitle`
+    return utils.getTranslate(key)
+  }
+
+  // Returns the category translated title
+  const getCategoryTitle = (category: CategoryConfig): string => {
+    const key = `views.emergencyData.categories.${category.id}.title`
+    return utils.getTranslate(key)
+  }
+
+  // Returns the category translated subtitle
+  const getCategorySubtitle = (category: CategoryConfig): string => {
+    const key = `views.emergencyData.categories.${category.id}.subtitle`
+    return utils.getTranslate(key)
+  }
+
+  // Handle submit form event (updated data)
+  const handleSubmit = async (formData: FormValues) => {
+    const context = formPopup.context.value as FormContext | null
+    if(!context) return
+
+    const cleanData = JSON.parse(JSON.stringify(formData))
+
+    let result = null
+    if(context.sectionId === "patient") {
+      result = await form.executeDBSubmit(() => patientController.update(cleanData))
+    }
+
+    if(!result) return
+
+    if(result && result.success) {
+      const newPatient = await patientController.getPatient()
+      patient.value = newPatient.data as Patient
+      formPopup.close()
+    }
+
+    if(result.code) {
+      snackbar.open(result.code as WarningCode)
     }
   }
 
-  if(section.action === "externalLink"){
-    return {
-      rightIcon: icons["external-link"],
-      target: "_blank"
-    }
-  }
-
-  if(section.action === "internalLink"){
-    return {
-      tag: "router",
-      rightIcon: icons["chevron-right"]
-    }
-  }
-
-  // section.action === "default" or nothing
-  return {
-    tag: "button"
-  }
-}
-
-const getButtonTitle = (section, button) => {
-  return button.title
-      ? button.title
-      : te(`views.emergencyData.sections.${section.id}.buttons.${button.id}.title`)
-          ? t(`views.emergencyData.sections.${section.id}.buttons.${button.id}.title`)
-          : ""
-}
-
-const getButtonSubtitle = (section, button) => {
-  // 1. Gets from database
-  if(button.subtitle) return button.subtitle
-
-  // 2. Gets from translate or Fallback
-  return te(`views.emergencyData.sections.${section.id}.buttons.${button.id}.subtitle`)
-      ? t(`views.emergencyData.sections.${section.id}.buttons.${button.id}.subtitle`)
-      : ""
-}
-
-const getSectionTitle = (section) => {
-  return te(`views.emergencyData.sections.${section.id}.title`)
-      ? t(`views.emergencyData.sections.${section.id}.title`)
-      : ""
-}
-
-const getSectionSubtitle = (section) => {
-  return te(`views.emergencyData.sections.${section.id}.subtitle`)
-      ? t(`views.emergencyData.sections.${section.id}.subtitle`)
-      : ""
-}
-
-const handleSubmit = async (formData) => {
-  const context = formPopup.context.value
-  if(!context) return
-
-  const cleanData = JSON.parse(JSON.stringify(formData))
-
-  let result = null
-  if(context.sectionId === "patient"){
-    result = await form.executeDBSubmit(() => patientController.update(cleanData))
-  }
-
-  if(!result) return
-
-  if(result && result.success){
-    patient.value = result.data
-    formPopup.close()
-    snackbar.open(result.code)
-  }
-
-  snackbar.open(result.code)
-}
-
-onMounted(async () => {
-  const results = await Promise.all([
+  onMounted(async () => {
+    const results = await Promise.all([
       patientController.getPatient(),
       medicineController.getAll(),
       allergyController.getAll(),
       healthPlanController.getAll(),
       doctorController.getAll(),
       emergencyContactController.getAll(),
-  ])
+      caregiverController.getAll()
+    ])
 
-  const [
+    const [
       patientData,
       medicineData,
       allergyData,
       healthPlanData,
       doctorData,
-      emergencyContactData
-  ] = results
+      emergencyContactData,
+      caregiverData
+    ] = results
 
-  if(patientData.success){
-    patient.value = patientData.data
-  }else{
-    snackbar.open(patientData.code)
-  }
+    if (patientData.success && patientData.data) {
+      patient.value = patientData.data as Patient
+    } else if (patientData.code) {
+      snackbar.open(patientData.code as WarningCode)
+    }
 
-  if (medicineData.success) medicines.value = medicineData.data
-  if (allergyData.success) allergies.value = allergyData.data
-  if (healthPlanData.success) healthPlans.value = healthPlanData.data
-  if (doctorData.success) doctors.value = doctorData.data
-  if (emergencyContactData.success) emergencyContacts.value = emergencyContactData.data
-})
+    if (medicineData.success) medicines.value = medicineData.data as Medicine[]
+    if (allergyData.success) allergies.value = allergyData.data as Allergy[]
+    if (healthPlanData.success) healthPlans.value = healthPlanData.data as HealthPlan[]
+    if (doctorData.success) doctors.value = doctorData.data as Doctor[]
+    if (emergencyContactData.success) emergencyContacts.value = emergencyContactData.data as EmergencyContact[]
+    if (caregiverData.success) caregivers.value = caregiverData.data as Caregiver[]
+  })
 </script>

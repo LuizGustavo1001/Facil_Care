@@ -1,5 +1,6 @@
 <template>
   <transition name="fade-bounce" mode="out-in">
+    <!-- Snackbar -->
     <div
         v-if="isActive"
         class="snackbar flex gap-1 align-center justify-between cursor-pointer active-border fixed"
@@ -16,13 +17,16 @@
       </span>
     </span>
 
-      <Icon :icon="icons.close" class="right-icon"/>
+      <Icon
+          :icon="icons.close"
+          class="right-icon"
+      />
     </div>
   </transition>
 </template>
 
 <style scoped>
-  .snackbar{
+  .snackbar {
     padding: var(--spacing-md);
 
     bottom: 2em;
@@ -39,45 +43,47 @@
   }
 
   /* VARIANTS */
-  /* 1. success */
-  .snackbar.success{
+  /* 1. Success */
+  .snackbar.success {
     background: var(--color-bg-green);
     color: var(--color-text-green);
   }
 
-  /* 2. error */
-  .snackbar.error{
+  /* 2. Error */
+  .snackbar.error {
     background: var(--color-bg-red);
     color: var(--color-text-red);
   }
 
-  /* 3. warning */
-  .snackbar.warning{
+  /* 3. Warning */
+  .snackbar.warning {
     background: var(--color-bg-orange);
     color: var(--color-text-orange);
   }
 
-  /* 4. info */
-  .snackbar.info{
+  /* 4. Info */
+  .snackbar.info {
     background: var(--color-bg-blue);
     color: var(--color-text-blue);
   }
 </style>
 
-<script setup>
+<script setup lang="ts">
   import { icons } from "../../assets/icons/icons.js"
   import Icon from "../icons/Icon.vue"
+  import { SNACKBAR_TYPES } from "../../constants/snackbar"
+  import type { SnackbarType } from "../../types/snackbar"
 
-  // PROPS
-  const props = defineProps({
-    message: String,
-    type: {
-      type: String,
-      default: 'success'
-    },
-    isActive: {
-      type: Boolean,
-      required: true
-    }
+  // TYPES & INTERFACES
+  interface Props {
+    message?: string | null
+    type?: SnackbarType | string
+    isActive: boolean
+  }
+
+  // PROPS DEFAULT VALUES
+  const props = withDefaults(defineProps<Props>(), {
+    message: null,
+    type: SNACKBAR_TYPES.SUCCESS,
   })
 </script>

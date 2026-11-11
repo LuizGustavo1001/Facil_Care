@@ -1,5 +1,6 @@
 <template>
   <div class="view regular">
+    <!-- Register View -->
     <Snackbar
         :isActive="isSnakcbarOpen"
         :message="snackbar.data.message"
@@ -8,21 +9,20 @@
     />
 
     <AppHeader
-        :title="getPageTitle(PAGES.REGISTER)"
-        :leftBtnIcon="icons['chevron-left']"
-        @return-page="navigation.handleReturn"
+        :title="getPageTitle()"
     />
 
     <main class="main regular gap-1">
+      <!-- Form Section -->
       <section v-if="!addSuccess" class="main-section regular gap-15">
         <form
             v-if="template"
-            class="main-form flex flex-column gap-05"
+            class="main-form flex flex-column gap-1"
             @submit.prevent="handleSubmit"
         >
-          <div class="form-inputs flex flex-column gap-05">
+          <div class="form-inputs flex flex-column gap-1">
             <component
-                v-for="input in template.main.inputs"
+                v-for="input in template?.main?.inputs ?? []"
                 :key="input.id || input.name"
                 :is="form.getInputComponent(input.tag)"
                 v-bind="form.getInputProps(input, { readOnly: false }, template?.id, null, dynamicData)"
@@ -37,13 +37,15 @@
                 :key="btn.id"
                 v-bind="form.getBtnProps(btn, FORM_TYPES.CREATE)"
                 :aria-disabled="form.isSubmitting"
+                style=" min-width: 200px; max-width: 80dvw; align-self: flex-end"
             />
           </div>
         </form>
       </section>
 
-      <section v-else class="success-section main-section center text-center align-center gap-15">
-        <Icon :icon="icons['check-circle-line']" size="50px" padding="sm"/>
+      <!-- Item Registred Successfully Section -->
+      <section v-else class=" main-section center text-center align-center gap-15" >
+        <Icon :icon="icons['user-smile-fill']" size="50px" padding="sm" :bgColor="BUTTON_COLORS.GREEN" style="border-radius: var(--radius-lg)" />
 
         <p>{{ successMessage }}!</p>
 
@@ -62,25 +64,32 @@
 </template>
 
 <style scoped>
-  .success-section .icon-wrapper{
+  .success-section .icon-wrapper {
     background: var(--green-400);
     border-radius: var(--radius-xl);
   }
 </style>
 
-<script setup>
+<script setup lang="ts">
   import { computed, onMounted, ref } from "vue"
-  import { PAGES } from "../composables/usePages.js"
   import { icons } from "../assets/icons/icons.js"
-  import { formTemplates } from "../locales/projectConfig.js"
-  import { FORM_TYPES } from "../composables/useForm.js"
-  import { VITAL_SIGNS_PAGES, FOLLOW_UPS_PAGES } from "../composables/usePages.js"
+  import { formTemplates } from "../locales/projectConfig"
+
+  import { PAGES } from "../constants/sysPages"
+  import { FORM_TYPES } from "../constants/form"
+  import { VITAL_SIGNS_PAGES, FOLLOW_UPS_PAGES } from "../constants/sysPages"
+  import { BUTTON_COLORS } from "../constants/buttonComponent"
+
+  import type { WarningCode } from "../types/snackbar"
+  import type { FollowUpType, VitalSignType } from "../types/sysPages"
+  import type { FormRecord } from "../types/genericForm"
 
   import { useRoute } from "vue-router"
   import { useI18n } from "vue-i18n"
-  import { useNavigation } from "../composables/useNavigation.js"
-  import { useSnackbar } from "../composables/useSnackbar.js"
-  import { useForm } from "../composables/useForm.js"
+  import { useNavigation } from "../composables/useNavigation"
+  import { useSnackbar } from "../composables/useSnackbar"
+  import { useForm } from "../composables/useForm"
+  import { useUtils } from "../composables/useUtils"
 
   import AppHeader from "../components/layout/AppHeader.vue"
   import AppFooter from "../components/layout/AppFooter.vue"
@@ -88,26 +97,39 @@
   import ActionButton from "../components/buttons/ActionButton.vue"
   import Icon from "../components/icons/Icon.vue"
 
-  import MedicinesController from "../controllers/MedicineController.js"
-  import MedicineRegistriesController from "../controllers/MedicineRegistriesController.js"
-  import HealthPlanController from "../controllers/HealthPlanController.js"
-  import AllergyController from "../controllers/AllergyController.js"
-  import CaregiverController from "../controllers/CaregiverController.js"
-  import DoctorController from "../controllers/DoctorController.js"
-  import EmergencyContactController from "../controllers/EmergencyContactController.js"
-  import FollowUpController from "../controllers/FollowUpController.js"
-  import VitalSignController from "../controllers/VitalSignController.js"
+  import MedicinesController from "../controllers/MedicineController"
+  import HealthPlanController from "../controllers/HealthPlanController"
+  import AllergyController from "../controllers/AllergyController"
+  import CaregiverController from "../controllers/CaregiverController"
+  import DoctorController from "../controllers/DoctorController"
+  import EmergencyContactController from "../controllers/EmergencyContactController"
+  import FollowUpController from "../controllers/FollowUpController"
+  import VitalSignController from "../controllers/VitalSignController"
+
+  import type { Caregiver } from "../interfaces/Caregiver"
+  import type { FormRegularTemplate } from "../interfaces/Form"
+
+  // TYPES & INTERFACES
+  type RegisterResult =
+      | Awaited<ReturnType<typeof caregiverController.create>>
+      | Awaited<ReturnType<typeof healthPlanController.create>>
+      | Awaited<ReturnType<typeof allergyController.create>>
+      | Awaited<ReturnType<typeof doctorController.create>>
+      | Awaited<ReturnType<typeof emergencyContactController.create>>
+      | Awaited<ReturnType<typeof medicineController.create>>
+      | Awaited<ReturnType<typeof vitalSignController.create>>
+      | Awaited<ReturnType<typeof followUpController.create>>
 
   // COMPOSABLES
   const navigation = useNavigation()
   const snackbar = useSnackbar()
   const route = useRoute()
   const form = useForm()
-  const { t, te } = useI18n()
+  const utils = useUtils()
+  const { t } = useI18n()
 
   // CONTROLLERS
   const medicineController = new MedicinesController()
-  const medicineRegistryController = new MedicineRegistriesController()
   const healthPlanController = new HealthPlanController()
   const allergyController = new AllergyController()
   const caregiverController = new CaregiverController()
@@ -117,17 +139,19 @@
   const vitalSignController = new VitalSignController()
 
   // COMPUTED PROPERTIES
-  // State for dynamic data
-  const caregiversList = ref([])
-  const addSuccess = ref(false)
-  const successMessage = ref("")
+  const isSnakcbarOpen = computed<boolean>(() => snackbar.isActive.value)
+
+  // STATES
+  const caregiversList = ref<Caregiver[]>([])
+  const addSuccess = ref<boolean>(false)
+  const successMessage = ref<string>("")
 
   // Search for dynamic data to mount on the screen
   onMounted(async() => {
     try {
       const response = await caregiverController.getAll()
       if (response) {
-        caregiversList.value = Array.isArray(response) ? response : (response.data || [])
+        caregiversList.value = response.data || []
       }
     } catch (error) {
       console.error("DB Error:", error)
@@ -140,24 +164,26 @@
   }))
 
   // Page's current category within route params
-  const currentCategory = computed(() => {
-    return route.params.category || null
+  const currentCategory = computed<string | null>(() => {
+    const category = route.params.category
+
+    return typeof category === "string" ? category : null
   })
 
   // Returns the current form template based on the current category
-  const template = computed(() => {
-    return formTemplates.find(item => item.id === currentCategory.value) ?? null
+  const template = computed<FormRegularTemplate | null>(() => {
+    return formTemplates.find(
+        item => item.id === currentCategory.value
+    ) ?? null
   })
 
-  const isSnakcbarOpen = computed(() => snackbar.isActive.value)
-
   // FUNCTIONS
-  const getPageTitle = () => {
+  const getPageTitle = (): string => {
     const registerKey = `pageTitle.${PAGES.REGISTER}`
     const currentCategoryKey = `views.register.categories.${currentCategory.value}.title`
 
-    const registerLabel = te(registerKey) ? t(registerKey) : ""
-    const currentCategoryLabel = te(currentCategoryKey) ? t(currentCategoryKey) : ""
+    const registerLabel = utils.getTranslate(registerKey)
+    const currentCategoryLabel = utils.getTranslate(currentCategoryKey)
 
     return `${registerLabel} ${currentCategoryLabel}`
   }
@@ -167,42 +193,62 @@
     return template.value?.main?.buttons ?? []
   }
 
-  const handleSubmit = async (event) => {
+  const handleRegisterByCategory = async (category: string, formData: FormRecord): Promise<RegisterResult | undefined> => {
+    // Cast payload to any / target input type per controller mapping
+    const payload = formData as any
+
+    if (category === PAGES.CAREGIVERS) {
+      return caregiverController.create(payload)
+    }
+    if (category === PAGES.HEALTH_PLANS) {
+      return healthPlanController.create(payload)
+    }
+    if (category === PAGES.ALLERGIES) {
+      return allergyController.create(payload)
+    }
+    if (category === PAGES.DOCTORS) {
+      return doctorController.create(payload)
+    }
+    if (category === PAGES.EMERGENCY_CONTACTS) {
+      return emergencyContactController.create(payload)
+    }
+    if (category === PAGES.MEDICINES) {
+      return medicineController.create(payload)
+    }
+    if (VITAL_SIGNS_PAGES.includes(category as VitalSignType)) {
+      return vitalSignController.create(payload, category as VitalSignType)
+    }
+    if (FOLLOW_UPS_PAGES.includes(category as FollowUpType)) {
+      return followUpController.create(payload, category as FollowUpType)
+    }
+
+    return undefined
+  }
+
+  const handleSubmit = async (event: SubmitEvent) => {
     const formElement = event.currentTarget
-    const data = form.extractData(event)
-    let result
+    if (!(formElement instanceof HTMLFormElement)) return
 
-    if(!formElement.checkValidity()){
-      formElement.checkValidity()
-      return
+    const category = currentCategory.value
+    const currentTemplate = template.value
+    if (!category || !currentTemplate || !formElement.checkValidity()) return
+
+    let data: FormRecord = form.extractData(event, currentTemplate)
+
+    if(data.dateTime) {
+      data.dateTime = new Date(data.dateTime as string)
     }
 
-    if (currentCategory.value === PAGES.CAREGIVERS) {
-      result = await caregiverController.create(data)
-    } else if (currentCategory.value === PAGES.HEALTH_PLANS) {
-      result = await healthPlanController.create(data)
-    } else if (currentCategory.value === PAGES.ALLERGIES) {
-      result = await allergyController.create(data)
-    } else if (currentCategory.value === PAGES.DOCTORS) {
-      result = await doctorController.create(data)
-    } else if (currentCategory.value === PAGES.EMERGENCY_CONTACTS) {
-      result = await emergencyContactController.create(data)
-    } else if (currentCategory.value === PAGES.MEDICINES) {
-      result = await medicineController.create(data)
-    } else if (currentCategory.value === PAGES.MEDICINE_REGISTRIES) {
-      result = await medicineRegistryController.create(data)
-    } else if (VITAL_SIGNS_PAGES.includes(currentCategory.value)) {
-      result = await vitalSignController.create(data, currentCategory.value)
-    } else if (FOLLOW_UPS_PAGES.includes(currentCategory.value)) {
-      result = await followUpController.create(data, currentCategory.value)
-    }
+    const result = await handleRegisterByCategory(category, data)
 
-    if(result && result.success){
+    if (result?.success) {
       formElement.reset()
-      addSuccess.value = !addSuccess.value
-      successMessage.value = snackbar.getWarningTitle(result.code)
+      addSuccess.value = true
+      successMessage.value = snackbar.getWarningTitle(result.code as WarningCode)
     }
 
-    snackbar.open(result.code || "DatabaseError")
+    if (result?.code) {
+      snackbar.open(result.code as WarningCode)
+    }
   }
 </script>

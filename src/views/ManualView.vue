@@ -1,32 +1,26 @@
-<template>
+q<template>
   <div class="view regular">
-    <AppHeader
-        :title="utils.getPageTitle(PAGES['USER_MANUAL'])"
-        :leftBtnIcon="icons['chevron-left']"
-        @return-page="navigation.handleReturn"
-    />
+    <!-- System User's Manual View -->
+    <AppHeader :title="utils.getPageTitle(PAGES['USER_MANUAL'])" />
 
     <main class="main regular gap-1">
       <section class="main-section regular gap-05"></section>
     </main>
 
-    <AppFooter page="manual" />
+    <AppFooter :page="PAGES.USER_MANUAL" />
   </div>
 </template>
 
 <style scoped></style>
 
-<script setup>
-  import { icons } from "../assets/icons/icons.js"
-  import { PAGES } from "../composables/usePages.js"
+<script setup lang="ts">
+  import { PAGES } from "../constants/sysPages"
 
-  import { useNavigation } from "../composables/useNavigation.js"
-  import { useUtils } from "../composables/useUtils.js"
+  import { useUtils } from "../composables/useUtils"
 
   import AppHeader from "../components/layout/AppHeader.vue"
   import AppFooter from "../components/layout/AppFooter.vue"
 
   // COMPOSABLES
-  const navigation = useNavigation()
   const utils = useUtils()
 </script>

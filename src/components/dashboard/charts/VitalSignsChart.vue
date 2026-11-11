@@ -1,6 +1,11 @@
 <template>
-  <div class="chart-container">
-    <Line v-if="parsedRecords.length" :key="chartKey" :data="chartData" :options="chartOptions" />
+  <div class="chart-container width-full">
+    <Line
+        v-if="parsedRecords.length"
+        :key="chartKey"
+        :data="chartData"
+        :options="chartOptions"
+    />
 
     <p v-else>{{ t(`charts.${PAGES.VITAL_SIGNS}.fallback`) }}</p>
   </div>
@@ -8,22 +13,28 @@
 
 <style scoped>
   .chart-container {
-    width: 100%;
     height: 320px;
   }
 </style>
 
-<script setup>
+<script setup lang="ts">
   import { computed, ref, watch } from "vue"
-  import { Chart as ChartJS, LineController, LineElement, PointElement, CategoryScale, LinearScale, Tooltip, Legend, Title } from "chart.js"
+  import {
+    Chart as ChartJS, LineController, LineElement, PointElement, CategoryScale, LinearScale, Tooltip, Legend, Title,
+    type ChartData,
+    type ChartOptions
+  } from "chart.js"
   import { Line } from "vue-chartjs"
 
-  import { PAGES } from "../../../composables/usePages.js"
-  import { charts } from "../../../locales/projectConfig.js"
+  import { PAGES } from "../../../constants/sysPages"
+  import { charts } from "../../../locales/projectConfig"
+  import { TRANSLATABLE_ITEMS } from "../../../constants/sysUnits"
+  import type { TranslatableUnitItem } from "../../../types/sysUnits"
 
   import { useI18n } from "vue-i18n"
-  import { useDate } from "../../../composables/useDate.js"
-  import {TRANSLATABLE_ITEMS, useUnitSystem} from "../../../composables/useUnitSystem.js"
+  import { useDate } from "../../../composables/useDate"
+  import { useUnitSystem } from "../../../composables/useUnitSystem"
+  import type { MonitoringRecord } from "../../../views/MonitoringOverview.vue"
 
   ChartJS.register(
       LineController,
@@ -36,30 +47,36 @@
       Title
   )
 
+  // TYPES & INTERFACES
+  export interface ParsedRecord {
+    dateTime: string
+    values: Record<string, number>
+  }
+
+  interface Props {
+    type: string
+    records?: MonitoringRecord[]
+  }
+
   // COMPOSABLES
   const { t, locale } = useI18n()
   const date = useDate()
   const unit = useUnitSystem()
 
-  // PROPS
-  const props = defineProps({
-    type: {
-      type: String,
-      required: true
-    },
-    records: {
-      type: Array,
-      default: () => []
-    }
-  })
+  // PROPS DEFAULT VALUES
+  const props = withDefaults(defineProps<Props>(), ({
+    records: () => []
+  }))
 
-  const parsedRecords = ref([])
-  const chartData = ref({ labels: [], datasets: [] })
-  const chartKey = ref(0)
+  // VARIABLES
+  const parsedRecords = ref<ParsedRecord[]>([])
+  const chartData = ref<ChartData<'line'>>({ labels: [], datasets: [] })
+  const chartKey = ref<number>(0)
 
-  const currentUnit = computed(() => unit.getTranslatedUnit(props.type).unit)
+  // COMPUTED PROPERTIES
+  const currentUnit = computed<string>(() => unit.getUnit(props.type))
 
-  const chartOptions = {
+  const chartOptions = computed<ChartOptions<'line'>>(() => ({
     responsive: true,
     maintainAspectRatio: false,
 
@@ -94,36 +111,13 @@
         }
       }
     }
-  }
+  }))
 
-  // Normalize a record's value into named numeric series
-  function normalizeValues(value) {
-    if(props.type === PAGES.BLOOD_PRESSURE){
-      value = parseBloodPressure(value)
 
-    }
+  // FUNCTIONS
 
-    if(TRANSLATABLE_ITEMS.includes(props.type)) {
-      value = Number(unit.parseUnit(props.type, value))
-    }
-
-    if(typeof value === "number") return { value: value }
-
-    if(typeof value === "string") return { value: Number(value) }
-
-    if(value && typeof value === "object" && !Array.isArray(value)){
-      return Object.fromEntries(
-          Object.entries(value).filter(
-              ([, item]) => typeof item === "number"
-          )
-      )
-    }
-
-    return {}
-  }
-
-  // Parses X/Y to [X, Y]
-  function parseBloodPressure(value) {
+  // Parses 'X/Y' to `{ systolic: X, diastolic: Y }`
+  function parseBloodPressure(value: unknown): Record<string, number> | null {
     if (typeof value !== 'string') return null
 
     const match = value.match(
@@ -138,7 +132,36 @@
     }
   }
 
-  function getDatasets(records){
+  // Normalize a record's value into named numeric series
+  function normalizeValues(value: unknown): Record<string, number> {
+    let parsedValue = value
+
+    if(props.type === PAGES.BLOOD_PRESSURE) {
+      parsedValue = parseBloodPressure(parsedValue)
+    }
+
+    const isTranslatable = (TRANSLATABLE_ITEMS as readonly string[]).includes(props.type)
+
+    if(isTranslatable) {
+      parsedValue = Number(unit.toImperial(props.type as TranslatableUnitItem, parsedValue as string | number))
+    }
+
+    if(typeof parsedValue === "number") return { value: parsedValue }
+
+    if(typeof parsedValue === "string") return { value: Number(parsedValue) }
+
+    if(parsedValue && typeof parsedValue === "object" && !Array.isArray(parsedValue)){
+      return Object.fromEntries(
+          Object.entries(parsedValue).filter(
+              ([, item]) => typeof item === "number"
+          )
+      ) as Record<string, number>
+    }
+
+    return {}
+  }
+
+  function getDatasets(records: ParsedRecord[]) {
     const seriesKey = [
         ...new Set(
             records.flatMap(record => Object.keys(record.values))
@@ -156,37 +179,39 @@
     }))
   }
 
+  // WATCHERS
   watch([() => props.records, () => props.type, locale], ([records, type]) => {
-      const processed = records
-          .filter(record => record.record === type)
-          .map(record => ({
-            dateTime: record.dateTime,
-            values: normalizeValues(record.value)
-          }))
-          .filter(record =>
-              Object.keys(record.values).length > 0 &&
-              !Number.isNaN(Date.parse(record.dateTime))
-          )
-          .sort(
-              (a, b) =>
-                  Date.parse(a.dateTime) - Date.parse(b.dateTime)
-          )
+        const processed: ParsedRecord[] = records
+            .filter(record => record.record === type)
+            .map(record => ({
+              dateTime: record.dateTime instanceof Date
+                  ? record.dateTime.toISOString()
+                  : String(record.dateTime),
+              values: normalizeValues(record.value)
+            }))
+            .filter(record =>
+                Object.keys(record.values).length > 0 &&
+                !Number.isNaN(Date.parse(record.dateTime))
+            )
+            .sort(
+                (a, b) =>
+                    Date.parse(a.dateTime) - Date.parse(b.dateTime)
+            )
 
-      parsedRecords.value = processed
+        parsedRecords.value = processed
 
-      chartData.value = {
-        labels: processed.map(record =>
-            date.getFormatted(record.dateTime, true)
-        ),
+        chartData.value = {
+          labels: processed.map(record =>
+              date.getFormatted(record.dateTime, true)
+          ),
+          datasets: getDatasets(processed)
+        }
 
-        datasets: getDatasets(processed)
+        chartKey.value++
+      },
+      {
+        immediate: true,
+        deep: true
       }
-
-      chartKey.value++
-    },
-    {
-      immediate: true,
-      deep: true
-    }
   )
 </script>
