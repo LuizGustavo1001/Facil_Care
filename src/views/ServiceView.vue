@@ -4,7 +4,7 @@
     <AppHeader
         :title="utils.getPageTitle(PAGES['SERVICES'])"
         :leftIcon="icons['service-fill']"
-        :hasNotifications="true"
+        :hasNotifications="false"
         type="noButton"
     />
 
@@ -40,9 +40,7 @@
       </section>
     </main>
 
-    <NavigationBar
-        :activeItem="mainNavigationBar[PAGES.SERVICES].id"
-    />
+    <NavigationBar :activeItem="mainNavigationBar[PAGES.SERVICES].id" />
   </div>
 </template>
 

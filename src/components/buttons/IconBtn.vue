@@ -61,11 +61,11 @@
   }
 
   /* 4. Background Color */
-  .icon-btn.bg-clr {
+  .icon-btn.wBorder {
     background: var(--color-bg-primary);
     color: var(--color-text-primary-muted);
   }
-  .icon-btn.bg-clr:hover {
+  .icon-btn.wBorder:hover {
     background: var(--color-bg-hover);
   }
 

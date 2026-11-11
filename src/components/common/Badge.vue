@@ -4,7 +4,7 @@
       :class="[computedColor]"
       :style="computedPadding"
   >
-    <Icon v-if="props.icon" :icon="props.icon" size="15px" />
+    <Icon v-if="props.icon" :icon="props.icon" class="flex-shrink" size="20px" />
     <p class="flex-grow-1">{{ props.text }}</p>
   </div>
 </template>

@@ -162,7 +162,24 @@ export default {
     views: {
         [PAGES.HOME]: {
             todaysMedicines: "Today's Medicines",
-            newMedicine: "New Medicine"
+            newMedicine: "New Medicine",
+            quickAccess: {
+                [PAGES.VITAL_SIGNS]: {
+                    title: "Vital Signs"
+                },
+                [PAGES.EMERGENCY_DATA]: {
+                    title: "Emergency"
+                },
+                [PAGES.IMPORT]: {
+                    title: "Import"
+                },
+                [PAGES.EXPORT]: {
+                    title: "Export"
+                },
+                [PAGES.PREFERENCES]: {
+                    title: "Preferences"
+                }
+            }
         },
 
         [PAGES.SERVICES]: {

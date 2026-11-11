@@ -254,6 +254,16 @@ export const pages = {
     }
 }
 
+export const homeView = {
+    quickAccess: [
+        { ...pages[PAGES.VITAL_SIGNS] },
+        { ...pages[PAGES.EMERGENCY_DATA] },
+        { ...pages[PAGES.IMPORT] },
+        { ...pages[PAGES.EXPORT] },
+        { ...pages[PAGES.PREFERENCES] }
+    ]
+}
+
 export const servicesView = [
     {
       id: "registers",

@@ -294,7 +294,7 @@ a {
     text-decoration: none;
 }
 
-main {
+.main {
     padding: var(--spacing-lg) var(--spacing-sm);
     margin-bottom: 100px;
 }
@@ -552,7 +552,7 @@ main {
 }
 
 .edit-link {
-    color: var(--color-text-blue);
+    color: var(--color-text-brand);
     display: flex;
     align-items: center;
     gap: 0.3em;

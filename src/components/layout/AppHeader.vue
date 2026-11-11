@@ -1,7 +1,10 @@
 <template>
   <header
       class="app-header flex justify-center align-center gap-05 sticky"
-      :class="computedType"
+      :class="[
+          computedType,
+          computedVariant
+        ]"
   >
     <!-- App Header -->
     <div class="flex align-center gap-05 flex-grow-1">
@@ -39,7 +42,7 @@
           tag="button"
           :icon="icons['notification-line']"
           size="25px"
-          variant="transparent"
+          :variant="computedVariant === 'transparent' ? 'subtle' : 'transparent'"
           @click="toggleNotifications"
       />
       <NotificationsMenu
@@ -54,16 +57,27 @@
   .app-header {
     top: 0;
     padding: var(--spacing-md);
-    background: var(--color-bg-primary);
 
     border-radius: 0 0 var(--radius-lg) var(--radius-lg);
-    box-shadow: 0 0 3px 3px var(--color-shadow-subtle);
 
     z-index: 1;
   }
 
   .app-header p {
     font-size: var(--font-heading-3);
+  }
+
+  /* VARIANTS */
+  /* 1. Transparent */
+  .app-header.transparent {
+    background: transparent;
+    color: var(--color-text-inverse);
+  }
+
+  /* 2. Subtle */
+  .app-header.subtle {
+    background: var(--color-bg-primary);
+    box-shadow: 0 0 3px 3px var(--color-shadow-subtle);
   }
 </style>
 
@@ -82,22 +96,26 @@
     default: "default",
     noButton: "noButton"
   }
+  const HEADER_VARIANTS: string[] = ["subtle", "transparent"]
 
   // TYPES & INTERFACES
   type HeaderType = typeof HEADER_TYPES[keyof typeof HEADER_TYPES]
+  type HeaderVariant = typeof HEADER_VARIANTS[number]
 
   interface Props {
     title?: string
     leftIcon?: string
     type?: HeaderType | string
     hasNotifications?: boolean
+    variant?: HeaderVariant | string
   }
 
   // PROPS DEFAULT VALUES
   const props = withDefaults(defineProps<Props>(), {
     leftIcon: icons["logo-fill-colorful"],
     type: "",
-    hasNotifications: false
+    hasNotifications: false,
+    variant: ""
   })
 
   // COMPOSABLES
@@ -117,6 +135,14 @@
     }
 
     return HEADER_TYPES[props.type]
+  })
+
+  const computedVariant = computed<HeaderVariant>(() => {
+    if(!HEADER_VARIANTS.includes(props.variant)) {
+      return HEADER_VARIANTS[0]
+    }
+
+    return props.variant
   })
 
   /*

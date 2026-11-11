@@ -163,7 +163,24 @@ export default {
     views: {
         [PAGES.HOME]: {
             todaysMedicines: "Remédios de Hoje",
-            newMedicine: "Novo Medicamento"
+            newMedicine: "Novo Medicamento",
+            quickAccess: {
+                [PAGES.VITAL_SIGNS]: {
+                    title: "Sinais Vitais"
+                },
+                [PAGES.EMERGENCY_DATA]: {
+                    title: "Emergência"
+                },
+                [PAGES.IMPORT]: {
+                    title: "Importar"
+                },
+                [PAGES.EXPORT]: {
+                    title: "Exportar"
+                },
+                [PAGES.PREFERENCES]: {
+                    title: "Preferências"
+                }
+            }
         },
 
         [PAGES.SERVICES]: {

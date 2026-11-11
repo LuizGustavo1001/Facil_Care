@@ -1,6 +1,7 @@
 <template>
-  <div class="view regular">
+  <div class="view regular home-view relative overflow-hidden">
     <!-- Home View -->
+
     <Snackbar
         :isActive="isSnackbarOpen"
         :message="snackbar.data.message"
@@ -8,48 +9,63 @@
         @click="snackbar.clear"
     />
 
-    <AppHeader
-        :title="utils.getPageTitle(PAGES['HOME'])"
-        :leftIcon="icons['hospital-fill']"
-        :hasNotifications="true"
-        type="noButton"
-    />
+    <!-- Header / Hero -->
+    <header class="home-hero flex-shrink">
+      <AppHeader
+          :title="utils.getPageTitle(PAGES['HOME'])"
+          :leftIcon="icons['hospital-fill']"
+          :hasNotifications="false"
+          type="noButton"
+          variant="transparent"
+      />
 
-    <!-- Main Section -->
-    <main class="main regular flex flex-column gap-1">
-      <section class="main-section gap-1">
-        <!-- Hero -->
-        <div class="main-card flex flex-column gap-1 text-center relative overflow-hidden">
-          <div>
-            <Icon :icon="icons['logo-colorful-bg']" size="50px" />
+      <!-- Patient Information -->
+      <section class="home-patient-card flex flex-column gap-05">
+        <p class="home-patient-name">
+          {{ t(`utils.hello`) }},
+          <span class="bolder-weight">{{ patient?.name ?? "" }}</span>!
+        </p>
 
-            <!-- Patient's Name -->
-            <p class="main-card-patient-name">
-              {{ t(`utils.hello`) }}, <span class="bolder-weight">{{ patient?.name ?? "" }}</span>!
-            </p>
-          </div>
+        <!-- Current Date -->
+        <div class="home-patient-date">
+          <Badge
+              class="bold-weight capitalize-words"
+              :text="date.getFullDate()"
+              :icon="icons['time-fill']"
+              spacing="xs"
+          />
+        </div>
+      </section>
+    </header>
 
-          <!-- Current Full Date -->
-          <div class="text-muted bold-weight flex align-center gap-05 justify-center capitalize-words">
-            <Badge
-                class="currentDate"
-                :text="date.getFullDate()"
-                :icon="icons['time-fill']"
-                spacing="xs"
-            />
-          </div>
+    <!-- Main Content -->
+    <main class="home-content flex flex-column">
+      <!-- Quick Access -->
+      <section class="quick-access flex flex-column gap-05">
+        <div class="section-title-container">
+          <h2 class="section-title text-uppercase text-muted bolder-weight">Acesso Rápido</h2>
+        </div>
+
+        <div class="quick-access-list flex gap-15 overflow-scroll">
+          <FeaturedItem
+              v-for="item in homeView.quickAccess"
+              :key="item?.id"
+              class="list-item"
+              :icon="item.iconFill"
+              :label="getQuickAccessItemTitle(item.id)"
+              :to="item.href"
+          />
         </div>
       </section>
 
-      <!-- Today's Medicines List -->
-      <section class="main-section regular gap-1">
-        <div class="section-title-container flex align-center gap-05">
-          <h2 class="section-title text-muted flex-grow-1 truncate-single">{{ t(`views.${PAGES.HOME}.todaysMedicines`) }}:</h2>
+      <!-- Today's Medicine -->
+      <section class="home-medicines flex flex-column gap-05 flex-grow-1">
+        <div class="section-title-container">
+          <h2 class="section-title text-uppercase text-muted bolder-weight">{{ t(`views.${PAGES.HOME}.todaysMedicines`) }}</h2>
         </div>
 
         <template v-if="medicines.length > 0">
-          <!-- List -->
-          <ul class="medicines-list buttons-wrapper overflow-auto">
+          <ul class="buttons-wrapper overflow-auto" style="height: 500px">
             <template
                 v-for="medicine in medicines"
                 :key="medicine._id"
@@ -64,7 +80,7 @@
                 <div class="flex-grow-1">
                   <p class="truncate-single">
                     <span class="bold-weight">{{ medicine.name }}</span>
-                    <span class="capitalize-words medium-weight"> ({{ getRouteAdminLabel(medicine.routeAdmin) }})</span>
+                    <span class="capitalize-words medium-weight"> ({{ getRouteAdminLabel(medicine.routeAdmin) }}) </span>
                   </p>
 
                   <p class="text-muted truncate-single">
@@ -90,79 +106,89 @@
           />
         </template>
 
-        <!-- FallBack Card -->
-        <NotFoundCard v-else type="noMedicinesToday" size="large" />
+        <NotFoundCard v-else type="noMedicinesToday" size="medium" />
       </section>
     </main>
 
-    <NavigationBar
-        :activeItem="mainNavigationBar[PAGES.HOME].id"
-    />
+    <NavigationBar :activeItem="mainNavigationBar[PAGES.HOME].id" />
   </div>
 </template>
 
 <style scoped>
-  .main-card:before {
-    content: "";
-    position: absolute;
+  .home-view {
+    background: var(--color-bg-primary);
+    border-radius:  0 0 14px 14px;
+  }
 
-    height: 100%;
+  .home-hero {
+    color: var(--color-text-inverse);
+
+    background:
+        var(--color-bg-brand)
+        url("../assets/images/lm-doodles.svg") center / cover;
+  }
+
+  .home-patient-card {
+    padding:
+        var(--spacing-md)
+        var(--spacing-md)
+        64px;
+  }
+  .home-patient-name {
+    font-size: var(--font-heading-1);
+    font-weight: var(--medium-weight);
+  }
+
+  .home-patient-date .badge {
+    width: fit-content;
+  }
+
+  .home-content {
+    z-index: 1;
+    gap: 32px;
+    margin-top: -24px;
+
     width: 100%;
-    inset: 0;
-    background: var(--color-bg-blue);
 
-    z-index: -1;
-  }
-  .main-card {
-    background: url("../assets/images/lm-doodles.svg");
-    background-size: contain;
+    padding:
+        var(--spacing-xl)
+        var(--spacing-md)
+        200px;
 
-    padding: var(--spacing-xl);
-    border-radius: var(--radius-sm);
+    background: var(--color-bg-primary);
+    border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
+    box-shadow: 0 0 5px 5px var(--color-shadow-subtle);
   }
 
-  .main-card .badge {
-    box-shadow: 0 0 2px 2px var(--color-shadow-subtle);
-  }
-
-  .main-card .text-muted {
-    color: var(--color-text-inverse-muted);
-  }
-
-  .main-card-patient-name {
-    font-size: var(--font-heading-2);
-  }
-  .currentDate {
-    font-size: var(--font-body-md);
-  }
-
-  .medicines-list {
-    max-height: 500px;
-  }
-
-  .medicines-list .item {
+  .home-medicines .item {
     padding: var(--spacing-md);
     background: var(--color-bg-subtle);
   }
 
   /* DARK MODE */
-  .dark .main-card {
-    background: url("../assets/images/dm-doodles.svg");
-    background-size: contain;
-
-    color: inherit;
+  .dark .home-hero {
+    background:
+        var(--color-bg-brand)
+        url("../assets/images/dm-doodles.svg") center / cover;
   }
 
   /* HIGH CONTRAST */
-  .highContrast .main-card {
+  .highContrast .home-hero {
     background: var(--color-bg-subtle);
     color: inherit;
+  }
+  .highContrast .app-header {
+    color: inherit;
+  }
+  .highContrast .home-content {
+    border: 1px solid var(--color-border-default);
   }
 </style>
 
 <script setup lang="ts">
   import { computed, onMounted, ref } from "vue"
   import { mainNavigationBar, pages } from "../locales/projectConfig"
+  import { homeView } from "../locales/projectConfig"
   import { icons } from "../assets/icons/icons.js"
 
   import { useI18n } from "vue-i18n"
@@ -190,6 +216,7 @@
 
   import type { WarningCode } from "../types/snackbar"
   import type { DayPeriod } from "../types/date"
+  import FeaturedItem from "../components/buttons/FeaturedItem.vue"
 
   // COMPOSABLES
   const { t } = useI18n()
@@ -230,6 +257,12 @@
   // Returns the translated route admin
   const getRouteAdminLabel = (route: string): string => {
     const key = `options.routeAdmin.${route}`
+
+    return utils.getTranslate(key)
+  }
+
+  const getQuickAccessItemTitle = (itemId: string): string => {
+    const key = `views.${PAGES.HOME}.quickAccess.${itemId}.title`
 
     return utils.getTranslate(key)
   }

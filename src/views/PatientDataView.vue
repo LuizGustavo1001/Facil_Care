@@ -12,7 +12,7 @@
     <AppHeader
         :title="utils.getPageTitle(PAGES['PATIENT_DATA'])"
         :leftIcon="icons['user-fill']"
-        :hasNotifications="true"
+        :hasNotifications="false"
         type="noButton"
     />
 
@@ -105,6 +105,12 @@
   }
   .patient-info p {
     font-size: var(--font-body-sm);
+  }
+
+  /* HIGH CONTRAST */
+  .highContrast .patient-info,
+  .highContrast .patient-info p {
+    color: var(--color-text-inverse);
   }
 </style>
 

@@ -1,9 +1,7 @@
 <template>
   <div class="view regular">
     <!-- System Preferences View -->
-    <AppHeader
-        :title="utils.getPageTitle(PAGES['PREFERENCES'])"
-    />
+    <AppHeader :title="utils.getPageTitle(PAGES['PREFERENCES'])" />
 
     <main class="main regular gap-2">
       <!-- Categories List -->

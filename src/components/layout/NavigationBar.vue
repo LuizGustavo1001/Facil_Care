@@ -84,6 +84,7 @@
   /* TABLET & DESKTOP */
   @media(min-width: 768px) {
     .main-navigation-bar {
+      width: 100%;
       font-size: var(--font-button-description);
     }
 
