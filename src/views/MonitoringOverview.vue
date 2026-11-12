@@ -35,10 +35,10 @@
                   }"
               @click="activeFilterDays = filter.days"
           >
-            {{ t(`charts.filters.${filter.id}.title`) }}
+            {{ utils.getTranslate(`charts.filters.${filter.id}.title`) }}
           </li>
 
-          <li>({{ filteredMonitoringData.length }} {{ t(`utils.measurements`) }})</li>
+          <li>({{ filteredMonitoringData.length }} {{ utils.getTranslate(`utils.measurements`) }})</li>
         </ul>
 
         <template v-if="formattedData.length > 0">
@@ -58,13 +58,13 @@
                   <h2>{{ item.value }}</h2>
 
                   <template v-for="(text, index) in item.description" :key="index">
-                    <p v-if="text" class="text-muted"> {{ text }}</p>
+                    <p v-if="text" class="text-muted">{{ text }}</p>
                   </template>
                 </div>
 
                 <IconBtn
                     :icon="icons['delete-bin-line']"
-                    variant="destructive"
+                    :variant="ICON_BTN_VARIANTS.DESTRUCTIVE"
                     size="25px"
                     @click.stop="handleDelete(item)"
                 />
@@ -136,6 +136,21 @@
   import { useConfirmPopup } from "../composables/useConfirmPopup"
   import { useUnitSystem } from "../composables/useUnitSystem"
 
+  import VitalSignController from "../controllers/VitalSignController"
+  import FollowUpController from "../controllers/FollowUpController"
+  import CaregiverController from "../controllers/CaregiverController"
+
+  import type { FollowUp } from "../interfaces/FollowUp"
+  import type { VitalSign } from "../interfaces/VitalSign"
+
+  import { PAGES, VITAL_SIGNS_PAGES, FOLLOW_UPS_PAGES } from "../constants/sysPages"
+  import { ICON_BTN_VARIANTS } from "../constants/components/buttons"
+
+  import type { WarningCode } from "../types/components/snackbar"
+  import type { TranslatableUnitItem }  from "../types/sysUnits"
+  import type { FollowUpType, VitalSignType } from "../types/sysPages"
+  import type { ConfirmPopupMessage, ConfirmPopupTitle } from "../types/components/confirmPopup"
+
   import AppHeader from "../components/layout/AppHeader.vue"
   import AppFallback from "./AppFallback.vue"
   import Snackbar from "../components/feedback/Snackbar.vue"
@@ -145,20 +160,6 @@
   import ConfirmPopup from "../components/layout/popup/ConfirmPopup.vue"
   import AppOverlay from "../components/layout/AppOverlay.vue"
   import VitalSignsChart from "../components/dashboard/charts/VitalSignsChart.vue"
-
-  import VitalSignController from "../controllers/VitalSignController"
-  import FollowUpController from "../controllers/FollowUpController"
-  import CaregiverController from "../controllers/CaregiverController"
-
-  import type { FollowUp } from "../interfaces/FollowUp"
-  import type { VitalSign } from "../interfaces/VitalSign"
-
-  import { PAGES, VITAL_SIGNS_PAGES, FOLLOW_UPS_PAGES } from "../constants/sysPages"
-
-  import type { WarningCode } from "../types/snackbar"
-  import type { TranslatableUnitItem }  from "../types/sysUnits"
-  import type { FollowUpType, VitalSignType } from "../types/sysPages"
-  import type { ConfirmPopupMessage, ConfirmPopupTitle } from "../types/confirmPopup"
 
   // TYPES & INTERFACES
   export type MonitoringRecord = VitalSign | FollowUp
@@ -304,7 +305,7 @@
   const formatMonitoringRecord = async (item: MonitoringRecord): Promise<FormattedMonitoringItem> => {
     const formattedDate = item.dateTime
         ? date.getNumericDateTime(new Date(item.dateTime))
-        : null
+        : ""
 
     const parsedValue = unit.getTranslatedUnit(item.record as TranslatableUnitItem, item.value)
 
@@ -354,8 +355,8 @@
   // Opens the confirm popup to delete an item
   const handleDelete = (item: FormattedMonitoringItem): void => {
     const itemCategory = currentCategory.value === PAGES.VITAL_SIGNS
-        ? t("utils.vitalSign")
-        : t("utils.followUp")
+        ? utils.getTranslate("utils.vitalSign")
+        : utils.getTranslate("utils.followUp")
 
     const title = t("confirmPopupTemplates.deleteConfirm.title", { item: itemCategory.toLocaleLowerCase() }) + "?"
 

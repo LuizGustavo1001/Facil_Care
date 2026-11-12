@@ -3,14 +3,14 @@
     <!-- Notifications Menu -->
     <div v-if="isOpen" class="notifications-menu absolute overflow-auto flex flex-column gap-1">
       <div class="notifications-header flex align-center justify-between">
-        <h1>{{ t("notifications.title") }}</h1>
+        <h1>{{ utils.getTranslate("notifications.title") }}</h1>
 
         <!-- Mark Every INotification as Read Button -->
         <IconBtn
             v-if="hasNotifications"
             :icon="icons['double-check']"
             @click="handleMarkAllAsRead"
-            variant="primary"
+            :variant="ICON_BTN_VARIANTS.PRIMARY"
             size="25px"
         />
       </div>
@@ -38,7 +38,7 @@
 
       <!-- FallBack -->
       <div v-else class="empty-state">
-        <NotFoundCard type="notification" size="small"/>
+        <NotFoundCard type="notification" size="small" />
       </div>
     </div>
   </transition>
@@ -106,16 +106,18 @@
 <script setup lang="ts">
   import { computed, onMounted, ref } from "vue"
   import { icons } from "../../assets/icons/icons.js"
-
-  import { useI18n } from "vue-i18n"
+  import { useUtils } from "../../composables/useUtils"
 
   import NotificationController from "../../controllers/NotificationController"
+
+  import type { INotification } from "../../interfaces/INotification"
+
+  import { ICON_BTN_VARIANTS } from "../../constants/components/buttons"
 
   import NotFoundCard from "../feedback/NotFoundCard.vue"
   import VerticalLine from "../common/VerticalLine.vue"
   import IconBtn from "../buttons/IconBtn.vue"
 
-  import type { INotification } from "../../interfaces/INotification"
 
   // TYPES & INTERFACES
   interface Props {
@@ -128,7 +130,7 @@
   })
 
   // COMPOSABLES
-  const { t } = useI18n()
+  const utils = useUtils()
 
   // CONTROLLERS
   const notificationController = new NotificationController()

@@ -36,6 +36,7 @@
                 v-for="btn in getButtons()"
                 :key="btn.id"
                 v-bind="form.getBtnProps(btn, FORM_TYPES.CREATE)"
+                type="submit"
                 :aria-disabled="form.isSubmitting"
                 style=" min-width: 200px; max-width: 80dvw; align-self: flex-end"
             />
@@ -52,7 +53,7 @@
         <ActionButton
             tag="button"
             @click="navigation.handleReturn"
-            :title="t(`utils.back`)"
+            :title="utils.getTranslate(`utils.back`)"
             padding="lg"
         />
       </section>
@@ -76,26 +77,19 @@
   import { formTemplates } from "../locales/projectConfig"
 
   import { PAGES } from "../constants/sysPages"
-  import { FORM_TYPES } from "../constants/form"
+  import { FORM_TYPES } from "../constants/components/form"
   import { VITAL_SIGNS_PAGES, FOLLOW_UPS_PAGES } from "../constants/sysPages"
-  import { BUTTON_COLORS } from "../constants/buttonComponent"
+  import { BUTTON_COLORS } from "../constants/components/buttons"
 
-  import type { WarningCode } from "../types/snackbar"
+  import type { WarningCode } from "../types/components/snackbar"
   import type { FollowUpType, VitalSignType } from "../types/sysPages"
-  import type { FormRecord } from "../types/genericForm"
+  import type { FormRecord } from "../types/components/genericForm"
 
   import { useRoute } from "vue-router"
-  import { useI18n } from "vue-i18n"
   import { useNavigation } from "../composables/useNavigation"
   import { useSnackbar } from "../composables/useSnackbar"
   import { useForm } from "../composables/useForm"
   import { useUtils } from "../composables/useUtils"
-
-  import AppHeader from "../components/layout/AppHeader.vue"
-  import AppFooter from "../components/layout/AppFooter.vue"
-  import Snackbar from "../components/feedback/Snackbar.vue"
-  import ActionButton from "../components/buttons/ActionButton.vue"
-  import Icon from "../components/icons/Icon.vue"
 
   import MedicinesController from "../controllers/MedicineController"
   import HealthPlanController from "../controllers/HealthPlanController"
@@ -108,6 +102,12 @@
 
   import type { Caregiver } from "../interfaces/Caregiver"
   import type { FormRegularTemplate } from "../interfaces/Form"
+
+  import AppHeader from "../components/layout/AppHeader.vue"
+  import AppFooter from "../components/layout/AppFooter.vue"
+  import Snackbar from "../components/feedback/Snackbar.vue"
+  import ActionButton from "../components/buttons/ActionButton.vue"
+  import Icon from "../components/icons/Icon.vue"
 
   // TYPES & INTERFACES
   type RegisterResult =
@@ -126,7 +126,6 @@
   const route = useRoute()
   const form = useForm()
   const utils = useUtils()
-  const { t } = useI18n()
 
   // CONTROLLERS
   const medicineController = new MedicinesController()

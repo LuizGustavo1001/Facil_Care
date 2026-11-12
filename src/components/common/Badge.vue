@@ -49,10 +49,10 @@
 
 <script setup lang="ts">
   import { computed } from "vue"
-  import { BUTTON_COLORS } from "../../constants/buttonComponent"
+  import { BUTTON_COLORS } from "../../constants/components/buttons"
   import { PADDING_SIZE } from "../../constants/paddindSizes"
 
-  import type { ButtonColor } from "../../types/buttonComponent"
+  import type { ButtonColor } from "../../types/components/buttons"
   import type { PaddingSize } from "../../types/paddingSizes"
 
   import Icon from "../icons/Icon.vue"
@@ -73,6 +73,7 @@
     icon: null
   })
 
+  // COMPUTED PROPERTIES
   const computedColor = computed(() => {
     if(!Object.values(BUTTON_COLORS).includes(props.color as ButtonColor)) {
       return BUTTON_COLORS.BLUE

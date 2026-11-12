@@ -2,7 +2,7 @@ import { PAGES } from "../constants/sysPages"
 import { THEME_PREFERENCES as THEMES } from "../constants/sysThemes"
 import { LANGUAGES } from "../constants/sysLanguages"
 import { UNITS } from "../constants/sysUnits"
-import { FORM_TYPES } from "../constants/form"
+import { FORM_TYPES } from "../constants/components/form"
 
 export default {
     pageTitle: {

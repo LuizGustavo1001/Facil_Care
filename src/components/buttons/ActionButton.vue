@@ -124,28 +124,28 @@
   import type { Component } from "vue"
   import { RouterLink } from "vue-router"
 
-  import type { ButtonTag } from "../../types/buttonComponent"
+  import type { ActionBtnVariant, ButtonTag } from "../../types/components/buttons"
   import type { PaddingSize } from "../../types/paddingSizes"
+
+  import { ACTION_BUTTON_VARIANTS, BUTTON_TAGS } from "../../constants/components/buttons"
+  import { PADDING_SIZE } from "../../constants/paddindSizes"
 
   import Icon from "../icons/Icon.vue"
 
   // STATIC VARIABLES
-  const VARIANTS = ["brand", "subtle", "destructive", "transparent", "primary"]
-  const DEFAULT_VARIANT: VariantType = VARIANTS[0]
+  const DEFAULT_VARIANT: ActionBtnVariant = ACTION_BUTTON_VARIANTS.BRAND
 
   // TYPES & INTERFACES
-  type VariantType = typeof VARIANTS[number]
-
-  interface ActionButtonProps {
-    tag?: ButtonTag | string
+  export interface ActionButtonProps {
+    tag?: ButtonTag
     leftIcon?: string | null
     leftIconSize?: string
     rightIcon?: string | null
     rightIconSize?: string
     to?: string
     target?: string
-    padding?: PaddingSize | string
-    variant?: VariantType | string
+    padding?: PaddingSize
+    variant?: ActionBtnVariant
     alignCenter?: boolean
     hasBorderRadius?: boolean
     title?: string | null
@@ -154,15 +154,15 @@
 
   // PROPS DEFAULT VALUES
   const props = withDefaults(defineProps<ActionButtonProps>(), {
-    tag: "a",
+    tag: BUTTON_TAGS.LINK,
     leftIcon: null,
     leftIconSize: '25px',
     rightIcon: null,
     rightIconSize: '25px',
     to: '#',
     target: "_self",
-    padding: "xs",
-    variant: "",
+    padding: PADDING_SIZE.EXTRA_SMALL_1,
+    variant: ACTION_BUTTON_VARIANTS.BRAND,
     alignCenter: false,
     hasBorderRadius: true,
     title: null,
@@ -170,17 +170,17 @@
   })
 
   // COMPUTED PROPERTIES
-  const isButton = computed<boolean>(() => props.tag === "button")
-  const isRouterLink = computed<boolean>(() => props.tag === "router")
+  const isButton = computed<boolean>(() => props.tag === BUTTON_TAGS.BUTTON)
+  const isRouterLink = computed<boolean>(() => props.tag === BUTTON_TAGS.ROUTER)
   const paddingStyle = computed<string>(() => `padding: var(--spacing-${props.padding})`)
 
-  const variantClass = computed<VariantType>(() => {
-    return VARIANTS.includes(props.variant)
+  const variantClass = computed<ActionBtnVariant>(() => {
+    return Object.values(ACTION_BUTTON_VARIANTS).includes(props.variant)
         ? props.variant
         : DEFAULT_VARIANT
   })
 
-  const componentTag = computed<string | Component>(() => {
+  const componentTag = computed<ButtonTag | Component>(() => {
     // 1. Tag == RouterLink (Internal Link)
     if(isRouterLink.value) {
       return RouterLink as Component

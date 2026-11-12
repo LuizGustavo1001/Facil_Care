@@ -27,13 +27,13 @@
         <Icon
             :icon="pages[PAGES.ERASE].iconFill"
             size="40px"
-            padding="xs"
+            :padding="PADDING_SIZE.EXTRA_SMALL_1"
             :bgColor="pages[PAGES.ERASE].color"
             style="border-radius: var(--radius-md)"
         />
 
         <div class="section-title-container flex flex-column gap-05">
-          <h2 class="section-title">{{ t(`views.eraseData.categories.erase.title`)}}</h2>
+          <h2 class="section-title">{{ utils.getTranslate(`views.eraseData.categories.erase.title`) }}</h2>
           <div class="section-description flex flex-column gap-03">
             <p v-for="(desc, index) in tm('views.eraseData.categories.erase.regularSubtitles')" :key="index" class="text-muted">
               {{ desc }}.
@@ -46,11 +46,11 @@
         </div>
 
         <ActionButton
-            tag="button"
+            :tag="BUTTON_TAGS.BUTTON"
             :leftIcon="icons['warning-circle-fill']"
-            :title="t('views.eraseData.categories.erase.buttons[0]')"
-            padding="md"
-            variant="destructive"
+            :title="utils.getTranslate('views.eraseData.categories.erase.buttons[0]')"
+            :padding="PADDING_SIZE.MEDIUM"
+            :variant="ACTION_BUTTON_VARIANTS.DESTRUCTIVE"
             @click.stop="handleClick"
         />
       </section>
@@ -60,18 +60,18 @@
         <Icon
             :icon="icons['user-smile-line']"
             size="50px"
-            padding="xs"
+            :padding="PADDING_SIZE.EXTRA_SMALL_1"
             :bgColor="BUTTON_COLORS.GREEN"
             style="border-radius: var(--radius-sm)"
         />
 
-        <p>{{ t(`views.eraseData.categories.erase.successDelete`) }}!</p>
+        <p>{{ utils.getTranslate(`views.eraseData.categories.erase.successDelete`) }}!</p>
 
         <ActionButton
-            tag="button"
+            :tag="BUTTON_TAGS.BUTTON"
+            :title="utils.getTranslate(`utils.homePage`)"
+            :padding="PADDING_SIZE.MEDIUM"
             @click="navigation.handleReturn"
-            :title="t(`utils.homePage`)"
-            padding="md"
         />
       </section>
     </main>
@@ -101,6 +101,13 @@
   import { useSnackbar } from "../composables/useSnackbar"
   import { useConfirmPopup } from "../composables/useConfirmPopup"
 
+  import DatabaseController from "../controllers/DatabaseController"
+
+  import type { WarningCode } from "../types/components/snackbar"
+  import { ACTION_BUTTON_VARIANTS, BUTTON_COLORS, BUTTON_TAGS } from "../constants/components/buttons"
+  import { PAGES } from "../constants/sysPages"
+  import { PADDING_SIZE } from "../constants/paddindSizes"
+
   import AppHeader from "../components/layout/AppHeader.vue"
   import AppFooter from "../components/layout/AppFooter.vue"
   import ActionButton from "../components/buttons/ActionButton.vue"
@@ -109,14 +116,8 @@
   import ConfirmPopup from "../components/layout/popup/ConfirmPopup.vue"
   import AppOverlay from "../components/layout/AppOverlay.vue"
 
-  import DatabaseController from "../controllers/DatabaseController"
-
-  import type { WarningCode } from "../types/snackbar"
-  import { BUTTON_COLORS } from "../constants/buttonComponent"
-  import { PAGES } from "../constants/sysPages"
-
   // COMPOSABLES
-  const { t, tm } = useI18n()
+  const { tm } = useI18n()
   const confirmPopup = useConfirmPopup()
   const navigation = useNavigation()
   const utils = useUtils()

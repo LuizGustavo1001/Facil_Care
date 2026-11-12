@@ -1,7 +1,8 @@
 import { reactive, ref } from "vue"
 import { useI18n } from "vue-i18n"
+
 import { warningMessages } from "../locales/projectConfig"
-import type { WarningCode } from "../types/snackbar"
+import type { WarningCode } from "../types/components/snackbar"
 
 export function useSnackbar() {
     const isActive = ref<boolean>(false)

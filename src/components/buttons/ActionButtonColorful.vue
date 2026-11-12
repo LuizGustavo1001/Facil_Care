@@ -147,28 +147,29 @@
   import { computed } from "vue"
   import type { Component } from "vue"
   import { RouterLink } from "vue-router"
-  import { BUTTON_COLORS } from "../../constants/buttonComponent"
+  import { ACTION_BUTTON_COLORFUL_VARIANTS, BUTTON_COLORS, BUTTON_TAGS } from "../../constants/components/buttons"
 
-  import type { ButtonColor, ButtonTag } from "../../types/buttonComponent"
+  import type {
+    ActionBtnColorfulVariant,
+    ButtonColor,
+    ButtonTag
+  } from "../../types/components/buttons"
 
   import Icon from "../icons/Icon.vue"
 
   // STATIC VARIABLES
-  const VARIANTS = ["subtle", "primary"]
-  const DEFAULT_VARIANT: VariantType = VARIANTS[0]
+  const DEFAULT_VARIANT: ActionBtnColorfulVariant = ACTION_BUTTON_COLORFUL_VARIANTS.SUBTLE
 
   // TYPES & INTERFACES
-  type VariantType = typeof VARIANTS[number]
-
   interface ActionButtonColorfulProps {
-    tag?: ButtonTag | string
+    tag?: ButtonTag
     leftIcon?: string | null
     leftIconSize?: string
     rightIcon?: string | null
     rightIconSize?: string
     to?: string
     target?: string
-    variant?: VariantType | string
+    variant?: ActionBtnColorfulVariant
     color?: ButtonColor | string
     title?: string | null
     description?: string | null
@@ -176,30 +177,30 @@
 
   // PROPS DEFAULT VALUES
   const props = withDefaults(defineProps<ActionButtonColorfulProps>(), {
-    tag: "button",
+    tag: BUTTON_TAGS.BUTTON,
     leftIcon: null,
     leftIconSize: "20px",
     rightIcon: null,
     rightIconSize: "23px",
     to: "#",
     target: "external",
-    variant: "",
-    color: "",
+    variant: ACTION_BUTTON_COLORFUL_VARIANTS.SUBTLE,
+    color: BUTTON_COLORS.BLUE,
     title: null,
     description: null,
   })
 
   // COMPUTED PROPERTIES
-  const isButton = computed<boolean>(() => props.tag === 'button')
-  const isRouterLink = computed<boolean>(() => props.tag === "router")
+  const isButton = computed<boolean>(() => props.tag === BUTTON_TAGS.BUTTON)
+  const isRouterLink = computed<boolean>(() => props.tag === BUTTON_TAGS.ROUTER)
 
-  const variantClass = computed<VariantType>(() => {
-    return VARIANTS.includes(props.variant)
+  const variantClass = computed<ActionBtnColorfulVariant>(() => {
+    return Object.values(ACTION_BUTTON_COLORFUL_VARIANTS).includes(props.variant)
         ? props.variant
         : DEFAULT_VARIANT
   })
 
-  const componentTag = computed<string | Component>(() => {
+  const componentTag = computed<ButtonTag | Component>(() => {
     // 1. Tag == RouterLink (Internal Link)
     if(isRouterLink.value) {
       return RouterLink as Component

@@ -17,7 +17,7 @@
 
         <!-- Developers Credits -->
         <div class="card credits flex flex-column gap-05 text-center">
-          <p>{{ t(`utils.developedBy`) }} <strong>Luiz Gustavo de Almeida Lopes</strong></p>
+          <p>{{ utils.getTranslate(`utils.developedBy`) }} <strong>Luiz Gustavo de Almeida Lopes</strong></p>
         </div>
 
         <!-- Developers Social Media -->
@@ -28,10 +28,10 @@
                 :key="item.id"
             >
               <ActionButton
-                  tag="a"
+                  :tag="BUTTON_TAGS.LINK"
                   :to="item.href"
                   target="_blank"
-                  variant="primary"
+                  :variant="ACTION_BUTTON_VARIANTS.PRIMARY"
                   :title="item.name ?? ''"
                   :leftIcon="item.iconFill"
                   :rightIcon="icons['external-link']"
@@ -73,14 +73,13 @@
   import { aboutView } from "../locales/projectConfig"
 
   import { useUtils } from "../composables/useUtils"
-  import { useI18n } from "vue-i18n"
 
   import AppHeader from "../components/layout/AppHeader.vue"
   import Icon from "../components/icons/Icon.vue"
   import Badge from "../components/common/Badge.vue"
   import ActionButton from "../components/buttons/ActionButton.vue"
+  import { ACTION_BUTTON_VARIANTS, BUTTON_TAGS } from "../constants/components/buttons"
 
   // COMPOSABLES
-  const { t } = useI18n()
   const utils = useUtils()
 </script>

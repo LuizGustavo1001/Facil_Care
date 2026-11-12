@@ -23,7 +23,7 @@
           v-if="item?.hasText"
           class="label bolder-weight"
       >
-        {{ getItemTitle(item) }}
+        {{ getItemTitle(item.id) }}
       </p>
     </RouterLink>
   </nav>
@@ -33,6 +33,7 @@
   .main-navigation-bar {
     bottom: 0;
     padding: var(--spacing-sm);
+    width: 100%;
 
     background: var(--color-bg-primary);
 
@@ -58,11 +59,11 @@
   /* MOBILE */
   @media(max-width: 768px) {
     .main-navigation-bar {
-      width: 100%;
       padding: var(--spacing-xs) var(--spacing-xl) var(--spacing-xs) var(--spacing-xl);
       justify-content: space-between;
       font-size: var(--font-caption);
     }
+
     .nav-item {
       flex-direction: column;
       min-width: 60px;
@@ -84,7 +85,6 @@
   /* TABLET & DESKTOP */
   @media(min-width: 768px) {
     .main-navigation-bar {
-      width: 100%;
       font-size: var(--font-button-description);
     }
 
@@ -109,10 +109,10 @@
 
       padding: var(--spacing-xs);
       width: fit-content;
-      gap: 1em;
+      gap: 0.3em;
 
       border-radius: var(--radius-full);
-      border: 1px solid var(--color-border-default-subtle);
+      border: 2px solid var(--color-border-default);
     }
 
     .nav-item {
@@ -124,25 +124,17 @@
 <script setup lang="ts">
   import { computed } from "vue"
   import { mainNavigationBar } from "../../locales/projectConfig"
-  import { useI18n } from "vue-i18n"
+  import { useUtils } from "../../composables/useUtils"
   import Icon from "../icons/Icon.vue"
 
   // TYPES & INTERFACES
   interface Props { activeItem?: string | null }
 
-  interface NavItem {
-      id: string
-      icon: string
-      iconActive: string
-      href: string
-      hasText: boolean
-  }
-
   // PROPS DEFAULT VALUES
   const props = withDefaults(defineProps<Props>(), { activeItem: null })
 
   // COMPOSABLES
-  const { t, te } = useI18n()
+  const utils = useUtils()
 
   // COMPUTED PROPERTIES
   const computedActiveItem = computed<string | null>(() => {
@@ -151,12 +143,10 @@
         ?? null
   })
 
-  const getItemTitle = (item: NavItem): string => {
-    const key = `mainNavigationBar.${item.id}.title`
-
-    return te(key)
-        ? t(key)
-        : ""
+  // FUNCTIONS
+  const getItemTitle = (itemId: string): string => {
+    const key = `mainNavigationBar.${itemId}.title`
+    return utils.getTranslate(key)
   }
 
   const isItemActive = (itemId: string): boolean => {

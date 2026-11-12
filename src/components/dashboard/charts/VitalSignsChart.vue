@@ -7,7 +7,7 @@
         :options="chartOptions"
     />
 
-    <p v-else>{{ t(`charts.${PAGES.VITAL_SIGNS}.fallback`) }}</p>
+    <p v-else>{{ utils.getTranslate(`charts.${PAGES.VITAL_SIGNS}.fallback`) }}</p>
   </div>
 </template>
 
@@ -31,9 +31,11 @@
   import { TRANSLATABLE_ITEMS } from "../../../constants/sysUnits"
   import type { TranslatableUnitItem } from "../../../types/sysUnits"
 
-  import { useI18n } from "vue-i18n"
+  import { useUtils } from "../../../composables/useUtils"
   import { useDate } from "../../../composables/useDate"
   import { useUnitSystem } from "../../../composables/useUnitSystem"
+  import { currentLanguage } from "../../../composables/useLanguage"
+
   import type { MonitoringRecord } from "../../../views/MonitoringOverview.vue"
 
   ChartJS.register(
@@ -59,9 +61,9 @@
   }
 
   // COMPOSABLES
-  const { t, locale } = useI18n()
   const date = useDate()
   const unit = useUnitSystem()
+  const utils = useUtils()
 
   // PROPS DEFAULT VALUES
   const props = withDefaults(defineProps<Props>(), ({
@@ -100,14 +102,14 @@
       x: {
         title: {
           display: true,
-          text: t(`charts.${PAGES.VITAL_SIGNS}.${props.type}.x_axis`)
+          text: utils.getTranslate(`charts.${PAGES.VITAL_SIGNS}.${props.type}.x_axis`)
         }
       },
       y: {
         beginAtZero: false,
         title: {
           display: true,
-          text: `${t(`charts.${PAGES.VITAL_SIGNS}.${props.type}.y_axis`)} (${currentUnit.value})`
+          text: `${utils.getTranslate(`charts.${PAGES.VITAL_SIGNS}.${props.type}.y_axis`)} (${currentUnit.value})`
         }
       }
     }
@@ -169,7 +171,7 @@
     ]
 
     return seriesKey.map((key, index) => ({
-      label: t(`charts.${PAGES.VITAL_SIGNS}.${props.type}.values.${key}`),
+      label: utils.getTranslate(`charts.${PAGES.VITAL_SIGNS}.${props.type}.values.${key}`),
       data: records.map(record => record.values[key] ?? null),
       borderColor: charts.colors[index % charts.colors.length],
       backgroundColor: charts.colors[index % charts.colors.length],
@@ -180,7 +182,7 @@
   }
 
   // WATCHERS
-  watch([() => props.records, () => props.type, locale], ([records, type]) => {
+  watch([() => props.records, () => props.type, currentLanguage], ([records, type]) => {
         const processed: ParsedRecord[] = records
             .filter(record => record.record === type)
             .map(record => ({

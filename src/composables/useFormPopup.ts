@@ -1,11 +1,11 @@
 import { usePopup } from "./usePopup"
 import { ref } from "vue"
 
-import { FORM_TYPES } from "../constants/form"
+import { FORM_TYPES } from "../constants/components/form"
 import type { FormRegularTemplate } from "../interfaces/Form"
 
-import type { FormContext } from "../types/formPopup"
-import type { FormType, FormValues } from "../types/genericForm"
+import type { FormContext } from "../types/components/formPopup"
+import type { FormType, FormValues } from "../types/components/genericForm"
 
 export function useFormPopup() {
     const popup = usePopup()
@@ -17,13 +17,7 @@ export function useFormPopup() {
 
     /**
      * Opens Form Popup.
-     *
      * Cleans old values and fill with the new ones: `nextTemplate`, `nextValues`, and `nextContent`.
-     *
-     * @param nextTemplate
-     * @param nextValues
-     * @param nextContext
-     * @param nextType
      **/
     const open = (nextTemplate: FormRegularTemplate, nextValues?: FormValues, nextContext?: FormContext, nextType: FormType = FORM_TYPES.CREATE): void => {
         clear()

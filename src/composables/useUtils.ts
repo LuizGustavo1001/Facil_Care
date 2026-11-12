@@ -1,5 +1,4 @@
 import { useI18n } from "vue-i18n"
-import { AsYouType } from "libphonenumber-js"
 
 export function useUtils() {
     const { t, te } = useI18n()
@@ -9,10 +8,7 @@ export function useUtils() {
      **/
     const getPageTitle = (page: string): string => {
         const key = `pageTitle.${page}`
-
-        return te(key)
-            ? t(key)
-            : ""
+        return getTranslate(key)
     }
 
     /**
@@ -31,13 +27,13 @@ export function useUtils() {
      * @param translationKey - i18n translate key.
      **/
     const getOptionTranslate = (type: string, translationKey: string) => {
-        return te(`options.${type}.${translationKey}`)
-            ? t(`options.${type}.${translationKey}`)
-            : ""
+        const key = `options.${type}.${translationKey}`
+        return getTranslate(key)
     }
 
     /**
-     * Returns the string that represents the `translationKey` localed by the current language. Returns an `empty string`, if the translationKey doesn't represents a key
+     * Returns the string that represents the `translationKey` localed by the current language.
+     * Returns an `empty string`, if the translationKey doesn't represents a key
      **/
     const getTranslate = (translationKey: string) => {
         return te(translationKey)
@@ -45,16 +41,5 @@ export function useUtils() {
             : ""
     }
 
-    // Format Brazilian phone numbers
-    function formatPhone(value: string){
-        const digits = String(value ?? "")
-            .replace(/\D/g, "")
-            .slice(0, 11)
-
-        if(!digits) return ""
-
-        return new AsYouType("BR").input(digits)
-    }
-
-    return { getPageTitle, pageExists, getOptionTranslate, formatPhone, getTranslate }
+    return { getPageTitle, pageExists, getOptionTranslate, getTranslate }
 }

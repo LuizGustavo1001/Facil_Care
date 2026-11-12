@@ -52,13 +52,13 @@
           <ul class="list buttons-wrapper">
             <li v-for="item in formattedData" :key="item.id" class="flex align-center gap-05">
               <ActionButton
-                  tag="button"
+                  :tag="BUTTON_TAGS.BUTTON"
                   :rightIcon="icons['pencil-line']"
                   rightIconSize="23px"
                   :title="item.title"
                   :description="item.description"
-                  variant="subtle"
-                  padding="md"
+                  :variant="ACTION_BUTTON_VARIANTS.SUBTLE"
+                  :padding="PADDING_SIZE.MEDIUM"
                   class="width-full"
                   @click.stop="handleButtonAction(item, $event)"
                   :hasBorderRadius="false"
@@ -69,7 +69,7 @@
               <IconBtn
                   :icon="icons['delete-bin-line']"
                   size="25px"
-                  variant="destructive"
+                  :variant="ICON_BTN_VARIANTS.DESTRUCTIVE"
                   @click.stop="handleDelete(item)"
               />
             </li>
@@ -95,13 +95,15 @@
   import { formTemplates } from "../locales/projectConfig"
 
   import { MANAGE_PAGES, PAGES } from "../constants/sysPages"
-  import { FORM_TYPES } from "../constants/form"
+  import { FORM_TYPES } from "../constants/components/form"
+  import { ACTION_BUTTON_VARIANTS, BUTTON_TAGS, ICON_BTN_VARIANTS } from "../constants/components/buttons"
+  import { PADDING_SIZE } from "../constants/paddindSizes"
 
-  import type { WarningCode } from "../types/snackbar"
-  import type { FormContext } from "../types/formPopup"
-  import type { FormValues } from "../types/genericForm"
+  import type { WarningCode } from "../types/components/snackbar"
+  import type { FormContext } from "../types/components/formPopup"
+  import type { FormValues } from "../types/components/genericForm"
   import type { ManagePageType } from "../types/sysPages"
-  import type { ConfirmPopupTitle, ConfirmPopupMessage } from "../types/confirmPopup"
+  import type { ConfirmPopupTitle, ConfirmPopupMessage } from "../types/components/confirmPopup"
 
   import { useRoute } from "vue-router"
   import { useUtils } from "../composables/useUtils"
@@ -111,17 +113,6 @@
   import { useDate } from "../composables/useDate"
   import { useConfirmPopup } from "../composables/useConfirmPopup"
   import { useFormPopup } from "../composables/useFormPopup"
-
-  import AppHeader from "../components/layout/AppHeader.vue"
-  import ActionButton from "../components/buttons/ActionButton.vue"
-  import AppFallback from "./AppFallback.vue"
-  import AppFooter from "../components/layout/AppFooter.vue"
-  import Snackbar from "../components/feedback/Snackbar.vue"
-  import AppOverlay from "../components/layout/AppOverlay.vue"
-  import NotFoundCard from "../components/feedback/NotFoundCard.vue"
-  import IconBtn from "../components/buttons/IconBtn.vue"
-  import FormPopup from "../components/layout/popup/FormPopup.vue"
-  import ConfirmPopup from "../components/layout/popup/ConfirmPopup.vue"
 
   import MedicineController from "../controllers/MedicineController"
   import CaregiverController from "../controllers/CaregiverController"
@@ -137,6 +128,17 @@
   import type { EmergencyContact } from "../interfaces/EmergencyContact"
   import type { Medicine } from "../interfaces/Medicine"
   import type { FormPopupTemplate } from "../interfaces/Form"
+
+  import AppHeader from "../components/layout/AppHeader.vue"
+  import ActionButton from "../components/buttons/ActionButton.vue"
+  import AppFallback from "./AppFallback.vue"
+  import AppFooter from "../components/layout/AppFooter.vue"
+  import Snackbar from "../components/feedback/Snackbar.vue"
+  import AppOverlay from "../components/layout/AppOverlay.vue"
+  import NotFoundCard from "../components/feedback/NotFoundCard.vue"
+  import IconBtn from "../components/buttons/IconBtn.vue"
+  import FormPopup from "../components/layout/popup/FormPopup.vue"
+  import ConfirmPopup from "../components/layout/popup/ConfirmPopup.vue"
 
   // TYPES & INTERFACES
   interface FormattedItem {
@@ -192,6 +194,33 @@
   const emergencyContacts = ref<EmergencyContact[]>([])
   const medicines = ref<Medicine[]>([])
   const medicinesList = ref([])
+
+  const categoryConfig = {
+    [PAGES.MEDICINES]: {
+      controller: medicineController,
+      setData: (data: Medicine[]) => medicines.value = data
+    },
+    [PAGES.CAREGIVERS]: {
+      controller: caregiverController,
+      setData: (data: Caregiver[]) => caregivers.value = data
+    },
+    [PAGES.DOCTORS]: {
+      controller: doctorController,
+      setData: (data: Doctor[]) => doctors.value = data
+    },
+    [PAGES.EMERGENCY_CONTACTS]: {
+      controller: emergencyContactController,
+      setData: (data: EmergencyContact[]) => emergencyContacts.value = data
+    },
+    [PAGES.ALLERGIES]: {
+      controller: allergyController,
+      setData: (data: Allergy[]) => allergies.value = data
+    },
+    [PAGES.HEALTH_PLANS]: {
+      controller: healthPlanController,
+      setData: (data: HealthPlan[]) => healthPlans.value = data
+    }
+  }
 
   // COMPUTED PROPERTIES
   const dynamicData = computed(() => ({
@@ -314,15 +343,14 @@
 
   // Returns the joined times sorted
   const joinTimes = (parts: string[] = []): string => {
-    return parts
-        .filter(Boolean)
-        .sort((a, b) => {
-          const [hourA, minuteA] = a.split(":").map(Number)
-          const [hourB, minuteB] = b.split(":").map(Number)
+    const sortedParts = date.sortTimes(parts)
 
-          return (hourA * 60 + minuteA) - (hourB * 60 + minuteB)
-        })
-        .map(time => date.getNumericHour(date.timeToDate(time)))
+    return sortedParts
+        .map(
+            time => date.getNumericHour(
+                date.timeToDate(time)
+            )
+        )
         .join(", ")
   }
 
@@ -378,43 +406,38 @@
   // Executes the database update query for the selected item
   const handleSubmit = async (formData: Record<string, unknown>) => {
     const context = formPopup.context.value as FormContext | null
-    if (!context || !context.itemId) return
+
+    if(!context || !context.itemId) return
+
+    const config = categoryConfig[currentCategory.value as keyof typeof categoryConfig]
+
+    if(!config) return
 
     const itemId = context.itemId as number
-    let result = null
-
     const cleanData = JSON.parse(JSON.stringify(formData))
 
-    switch(currentCategory.value){
-      case PAGES.MEDICINES:
-        result = await form.executeDBSubmit(() => medicineController.update(itemId, cleanData))
-        break
-      case PAGES.CAREGIVERS:
-        result = await form.executeDBSubmit(() => caregiverController.update(itemId, cleanData))
-        break
-      case PAGES.DOCTORS:
-        result = await form.executeDBSubmit(() => doctorController.update(itemId, cleanData))
-        break
-      case PAGES.EMERGENCY_CONTACTS:
-        result = await form.executeDBSubmit(() => emergencyContactController.update(itemId, cleanData))
-        break
-      case PAGES.ALLERGIES:
-        result = await form.executeDBSubmit(() => allergyController.update(itemId, cleanData))
-        break
-      case PAGES.HEALTH_PLANS:
-        result = await form.executeDBSubmit(() => healthPlanController.update(itemId, cleanData))
-        break
-    }
+    const result = await form.executeDBSubmit(() => config.controller.update(itemId, cleanData))
 
     if(!result) return
 
-    if(result && result.success) {
-      await updateData(currentCategory.value as string, result.data as UpdatedData)
-
-      formPopup.close()
+    if(!result.success) {
+      snackbar.open((result.code || "DBError") as WarningCode)
+      return
     }
 
-    snackbar.open((result.code || "DBError") as WarningCode)
+    const newData = await config.controller.getAll()
+
+    if(!newData?.success) {
+      snackbar.open((newData?.code || "DBError") as WarningCode)
+      return
+    }
+
+    if(result.success) {
+      config.setData(newData.data as never)
+      snackbar.open((result.code || "DBError") as WarningCode)
+    }
+
+    formPopup.close()
   }
 
   const updateData = async (categoryId: string, updatedData: UpdatedData) => {

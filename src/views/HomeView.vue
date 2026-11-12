@@ -15,14 +15,14 @@
           :title="utils.getPageTitle(PAGES['HOME'])"
           :leftIcon="icons['hospital-fill']"
           :hasNotifications="false"
-          type="noButton"
-          variant="transparent"
+          :type="HEADER_TYPES['NO_BUTTON']"
+          :variant="HEADER_VARIANTS.TRANSPARENT"
       />
 
       <!-- Patient Information -->
       <section class="home-patient-card flex flex-column gap-05">
         <p class="home-patient-name">
-          {{ t(`utils.hello`) }},
+          {{ utils.getTranslate(`utils.hello`) }},
           <span class="bolder-weight">{{ patient?.name ?? "" }}</span>!
         </p>
 
@@ -32,7 +32,7 @@
               class="bold-weight capitalize-words"
               :text="date.getFullDate()"
               :icon="icons['time-fill']"
-              spacing="xs"
+              :spacing="PADDING_SIZE.EXTRA_SMALL_1"
           />
         </div>
       </section>
@@ -61,7 +61,7 @@
       <!-- Today's Medicine -->
       <section class="home-medicines flex flex-column gap-05 flex-grow-1">
         <div class="section-title-container">
-          <h2 class="section-title text-uppercase text-muted bolder-weight">{{ t(`views.${PAGES.HOME}.todaysMedicines`) }}</h2>
+          <h2 class="section-title text-uppercase text-muted bolder-weight">{{ utils.getTranslate(`views.${PAGES.HOME}.todaysMedicines`) }}</h2>
         </div>
 
         <template v-if="medicines.length > 0">
@@ -93,11 +93,11 @@
 
           <!-- Add New Medicine Button -->
           <ActionButton
-              tag="router"
+              :tag="BUTTON_TAGS.ROUTER"
               :to="pages[PAGES.MEDICINES].href"
               :rightIcon="icons['add']"
-              :title="t(`views.${PAGES.HOME}.newMedicine`)"
-              padding="sm"
+              :title="utils.getTranslate(`views.${PAGES.HOME}.newMedicine`)"
+              :padding="PADDING_SIZE.SMALL"
               :align-center="true"
               style="
                 align-self: flex-end;
@@ -191,35 +191,34 @@
   import { homeView } from "../locales/projectConfig"
   import { icons } from "../assets/icons/icons.js"
 
-  import { useI18n } from "vue-i18n"
   import { useSnackbar } from "../composables/useSnackbar"
   import { useUtils } from "../composables/useUtils"
   import { useDate } from "../composables/useDate"
-
-  import AppHeader from "../components/layout/AppHeader.vue"
-  import Snackbar from "../components/feedback/Snackbar.vue"
-  import NavigationBar from "../components/layout/NavigationBar.vue"
-  import Icon from "../components/icons/Icon.vue"
-  import Badge from "../components/common/Badge.vue"
-  import ActionButton from "../components/buttons/ActionButton.vue"
-  import NotFoundCard from "../components/feedback/NotFoundCard.vue"
 
   import PatientController from "../controllers/PatientController"
   import MedicineController from "../controllers/MedicineController"
 
   import { PAGES } from "../constants/sysPages"
   import { DAY_PERIODS } from "../constants/dayPeriods"
-  import { BUTTON_COLORS } from "../constants/buttonComponent"
+  import { BUTTON_COLORS, BUTTON_TAGS } from "../constants/components/buttons"
+  import { PADDING_SIZE } from "../constants/paddindSizes"
+  import { HEADER_TYPES, HEADER_VARIANTS } from "../constants/components/appHeader"
 
   import type { Medicine } from "../interfaces/Medicine"
   import type { Patient } from "../interfaces/Patient"
 
-  import type { WarningCode } from "../types/snackbar"
+  import type { WarningCode } from "../types/components/snackbar"
   import type { DayPeriod } from "../types/date"
+
+  import AppHeader from "../components/layout/AppHeader.vue"
+  import Snackbar from "../components/feedback/Snackbar.vue"
+  import NavigationBar from "../components/layout/NavigationBar.vue"
+  import Badge from "../components/common/Badge.vue"
+  import ActionButton from "../components/buttons/ActionButton.vue"
+  import NotFoundCard from "../components/feedback/NotFoundCard.vue"
   import FeaturedItem from "../components/buttons/FeaturedItem.vue"
 
   // COMPOSABLES
-  const { t } = useI18n()
   const snackbar = useSnackbar()
   const utils = useUtils()
   const date = useDate()
@@ -257,13 +256,11 @@
   // Returns the translated route admin
   const getRouteAdminLabel = (route: string): string => {
     const key = `options.routeAdmin.${route}`
-
     return utils.getTranslate(key)
   }
 
   const getQuickAccessItemTitle = (itemId: string): string => {
     const key = `views.${PAGES.HOME}.quickAccess.${itemId}.title`
-
     return utils.getTranslate(key)
   }
 

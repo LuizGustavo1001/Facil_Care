@@ -13,7 +13,7 @@
     <main class="main regular">
       <!-- Import Via P2P -->
       <section v-if="route.query.peerId" class="main-section center card">
-        <h2 v-if="peerStatus !== 'error' && peerStatus !== 'done'">{{ t(`views.import.categories.importing.title`) }}...</h2>
+        <h2 v-if="peerStatus !== 'error' && peerStatus !== 'done'">{{ utils.getTranslate(`views.import.categories.importing.title`) }}...</h2>
 
         <!-- Status: Connecting -->
         <div v-if="peerStatus === 'connecting'" class="status-box">
@@ -21,7 +21,7 @@
           <Badge
               :text="`${getActionLabel('importing', 'finding')}...`"
               :color="BUTTON_COLORS.YELLOW"
-              spacing="xs"
+              :spacing="PADDING_SIZE.EXTRA_SMALL_1"
           />
         </div>
 
@@ -31,7 +31,7 @@
           <Badge
               :text="`${getActionLabel('importing', 'receiving')}...`"
               :color="BUTTON_COLORS.BLUE"
-              spacing="xs"
+              :spacing="PADDING_SIZE.EXTRA_SMALL_1"
           />
         </div>
 
@@ -41,9 +41,9 @@
           <p>{{ getActionLabel('importing', 'done') }}!</p>
 
           <ActionButton
-              tag="button"
-              padding="lg"
-              :title="t(`utils.back`)"
+              :tag="BUTTON_TAGS.BUTTON"
+              :padding="PADDING_SIZE.LARGE"
+              :title="utils.getTranslate(`utils.back`)"
               @click="navigation.handleReturn"
           />
         </div>
@@ -53,9 +53,9 @@
           <p class="error-message"> {{ peerError }} </p>
 
           <ActionButton
-              tag="button"
-              padding="lg"
-              :title="t(`utils.back`)"
+              :tag="BUTTON_TAGS.BUTTON"
+              :padding="PADDING_SIZE.LARGE"
+              :title="utils.getTranslate(`utils.back`)"
               @click="navigation.handleReturn"
           />
         </div>
@@ -66,13 +66,19 @@
         <!-- Import Completed -->
         <template v-if="importDone">
           <div class="flex flex-column align-center gap-1">
-            <Icon :icon="icons['user-smile-fill']" size="50px" padding="sm" :bgColor="BUTTON_COLORS.GREEN" style="border-radius: var(--radius-md)" />
+            <Icon
+                :icon="icons['user-smile-fill']"
+                size="50px"
+                :padding="PADDING_SIZE.SMALL"
+                :bgColor="BUTTON_COLORS.GREEN"
+                style="border-radius: var(--radius-md)"
+            />
             <p>{{ getActionLabel('importing', 'done')}}!</p>
 
             <ActionButton
-                tag="button"
-                padding="lg"
-                :title="t(`utils.back`)"
+                :tag="BUTTON_TAGS.BUTTON"
+                :padding="PADDING_SIZE.LARGE"
+                :title="utils.getTranslate(`utils.back`)"
                 @click="navigation.handleReturn"
             />
           </div>
@@ -83,7 +89,7 @@
           <Icon
               :icon="icons['qr-scan-fill']"
               size="40px"
-              padding="sm"
+              :padding="PADDING_SIZE.SMALL"
               :bgColor="BUTTON_COLORS.YELLOW"
               style="border-radius: var(--radius-md)"
           />
@@ -104,8 +110,8 @@
 
           <!-- Trigger to File Input -->
           <ActionButton
-              tag="button"
-              padding="md"
+              :tag="BUTTON_TAGS.BUTTON"
+              :padding="PADDING_SIZE.MEDIUM"
               :title="isDexieImporting
                 ? getActionLabel('localFile', 'restoring')
                 : getActionLabel('localFile', 'selectFile')"
@@ -159,15 +165,19 @@
   import { icons } from "../assets/icons/icons.js"
 
   import { PAGES } from "../constants/sysPages"
-  import { BUTTON_COLORS } from "../constants/buttonComponent"
+  import { BUTTON_COLORS, BUTTON_TAGS } from "../constants/components/buttons"
+  import { PADDING_SIZE } from "../constants/paddindSizes"
 
-  import { useI18n } from "vue-i18n"
   import { useRoute } from "vue-router"
   import { useUtils } from "../composables/useUtils"
   import { useSnackbar } from "../composables/useSnackbar"
   import { useDexieBackup } from "../composables/useDexieBackup"
   import { usePeerSync } from "../composables/usePeerSync"
   import { useNavigation } from "../composables/useNavigation"
+
+  import type { PeerSyncError } from "../types/peerSync"
+  import type { DexieError } from "../types/dexie"
+  import type { WarningCode } from "../types/components/snackbar"
 
   import Snackbar from "../components/feedback/Snackbar.vue"
   import AppHeader from "../components/layout/AppHeader.vue"
@@ -176,12 +186,7 @@
   import ActionButton from "../components/buttons/ActionButton.vue"
   import Badge from "../components/common/Badge.vue"
 
-  import type { PeerSyncError } from "../types/peerSync"
-  import type { DexieError } from "../types/dexie"
-  import type { WarningCode } from "../types/snackbar"
-
   // COMPOSABLES
-  const { t } = useI18n()
   const route = useRoute()
   const utils = useUtils()
   const snackbar = useSnackbar()

@@ -24,9 +24,9 @@
 <script setup lang="ts">
   import { computed } from "vue"
   import { icons } from "../../assets/icons/icons.js"
-  import { useI18n } from "vue-i18n"
 
   import Icon from "../icons/Icon.vue"
+  import { useUtils } from "../../composables/useUtils"
 
   // CONSTANTS
   const iconsMap: Record<string, string> = {
@@ -52,7 +52,7 @@
   }
 
   // COMPOSABLES
-  const { t, te } = useI18n()
+  const utils = useUtils()
 
   // PROPS
   const props = withDefaults(defineProps<Props>(), {
@@ -65,8 +65,7 @@
   const currentSize = computed<Size>(() => sizesMap[props.size] ?? sizesMap.large)
 
   const currentText = computed<string>(() => {
-    return te(`utils.notFoundCard.${props.type}`)
-        ? t(`utils.notFoundCard.${props.type}`)
-        : ""
+    const key = `utils.notFoundCard.${props.type}`
+    return utils.getTranslate(key)
   })
 </script>

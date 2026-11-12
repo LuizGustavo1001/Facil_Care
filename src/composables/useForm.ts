@@ -10,6 +10,7 @@ import TextArea from "../components/inputs/TextArea.vue"
 import SelectInput from "../components/inputs/SelectInput.vue"
 import MultipleTimeInput from "../components/inputs/MultipleTimeInput.vue"
 import WeekDaysInput from "../components/inputs/WeekDaysInput.vue"
+import type { ActionButtonProps } from "../components/buttons/ActionButton.vue"
 
 import type {
     DynamicOption,
@@ -19,7 +20,11 @@ import type {
     PopupSettings,
     SelectOption
 } from "../interfaces/Form"
-import type { DynamicData, FormRecord, Converter, FormValues } from "../types/genericForm"
+import type { DynamicData, FormRecord, Converter, FormValues } from "../types/components/genericForm"
+import type { ButtonTag } from "../types/components/buttons"
+
+import { BUTTON_TAGS } from "../constants/components/buttons"
+import { PADDING_SIZE } from "../constants/paddindSizes"
 
 export function useForm(){
     const isSubmitting = ref<boolean>(false)
@@ -235,24 +240,24 @@ export function useForm(){
         const isEmpty = currentValue === null || currentValue === undefined || currentValue === ""
 
         if(isEmpty) {
-            if (input.inputType === 'datetime-local' && input.isDefaultNow) {
+            if(input.inputType === 'datetime-local' && input.isDefaultNow) {
                 currentValue = date.getCurrentDateTimeLocal()
             } else if (input.inputType === 'date') {
                 currentValue = date.getToday()
             } else if (input.inputType === 'time') {
-                currentValue = date.getHourWithoutLocale()
+                currentValue = date.dateToTime()
             }
 
             if (input.tag === "mpTime") {
                 currentValue = Array.isArray(currentValue) && currentValue.length
                     ? currentValue
-                    : [date.getHourWithoutLocale()]
+                    : [date.dateToTime()] // fallback values
             }
 
             if (input.tag === "mpDays") {
                 currentValue = Array.isArray(currentValue)
                     ? currentValue
-                    : [0, 1]
+                    : [0, 1] // fallback values
             }
         }
 
@@ -377,16 +382,15 @@ export function useForm(){
     /**
      * Returns form button props.
      */
-    const getBtnProps = (btn: FormButton, type: string) => {
+    const getBtnProps = (btn: FormButton, type: string): ActionButtonProps => {
         const key = `formPopupTypes.${type}.title`
-        const title = te(key) ? t(key) : ""
+        const title = utils.getTranslate(key)
 
         return {
             title: title,
-            padding: "md",
+            padding: PADDING_SIZE.MEDIUM,
             alignCenter: true,
-            tag: btn.tag ?? "button",
-            type: btn.type ?? "submit"
+            tag: btn.tag as ButtonTag ?? BUTTON_TAGS.BUTTON,
         }
     }
 

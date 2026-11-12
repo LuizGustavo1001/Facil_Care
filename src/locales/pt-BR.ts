@@ -2,7 +2,7 @@ import { PAGES } from "../constants/sysPages"
 import { THEME_PREFERENCES as THEMES } from "../constants/sysThemes"
 import { LANGUAGES } from "../constants/sysLanguages"
 import { UNITS } from "../constants/sysUnits"
-import { FORM_TYPES } from "../constants/form"
+import { FORM_TYPES } from "../constants/components/form"
 
 export default {
     pageTitle: {
@@ -1429,7 +1429,7 @@ export default {
             title: "O cuidador selecionado não foi encontrado"
         },
         CaregiverUpdated: {
-            title: "Os ddos do cuidador selecionado foram atualizados com sucesso"
+            title: "Os dados do cuidador selecionado foram atualizados com sucesso"
         },
         CaregiverDeleted: {
             title: "O cuidador selecionado foi excluído com sucesso"

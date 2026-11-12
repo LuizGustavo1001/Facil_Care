@@ -24,7 +24,8 @@
                 @change="handleSelect(item.event, $event)"
             >
               <option
-                  v-for="option in item.options" :key="option.id"
+                  v-for="option in item.options"
+                  :key="option.id"
                   :value="option.id"
               >
                 {{ utils.getOptionTranslate(item.id, option.id) }}
@@ -49,14 +50,15 @@
   import { useTheme } from "../composables/useTheme"
   import { useUtils } from "../composables/useUtils"
 
-  import AppHeader from "../components/layout/AppHeader.vue"
-  import AppFooter from "../components/layout/AppFooter.vue"
-  import SelectInput from "../components/inputs/SelectInput.vue"
-
   import type { SysLanguage } from "../types/sysLanguages"
   import type { SysTheme } from "../types/sysThemes"
   import type { UnitSystem } from "../types/sysUnits"
+
   import { PAGES } from "../constants/sysPages"
+
+  import AppHeader from "../components/layout/AppHeader.vue"
+  import AppFooter from "../components/layout/AppFooter.vue"
+  import SelectInput from "../components/inputs/SelectInput.vue"
 
   // TYPES & INTERFACES
   type Preference =
@@ -134,7 +136,6 @@
 
   const getCategoryTitle = (categoryId: string): string => {
     const key = `views.preferences.categories.${categoryId}.title`
-
     return utils.getTranslate(key)
   }
 </script>

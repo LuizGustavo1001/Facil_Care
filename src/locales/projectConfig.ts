@@ -4,11 +4,11 @@ import { THEME_PREFERENCES } from "../constants/sysThemes"
 import { LANGUAGES } from "../constants/sysLanguages"
 import { PAGES } from "../constants/sysPages"
 import { UNITS } from "../constants/sysUnits"
-import { BUTTON_COLORS } from "../constants/buttonComponent"
+import { BUTTON_COLORS } from "../constants/components/buttons"
 import { WEEK_DAYS } from "../constants/weekDays"
 
 import type { FormRegularTemplate } from "../interfaces/Form"
-import type { FormType } from "../types/genericForm"
+import type { FormType } from "../types/components/genericForm"
 
 export const THEME_OPTIONS = [
     { id: THEME_PREFERENCES.LIGHT },
@@ -384,22 +384,22 @@ export const emergencyDataView = {
             buttons: [
                 {
                     id: "name",
-                    color: "blue",
+                    color: BUTTON_COLORS.BLUE,
                     icon: icons["user-fill"],
                 },
                 {
                     id: "birthDate",
-                    color: "green",
+                    color: BUTTON_COLORS.GREEN,
                     icon: icons["cake-fill"]
                 },
                 {
                     id: "bloodType",
-                    color: "red",
+                    color: BUTTON_COLORS.RED,
                     icon: icons["blood-type-fill"]
                 },
                 {
                     id: "address",
-                    color: "blue",
+                    color: BUTTON_COLORS.BLUE,
                     icon: icons["pin-user-fill"]
                 }
             ]
@@ -819,7 +819,7 @@ export const formTemplates = [
                     name: "startDate",
                     for: "startDate",
                     required: true,
-                    inputType: "datetime-local",
+                    inputType: "date",
                     isDefaultNow: true
                 },
                 {

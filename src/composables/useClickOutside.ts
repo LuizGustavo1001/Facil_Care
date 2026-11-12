@@ -1,5 +1,5 @@
 import { onMounted, onUnmounted, unref } from "vue"
-import type { DOMReference } from "../types/formPopup"
+import type { DOMReference } from "../types/components/formPopup"
 import type { MaybeRef } from "vue"
 
 export type ClickOutsideTarget = MaybeRef<DOMReference>

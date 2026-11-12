@@ -13,7 +13,7 @@
         :title="utils.getPageTitle(PAGES['PATIENT_DATA'])"
         :leftIcon="icons['user-fill']"
         :hasNotifications="false"
-        type="noButton"
+        :type="HEADER_TYPES['NO_BUTTON']"
     />
 
     <main class="main flex flex-column gap-15">
@@ -27,7 +27,7 @@
 
           <div class="flex flex-column">
             <h1>{{ patient.name }}</h1>
-            <p class="text-muted">{{ age }} {{ t("utils.years") }} • {{ utils.getOptionTranslate("bloodType", `${patient.bloodType}`) }}</p>
+            <p class="text-muted">{{ age }} {{ utils.getTranslate("utils.years") }} • {{ utils.getOptionTranslate("bloodType", `${patient.bloodType}`) }}</p>
           </div>
         </div>
       </section>
@@ -49,7 +49,7 @@
             >
               <!-- Category Item -->
               <ActionButtonColorful
-                  tag="router"
+                  :tag="BUTTON_TAGS.ROUTER"
                   :to="button.href"
                   :title="getButtonTitle(button.id)"
                   :leftIcon="button.iconFill"
@@ -68,9 +68,9 @@
             tag="router"
             :to="`${patientDataView.delete.href}`"
             :leftIcon="patientDataView.delete.iconFill"
-            variant="destructive"
-            :title="t(`utils.deleteAccount`)"
-            padding="sm"
+            :variant="ACTION_BUTTON_VARIANTS.DESTRUCTIVE"
+            :title="utils.getTranslate(`utils.deleteAccount`)"
+            :padding="PADDING_SIZE.MEDIUM"
             class="btn"
             style="
               width: fit-content;
@@ -80,9 +80,7 @@
       </section>
     </main>
 
-    <NavigationBar
-        :activeItem="mainNavigationBar[PAGES.PATIENT_DATA].id"
-    />
+    <NavigationBar :activeItem="mainNavigationBar[PAGES.PATIENT_DATA].id" />
   </div>
 </template>
 
@@ -116,14 +114,22 @@
 
 <script setup lang="ts">
   import { computed, onMounted, ref } from "vue"
-  import { PAGES } from "../constants/sysPages"
   import { icons } from "../assets/icons/icons.js"
   import { mainNavigationBar, patientDataView } from "../locales/projectConfig"
 
+  import { PAGES } from "../constants/sysPages"
+  import { ACTION_BUTTON_VARIANTS, BUTTON_TAGS } from "../constants/components/buttons"
+  import { PADDING_SIZE } from "../constants/paddindSizes"
+  import { HEADER_TYPES } from "../constants/components/appHeader"
+
   import { useUtils } from "../composables/useUtils"
-  import { useI18n } from "vue-i18n"
   import { useSnackbar } from "../composables/useSnackbar"
   import { useDate } from "../composables/useDate"
+
+  import PatientController from "../controllers/PatientController"
+
+  import type { Patient } from "../interfaces/Patient"
+  import type { WarningCode } from "../types/components/snackbar"
 
   import AppHeader from "../components/layout/AppHeader.vue"
   import NavigationBar from "../components/layout/NavigationBar.vue"
@@ -132,13 +138,7 @@
   import Icon from "../components/icons/Icon.vue"
   import Snackbar from "../components/feedback/Snackbar.vue"
 
-  import PatientController from "../controllers/PatientController"
-
-  import type { Patient } from "../interfaces/Patient"
-  import type { WarningCode } from "../types/snackbar"
-
   // COMPOSABLES
-  const { t } = useI18n()
   const utils = useUtils()
   const snackbar = useSnackbar()
   const date = useDate()

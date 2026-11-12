@@ -8,7 +8,7 @@
       :rel="!isButton && parsedTarget === '_blank' ? 'noopener noreferrer' : undefined"
       class="featured-item flex flex-column gap-05 align-center cursor-pointer"
   >
-    <Icon :icon="props.icon" :size="props.iconSize" padding="sm"/>
+    <Icon :icon="props.icon" :size="props.iconSize" padding="sm" />
 
     <span class="bolder-weight text-center text">{{ label }}</span>
   </component>
@@ -26,7 +26,6 @@
 
   .featured-item:hover .icon {
     background: var(--color-bg-hover);
-
   }
 
   .icon {
@@ -41,13 +40,18 @@
 </style>
 
 <script setup lang="ts">
-  import Icon from "../icons/Icon.vue"
-  import { icons } from "../../assets/icons/icons"
   import { type Component, computed } from "vue"
   import { RouterLink } from "vue-router"
 
+  import Icon from "../icons/Icon.vue"
+  import { icons } from "../../assets/icons/icons"
+
+  import { BUTTON_TAGS } from "../../constants/components/buttons"
+  import type { ButtonTag } from "../../types/components/buttons"
+
+  // TYPES & INTERFACES
   interface Props {
-    tag?: string
+    tag?: ButtonTag
     icon: string
     label: string
     target?: string
@@ -55,8 +59,9 @@
     iconSize?: string
   }
 
+  // PROPS DEFAULT VALUES
   const props = withDefaults(defineProps<Props>(), {
-    tag: "router",
+    tag: BUTTON_TAGS.ROUTER,
     icon: icons["heart-pulse-fill"],
     label: "",
     target: "_self",
@@ -64,9 +69,10 @@
     to: '#'
   })
 
-  const isButton = computed<boolean>(() => props.tag === "button")
-  const isRouterLink = computed<boolean>(() => props.tag === "router")
-  const componentTag = computed<string | Component>(() => {
+  // COMPUTED PROPERTIES
+  const isButton = computed<boolean>(() => props.tag === BUTTON_TAGS.BUTTON)
+  const isRouterLink = computed<boolean>(() => props.tag === BUTTON_TAGS.ROUTER)
+  const componentTag = computed<ButtonTag | Component>(() => {
     // 1. Tag == RouterLink (Internal Link)
     if(isRouterLink.value) {
       return RouterLink as Component

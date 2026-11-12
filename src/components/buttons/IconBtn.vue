@@ -31,7 +31,6 @@
   }
 
   /* VARIANTS */
-
   /* 1. Brand */
   .icon-btn.brand {
     background: var(--color-bg-brand);
@@ -96,17 +95,18 @@
   import { RouterLink } from "vue-router"
 
   import type { PaddingSize } from "../../types/paddingSizes"
-  import type { ButtonTag } from "../../types/buttonComponent"
+  import type { ButtonTag } from "../../types/components/buttons"
+  import type { IconBtnVariant } from "../../types/components/buttons"
+
+  import { BUTTON_TAGS, ICON_BTN_VARIANTS } from "../../constants/components/buttons"
+  import { PADDING_SIZE } from "../../constants/paddindSizes"
 
   import Icon from "../icons/Icon.vue"
 
   // STATIC VARIABLES
-  const VARIANTS = ["brand", "wBorder", "primary", "transparent", "subtle", "destructive"]
-  const DEFAULT_VARIANT: VariantType = VARIANTS[0]
+  const DEFAULT_VARIANT: IconBtnVariant = ICON_BTN_VARIANTS.BRAND
 
   // TYPES & INTERFACES
-  type VariantType = typeof VARIANTS[number]
-
   interface IconButtonProps {
     tag?: ButtonTag | string
     icon: string
@@ -114,22 +114,22 @@
     target?: string
     size?: string
     padding?: PaddingSize | string
-    variant?: VariantType | string
+    variant?: IconBtnVariant
   }
 
   // PROPS DEFAULT VALUES
   const props = withDefaults(defineProps<IconButtonProps>(), {
-    tag: "button",
+    tag: BUTTON_TAGS.BUTTON,
     to: "#",
     target: "external",
     size: "30px",
-    padding: "xs",
-    variant: ""
+    padding: PADDING_SIZE.EXTRA_SMALL_1,
+    variant: ICON_BTN_VARIANTS.BRAND
   })
 
   // COMPUTED PROPERTIES
-  const isButton = computed<boolean>(() => props.tag === 'button')
-  const isRouterLink = computed<boolean>(() => props.tag === "router")
+  const isButton = computed<boolean>(() => props.tag === BUTTON_TAGS.BUTTON)
+  const isRouterLink = computed<boolean>(() => props.tag === BUTTON_TAGS.ROUTER)
   const paddingStyle = computed<string>(() => `padding: var(--spacing-${props.padding})`)
 
   const componentTag = computed<string | Component>(() => {
@@ -142,8 +142,8 @@
     return props.tag
   })
 
-  const variantClass = computed<VariantType>(() => {
-    return VARIANTS.includes(props.variant)
+  const variantClass = computed<IconBtnVariant>(() => {
+    return Object.values(ICON_BTN_VARIANTS).includes(props.variant)
         ? props.variant
         : DEFAULT_VARIANT
   })

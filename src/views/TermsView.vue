@@ -14,7 +14,7 @@
         >
           <div class="title flex align-center gap-03">
             <Icon v-if="category.icon" :icon="category.icon" size="25px" />
-            <h1>{{ t(`views.${PAGES.TERMS}.categories.${category.id}.title`) }}</h1>
+            <h1>{{ utils.getTranslate(`views.${PAGES.TERMS}.categories.${category.id}.title`) }}</h1>
           </div>
 
           <ul class="content flex flex-column gap-03 overflow-hidden">
@@ -91,5 +91,5 @@
 
   // COMPOSABLES
   const utils = useUtils()
-  const { t, tm } = useI18n()
+  const { tm } = useI18n()
 </script>
