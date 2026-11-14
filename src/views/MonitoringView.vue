@@ -91,13 +91,11 @@
   // Returns button label
   const getItemTitle = (id: string): string => {
     const key = `views.monitoring.${currentCategory.value}.items.${id}.title`
-
     return utils.getTranslate(key)
   }
 
   const getPageSubtitle = (): string => {
     const key = `views.monitoring.${currentCategory.value}.subtitle`
-
     return utils.getTranslate(key)
   }
 </script>

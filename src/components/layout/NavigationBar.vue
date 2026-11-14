@@ -93,8 +93,9 @@
       flex-direction: row;
       gap: 0.5em;
 
-      border-radius: var(--radius-xs);
+      border-radius: var(--radius-full);
     }
+
     .nav-item.active,
     .nav-item:hover {
       background-color: var(--color-bg-subtle);
@@ -107,16 +108,13 @@
       bottom: 1em;
       transform: translateX(-50%);
 
-      padding: var(--spacing-xs);
+      padding: 0.4em;
       width: fit-content;
       gap: 0.3em;
 
       border-radius: var(--radius-full);
-      border: 2px solid var(--color-border-default);
-    }
-
-    .nav-item {
-      border-radius: var(--radius-full);
+      box-shadow: 0 2px 2px 1px var(--color-shadow-default);
+      border: 2px solid var(--color-border-default-subtle);
     }
   }
 </style>

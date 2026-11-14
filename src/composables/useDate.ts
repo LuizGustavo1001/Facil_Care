@@ -366,6 +366,35 @@ export function useDate() {
         else return DAY_PERIODS.AFTERNOON
     }
 
+    /**
+     * Returns the label that represents the selected day.
+     *
+     * @example
+     * getDayLabel(0, "long"): "sunday"
+     *
+     * getDayLabel(2, "short"): "tue" // (tuesday)
+     **/
+    const getDayLabel = (dayNumber: number, type: "narrow" | "short" | "long" = "long"): string => {
+        // 05/01/2025 it's a sunday
+        const date = new Date(2025, 0, 5 + dayNumber)
+
+        return date.toLocaleString(formatedLanguage.value, {
+            weekday: type
+        })
+    }
+
+    /**
+     * Returns the number that represents the selected day.
+     * Uses the current date unless a reference date is provided.
+     **/
+    const getDayNumber = (day: DateInput = new Date()): number => {
+        const date = parseDate(day)
+
+        if(!date) return 0
+
+        return date.getDay()
+    }
+
     return {
         parseDate,
         parseDateTimeLocal,
@@ -383,6 +412,8 @@ export function useDate() {
         getNumericDateTime,
         getDayPeriod,
         getToday,
-        getCurrentDateTimeLocal
+        getCurrentDateTimeLocal,
+        getDayLabel,
+        getDayNumber
     }
 }

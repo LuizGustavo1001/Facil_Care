@@ -2,6 +2,7 @@ export const PAGES = {
     HOME: "home",
     SERVICES: "services",
     PATIENT_DATA: "patientData",
+    WEEK_SCHEDULE: "weekSchedule",
 
     MONITORING: "monitoring",
     MANAGE: "manage",

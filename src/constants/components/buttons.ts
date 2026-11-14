@@ -20,6 +20,14 @@ export const ACTION_BUTTON_COLORFUL_VARIANTS = {
     PRIMARY: "primary"
 } as const
 
+export const CHIPS_VARIANTS = {
+    BRAND: "brand",
+    PRIMARY: "primary",
+    TRANSPARENT: "transparent",
+    SUBTLE: "subtle",
+    W_BORDER: "wBorder"
+} as const
+
 export const BUTTON_COLORS = {
     RED: "red",
     YELLOW: "yellow",

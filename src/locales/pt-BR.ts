@@ -9,6 +9,7 @@ export default {
         [PAGES.HOME]: "Página Inicial",
         [PAGES.SERVICES]: "Gerenciar Dados Médicos",
         [PAGES.PATIENT_DATA]: "Dados do Paciente",
+        [PAGES.WEEK_SCHEDULE]: "Medicamentos da Semana",
 
         [PAGES.VITAL_SIGNS]: "Sinais Vitais",
         [PAGES.FOLLOW_UPS]: "Acompanhamento Fisiológico e Comportamental",
@@ -54,6 +55,8 @@ export default {
         [PAGES.HOME]: "Início",
         [PAGES.SERVICES]: "Serviços",
         [PAGES.PATIENT_DATA]: "Dados do Paciente",
+        [PAGES.WEEK_SCHEDULE]: "Medicamentos da Semana",
+
         [PAGES.MONITORING]: "Monitoramento",
         [PAGES.MANAGE]: "Gerenciamento",
         [PAGES.EMERGENCY_DATA]: "Dados de Emergência",
@@ -205,6 +208,10 @@ export default {
             others: {
                 title: "Outros"
             }
+        },
+
+        [PAGES.WEEK_SCHEDULE]: {
+          subtitle: "Visualize aqui os remédios que o paciente deve tomar em cada dia da semana"
         },
 
         [PAGES.REGISTER]: {
@@ -1599,6 +1606,9 @@ export default {
         },
         [PAGES.PATIENT_DATA]: {
             title: "Paciente"
+        },
+        [PAGES.WEEK_SCHEDULE]: {
+            title: "Semana"
         }
     }
 }

@@ -3,7 +3,7 @@
     <!-- System Services View -->
     <AppHeader
         :title="utils.getPageTitle(PAGES['SERVICES'])"
-        :leftIcon="icons['service-fill']"
+        :leftIcon="pages[PAGES.SERVICES].iconFill"
         :hasNotifications="false"
         :type="HEADER_TYPES['NO_BUTTON']"
     />
@@ -57,7 +57,7 @@
   import { HEADER_TYPES } from "../constants/components/appHeader"
 
   import { icons } from "../assets/icons/icons.js"
-  import { mainNavigationBar, servicesView } from "../locales/projectConfig"
+  import { mainNavigationBar, pages, servicesView } from "../locales/projectConfig"
 
   import { useUtils } from "../composables/useUtils"
 

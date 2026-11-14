@@ -1,13 +1,13 @@
 <template>
   <component
-    :is="componentTag"
+    :is="buttonServices.getComponentTag(props.tag)"
     :type="isButton ? 'button' : undefined"
     :to="isRouterLink ? to : undefined"
     :href="!isButton ? (to || undefined) : undefined"
     :target="!isButton ? parsedTarget : undefined"
     :rel="!isButton && parsedTarget === '_blank' ? 'noopener noreferrer' : undefined"
     :class="[variantClass]"
-    :style="[paddingStyle, computedBorderRadius]"
+    :style="[utils.getPaddingStyle(props.padding), computedBorderRadius]"
     class="action-btn flex justify-between align-center gap-03 active-border"
   >
     <span class="flex align-center gap-05 width-full">
@@ -121,8 +121,6 @@
 
 <script setup lang="ts">
   import { computed } from "vue"
-  import type { Component } from "vue"
-  import { RouterLink } from "vue-router"
 
   import type { ActionBtnVariant, ButtonTag } from "../../types/components/buttons"
   import type { PaddingSize } from "../../types/paddingSizes"
@@ -130,10 +128,14 @@
   import { ACTION_BUTTON_VARIANTS, BUTTON_TAGS } from "../../constants/components/buttons"
   import { PADDING_SIZE } from "../../constants/paddindSizes"
 
+  import { useUtils } from "../../composables/useUtils"
+  import { useButtons } from "../../composables/components/useButtons"
+
   import Icon from "../icons/Icon.vue"
 
-  // STATIC VARIABLES
-  const DEFAULT_VARIANT: ActionBtnVariant = ACTION_BUTTON_VARIANTS.BRAND
+  // COMPOSABLES
+  const utils = useUtils()
+  const buttonServices = useButtons()
 
   // TYPES & INTERFACES
   export interface ActionButtonProps {
@@ -170,31 +172,16 @@
   })
 
   // COMPUTED PROPERTIES
-  const isButton = computed<boolean>(() => props.tag === BUTTON_TAGS.BUTTON)
-  const isRouterLink = computed<boolean>(() => props.tag === BUTTON_TAGS.ROUTER)
-  const paddingStyle = computed<string>(() => `padding: var(--spacing-${props.padding})`)
+  const isButton = computed<boolean>(() => buttonServices.isButton(props.tag))
+  const isRouterLink = computed<boolean>(() => buttonServices.isRouterLink(props.tag))
 
   const variantClass = computed<ActionBtnVariant>(() => {
     return Object.values(ACTION_BUTTON_VARIANTS).includes(props.variant)
         ? props.variant
-        : DEFAULT_VARIANT
+        : ACTION_BUTTON_VARIANTS.BRAND
   })
 
-  const componentTag = computed<ButtonTag | Component>(() => {
-    // 1. Tag == RouterLink (Internal Link)
-    if(isRouterLink.value) {
-      return RouterLink as Component
-    }
-
-    // 2. Other Tag
-    return props.tag
-  })
-
-  const parsedTarget = computed<string>(() => {
-    return props.target === "external"
-        ? "_blank"
-        : props.target
-  })
+  const parsedTarget = buttonServices.getTarget(props.target)
 
   const textAlign = computed<string>(() => {
     return props.alignCenter

@@ -77,7 +77,7 @@
   const props = withDefaults(defineProps<Props>(), {
     padding: "none",
     size: "20px",
-    bgColor: "transparent",
+    bgColor: "transparent"
   })
 
   // Defines the icon and the icon background color set

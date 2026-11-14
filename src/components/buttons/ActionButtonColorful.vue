@@ -1,12 +1,15 @@
 <template>
   <component
-      :is="componentTag"
+      :is="buttonServices.getComponentTag(props.tag)"
       :type="isButton ? 'button' : undefined"
       :to="isRouterLink ? to : undefined"
       :href="!isButton ? (to || undefined) : undefined"
-      :target="!isButton ? target : undefined"
-      :rel="!isButton && target === '_blank' ? 'noopener noreferrer' : undefined"
-      :class="[colorVariant, variantClass]"
+      :target="!isButton ? parsedTarget : undefined"
+      :rel="!isButton && parsedTarget === '_blank' ? 'noopener noreferrer' : undefined"
+      :class="[
+          buttonServices.getColorVariant(props.color),
+          variantClass
+      ]"
       class="action-btn-colorful flex justify-between gap-1 active-border"
   >
     <span class="flex gap-05 align-center">
@@ -145,9 +148,11 @@
 
 <script setup lang="ts">
   import { computed } from "vue"
-  import type { Component } from "vue"
-  import { RouterLink } from "vue-router"
-  import { ACTION_BUTTON_COLORFUL_VARIANTS, BUTTON_COLORS, BUTTON_TAGS } from "../../constants/components/buttons"
+  import {
+    ACTION_BUTTON_COLORFUL_VARIANTS,
+    BUTTON_COLORS,
+    BUTTON_TAGS
+  } from "../../constants/components/buttons"
 
   import type {
     ActionBtnColorfulVariant,
@@ -155,10 +160,12 @@
     ButtonTag
   } from "../../types/components/buttons"
 
+  import { useButtons } from "../../composables/components/useButtons"
+
   import Icon from "../icons/Icon.vue"
 
-  // STATIC VARIABLES
-  const DEFAULT_VARIANT: ActionBtnColorfulVariant = ACTION_BUTTON_COLORFUL_VARIANTS.SUBTLE
+  // COMPOSABLES
+  const buttonServices = useButtons()
 
   // TYPES & INTERFACES
   interface ActionButtonColorfulProps {
@@ -170,7 +177,7 @@
     to?: string
     target?: string
     variant?: ActionBtnColorfulVariant
-    color?: ButtonColor | string
+    color?: ButtonColor
     title?: string | null
     description?: string | null
   }
@@ -183,37 +190,21 @@
     rightIcon: null,
     rightIconSize: "23px",
     to: "#",
-    target: "external",
+    target: "",
     variant: ACTION_BUTTON_COLORFUL_VARIANTS.SUBTLE,
     color: BUTTON_COLORS.BLUE,
     title: null,
-    description: null,
+    description: null
   })
 
   // COMPUTED PROPERTIES
-  const isButton = computed<boolean>(() => props.tag === BUTTON_TAGS.BUTTON)
-  const isRouterLink = computed<boolean>(() => props.tag === BUTTON_TAGS.ROUTER)
+  const isButton = computed<boolean>(() => buttonServices.isButton(props.tag))
+  const isRouterLink = computed<boolean>(() => buttonServices.isRouterLink(props.tag))
+  const parsedTarget = buttonServices.getTarget(props.target)
 
   const variantClass = computed<ActionBtnColorfulVariant>(() => {
     return Object.values(ACTION_BUTTON_COLORFUL_VARIANTS).includes(props.variant)
         ? props.variant
-        : DEFAULT_VARIANT
-  })
-
-  const componentTag = computed<ButtonTag | Component>(() => {
-    // 1. Tag == RouterLink (Internal Link)
-    if(isRouterLink.value) {
-      return RouterLink as Component
-    }
-
-    // 2. Other Tag
-    return props.tag
-  })
-
-  // avoid invalid color variant
-  const colorVariant = computed(() => {
-    return Object.values(BUTTON_COLORS).includes(props.color as ButtonColor)
-        ? props.color
-        : BUTTON_COLORS.BLUE
+        : ACTION_BUTTON_COLORFUL_VARIANTS.SUBTLE
   })
 </script>

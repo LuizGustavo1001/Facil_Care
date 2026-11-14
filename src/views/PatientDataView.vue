@@ -11,7 +11,7 @@
 
     <AppHeader
         :title="utils.getPageTitle(PAGES['PATIENT_DATA'])"
-        :leftIcon="icons['user-fill']"
+        :leftIcon="pages[PAGES.PATIENT_DATA].iconFill"
         :hasNotifications="false"
         :type="HEADER_TYPES['NO_BUTTON']"
     />
@@ -115,7 +115,7 @@
 <script setup lang="ts">
   import { computed, onMounted, ref } from "vue"
   import { icons } from "../assets/icons/icons.js"
-  import { mainNavigationBar, patientDataView } from "../locales/projectConfig"
+  import { mainNavigationBar, pages, patientDataView } from "../locales/projectConfig"
 
   import { PAGES } from "../constants/sysPages"
   import { ACTION_BUTTON_VARIANTS, BUTTON_TAGS } from "../constants/components/buttons"

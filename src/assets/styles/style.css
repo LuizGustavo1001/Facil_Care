@@ -230,7 +230,7 @@ body.dark {
 
     /* Border Color */
     --color-border-default: var(--gray-700);
-    --color-border-default-subtle: var(--gray-600);
+    --color-border-default-subtle: var(--gray-800);
     --color-border-brand: var(--blue-500);
     --color-border-brand-alt: var(--blue-400);
 

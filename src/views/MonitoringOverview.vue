@@ -29,13 +29,13 @@
           <li
               v-for="filter in charts.filters"
               :key="filter.id"
-              class="filter-item capitalize-words"
-              :class="{
-                    active: activeFilterDays === filter.days
-                  }"
-              @click="activeFilterDays = filter.days"
           >
-            {{ utils.getTranslate(`charts.filters.${filter.id}.title`) }}
+            <Chips
+                :label="utils.getTranslate(`charts.filters.${filter.id}.title`)"
+                class="capitalize-words"
+                :isActive="activeFilterDays === filter.days"
+                @click="activeFilterDays = filter.days"
+            />
           </li>
 
           <li>({{ filteredMonitoringData.length }} {{ utils.getTranslate(`utils.measurements`) }})</li>
@@ -160,6 +160,7 @@
   import ConfirmPopup from "../components/layout/popup/ConfirmPopup.vue"
   import AppOverlay from "../components/layout/AppOverlay.vue"
   import VitalSignsChart from "../components/dashboard/charts/VitalSignsChart.vue"
+  import Chips from "../components/common/Chips.vue";
 
   // TYPES & INTERFACES
   export type MonitoringRecord = VitalSign | FollowUp

@@ -13,7 +13,7 @@
     <header class="home-hero flex-shrink">
       <AppHeader
           :title="utils.getPageTitle(PAGES['HOME'])"
-          :leftIcon="icons['hospital-fill']"
+          :leftIcon="pages[PAGES.HOME].iconFill"
           :hasNotifications="false"
           :type="HEADER_TYPES['NO_BUTTON']"
           :variant="HEADER_VARIANTS.TRANSPARENT"
@@ -39,7 +39,7 @@
     </header>
 
     <!-- Main Content -->
-    <main class="home-content flex flex-column">
+    <main class="home-content flex flex-column flex-grow-1">
       <!-- Quick Access -->
       <section class="quick-access flex flex-column gap-05">
         <div class="section-title-container">
@@ -64,49 +64,7 @@
           <h2 class="section-title text-uppercase text-muted bolder-weight">{{ utils.getTranslate(`views.${PAGES.HOME}.todaysMedicines`) }}</h2>
         </div>
 
-        <template v-if="medicines.length > 0">
-          <ul class="buttons-wrapper overflow-auto" style="height: 500px">
-            <template
-                v-for="medicine in medicines"
-                :key="medicine._id"
-            >
-              <li
-                  v-for="medicineSchedule in medicine.administrationTimes"
-                  :key="medicine._id + medicineSchedule"
-                  class="flex gap-05 align-center item"
-              >
-                <Badge :text="medicineSchedule" class="flex-shrink" :color="getBadgeColor(medicineSchedule)" />
-
-                <div class="flex-grow-1">
-                  <p class="truncate-single">
-                    <span class="bold-weight">{{ medicine.name }}</span>
-                    <span class="capitalize-words medium-weight"> ({{ getRouteAdminLabel(medicine.routeAdmin) }}) </span>
-                  </p>
-
-                  <p class="text-muted truncate-single">
-                    {{ medicine.observations }}
-                  </p>
-                </div>
-              </li>
-            </template>
-          </ul>
-
-          <!-- Add New Medicine Button -->
-          <ActionButton
-              :tag="BUTTON_TAGS.ROUTER"
-              :to="pages[PAGES.MEDICINES].href"
-              :rightIcon="icons['add']"
-              :title="utils.getTranslate(`views.${PAGES.HOME}.newMedicine`)"
-              :padding="PADDING_SIZE.SMALL"
-              :align-center="true"
-              style="
-                align-self: flex-end;
-                width: fit-content;
-              "
-          />
-        </template>
-
-        <NotFoundCard v-else type="noMedicinesToday" size="medium" />
+        <MedicineList :medicineList="medicines" />
       </section>
     </main>
 
@@ -160,11 +118,6 @@
     box-shadow: 0 0 5px 5px var(--color-shadow-subtle);
   }
 
-  .home-medicines .item {
-    padding: var(--spacing-md);
-    background: var(--color-bg-subtle);
-  }
-
   /* DARK MODE */
   .dark .home-hero {
     background:
@@ -199,8 +152,6 @@
   import MedicineController from "../controllers/MedicineController"
 
   import { PAGES } from "../constants/sysPages"
-  import { DAY_PERIODS } from "../constants/dayPeriods"
-  import { BUTTON_COLORS, BUTTON_TAGS } from "../constants/components/buttons"
   import { PADDING_SIZE } from "../constants/paddindSizes"
   import { HEADER_TYPES, HEADER_VARIANTS } from "../constants/components/appHeader"
 
@@ -208,15 +159,13 @@
   import type { Patient } from "../interfaces/Patient"
 
   import type { WarningCode } from "../types/components/snackbar"
-  import type { DayPeriod } from "../types/date"
 
   import AppHeader from "../components/layout/AppHeader.vue"
   import Snackbar from "../components/feedback/Snackbar.vue"
   import NavigationBar from "../components/layout/NavigationBar.vue"
   import Badge from "../components/common/Badge.vue"
-  import ActionButton from "../components/buttons/ActionButton.vue"
-  import NotFoundCard from "../components/feedback/NotFoundCard.vue"
   import FeaturedItem from "../components/buttons/FeaturedItem.vue"
+  import MedicineList from "../components/layout/MedicineList.vue"
 
   // COMPOSABLES
   const snackbar = useSnackbar()
@@ -235,30 +184,6 @@
   const medicines = ref<Medicine[]>([])
 
   // FUNCTIONS
-  // Returns the time badge color based at the current day period
-  const getBadgeColor = (schedule: string): string => {
-    const formattedTime = date.timeToDate(schedule) as Date
-
-    const dayPeriod: DayPeriod = date.getDayPeriod(formattedTime)
-
-    switch (dayPeriod) {
-      case DAY_PERIODS.AFTERNOON:
-        return BUTTON_COLORS.PURPLE
-
-      case DAY_PERIODS.EVENING:
-        return BUTTON_COLORS.ORANGE
-
-      default:
-        return BUTTON_COLORS.BLUE
-    }
-  }
-
-  // Returns the translated route admin
-  const getRouteAdminLabel = (route: string): string => {
-    const key = `options.routeAdmin.${route}`
-    return utils.getTranslate(key)
-  }
-
   const getQuickAccessItemTitle = (itemId: string): string => {
     const key = `views.${PAGES.HOME}.quickAccess.${itemId}.title`
     return utils.getTranslate(key)

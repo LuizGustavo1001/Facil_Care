@@ -1,7 +1,13 @@
 import { useI18n } from "vue-i18n"
+import type { PaddingSize } from "../types/paddingSizes"
+import type { DayPeriod } from "../types/date"
+import { DAY_PERIODS } from "../constants/dayPeriods"
+import { BUTTON_COLORS } from "../constants/components/buttons"
+import { useDate } from "./useDate"
 
 export function useUtils() {
     const { t, te } = useI18n()
+    const date = useDate()
 
     /**
      * @param page - From lang or PAGES{}.
@@ -41,5 +47,34 @@ export function useUtils() {
             : ""
     }
 
-    return { getPageTitle, pageExists, getOptionTranslate, getTranslate }
+    const getPaddingStyle = (padding: PaddingSize): string => {
+        return `padding: var(--spacing-${padding})`
+    }
+
+    // Returns the time badge color based at the current day period
+    const getBadgeColor = (schedule: string): string => {
+        const formattedTime = date.timeToDate(schedule) as Date
+
+        const dayPeriod: DayPeriod = date.getDayPeriod(formattedTime)
+
+        switch (dayPeriod) {
+            case DAY_PERIODS.AFTERNOON:
+                return BUTTON_COLORS.PURPLE
+
+            case DAY_PERIODS.EVENING:
+                return BUTTON_COLORS.ORANGE
+
+            default:
+                return BUTTON_COLORS.BLUE
+        }
+    }
+
+    // Returns the translated medicine route admin
+    const getRouteAdminLabel = (route: string): string => {
+        const key = `options.routeAdmin.${route}`
+        return getTranslate(key)
+    }
+
+
+    return { getPageTitle, pageExists, getOptionTranslate, getTranslate, getPaddingStyle, getBadgeColor, getRouteAdminLabel }
 }
