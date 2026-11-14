@@ -87,8 +87,8 @@
 
   import { useRoute } from "vue-router"
   import { useNavigation } from "../composables/useNavigation"
-  import { useSnackbar } from "../composables/useSnackbar"
-  import { useForm } from "../composables/useForm"
+  import { useSnackbar } from "../composables/components/useSnackbar"
+  import { useForm } from "../composables/components/useForm"
   import { useUtils } from "../composables/useUtils"
 
   import MedicinesController from "../controllers/MedicineController"

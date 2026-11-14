@@ -1,6 +1,6 @@
 import { usePopup } from "./usePopup"
 import { ref } from "vue"
-import type { ConfirmPopupAction, ConfirmPopupMessage, ConfirmPopupTitle } from "../types/components/confirmPopup"
+import type { ConfirmPopupAction, ConfirmPopupMessage, ConfirmPopupTitle } from "../../types/components/confirmPopup"
 
 export function useConfirmPopup(){
     const popup = usePopup()

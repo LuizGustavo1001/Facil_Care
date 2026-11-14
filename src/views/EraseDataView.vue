@@ -98,8 +98,8 @@
   import { useI18n } from "vue-i18n"
   import { useNavigation } from "../composables/useNavigation"
   import { useUtils } from "../composables/useUtils"
-  import { useSnackbar } from "../composables/useSnackbar"
-  import { useConfirmPopup } from "../composables/useConfirmPopup"
+  import { useSnackbar } from "../composables/components/useSnackbar"
+  import { useConfirmPopup } from "../composables/components/useConfirmPopup"
 
   import DatabaseController from "../controllers/DatabaseController"
 

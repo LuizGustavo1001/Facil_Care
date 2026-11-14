@@ -144,7 +144,7 @@
   import { homeView } from "../locales/projectConfig"
   import { icons } from "../assets/icons/icons.js"
 
-  import { useSnackbar } from "../composables/useSnackbar"
+  import { useSnackbar } from "../composables/components/useSnackbar"
   import { useUtils } from "../composables/useUtils"
   import { useDate } from "../composables/useDate"
 
@@ -164,7 +164,7 @@
   import Snackbar from "../components/feedback/Snackbar.vue"
   import NavigationBar from "../components/layout/NavigationBar.vue"
   import Badge from "../components/common/Badge.vue"
-  import FeaturedItem from "../components/buttons/FeaturedItem.vue"
+  import FeaturedItem from "../components/common/FeaturedItem.vue"
   import MedicineList from "../components/layout/MedicineList.vue"
 
   // COMPOSABLES

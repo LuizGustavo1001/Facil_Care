@@ -170,7 +170,7 @@
 
   import { useRoute } from "vue-router"
   import { useUtils } from "../composables/useUtils"
-  import { useSnackbar } from "../composables/useSnackbar"
+  import { useSnackbar } from "../composables/components/useSnackbar"
   import { useDexieBackup } from "../composables/useDexieBackup"
   import { usePeerSync } from "../composables/usePeerSync"
   import { useNavigation } from "../composables/useNavigation"

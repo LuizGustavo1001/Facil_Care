@@ -103,7 +103,7 @@ db.on("populate", async (transaction) => {
         },
         {
             record: 'bodyTemperature',
-            value: '31',
+            value: '35',
             dateTime: new Date(),
             observations: 'Adicione mais registros clicando no botão abaixo',
             patientId: patientId,

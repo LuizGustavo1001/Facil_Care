@@ -132,8 +132,8 @@
   import { useI18n } from "vue-i18n"
   import { useDate } from "../composables/useDate"
   import { useUtils } from "../composables/useUtils"
-  import { useSnackbar } from "../composables/useSnackbar"
-  import { useConfirmPopup } from "../composables/useConfirmPopup"
+  import { useSnackbar } from "../composables/components/useSnackbar"
+  import { useConfirmPopup } from "../composables/components/useConfirmPopup"
   import { useUnitSystem } from "../composables/useUnitSystem"
 
   import VitalSignController from "../controllers/VitalSignController"
@@ -160,7 +160,7 @@
   import ConfirmPopup from "../components/layout/popup/ConfirmPopup.vue"
   import AppOverlay from "../components/layout/AppOverlay.vue"
   import VitalSignsChart from "../components/dashboard/charts/VitalSignsChart.vue"
-  import Chips from "../components/common/Chips.vue";
+  import Chips from "../components/common/Chips.vue"
 
   // TYPES & INTERFACES
   export type MonitoringRecord = VitalSign | FollowUp

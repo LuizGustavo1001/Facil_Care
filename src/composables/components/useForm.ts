@@ -1,16 +1,16 @@
 import type { Component, MaybeRef } from "vue"
 import { ref, unref } from "vue"
-import { useUnitSystem } from "./useUnitSystem"
-import { useDate } from "./useDate"
+import { useUnitSystem } from "../useUnitSystem"
+import { useDate } from "../useDate"
 import { useI18n } from "vue-i18n"
-import { useUtils } from "./useUtils"
+import { useUtils } from "../useUtils"
 
-import Input from "../components/inputs/Input.vue"
-import TextArea from "../components/inputs/TextArea.vue"
-import SelectInput from "../components/inputs/SelectInput.vue"
-import MultipleTimeInput from "../components/inputs/MultipleTimeInput.vue"
-import WeekDaysInput from "../components/inputs/WeekDaysInput.vue"
-import type { ActionButtonProps } from "../components/buttons/ActionButton.vue"
+import Input from "../../components/inputs/Input.vue"
+import TextArea from "../../components/inputs/TextArea.vue"
+import SelectInput from "../../components/inputs/SelectInput.vue"
+import MultipleTimeInput from "../../components/inputs/MultipleTimeInput.vue"
+import WeekDaysInput from "../../components/inputs/WeekDaysInput.vue"
+import type { ActionButtonProps } from "../../components/buttons/ActionButton.vue"
 
 import type {
     DynamicOption,
@@ -19,12 +19,12 @@ import type {
     FormRegularTemplate,
     PopupSettings,
     SelectOption
-} from "../interfaces/Form"
-import type { DynamicData, FormRecord, Converter, FormValues } from "../types/components/genericForm"
-import type { ButtonTag } from "../types/components/buttons"
+} from "../../interfaces/Form"
+import type { DynamicData, FormRecord, Converter, FormValues } from "../../types/components/genericForm"
+import type { ButtonTag } from "../../types/components/buttons"
 
-import { BUTTON_TAGS } from "../constants/components/buttons"
-import { PADDING_SIZE } from "../constants/paddindSizes"
+import { BUTTON_TAGS } from "../../constants/components/buttons"
+import { PADDING_SIZE } from "../../constants/paddindSizes"
 
 export function useForm(){
     const isSubmitting = ref<boolean>(false)

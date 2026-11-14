@@ -77,10 +77,10 @@
   import { emergencyDataView , formTemplates } from "../locales/projectConfig"
 
   import { useUtils } from "../composables/useUtils"
-  import { useSnackbar } from "../composables/useSnackbar"
+  import { useSnackbar } from "../composables/components/useSnackbar"
   import { useDate } from "../composables/useDate"
-  import { useForm } from "../composables/useForm"
-  import { useFormPopup } from "../composables/useFormPopup"
+  import { useForm } from "../composables/components/useForm"
+  import { useFormPopup } from "../composables/components/useFormPopup"
 
   import PatientController from "../controllers/PatientController"
   import MedicineController from "../controllers/MedicineController"

@@ -123,7 +123,7 @@
   import { HEADER_TYPES } from "../constants/components/appHeader"
 
   import { useUtils } from "../composables/useUtils"
-  import { useSnackbar } from "../composables/useSnackbar"
+  import { useSnackbar } from "../composables/components/useSnackbar"
   import { useDate } from "../composables/useDate"
 
   import PatientController from "../controllers/PatientController"

@@ -60,7 +60,7 @@
 
   import { popupTypes } from "../../../locales/projectConfig"
 
-  import { useForm } from "../../../composables/useForm"
+  import { useForm } from "../../../composables/components/useForm"
   import { useUtils } from "../../../composables/useUtils"
 
   import AppPopup from "./AppPopup.vue"

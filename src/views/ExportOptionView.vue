@@ -198,7 +198,7 @@
 
   import { useDexieBackup } from "../composables/useDexieBackup"
   import { useRoute } from "vue-router"
-  import { useSnackbar } from "../composables/useSnackbar"
+  import { useSnackbar } from "../composables/components/useSnackbar"
   import { useQRCode } from "../composables/useQRCode"
   import { usePeerSync } from "../composables/usePeerSync"
   import { useI18n } from "vue-i18n"

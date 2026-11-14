@@ -1,5 +1,13 @@
 <template>
   <div class="view regular">
+    <!-- Week Schedule (Medicines) -->
+    <Snackbar
+        :isActive="isSnackbarOpen"
+        :message="snackbar.data.message"
+        :type="snackbar.data.type || undefined"
+        @click="snackbar.clear"
+    />
+
     <AppHeader
         :title="utils.getPageTitle(PAGES['WEEK_SCHEDULE'])"
         :leftIcon="pages[PAGES.WEEK_SCHEDULE].iconFill"
@@ -34,14 +42,14 @@
 </style>
 
 <script setup lang="ts">
-  import { ref, watch } from "vue"
+  import { computed, ref, watch } from "vue"
 
   import { PAGES } from "../constants/sysPages"
   import { HEADER_TYPES } from "../constants/components/appHeader"
 
   import { useUtils } from "../composables/useUtils"
   import { useDate } from "../composables/useDate"
-  import { useSnackbar } from "../composables/useSnackbar"
+  import { useSnackbar } from "../composables/components/useSnackbar"
 
   import { mainNavigationBar, pages, weekScheculeView } from "../locales/projectConfig"
 
@@ -54,6 +62,7 @@
   import AppHeader from "../components/layout/AppHeader.vue"
   import Chips from "../components/common/Chips.vue"
   import MedicineList from "../components/layout/MedicineList.vue"
+  import Snackbar from "../components/feedback/Snackbar.vue"
 
   // COMPOSABLES
   const utils = useUtils()
@@ -62,6 +71,9 @@
 
   // CONSTANTS
   const selectedDay = ref<number>(date.getDayNumber())
+
+  // COMPUTED PROPERTIES
+  const isSnackbarOpen = computed<boolean>(() => snackbar.isActive.value)
 
   // CONTROLLERS
   const medicineController = new MedicineController()
