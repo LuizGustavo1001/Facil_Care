@@ -26,13 +26,6 @@ Para isso, utiliza-se o banco de dados interno aos navegadores (`IndexedDB` + wr
 Imagens do Sistema
 ---
 <table>
-  <tr style="display: grid; grid-template-columns: repeat(5, 1fr)">
-    <th>Início</th>
-    <th>Gerenciamento</th>
-    <th>Registros</th>
-    <th>Estatísticas</th>
-    <th>Sinais Vitais</th>
-  </tr>
   <tr  style="display: grid; grid-template-columns: repeat(5, 1fr)">
     <td>
       <img src="/docs/preview/home-page.jpeg" alt="Página Inicial">
