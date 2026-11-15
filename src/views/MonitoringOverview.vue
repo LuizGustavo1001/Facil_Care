@@ -25,20 +25,20 @@
 
       <main class="main regular gap-2">
         <!-- Days Interval Filter -->
-        <ul class="filter-list flex align-center gap-05 overflow-auto">
+        <ul class="filter-list flex align-center gap-05 overflow-scroll">
           <li
               v-for="filter in charts.filters"
               :key="filter.id"
-              class="filter-item capitalize-words"
-              :class="{
-                    active: activeFilterDays === filter.days
-                  }"
-              @click="activeFilterDays = filter.days"
           >
-            {{ t(`charts.filters.${filter.id}.title`) }}
+            <Chips
+                :label="utils.getTranslate(`charts.filters.${filter.id}.title`)"
+                class="capitalize-words"
+                :isActive="activeFilterDays === filter.days"
+                @click="activeFilterDays = filter.days"
+            />
           </li>
 
-          <li>({{ filteredMonitoringData.length }} {{ t(`utils.measurements`) }})</li>
+          <li>({{ filteredMonitoringData.length }} {{ utils.getTranslate(`utils.measurements`) }})</li>
         </ul>
 
         <template v-if="formattedData.length > 0">
@@ -58,13 +58,13 @@
                   <h2>{{ item.value }}</h2>
 
                   <template v-for="(text, index) in item.description" :key="index">
-                    <p v-if="text" class="text-muted"> {{ text }}</p>
+                    <p v-if="text" class="text-muted">{{ text }}</p>
                   </template>
                 </div>
 
                 <IconBtn
                     :icon="icons['delete-bin-line']"
-                    variant="destructive"
+                    :variant="ICON_BTN_VARIANTS.DESTRUCTIVE"
                     size="25px"
                     @click.stop="handleDelete(item)"
                 />
@@ -132,9 +132,24 @@
   import { useI18n } from "vue-i18n"
   import { useDate } from "../composables/useDate"
   import { useUtils } from "../composables/useUtils"
-  import { useSnackbar } from "../composables/useSnackbar"
-  import { useConfirmPopup } from "../composables/useConfirmPopup"
+  import { useSnackbar } from "../composables/components/useSnackbar"
+  import { useConfirmPopup } from "../composables/components/useConfirmPopup"
   import { useUnitSystem } from "../composables/useUnitSystem"
+
+  import VitalSignController from "../controllers/VitalSignController"
+  import FollowUpController from "../controllers/FollowUpController"
+  import CaregiverController from "../controllers/CaregiverController"
+
+  import type { FollowUp } from "../interfaces/FollowUp"
+  import type { VitalSign } from "../interfaces/VitalSign"
+
+  import { PAGES, VITAL_SIGNS_PAGES, FOLLOW_UPS_PAGES } from "../constants/sysPages"
+  import { ICON_BTN_VARIANTS } from "../constants/components/buttons"
+
+  import type { WarningCode } from "../types/components/snackbar"
+  import type { TranslatableUnitItem }  from "../types/sysUnits"
+  import type { FollowUpType, VitalSignType } from "../types/sysPages"
+  import type { ConfirmPopupMessage, ConfirmPopupTitle } from "../types/components/confirmPopup"
 
   import AppHeader from "../components/layout/AppHeader.vue"
   import AppFallback from "./AppFallback.vue"
@@ -145,20 +160,7 @@
   import ConfirmPopup from "../components/layout/popup/ConfirmPopup.vue"
   import AppOverlay from "../components/layout/AppOverlay.vue"
   import VitalSignsChart from "../components/dashboard/charts/VitalSignsChart.vue"
-
-  import VitalSignController from "../controllers/VitalSignController"
-  import FollowUpController from "../controllers/FollowUpController"
-  import CaregiverController from "../controllers/CaregiverController"
-
-  import type { FollowUp } from "../interfaces/FollowUp"
-  import type { VitalSign } from "../interfaces/VitalSign"
-
-  import { PAGES, VITAL_SIGNS_PAGES, FOLLOW_UPS_PAGES } from "../constants/sysPages"
-
-  import type { WarningCode } from "../types/snackbar"
-  import type { TranslatableUnitItem }  from "../types/sysUnits"
-  import type { FollowUpType, VitalSignType } from "../types/sysPages"
-  import type { ConfirmPopupMessage, ConfirmPopupTitle } from "../types/confirmPopup"
+  import Chips from "../components/common/Chips.vue"
 
   // TYPES & INTERFACES
   export type MonitoringRecord = VitalSign | FollowUp
@@ -199,7 +201,7 @@
   const currentCategory = computed<string | null>(() => {
     const category = route.params.category
 
-    if (typeof category !== "string") return null
+    if(typeof category !== "string") return null
 
     return category !== "string" ? category : null
   })
@@ -207,7 +209,7 @@
   const currentMonitoring = computed<string | null>(() => {
     const category = route.params.monitoring
 
-    if (typeof category !== "string") return null
+    if(typeof category !== "string") return null
 
     return category !== "string" ? category : null
   })
@@ -235,7 +237,7 @@
   const getMonitoringRecords = async () => {
     const days = activeFilterDays.value as number
 
-    switch (currentCategory.value) {
+    switch(currentCategory.value) {
       case PAGES.FOLLOW_UPS:
         return days === null
             ? followUpsController.getByField(currentMonitoring.value as FollowUpType)
@@ -304,7 +306,7 @@
   const formatMonitoringRecord = async (item: MonitoringRecord): Promise<FormattedMonitoringItem> => {
     const formattedDate = item.dateTime
         ? date.getNumericDateTime(new Date(item.dateTime))
-        : null
+        : ""
 
     const parsedValue = unit.getTranslatedUnit(item.record as TranslatableUnitItem, item.value)
 
@@ -354,8 +356,8 @@
   // Opens the confirm popup to delete an item
   const handleDelete = (item: FormattedMonitoringItem): void => {
     const itemCategory = currentCategory.value === PAGES.VITAL_SIGNS
-        ? t("utils.vitalSign")
-        : t("utils.followUp")
+        ? utils.getTranslate("utils.vitalSign")
+        : utils.getTranslate("utils.followUp")
 
     const title = t("confirmPopupTemplates.deleteConfirm.title", { item: itemCategory.toLocaleLowerCase() }) + "?"
 
@@ -368,7 +370,7 @@
 
     const itemId = item.id as number
 
-    switch (currentCategory.value) {
+    switch(currentCategory.value) {
       case PAGES.VITAL_SIGNS:
         result = await vitalSignsController.delete(itemId)
         break
@@ -378,11 +380,11 @@
         break
     }
 
-    if (!result) return
+    if(!result) return
 
     snackbar.open(result.code as WarningCode)
 
-    if (result.success) {
+    if(result.success) {
       // Trigger a new query using the currently selected filter
       refreshKey.value++
     }

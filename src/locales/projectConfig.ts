@@ -4,11 +4,11 @@ import { THEME_PREFERENCES } from "../constants/sysThemes"
 import { LANGUAGES } from "../constants/sysLanguages"
 import { PAGES } from "../constants/sysPages"
 import { UNITS } from "../constants/sysUnits"
-import { BUTTON_COLORS } from "../constants/buttonComponent"
+import { BUTTON_COLORS } from "../constants/components/buttons"
 import { WEEK_DAYS } from "../constants/weekDays"
 
 import type { FormRegularTemplate } from "../interfaces/Form"
-import type { FormType } from "../types/genericForm"
+import type { FormType } from "../types/components/genericForm"
 
 export const THEME_OPTIONS = [
     { id: THEME_PREFERENCES.LIGHT },
@@ -27,15 +27,15 @@ export const UNITS_OPTIONS = [
     { id: UNITS.IMPERIAL }
 ]
 
-export const weekDays = [
-    { value: 0, label: WEEK_DAYS.SUNDAY},
-    { value: 1, label: WEEK_DAYS.MONDAY },
-    { value: 2, label: WEEK_DAYS.TUESDAY },
-    { value: 3, label: WEEK_DAYS.WEDNESDAY },
-    { value: 4, label: WEEK_DAYS.THURSDAY },
-    { value: 5, label: WEEK_DAYS.FRIDAY },
-    { value: 6, label: WEEK_DAYS.SATURDAY },
-]
+export const weekDaysFormat = {
+    [WEEK_DAYS.SUNDAY]: {value: 0, label: WEEK_DAYS.SUNDAY},
+    [WEEK_DAYS.MONDAY]: {value: 1, label: WEEK_DAYS.MONDAY},
+    [WEEK_DAYS.TUESDAY]: {value: 2, label: WEEK_DAYS.TUESDAY},
+    [WEEK_DAYS.WEDNESDAY]: {value: 3, label: WEEK_DAYS.WEDNESDAY},
+    [WEEK_DAYS.THURSDAY]: {value: 4, label: WEEK_DAYS.THURSDAY},
+    [WEEK_DAYS.FRIDAY]: {value: 5, label: WEEK_DAYS.FRIDAY},
+    [WEEK_DAYS.SATURDAY]: {value: 6, label: WEEK_DAYS.SATURDAY},
+}
 
 export const pages = {
     [PAGES.HOME]: {
@@ -55,6 +55,12 @@ export const pages = {
         iconFill: icons['user-fill'],
         iconLine: icons['user-line'],
         href: `/${PAGES.PATIENT_DATA}`
+    },
+    [PAGES.WEEK_SCHEDULE]: {
+        id: PAGES.WEEK_SCHEDULE,
+        iconFill: icons['calendar-schedule-fill'],
+        iconLine: icons['calendar-schedule-line'],
+        href: `/${PAGES.WEEK_SCHEDULE}`
     },
     [PAGES.VITAL_SIGNS]: {
         id: PAGES.VITAL_SIGNS,
@@ -303,7 +309,7 @@ export const patientDataView = {
             id: "manageData",
             buttons: [
                 pages[PAGES.EXPORT],
-                pages[PAGES.IMPORT],
+                pages[PAGES.IMPORT]
             ]
         },
         {
@@ -384,22 +390,22 @@ export const emergencyDataView = {
             buttons: [
                 {
                     id: "name",
-                    color: "blue",
-                    icon: icons["user-fill"],
+                    color: BUTTON_COLORS.BLUE,
+                    icon: icons["user-fill"]
                 },
                 {
                     id: "birthDate",
-                    color: "green",
+                    color: BUTTON_COLORS.GREEN,
                     icon: icons["cake-fill"]
                 },
                 {
                     id: "bloodType",
-                    color: "red",
+                    color: BUTTON_COLORS.RED,
                     icon: icons["blood-type-fill"]
                 },
                 {
                     id: "address",
-                    color: "blue",
+                    color: BUTTON_COLORS.BLUE,
                     icon: icons["pin-user-fill"]
                 }
             ]
@@ -431,10 +437,11 @@ export const emergencyDataView = {
             icon: icons['health-metric-fill'],
             component: "alt",
             action: "internalLink",
+
             buttons: [
                 pages[PAGES.DOCTORS],
                 pages[PAGES.MEDICINES],
-                pages[PAGES.CAREGIVERS],
+                pages[PAGES.CAREGIVERS]
             ]
         }
     ]
@@ -444,7 +451,7 @@ export const termsView = {
     categories: [
         {
             id: "consciousUse",
-            icon: icons['user-smile-fill'],
+            icon: icons['user-smile-fill']
         },
         {
             id: "dataPrivacy",
@@ -452,7 +459,7 @@ export const termsView = {
         },
         {
             id: "telemetry",
-            icon: icons['pin-user-fill'],
+            icon: icons['pin-user-fill']
         },
         {
             id: "devicePermissions",
@@ -460,7 +467,7 @@ export const termsView = {
         },
         {
             id: "dataManagement",
-            icon: icons['qr-scan-fill'],
+            icon: icons['qr-scan-fill']
         },
         {
             id: "dataExclusion",
@@ -610,6 +617,8 @@ export const warningMessages = {
     MedicineCreationFailed: "error",
     MedicineUpdateFailed: "error",
     MedicineDeleteFailed: "error",
+
+    NoMedicineForToday: "info",
 
     InvalidDateInterval: "error",
 
@@ -819,7 +828,7 @@ export const formTemplates = [
                     name: "startDate",
                     for: "startDate",
                     required: true,
-                    inputType: "datetime-local",
+                    inputType: "date",
                     isDefaultNow: true
                 },
                 {
@@ -1843,6 +1852,13 @@ export const mainNavigationBar = {
         href: "/services",
         hasText: true
     },
+    [PAGES.WEEK_SCHEDULE]: {
+        id: "weekSchedule",
+        icon: icons['calendar-schedule-line'],
+        iconActive: icons["calendar-schedule-fill"],
+        href: "/weekSchedule",
+        hasText: true
+    },
     [PAGES.PATIENT_DATA]: {
         id: PAGES.PATIENT_DATA,
         icon: icons["user-line"],
@@ -1866,5 +1882,9 @@ export const aboutView = {
     social: [
         socialMedias['github']
     ],
-    version: "2.0.0"
+    version: "2.0.1"
+}
+
+export const weekScheculeView = {
+    weekDaysFormat
 }

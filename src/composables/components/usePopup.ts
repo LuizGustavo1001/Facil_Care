@@ -1,8 +1,10 @@
-import { ref } from "vue"
-import { useOverlay } from "./useOverlay"
-import { useClickOutside } from "./useClickOutside"
-import type { DOMReference } from "../types/formPopup"
 import type { Ref } from "vue"
+import { ref } from "vue"
+
+import { useOverlay } from "./useOverlay"
+import { useClickOutside } from "../useClickOutside"
+
+import type { DOMReference } from "../../types/components/formPopup"
 
 export function usePopup() {
     const isOpen = ref<boolean>(false)
@@ -12,14 +14,14 @@ export function usePopup() {
     const overlay = useOverlay()
 
     const open = (): void => {
-        if (isOpen.value) return
+        if(isOpen.value) return
 
         isOpen.value = true
         overlay.show()
     }
 
     const close = (): void => {
-        if (!isOpen.value) return
+        if(!isOpen.value) return
 
         isOpen.value = false
         overlay.hide()

@@ -10,13 +10,13 @@
 
     <div class="week-days-wrapper flex gap-05">
       <div
-          v-for="day in weekDays"
+          v-for="day in weekDaysFormat"
           :key="day.value"
           class="week-day-button flex align-center justify-center"
           :class="{ active: isSelected(day.value) }"
           @click="toggleDayBtn(day.value)"
       >
-        {{ getDayLabel(day.value) }}
+        {{ date.getDayLabel(day.value, "narrow") }}
       </div>
     </div>
 
@@ -59,8 +59,11 @@
 </style>
 
 <script setup lang="ts">
-  import { weekDays } from "../../locales/projectConfig"
-  import { formatedLanguage } from "../../composables/useDate"
+  import { weekDaysFormat } from "../../locales/projectConfig"
+  import { useDate } from "../../composables/useDate"
+
+  // COMPOSABLES
+  const date = useDate()
 
   // OPTIONS
   defineOptions({
@@ -80,15 +83,6 @@
   const props = defineProps<WeekDaysInputProps>()
 
   // FUNCTIONS
-  const getDayLabel = (dayNumber: number): string => {
-    // 05/01/2025 it's a sunday
-    const date = new Date(2025, 0, 5 + dayNumber)
-
-    return date.toLocaleString(formatedLanguage.value, {
-      weekday: "narrow"
-    })
-  }
-
   const isSelected = (dayValue: number): boolean => {
     return model.value.includes(dayValue)
   }

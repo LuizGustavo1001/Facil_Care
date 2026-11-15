@@ -46,9 +46,9 @@
           <!-- Generate Button/Restart -->
           <div v-if="peerStatus === 'idle'" class="actions">
             <ActionButton
-                tag="button"
-                variant="highlight"
-                padding="md"
+                :tag="BUTTON_TAGS.BUTTON"
+                :variant="ACTION_BUTTON_VARIANTS.BRAND"
+                :padding="PADDING_SIZE.MEDIUM"
                 :leftIcon="icons['qr-code-fill']"
                 :title="getActionLabel('generate')"
                 @click="handleStartP2PSession"
@@ -66,10 +66,10 @@
               </template>
 
               <ActionButton
-                  tag="button"
-                  padding="md"
-                  variant="subtle"
-                  :leftIcon="icons['indeterminate-circle-fill']"
+                  :tag="BUTTON_TAGS.BUTTON"
+                  :padding="PADDING_SIZE.MEDIUM"
+                  :variant="ACTION_BUTTON_VARIANTS.SUBTLE"
+                  :leftIcon="icons['shut-down-line']"
                   :title="getActionLabel('cancel')"
                   @click="handleCancelP2P"
               />
@@ -87,10 +87,10 @@
               <p>{{ getActionLabel('done') }}!</p>
 
               <ActionButton
-                  tag="button"
-                  variant="subtle"
-                  padding="lg"
-                  :title="t('utils.back')"
+                  :tag="BUTTON_TAGS.BUTTON"
+                  :variant="ACTION_BUTTON_VARIANTS.SUBTLE"
+                  :padding="PADDING_SIZE.LARGE"
+                  :title="utils.getTranslate('utils.back')"
                   @click="navigation.handleReturn"
               />
             </div>
@@ -113,7 +113,7 @@
           <Icon
               :icon="icons['file-fill']"
               size="40px"
-              padding="sm"
+              :padding="PADDING_SIZE.SMALL"
               :bgColor="BUTTON_COLORS.YELLOW"
               style="border-radius: var(--radius-md)"
           />
@@ -141,16 +141,15 @@
 
         <div class="section-hero">
           <ActionButton
-              tag="button"
-              padding="md"
+              :tag="BUTTON_TAGS.BUTTON"
+              :padding="PADDING_SIZE.MEDIUM"
               :title="isDexieExporting
                 ? getActionLabel('exporting')
                 : getActionLabel('download')"
               :leftIcon="isDexieExporting
                 ? ''
-                : icons['download']"
+                : icons['save-fill']"
               :aria-disabled="isDexieExporting"
-
               @click="handleDownloadJSON"
           />
 
@@ -199,12 +198,22 @@
 
   import { useDexieBackup } from "../composables/useDexieBackup"
   import { useRoute } from "vue-router"
-  import { useSnackbar } from "../composables/useSnackbar"
+  import { useSnackbar } from "../composables/components/useSnackbar"
   import { useQRCode } from "../composables/useQRCode"
   import { usePeerSync } from "../composables/usePeerSync"
   import { useI18n } from "vue-i18n"
   import { useUtils } from "../composables/useUtils"
   import { useNavigation } from "../composables/useNavigation"
+
+  import { PAGES } from "../constants/sysPages"
+  import { BUTTON_COLORS } from "../constants/components/buttons"
+  import { ACTION_BUTTON_VARIANTS, BUTTON_TAGS } from "../constants/components/buttons"
+  import { PADDING_SIZE } from "../constants/paddindSizes"
+
+  import type { WarningCode } from "../types/components/snackbar"
+  import type { QRCodeError, QRCodeURL } from "../types/qrCode"
+  import type { PeerStatus, PeerSyncError } from "../types/peerSync"
+  import type { DexieError } from "../types/dexie"
 
   import AppHeader from "../components/layout/AppHeader.vue"
   import Snackbar from "../components/feedback/Snackbar.vue"
@@ -212,16 +221,8 @@
   import Icon from "../components/icons/Icon.vue"
   import ActionButton from "../components/buttons/ActionButton.vue"
 
-  import { PAGES } from "../constants/sysPages"
-  import { BUTTON_COLORS } from "../constants/buttonComponent"
-
-  import type { WarningCode } from "../types/snackbar"
-  import type { QRCodeError, QRCodeURL } from "../types/qrCode"
-  import type { PeerStatus, PeerSyncError } from "../types/peerSync"
-  import type { DexieError } from "../types/dexie"
-
   // COMPOSABLES
-  const { t, tm } = useI18n()
+  const { tm } = useI18n()
   const utils = useUtils()
   const snackbar = useSnackbar()
   const qrCode = useQRCode()
@@ -256,7 +257,6 @@
   // Returns selected export option title
   const getSubTypeTitle = (): string => {
     const key = `views.${PAGES.EXPORT}.categories.${currentExportType.value}.title`
-
     return utils.getTranslate(key)
   }
 
@@ -277,7 +277,6 @@
   // Returns the current translated export status
   const getActionLabel = (action: string): string => {
     const key = `views.${PAGES.EXPORT}.categories.${currentExportType.value}.badges.${action}`
-
     return utils.getTranslate(key)
   }
 
@@ -311,8 +310,8 @@
 
   // WATCHERS
   watch([qrCode.error, p2p.peerError], ([newQrCodeError, newPeerError]) => {
-    if (newQrCodeError) snackbar.open(newQrCodeError as WarningCode)
+    if(newQrCodeError) snackbar.open(newQrCodeError as WarningCode)
 
-    if (newPeerError) snackbar.open(newPeerError as WarningCode)
+    if(newPeerError) snackbar.open(newPeerError as WarningCode)
   })
 </script>

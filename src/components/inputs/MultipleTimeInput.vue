@@ -32,7 +32,7 @@
             v-if="timeValues.length > 1 && !readonly"
             tag="button"
             :icon="icons['delete-bin-fill']"
-            variant="destructive"
+            :variant="ICON_BTN_VARIANTS.DESTRUCTIVE"
             size="20px"
             type="button"
             class="remove-time-btn"
@@ -60,6 +60,7 @@
 <script setup lang="ts">
   import { computed } from "vue"
   import { icons } from "../../assets/icons/icons.js"
+  import { ICON_BTN_VARIANTS } from "../../constants/components/buttons"
 
   import { useI18n } from "vue-i18n"
   import { useDate } from "../../composables/useDate"
@@ -94,7 +95,7 @@
     readonly: false
   })
 
-  // COMPUTED
+  // COMPUTED PROPERTIES
   const computedId = computed<string | undefined>(() => {
     return props.for || (props.name ? `input-${props.name}` : undefined)
   })
@@ -113,11 +114,11 @@
   }
 
   function addTime(): void {
-    model.value = [...timeValues.value, date.getNumericHour()]
+    model.value = [...timeValues.value, date.dateToTime()]
   }
 
   function removeTime(index: number): void {
-    if(timeValues.value.length <= 1){
+    if(timeValues.value.length <= 1) {
       model.value = [""]
       return
     }

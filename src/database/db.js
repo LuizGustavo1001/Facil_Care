@@ -30,7 +30,7 @@ db.on("populate", async (transaction) => {
         {
             name: 'João Carlos Esposito',
             address: 'Av. Afonso Pena, 1537 - Centro, Belo Horizonte',
-            birthDate: '1953-03-10T00:00:00.000Z',
+            birthDate: '1953-03-10',
             bloodType: 'o_negative'
         }
     ], { allKeys: true })
@@ -103,7 +103,7 @@ db.on("populate", async (transaction) => {
         },
         {
             record: 'bodyTemperature',
-            value: '31',
+            value: '35',
             dateTime: new Date(),
             observations: 'Adicione mais registros clicando no botão abaixo',
             patientId: patientId,

@@ -1,18 +1,20 @@
 import { useI18n } from "vue-i18n"
-import { AsYouType } from "libphonenumber-js"
+import type { PaddingSize } from "../types/paddingSizes"
+import type { DayPeriod } from "../types/date"
+import { DAY_PERIODS } from "../constants/dayPeriods"
+import { BUTTON_COLORS } from "../constants/components/buttons"
+import { useDate } from "./useDate"
 
 export function useUtils() {
     const { t, te } = useI18n()
+    const date = useDate()
 
     /**
      * @param page - From lang or PAGES{}.
      **/
     const getPageTitle = (page: string): string => {
         const key = `pageTitle.${page}`
-
-        return te(key)
-            ? t(key)
-            : ""
+        return getTranslate(key)
     }
 
     /**
@@ -31,13 +33,13 @@ export function useUtils() {
      * @param translationKey - i18n translate key.
      **/
     const getOptionTranslate = (type: string, translationKey: string) => {
-        return te(`options.${type}.${translationKey}`)
-            ? t(`options.${type}.${translationKey}`)
-            : ""
+        const key = `options.${type}.${translationKey}`
+        return getTranslate(key)
     }
 
     /**
-     * Returns the string that represents the `translationKey` localed by the current language. Returns an `empty string`, if the translationKey doesn't represents a key
+     * Returns the string that represents the `translationKey` localed by the current language.
+     * Returns an `empty string`, if the translationKey doesn't represents a key
      **/
     const getTranslate = (translationKey: string) => {
         return te(translationKey)
@@ -45,16 +47,34 @@ export function useUtils() {
             : ""
     }
 
-    // Format Brazilian phone numbers
-    function formatPhone(value: string){
-        const digits = String(value ?? "")
-            .replace(/\D/g, "")
-            .slice(0, 11)
-
-        if(!digits) return ""
-
-        return new AsYouType("BR").input(digits)
+    const getPaddingStyle = (padding: PaddingSize): string => {
+        return `padding: var(--spacing-${padding})`
     }
 
-    return { getPageTitle, pageExists, getOptionTranslate, formatPhone, getTranslate }
+    // Returns the time badge color based at the current day period
+    const getBadgeColor = (schedule: string): string => {
+        const formattedTime = date.timeToDate(schedule) as Date
+
+        const dayPeriod: DayPeriod = date.getDayPeriod(formattedTime)
+
+        switch (dayPeriod) {
+            case DAY_PERIODS.AFTERNOON:
+                return BUTTON_COLORS.PURPLE
+
+            case DAY_PERIODS.EVENING:
+                return BUTTON_COLORS.ORANGE
+
+            default:
+                return BUTTON_COLORS.BLUE
+        }
+    }
+
+    // Returns the translated medicine route admin
+    const getRouteAdminLabel = (route: string): string => {
+        const key = `options.routeAdmin.${route}`
+        return getTranslate(key)
+    }
+
+
+    return { getPageTitle, pageExists, getOptionTranslate, getTranslate, getPaddingStyle, getBadgeColor, getRouteAdminLabel }
 }

@@ -2,13 +2,14 @@ import { PAGES } from "../constants/sysPages"
 import { THEME_PREFERENCES as THEMES } from "../constants/sysThemes"
 import { LANGUAGES } from "../constants/sysLanguages"
 import { UNITS } from "../constants/sysUnits"
-import { FORM_TYPES } from "../constants/form"
+import { FORM_TYPES } from "../constants/components/form"
 
 export default {
     pageTitle: {
         [PAGES.HOME]: "Home Page",
         [PAGES.SERVICES]: "Manage Medical Data",
         [PAGES.PATIENT_DATA]: "Patient Data",
+        [PAGES.WEEK_SCHEDULE]: "Week Medicine Schedule",
 
         [PAGES.VITAL_SIGNS]: "Vital Signs",
         [PAGES.FOLLOW_UPS]: "Physiological and Behavioral Monitoring",
@@ -54,6 +55,8 @@ export default {
         [PAGES.HOME]: "Home",
         [PAGES.SERVICES]: "Services",
         [PAGES.PATIENT_DATA]: "Patient Data",
+        [PAGES.WEEK_SCHEDULE]: "Week Medicine Schedule",
+
         [PAGES.MONITORING]: "Monitoring",
         [PAGES.MANAGE]: "Manage",
         [PAGES.EMERGENCY_DATA]: "Emergency Data",
@@ -204,6 +207,10 @@ export default {
             others: {
                 title: "Others"
             }
+        },
+
+        [PAGES.WEEK_SCHEDULE]: {
+            subtitle: "View here the medicaions the patient should take each day of the week"
         },
 
         [PAGES.REGISTER]: {
@@ -1544,29 +1551,8 @@ export default {
             title: "Error trying to remove medicine, try again later"
         },
 
-        NoMedicineRegistryFound: {
-            title: "No medicine registries found"
-        },
-        MedicineRegistryNotFound: {
-            title: "Selected medicine registry not found"
-        },
-        MedicineRegistryUpdated: {
-            title: "The selected medicine registry was updated successfully"
-        },
-        MedicineRegistryDeleted: {
-            title: "The selected medicine registry was deleted successfully"
-        },
-        MedicineRegistryCreated: {
-            title: "The medicine registry was added successfully"
-        },
-        MedicineRegistryCreationFailed: {
-            title: "Error trying to add new medicine registry, try again later"
-        },
-        MedicineRegistryUpdateFailed: {
-            title: "Error trying to update medicine registry data, try again later"
-        },
-        MedicineRegistryDeleteFailed: {
-            title: "Error trying to remove medicine registry, try again later"
+        NoMedicineForToday: {
+            title: "There are no medicines to be administered today!"
         },
 
         InvalidDateInterval: {
@@ -1621,6 +1607,9 @@ export default {
         },
         [PAGES.PATIENT_DATA]: {
             title: "Patient"
+        },
+        [PAGES.WEEK_SCHEDULE]: {
+            title: "Week"
         }
     }
 }

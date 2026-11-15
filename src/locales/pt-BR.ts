@@ -2,13 +2,14 @@ import { PAGES } from "../constants/sysPages"
 import { THEME_PREFERENCES as THEMES } from "../constants/sysThemes"
 import { LANGUAGES } from "../constants/sysLanguages"
 import { UNITS } from "../constants/sysUnits"
-import { FORM_TYPES } from "../constants/form"
+import { FORM_TYPES } from "../constants/components/form"
 
 export default {
     pageTitle: {
         [PAGES.HOME]: "Página Inicial",
         [PAGES.SERVICES]: "Gerenciar Dados Médicos",
         [PAGES.PATIENT_DATA]: "Dados do Paciente",
+        [PAGES.WEEK_SCHEDULE]: "Medicamentos da Semana",
 
         [PAGES.VITAL_SIGNS]: "Sinais Vitais",
         [PAGES.FOLLOW_UPS]: "Acompanhamento Fisiológico e Comportamental",
@@ -54,6 +55,8 @@ export default {
         [PAGES.HOME]: "Início",
         [PAGES.SERVICES]: "Serviços",
         [PAGES.PATIENT_DATA]: "Dados do Paciente",
+        [PAGES.WEEK_SCHEDULE]: "Medicamentos da Semana",
+
         [PAGES.MONITORING]: "Monitoramento",
         [PAGES.MANAGE]: "Gerenciamento",
         [PAGES.EMERGENCY_DATA]: "Dados de Emergência",
@@ -87,7 +90,7 @@ export default {
         notFoundCard: {
             item: "Nenhum item encontrado...",
             notification: "Nenhuma nova notificação encontrada...",
-            noMedicinesToday: "Nenhum remédio a ser administrado hoje!"
+            noMedicinesToday: "Nenhum medicamento a ser administrado hoje!"
         },
         vitalSign: "Sinal Vital",
         followUp: "Acompanhamento",
@@ -162,7 +165,7 @@ export default {
 
     views: {
         [PAGES.HOME]: {
-            todaysMedicines: "Remédios de Hoje",
+            todaysMedicines: "Medicamentos do Dia",
             newMedicine: "Novo Medicamento",
             quickAccess: {
                 [PAGES.VITAL_SIGNS]: {
@@ -205,6 +208,10 @@ export default {
             others: {
                 title: "Outros"
             }
+        },
+
+        [PAGES.WEEK_SCHEDULE]: {
+          subtitle: "Visualize aqui os Medicamentos que o paciente deve tomar em cada dia da semana"
         },
 
         [PAGES.REGISTER]: {
@@ -1429,7 +1436,7 @@ export default {
             title: "O cuidador selecionado não foi encontrado"
         },
         CaregiverUpdated: {
-            title: "Os ddos do cuidador selecionado foram atualizados com sucesso"
+            title: "Os dados do cuidador selecionado foram atualizados com sucesso"
         },
         CaregiverDeleted: {
             title: "O cuidador selecionado foi excluído com sucesso"
@@ -1547,6 +1554,10 @@ export default {
             title: "Erro ao tentar remover um medicamento, tente novamente mais tarde"
         },
 
+        NoMedicineForToday: {
+            title: "Nenhum medicamento a ser administrado hoje!"
+        },
+
         InvalidDateInterval: {
             title: "Intervalo de data inválido. Data mínima deve ser menor que a data máxima"
         },
@@ -1599,6 +1610,9 @@ export default {
         },
         [PAGES.PATIENT_DATA]: {
             title: "Paciente"
+        },
+        [PAGES.WEEK_SCHEDULE]: {
+            title: "Semana"
         }
     }
 }

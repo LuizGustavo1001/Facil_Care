@@ -38,6 +38,7 @@
               :key="btn.id"
               v-bind="form.getBtnProps(btn, type)"
               :aria-disabled="form.isSubmitting.value"
+              type="submit"
               style="min-width: 150px; align-self: flex-end;"
           />
         </div>
@@ -59,19 +60,19 @@
 
   import { popupTypes } from "../../../locales/projectConfig"
 
-  import { useForm } from "../../../composables/useForm"
-  import { useI18n } from "vue-i18n"
-
-  import AppPopup from "./AppPopup.vue"
-  import ActionButton from "../../buttons/ActionButton.vue"
+  import { useForm } from "../../../composables/components/useForm"
+  import { useUtils } from "../../../composables/useUtils"
 
   import type { FormRegularTemplate } from "../../../interfaces/Form"
   import type { FormButton } from "../../../interfaces/Form"
 
-  import { FORM_TYPES } from "../../../constants/form"
+  import { FORM_TYPES } from "../../../constants/components/form"
 
-  import type { DOMReference } from "../../../types/formPopup"
-  import type { FormType } from "../../../types/genericForm"
+  import type { DOMReference } from "../../../types/components/formPopup"
+  import type { FormType } from "../../../types/components/genericForm"
+
+  import AppPopup from "./AppPopup.vue"
+  import ActionButton from "../../buttons/ActionButton.vue"
 
   // TYPES & INTERFACES
   interface Props {
@@ -97,21 +98,22 @@
   }>()
 
   // COMPOSABLES
-  const { t, te } = useI18n()
   const form = useForm()
+  const utils = useUtils()
 
   // COMPUTED PROPERTIES
+
   // Returns current popupConfig based on the selected popup type
   const popupConfig = computed(() => popupTypes[props.type as keyof typeof popupTypes] || {})
 
   // FUNCTIONS
   const getPopupTitle = (): string => {
-    const typeKey = `formPopupTypes.${props.type}.title` // type label
+    const typeKey = `formPopupTypes.${props.type}.title`
 
     const templateKey = `formTemplates.${props.template.id}.header.title`
 
-    const type = te(typeKey) ? t(typeKey) : ""
-    const template = te(templateKey) ? t(templateKey) : ""
+    const type = utils.getTranslate(typeKey)
+    const template = utils.getTranslate(templateKey)
 
     return `${type} ${template}`
   }

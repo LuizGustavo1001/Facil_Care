@@ -16,7 +16,7 @@
     >
       <!-- 1. Default Option -->
       <option value="" disabled hidden>
-        {{t(`utils.selectOption`)}}...
+        {{ utils.getTranslate(`utils.selectOption`) }}...
       </option>
 
       <!-- 2. Specific Option(s) -->
@@ -47,7 +47,7 @@
 
 <script setup lang="ts">
   import { computed } from "vue"
-  import { useI18n } from "vue-i18n"
+  import { useUtils } from "../../composables/useUtils"
 
   // OPTIONS
   defineOptions({
@@ -87,7 +87,7 @@
   })
 
   // COMPOSABLES
-  const { t } = useI18n()
+  const utils = useUtils()
 
   // COMPUTED PROPERTIES
   const computedId = computed<string | undefined>(() => {

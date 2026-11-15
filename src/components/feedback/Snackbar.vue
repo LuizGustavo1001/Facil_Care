@@ -70,9 +70,10 @@
 
 <script setup lang="ts">
   import { icons } from "../../assets/icons/icons.js"
+  import { SNACKBAR_TYPES } from "../../constants/components/snackbar"
+  import type { SnackbarType } from "../../types/components/snackbar"
+
   import Icon from "../icons/Icon.vue"
-  import { SNACKBAR_TYPES } from "../../constants/snackbar"
-  import type { SnackbarType } from "../../types/snackbar"
 
   // TYPES & INTERFACES
   interface Props {
@@ -84,6 +85,6 @@
   // PROPS DEFAULT VALUES
   const props = withDefaults(defineProps<Props>(), {
     message: null,
-    type: SNACKBAR_TYPES.SUCCESS,
+    type: SNACKBAR_TYPES.SUCCESS
   })
 </script>

@@ -26,28 +26,21 @@ Para isso, utiliza-se o banco de dados interno aos navegadores (`IndexedDB` + wr
 Imagens do Sistema
 ---
 <table>
-  <tr>
-    <th>Página Inicial</th>
-    <th>Gerenciamento</th>
-    <th>Registros</th>
-    <th>Estatísticas</th>
-    <th>Sinais Vitais</th>
-  </tr>
-  <tr>
+  <tr  style="display: grid; grid-template-columns: repeat(5, 1fr)">
     <td>
-      <img src="/docs/preview/home-page.webp" alt="Página Inicial" width="240">
+      <img src="/docs/preview/home-page.jpeg" alt="Página Inicial">
     </td>
     <td>
-      <img src="/docs/preview/manage-page.webp" alt="Página Exemplo de Gerenciamento" width="240">
+      <img src="/docs/preview/manage-page.jpeg" alt="Página Exemplo de Gerenciamento">
     </td>
     <td>
-      <img src="/docs/preview/register-page.webp" alt="Página Exemplo de Registros" width="240">
+      <img src="/docs/preview/register-page.jpeg" alt="Página Exemplo de Registros">
     </td>
     <td>
-      <img src="/docs/preview/statistics-page.webp" alt="Página Exemplo de Estatísticas" width="240">
+      <img src="/docs/preview/statistics.jpeg" alt="Página Exemplo de Estatísticas">
     </td>
     <td>
-      <img src="/docs/preview/vital-signs-page.webp" alt="Página de Sinais Vitais" width="240">
+      <img src="/docs/preview/vital-signs.jpeg" alt="Página de Sinais Vitais">
     </td>
   </tr>
 </table>

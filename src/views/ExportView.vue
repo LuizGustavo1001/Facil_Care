@@ -9,7 +9,7 @@
       <section class="main-section regular gap-1">
         <!-- View Main Title -->
         <div class="section-title-container">
-          <p class="section-description text-muted">{{ t(`views.${PAGES.EXPORT}.subtitle`) }}:</p>
+          <p class="section-description text-muted">{{ utils.getTranslate(`views.${PAGES.EXPORT}.subtitle`) }}:</p>
         </div>
 
         <!-- Export Options -->
@@ -19,14 +19,14 @@
               :key="button.id"
           >
             <ActionButtonColorful
-                tag="router"
+                :tag="BUTTON_TAGS.ROUTER"
                 :to="button.href"
                 :title="getButtonTitle(button.id)"
                 :description="getButtonDescription(button.id)"
                 :leftIcon="button.icon"
                 leftIconSize="25px"
                 :rightIcon="icons['chevron-right']"
-                :color="button?.color ?? null"
+                :color="button?.color"
             />
           </template>
         </div>
@@ -43,9 +43,9 @@
 <script setup lang="ts">
   import { icons } from "../assets/icons/icons.js"
   import { PAGES } from "../constants/sysPages"
+  import { BUTTON_TAGS } from "../constants/components/buttons"
   import { exportView } from "../locales/projectConfig"
 
-  import { useI18n } from "vue-i18n"
   import { useUtils } from "../composables/useUtils"
 
   import AppHeader from "../components/layout/AppHeader.vue"
@@ -53,19 +53,16 @@
   import ActionButtonColorful from "../components/buttons/ActionButtonColorful.vue"
 
   // COMPOSABLES
-  const { t } = useI18n()
   const utils = useUtils()
 
   // FUNCTIONS
   const getButtonTitle = (buttonId: string): string => {
     const key = `views.${PAGES.EXPORT}.categories.${buttonId}.title`
-
     return utils.getTranslate(key)
   }
 
   const getButtonDescription = (buttonId: string): string => {
     const key = `views.${PAGES.EXPORT}.categories.${buttonId}.description`
-
     return utils.getTranslate(key)
   }
 </script>

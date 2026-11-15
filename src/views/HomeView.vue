@@ -13,16 +13,16 @@
     <header class="home-hero flex-shrink">
       <AppHeader
           :title="utils.getPageTitle(PAGES['HOME'])"
-          :leftIcon="icons['hospital-fill']"
+          :leftIcon="pages[PAGES.HOME].iconFill"
           :hasNotifications="false"
-          type="noButton"
-          variant="transparent"
+          :type="HEADER_TYPES['NO_BUTTON']"
+          :variant="HEADER_VARIANTS.TRANSPARENT"
       />
 
       <!-- Patient Information -->
       <section class="home-patient-card flex flex-column gap-05">
         <p class="home-patient-name">
-          {{ t(`utils.hello`) }},
+          {{ utils.getTranslate(`utils.hello`) }},
           <span class="bolder-weight">{{ patient?.name ?? "" }}</span>!
         </p>
 
@@ -32,14 +32,14 @@
               class="bold-weight capitalize-words"
               :text="date.getFullDate()"
               :icon="icons['time-fill']"
-              spacing="xs"
+              :spacing="PADDING_SIZE.EXTRA_SMALL_1"
           />
         </div>
       </section>
     </header>
 
     <!-- Main Content -->
-    <main class="home-content flex flex-column">
+    <main class="home-content flex flex-column flex-grow-1">
       <!-- Quick Access -->
       <section class="quick-access flex flex-column gap-05">
         <div class="section-title-container">
@@ -59,56 +59,29 @@
       </section>
 
       <!-- Today's Medicine -->
-      <section class="home-medicines flex flex-column gap-05 flex-grow-1">
+      <section class="home-medicines flex flex-column gap-1 flex-grow-1">
         <div class="section-title-container">
-          <h2 class="section-title text-uppercase text-muted bolder-weight">{{ t(`views.${PAGES.HOME}.todaysMedicines`) }}</h2>
+          <h2 class="section-title text-uppercase text-muted bolder-weight">{{ utils.getTranslate(`views.${PAGES.HOME}.todaysMedicines`) }}</h2>
         </div>
 
-        <template v-if="medicines.length > 0">
-          <ul class="buttons-wrapper overflow-auto" style="height: 500px">
-            <template
-                v-for="medicine in medicines"
-                :key="medicine._id"
-            >
-              <li
-                  v-for="medicineSchedule in medicine.administrationTimes"
-                  :key="medicine._id + medicineSchedule"
-                  class="flex gap-05 align-center item"
-              >
-                <Badge :text="medicineSchedule" class="flex-shrink" :color="getBadgeColor(medicineSchedule)" />
-
-                <div class="flex-grow-1">
-                  <p class="truncate-single">
-                    <span class="bold-weight">{{ medicine.name }}</span>
-                    <span class="capitalize-words medium-weight"> ({{ getRouteAdminLabel(medicine.routeAdmin) }}) </span>
-                  </p>
-
-                  <p class="text-muted truncate-single">
-                    {{ medicine.observations }}
-                  </p>
-                </div>
-              </li>
-            </template>
-          </ul>
-
-          <!-- Add New Medicine Button -->
-          <ActionButton
-              tag="router"
-              :to="pages[PAGES.MEDICINES].href"
-              :rightIcon="icons['add']"
-              :title="t(`views.${PAGES.HOME}.newMedicine`)"
-              padding="sm"
-              :align-center="true"
-              style="
-                align-self: flex-end;
-                width: fit-content;
-              "
-          />
-        </template>
-
-        <NotFoundCard v-else type="noMedicinesToday" size="medium" />
+        <MedicineList :medicineList="medicines" />
       </section>
     </main>
+
+    <!-- Add New Medicine Button -->
+    <ActionButton
+        :tag="BUTTON_TAGS.ROUTER"
+        :to="pages[PAGES.MEDICINES].href"
+        :rightIcon="icons['add']"
+        :title="utils.getTranslate(`views.${PAGES.HOME}.newMedicine`)"
+        :padding="PADDING_SIZE.SMALL"
+        :align-center="true"
+        class="fixed add-new-medicine-button"
+        style="
+          align-self: flex-end;
+          width: fit-content;
+        "
+    />
 
     <NavigationBar :activeItem="mainNavigationBar[PAGES.HOME].id" />
   </div>
@@ -160,9 +133,11 @@
     box-shadow: 0 0 5px 5px var(--color-shadow-subtle);
   }
 
-  .home-medicines .item {
-    padding: var(--spacing-md);
-    background: var(--color-bg-subtle);
+  .add-new-medicine-button {
+    bottom: 5em;
+    right: 1em;
+
+    z-index: 8;
   }
 
   /* DARK MODE */
@@ -181,7 +156,7 @@
     color: inherit;
   }
   .highContrast .home-content {
-    border: 1px solid var(--color-border-default);
+    border: 2px solid var(--color-border-default);
   }
 </style>
 
@@ -191,35 +166,32 @@
   import { homeView } from "../locales/projectConfig"
   import { icons } from "../assets/icons/icons.js"
 
-  import { useI18n } from "vue-i18n"
-  import { useSnackbar } from "../composables/useSnackbar"
+  import { useSnackbar } from "../composables/components/useSnackbar"
   import { useUtils } from "../composables/useUtils"
   import { useDate } from "../composables/useDate"
-
-  import AppHeader from "../components/layout/AppHeader.vue"
-  import Snackbar from "../components/feedback/Snackbar.vue"
-  import NavigationBar from "../components/layout/NavigationBar.vue"
-  import Icon from "../components/icons/Icon.vue"
-  import Badge from "../components/common/Badge.vue"
-  import ActionButton from "../components/buttons/ActionButton.vue"
-  import NotFoundCard from "../components/feedback/NotFoundCard.vue"
 
   import PatientController from "../controllers/PatientController"
   import MedicineController from "../controllers/MedicineController"
 
   import { PAGES } from "../constants/sysPages"
-  import { DAY_PERIODS } from "../constants/dayPeriods"
-  import { BUTTON_COLORS } from "../constants/buttonComponent"
+  import { PADDING_SIZE } from "../constants/paddindSizes"
+  import { HEADER_TYPES, HEADER_VARIANTS } from "../constants/components/appHeader"
+  import { BUTTON_TAGS } from "../constants/components/buttons"
 
   import type { Medicine } from "../interfaces/Medicine"
   import type { Patient } from "../interfaces/Patient"
 
-  import type { WarningCode } from "../types/snackbar"
-  import type { DayPeriod } from "../types/date"
-  import FeaturedItem from "../components/buttons/FeaturedItem.vue"
+  import type { WarningCode } from "../types/components/snackbar"
+
+  import AppHeader from "../components/layout/AppHeader.vue"
+  import Snackbar from "../components/feedback/Snackbar.vue"
+  import NavigationBar from "../components/layout/NavigationBar.vue"
+  import Badge from "../components/common/Badge.vue"
+  import FeaturedItem from "../components/common/FeaturedItem.vue"
+  import MedicineList from "../components/layout/MedicineList.vue"
+  import ActionButton from "../components/buttons/ActionButton.vue"
 
   // COMPOSABLES
-  const { t } = useI18n()
   const snackbar = useSnackbar()
   const utils = useUtils()
   const date = useDate()
@@ -236,34 +208,8 @@
   const medicines = ref<Medicine[]>([])
 
   // FUNCTIONS
-  // Returns the time badge color based at the current day period
-  const getBadgeColor = (schedule: string): string => {
-    const formattedTime = date.timeToDate(schedule) as Date
-
-    const dayPeriod: DayPeriod = date.getDayPeriod(formattedTime)
-
-    switch (dayPeriod) {
-      case DAY_PERIODS.AFTERNOON:
-        return BUTTON_COLORS.PURPLE
-
-      case DAY_PERIODS.EVENING:
-        return BUTTON_COLORS.ORANGE
-
-      default:
-        return BUTTON_COLORS.BLUE
-    }
-  }
-
-  // Returns the translated route admin
-  const getRouteAdminLabel = (route: string): string => {
-    const key = `options.routeAdmin.${route}`
-
-    return utils.getTranslate(key)
-  }
-
   const getQuickAccessItemTitle = (itemId: string): string => {
     const key = `views.${PAGES.HOME}.quickAccess.${itemId}.title`
-
     return utils.getTranslate(key)
   }
 

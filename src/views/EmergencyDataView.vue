@@ -44,7 +44,7 @@
               :to="category.href as string"
               class="edit-link"
           >
-            {{ t(`utils.edit`) }}
+            {{ utils.getTranslate(`utils.edit`) }}
             <Icon :icon="icons['pencil-fill']"/>
           </router-link>
         </div>
@@ -70,24 +70,17 @@
 <style scoped></style>
 
 <script setup lang="ts">
-  import { computed, onMounted, ref } from "vue"
   import type { Component } from "vue"
+  import { computed, onMounted, ref } from "vue"
+
   import { icons } from "../assets/icons/icons.js"
   import { emergencyDataView , formTemplates } from "../locales/projectConfig"
 
   import { useUtils } from "../composables/useUtils"
-  import { useSnackbar } from "../composables/useSnackbar"
+  import { useSnackbar } from "../composables/components/useSnackbar"
   import { useDate } from "../composables/useDate"
-  import { useForm } from "../composables/useForm"
-  import { useFormPopup } from "../composables/useFormPopup"
-
-  import AppHeader from "../components/layout/AppHeader.vue"
-  import AppFooter from "../components/layout/AppFooter.vue"
-  import ActionButton from "../components/buttons/ActionButton.vue"
-  import ActionButtonColorful from "../components/buttons/ActionButtonColorful.vue"
-  import Snackbar from "../components/feedback/Snackbar.vue"
-  import AppOverlay from "../components/layout/AppOverlay.vue"
-  import FormPopup from "../components/layout/popup/FormPopup.vue"
+  import { useForm } from "../composables/components/useForm"
+  import { useFormPopup } from "../composables/components/useFormPopup"
 
   import PatientController from "../controllers/PatientController"
   import MedicineController from "../controllers/MedicineController"
@@ -106,13 +99,22 @@
   import type { Medicine } from "../interfaces/Medicine"
   import type { FormPopupTemplate } from "../interfaces/Form"
 
-  import type { WarningCode } from "../types/snackbar"
-  import type { FormValues } from "../types/genericForm"
-  import type { FormContext } from "../types/formPopup"
+  import type { WarningCode } from "../types/components/snackbar"
+  import type { FormValues } from "../types/components/genericForm"
+  import type { FormContext } from "../types/components/formPopup"
 
   import { PAGES } from "../constants/sysPages"
+  import { PADDING_SIZE } from "../constants/paddindSizes"
+  import { ACTION_BUTTON_COLORFUL_VARIANTS, BUTTON_TAGS }  from "../constants/components/buttons"
+
+  import AppHeader from "../components/layout/AppHeader.vue"
+  import AppFooter from "../components/layout/AppFooter.vue"
+  import ActionButton from "../components/buttons/ActionButton.vue"
+  import ActionButtonColorful from "../components/buttons/ActionButtonColorful.vue"
+  import Snackbar from "../components/feedback/Snackbar.vue"
+  import AppOverlay from "../components/layout/AppOverlay.vue"
+  import FormPopup from "../components/layout/popup/FormPopup.vue"
   import Icon from "../components/icons/Icon.vue"
-  import {useI18n} from "vue-i18n";
 
   // TYPES & INTERFACES
   // Emegergency data button template
@@ -137,7 +139,6 @@
   }
 
   // COMPOSABLES
-  const { t } = useI18n()
   const utils = useUtils()
   const snackbar = useSnackbar()
   const date = useDate()
@@ -236,11 +237,11 @@
           dbButtons = currentButtons.map((button) => {
             let count = 0
 
-            if (button.id === PAGES.DOCTORS) {
+            if(button.id === PAGES.DOCTORS) {
               count = doctors.value.length
-            } else if (button.id === PAGES.MEDICINES) {
+            } else if(button.id === PAGES.MEDICINES) {
               count = medicines.value.length
-            } else if (button.id === PAGES.CAREGIVERS) {
+            } else if(button.id === PAGES.CAREGIVERS) {
               count = caregivers.value.length
             }
 
@@ -324,8 +325,8 @@
     return {
       title: getButtonTitle(category, button),
       description: getButtonSubtitle(category, button),
-      padding: "md",
-      variant: "subtle",
+      padding: PADDING_SIZE.MEDIUM,
+      variant: ACTION_BUTTON_COLORFUL_VARIANTS.SUBTLE,
       hasBorderRadius: false,
     }
   }
@@ -335,7 +336,7 @@
     if(category.action === "popup") {
       return {
         rightIcon: icons["pencil-line"],
-        tag: "button",
+        tag: BUTTON_TAGS.BUTTON,
         ref: formPopup.triggerRef
       }
     }
@@ -350,13 +351,13 @@
     if(category.action === "internalLink") {
       return {
         rightIcon: icons["chevron-right"],
-        tag: "router"
+        tag: BUTTON_TAGS.ROUTER
       }
     }
 
     // category.action === "none" or nothing
     return {
-      tag: "button"
+      tag: BUTTON_TAGS.BUTTON
     }
   }
 
@@ -398,7 +399,7 @@
 
     let result = null
     if(context.sectionId === "patient") {
-      result = await form.executeDBSubmit(() => patientController.update(cleanData))
+      result = await patientController.update(cleanData)
     }
 
     if(!result) return
@@ -435,17 +436,17 @@
       caregiverData
     ] = results
 
-    if (patientData.success && patientData.data) {
+    if(patientData.success && patientData.data) {
       patient.value = patientData.data as Patient
-    } else if (patientData.code) {
+    } else if(patientData.code) {
       snackbar.open(patientData.code as WarningCode)
     }
 
-    if (medicineData.success) medicines.value = medicineData.data as Medicine[]
-    if (allergyData.success) allergies.value = allergyData.data as Allergy[]
-    if (healthPlanData.success) healthPlans.value = healthPlanData.data as HealthPlan[]
-    if (doctorData.success) doctors.value = doctorData.data as Doctor[]
-    if (emergencyContactData.success) emergencyContacts.value = emergencyContactData.data as EmergencyContact[]
-    if (caregiverData.success) caregivers.value = caregiverData.data as Caregiver[]
+    if(medicineData.success) medicines.value = medicineData.data as Medicine[]
+    if(allergyData.success) allergies.value = allergyData.data as Allergy[]
+    if(healthPlanData.success) healthPlans.value = healthPlanData.data as HealthPlan[]
+    if(doctorData.success) doctors.value = doctorData.data as Doctor[]
+    if(emergencyContactData.success) emergencyContacts.value = emergencyContactData.data as EmergencyContact[]
+    if(caregiverData.success) caregivers.value = caregiverData.data as Caregiver[]
   })
 </script>

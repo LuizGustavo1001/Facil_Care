@@ -1,15 +1,15 @@
 import type { Component, MaybeRef } from "vue"
 import { ref, unref } from "vue"
-import { useUnitSystem } from "./useUnitSystem"
-import { useDate } from "./useDate"
-import { useI18n } from "vue-i18n"
-import { useUtils } from "./useUtils"
+import { useUnitSystem } from "../useUnitSystem"
+import { useDate } from "../useDate"
+import { useUtils } from "../useUtils"
 
-import Input from "../components/inputs/Input.vue"
-import TextArea from "../components/inputs/TextArea.vue"
-import SelectInput from "../components/inputs/SelectInput.vue"
-import MultipleTimeInput from "../components/inputs/MultipleTimeInput.vue"
-import WeekDaysInput from "../components/inputs/WeekDaysInput.vue"
+import Input from "../../components/inputs/Input.vue"
+import TextArea from "../../components/inputs/TextArea.vue"
+import SelectInput from "../../components/inputs/SelectInput.vue"
+import MultipleTimeInput from "../../components/inputs/MultipleTimeInput.vue"
+import WeekDaysInput from "../../components/inputs/WeekDaysInput.vue"
+import type { ActionButtonProps } from "../../components/buttons/ActionButton.vue"
 
 import type {
     DynamicOption,
@@ -18,8 +18,12 @@ import type {
     FormRegularTemplate,
     PopupSettings,
     SelectOption
-} from "../interfaces/Form"
-import type { DynamicData, FormRecord, Converter, FormValues } from "../types/genericForm"
+} from "../../interfaces/Form"
+import type { DynamicData, FormRecord, Converter, FormValues } from "../../types/components/genericForm"
+import type { ButtonTag } from "../../types/components/buttons"
+
+import { BUTTON_TAGS } from "../../constants/components/buttons"
+import { PADDING_SIZE } from "../../constants/paddindSizes"
 
 export function useForm(){
     const isSubmitting = ref<boolean>(false)
@@ -28,7 +32,6 @@ export function useForm(){
     const unit = useUnitSystem()
     const date = useDate()
     const utils = useUtils()
-    const { t, te } = useI18n()
 
     /**
      * Converts fields according to the provided converter.
@@ -37,7 +40,7 @@ export function useForm(){
         const result: FormValues = { ...data }
 
         for(const input of template?.main?.inputs ?? []) {
-            if (!input.measurementType || result[input.name] === undefined) continue
+            if(!input.measurementType || result[input.name] === undefined) continue
 
             // convert value
             result[input.name] = converter(
@@ -60,18 +63,18 @@ export function useForm(){
         template: FormRegularTemplate,
         idKey = "_id"
     ): FormValues | FormValues[] | null => {
-        if (!dataSource || !template.main?.inputs) {
+        if(!dataSource || !template.main?.inputs) {
             return Array.isArray(dataSource) ? [] : {}
         }
 
         const extractFields = (dataObj: FormRecord): FormValues => {
             const values: FormValues = {}
 
-            if (dataObj[idKey] !== undefined) {
+            if(dataObj[idKey] !== undefined) {
                 values[idKey] = dataObj[idKey]
             }
 
-            for (const input of template.main?.inputs ?? []) {
+            for(const input of template.main?.inputs ?? []) {
                 values[input.name] = dataObj[input.name]
             }
 
@@ -85,9 +88,6 @@ export function useForm(){
 
     /**
      * Normalizes form values to metric units before persistence.
-     *
-     * @param data
-     * @param template
      */
     const normalizeFormValues = (data: FormValues, template: FormRegularTemplate): FormValues => {
         return convertFormValues(
@@ -104,7 +104,7 @@ export function useForm(){
         event: SubmitEvent,
         template: FormRegularTemplate
     ): FormValues => {
-        if (!(event.currentTarget instanceof HTMLFormElement)) {
+        if(!(event.currentTarget instanceof HTMLFormElement)) {
             return {}
         }
 
@@ -118,17 +118,17 @@ export function useForm(){
         )
 
         // Initialize weekday fields as arrays.
-        for (const name of weekDayFields) {
+        for(const name of weekDayFields) {
             data[name] = []
         }
 
-        for (const [rawName, value] of formData.entries()) {
+        for(const [rawName, value] of formData.entries()) {
             const isArray = rawName.endsWith("[]")
             const name = isArray
                 ? rawName.slice(0, -2)
                 : rawName
 
-            if (isArray) {
+            if(isArray) {
                 const current = data[name]
                 const values = Array.isArray(current) ? current : []
 
@@ -145,25 +145,6 @@ export function useForm(){
         }
 
         return data
-    }
-
-    /**
-     * Executes a database operation and tracks its submission state.
-     *
-     * @param actionCallback - Controller method to access the desired model of the database.
-     *
-     * @example
-     * actionCallback: `() => patientController.updatePatient(...)`
-     **/
-    const executeDBSubmit = async <T>(actionCallback: () => Promise<T>): Promise<T> => {
-        isSubmitting.value = true
-        formWarning.value = null
-
-        try {
-            return await actionCallback()
-        } finally {
-            isSubmitting.value = false
-        }
     }
 
     // Returns the component associated with an input tag
@@ -196,18 +177,15 @@ export function useForm(){
         if (!input || !templateId) return ""
 
         const labelKey = `formTemplates.${templateId}.main.inputs.${input.id}.label`
+        let title = utils.getTranslate(labelKey)
 
-        const exists = te(labelKey)
-
-        let title = exists ? t(labelKey) : ""
-
-        if (input.mods?.hasMeasurementUnit) {
+        if(input.mods?.hasMeasurementUnit) {
             let measurementUnit
             if(typeof input !== null && typeof input != undefined) {
                 measurementUnit = unit.getUnit(<string>input.mods.measurementUnitType)
             }
 
-            if (measurementUnit) {
+            if(measurementUnit) {
                 title += ` (${measurementUnit})`
             }
         }
@@ -222,8 +200,7 @@ export function useForm(){
         if(!input || !templateId) return
 
         const placeholderKey = `formTemplates.${templateId}.main.inputs.${input.id}.placeholder`
-
-        return t(placeholderKey) ?? ""
+        return utils.getTranslate(placeholderKey)
     }
 
     // Returns the props required by an input component
@@ -235,24 +212,24 @@ export function useForm(){
         const isEmpty = currentValue === null || currentValue === undefined || currentValue === ""
 
         if(isEmpty) {
-            if (input.inputType === 'datetime-local' && input.isDefaultNow) {
+            if(input.inputType === 'datetime-local' && input.isDefaultNow) {
                 currentValue = date.getCurrentDateTimeLocal()
             } else if (input.inputType === 'date') {
                 currentValue = date.getToday()
             } else if (input.inputType === 'time') {
-                currentValue = date.getHourWithoutLocale()
+                currentValue = date.dateToTime()
             }
 
-            if (input.tag === "mpTime") {
+            if(input.tag === "mpTime") {
                 currentValue = Array.isArray(currentValue) && currentValue.length
                     ? currentValue
-                    : [date.getHourWithoutLocale()]
+                    : [date.dateToTime()] // fallback values
             }
 
-            if (input.tag === "mpDays") {
+            if(input.tag === "mpDays") {
                 currentValue = Array.isArray(currentValue)
                     ? currentValue
-                    : [0, 1]
+                    : [0, 1] // fallback values
             }
         }
 
@@ -336,8 +313,8 @@ export function useForm(){
         let options: SelectOption[] = []
 
         // 1. Static Options
-        if (Array.isArray(input.options)) {
-            for (const option of input.options) {
+        if(Array.isArray(input.options)) {
+            for(const option of input.options) {
                 const label = utils.getOptionTranslate(input.id, String(option.id))
 
                 options.push({
@@ -348,7 +325,7 @@ export function useForm(){
         }
 
         // 2. Dynamic Options from Database
-        if (input.dynamicKey && dynamicData[input.dynamicKey]) {
+        if(input.dynamicKey && dynamicData[input.dynamicKey]) {
             const dbItems = dynamicData[input.dynamicKey]
                 .map((item: DynamicOption): SelectOption | null => {
                     const placeholder =
@@ -357,7 +334,7 @@ export function useForm(){
                     const value =
                         item.id ?? item._id ?? item.name
 
-                    if (placeholder === undefined || value === undefined) {
+                    if(placeholder === undefined || value === undefined) {
                         return null
                     }
 
@@ -377,18 +354,17 @@ export function useForm(){
     /**
      * Returns form button props.
      */
-    const getBtnProps = (btn: FormButton, type: string) => {
+    const getBtnProps = (btn: FormButton, type: string): ActionButtonProps => {
         const key = `formPopupTypes.${type}.title`
-        const title = te(key) ? t(key) : ""
+        const title = utils.getTranslate(key)
 
         return {
             title: title,
-            padding: "md",
+            padding: PADDING_SIZE.MEDIUM,
             alignCenter: true,
-            tag: btn.tag ?? "button",
-            type: btn.type ?? "submit"
+            tag: btn.tag as ButtonTag ?? BUTTON_TAGS.BUTTON,
         }
     }
 
-    return { extractData, executeDBSubmit, isSubmitting, formWarning, getInputValue, normalizeFormValues, convertFormValues, getInputComponent, getInputProps, getSelectOptions, getBtnProps, getInputPlaceholder, getInputLabel }
+    return { extractData, isSubmitting, formWarning, getInputValue, normalizeFormValues, convertFormValues, getInputComponent, getInputProps, getSelectOptions, getBtnProps, getInputPlaceholder, getInputLabel }
 }

@@ -30,8 +30,8 @@
 
 <script setup lang="ts">
   import { computed } from "vue"
-  import { useUtils } from "../../composables/useUtils"
   import { useDate } from "../../composables/useDate"
+  import { usePhone } from "../../composables/usePhone"
 
   // OPTIONS
   defineOptions({
@@ -57,8 +57,8 @@
   })
 
   // COMPOSABLES
-  const utils = useUtils()
   const date = useDate()
+  const phone = usePhone()
 
   // COMPUTED PROPERTIES
 
@@ -73,30 +73,18 @@
       const value = model.value ?? ""
 
       if(props.inputType === "datetime-local" && value) {
-        return date.getCurrentDateTimeLocal(new Date(value))
+        return date.getCurrentDateTimeLocal(value)
       }
 
-      if(props.inputType === "date") {
-        return String(value).split("T")[0]
-      }
-
-      if(props.inputType === "tel") {
-        return utils.formatPhone(String(value))
+      if(props.inputType === "tel" && value) {
+        return phone.formatPhone(String(value))
       }
 
       return value
     },
     set(newValue: string | number) {
-      if(props.inputType === "datetime-local" || props.inputType === "date"){
-        model.value = newValue
-            ? new Date(newValue).toISOString()
-            : ""
-
-        return
-      }
-
-      if(props.inputType === "tel"){ // Store only phone digits
-        model.value = String(newValue ?? "").replace(/\D/g, "")
+      if(props.inputType === "tel") { // Store only phone digits
+        model.value = phone.trimPhone(newValue as string)
         return
       }
 

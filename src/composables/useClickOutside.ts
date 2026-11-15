@@ -1,5 +1,5 @@
 import { onMounted, onUnmounted, unref } from "vue"
-import type { DOMReference } from "../types/formPopup"
+import type { DOMReference } from "../types/components/formPopup"
 import type { MaybeRef } from "vue"
 
 export type ClickOutsideTarget = MaybeRef<DOMReference>
@@ -20,14 +20,14 @@ export function useClickOutside(
         container: ClickOutsideTarget,
         targetElement: EventTarget | null
     ): boolean => {
-        if (!(targetElement instanceof Node)) return false
+        if(!(targetElement instanceof Node)) return false
 
         const raw = unref(container)
         const el = raw && "$el" in raw ? raw.$el : raw
 
-        if (!el) return false
+        if(!el) return false
 
-        if (Array.isArray(el)) {
+        if(Array.isArray(el)) {
             return el.some(item => containsTarget(item, targetElement))
         }
 
@@ -40,13 +40,13 @@ export function useClickOutside(
      **/
     const handleClick = (event: MouseEvent): void => {
         // Main element doesn't exist
-        if (!unref(targetRef)) return
+        if(!unref(targetRef)) return
 
         // Click inside main element
-        if (containsTarget(targetRef, event.target)) return
+        if(containsTarget(targetRef, event.target)) return
 
         // Click inside ignored element
-        if (ignoreRef && containsTarget(ignoreRef, event.target)) return
+        if(ignoreRef && containsTarget(ignoreRef, event.target)) return
 
         callback(event)
     }

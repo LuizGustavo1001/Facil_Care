@@ -18,7 +18,7 @@
                 :key="item.id"
             >
               <ActionButtonColorful
-                  tag="router"
+                  :tag="BUTTON_TAGS.ROUTER"
                   :to="item.href"
                   :title="getItemTitle(item.id)"
                   :leftIcon="item.iconLine"
@@ -48,6 +48,7 @@
   import { monitoringViews } from "../locales/projectConfig"
 
   import { MONITORING_PAGES } from "../constants/sysPages"
+  import { BUTTON_TAGS } from "../constants/components/buttons"
 
   import type { MonitoringPageType } from "../types/sysPages"
 
@@ -90,13 +91,11 @@
   // Returns button label
   const getItemTitle = (id: string): string => {
     const key = `views.monitoring.${currentCategory.value}.items.${id}.title`
-
     return utils.getTranslate(key)
   }
 
   const getPageSubtitle = (): string => {
     const key = `views.monitoring.${currentCategory.value}.subtitle`
-
     return utils.getTranslate(key)
   }
 </script>

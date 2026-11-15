@@ -1,5 +1,5 @@
 import { useRouter } from 'vue-router'
-import { useOverlay } from "./useOverlay"
+import { useOverlay } from "./components/useOverlay"
 
 export function useNavigation(){
     const router = useRouter()

@@ -5,7 +5,7 @@
       <p>{{ getFallbackMessage() }}...</p>
 
       <ActionButton
-          tag="router"
+          :tag="BUTTON_TAGS.ROUTER"
           to="/"
           :title="getFallbackBtnMessage()"
           padding="lg"
@@ -18,6 +18,7 @@
 
 <script setup lang="ts">
   import { useUtils } from "../composables/useUtils"
+  import { BUTTON_TAGS } from "../constants/components/buttons"
 
   import ActionButton from "../components/buttons/ActionButton.vue"
   import AppFooter from "../components/layout/AppFooter.vue"
@@ -28,13 +29,11 @@
   // FUNCTIONS
   const getFallbackMessage = (): string => {
     const key = `utils.pageFallback.title`
-
     return utils.getTranslate(key)
   }
 
   const getFallbackBtnMessage = (): string => {
     const key = `utils.pageFallback.button`
-
     return utils.getTranslate(key)
   }
 </script>

@@ -1,5 +1,5 @@
-import { FORM_TYPES } from "../constants/form"
-import type { DynamicOption } from "../interfaces/Form"
+import { FORM_TYPES } from "../../constants/components/form"
+import type { DynamicOption } from "../../interfaces/Form"
 
 export type Converter = (type: string, value: unknown) => unknown
 export type FormInputTag =
@@ -12,4 +12,3 @@ export type FormType = typeof FORM_TYPES[keyof typeof FORM_TYPES]
 export type FormRecord = Record<string, unknown>
 export type DynamicData = Record<string, DynamicOption[]>
 export type FormValues = Record<string, unknown>
-//type FormContext = Record<string, unknown>

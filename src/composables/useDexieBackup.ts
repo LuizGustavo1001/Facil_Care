@@ -56,7 +56,7 @@ export function useDexieBackup() {
      * @return `TRUE` if the import was successful; otherwise, returns `FALSE`.
      **/
     const importFromJSON = async (file: File): Promise<boolean> => {
-        if (!(file instanceof File)) return false
+        if(!(file instanceof File)) return false
 
         isImporting.value = true
         error.value = null

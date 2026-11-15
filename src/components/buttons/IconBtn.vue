@@ -1,14 +1,14 @@
 <template>
   <component
-      :is="componentTag"
+      :is="buttonServices.getComponentTag(props.tag)"
       :type="isButton ? 'button' : undefined"
       :to="isRouterLink ? to : undefined"
       :href="!isButton ? (to || undefined) : undefined"
-      :target="!isButton ? target : undefined"
-      :rel="!isButton && target === '_blank' ? 'noopener noreferrer' : undefined"
+      :target="!isButton ? parsedTarget : undefined"
+      :rel="!isButton && parsedTarget === '_blank' ? 'noopener noreferrer' : undefined"
       class="icon-btn active-border"
       :class="variantClass"
-      :style="paddingStyle"
+      :style="utils.getPaddingStyle(props.padding)"
   >
     <Icon :icon="icon" :size="size" />
   </component>
@@ -31,7 +31,6 @@
   }
 
   /* VARIANTS */
-
   /* 1. Brand */
   .icon-btn.brand {
     background: var(--color-bg-brand);
@@ -92,59 +91,52 @@
 
 <script setup lang="ts">
   import { computed } from "vue"
-  import type { Component } from "vue"
-  import { RouterLink } from "vue-router"
 
   import type { PaddingSize } from "../../types/paddingSizes"
-  import type { ButtonTag } from "../../types/buttonComponent"
+  import type { ButtonTag } from "../../types/components/buttons"
+  import type { IconBtnVariant } from "../../types/components/buttons"
+
+  import { BUTTON_TAGS, ICON_BTN_VARIANTS } from "../../constants/components/buttons"
+  import { PADDING_SIZE } from "../../constants/paddindSizes"
+
+  import { useUtils } from "../../composables/useUtils"
+  import { useButtons } from "../../composables/components/useButtons"
 
   import Icon from "../icons/Icon.vue"
 
-  // STATIC VARIABLES
-  const VARIANTS = ["brand", "wBorder", "primary", "transparent", "subtle", "destructive"]
-  const DEFAULT_VARIANT: VariantType = VARIANTS[0]
+  // COMPOSABLES
+  const utils = useUtils()
+  const buttonServices = useButtons()
 
   // TYPES & INTERFACES
-  type VariantType = typeof VARIANTS[number]
-
   interface IconButtonProps {
-    tag?: ButtonTag | string
+    tag?: ButtonTag
     icon: string
     to?: string
     target?: string
     size?: string
-    padding?: PaddingSize | string
-    variant?: VariantType | string
+    padding?: PaddingSize
+    variant?: IconBtnVariant
   }
 
   // PROPS DEFAULT VALUES
   const props = withDefaults(defineProps<IconButtonProps>(), {
-    tag: "button",
+    tag: BUTTON_TAGS.BUTTON,
     to: "#",
-    target: "external",
+    target: "",
     size: "30px",
-    padding: "xs",
-    variant: ""
+    padding: PADDING_SIZE.EXTRA_SMALL_1,
+    variant: ICON_BTN_VARIANTS.BRAND
   })
 
   // COMPUTED PROPERTIES
-  const isButton = computed<boolean>(() => props.tag === 'button')
-  const isRouterLink = computed<boolean>(() => props.tag === "router")
-  const paddingStyle = computed<string>(() => `padding: var(--spacing-${props.padding})`)
+  const isButton = computed<boolean>(() => buttonServices.isButton(props.tag))
+  const isRouterLink = computed<boolean>(() => buttonServices.isRouterLink(props.tag))
+  const parsedTarget = buttonServices.getTarget(props.target)
 
-  const componentTag = computed<string | Component>(() => {
-    // 1. Tag == RouterLink (Internal Link)
-    if(isRouterLink.value) {
-      return RouterLink as Component
-    }
-
-    // 2. Other Tag
-    return props.tag
-  })
-
-  const variantClass = computed<VariantType>(() => {
-    return VARIANTS.includes(props.variant)
+  const variantClass = computed<IconBtnVariant>(() => {
+    return Object.values(ICON_BTN_VARIANTS).includes(props.variant)
         ? props.variant
-        : DEFAULT_VARIANT
+        : ICON_BTN_VARIANTS.BRAND
   })
 </script>

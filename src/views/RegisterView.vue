@@ -36,6 +36,7 @@
                 v-for="btn in getButtons()"
                 :key="btn.id"
                 v-bind="form.getBtnProps(btn, FORM_TYPES.CREATE)"
+                type="submit"
                 :aria-disabled="form.isSubmitting"
                 style=" min-width: 200px; max-width: 80dvw; align-self: flex-end"
             />
@@ -52,7 +53,7 @@
         <ActionButton
             tag="button"
             @click="navigation.handleReturn"
-            :title="t(`utils.back`)"
+            :title="utils.getTranslate(`utils.back`)"
             padding="lg"
         />
       </section>
@@ -76,26 +77,19 @@
   import { formTemplates } from "../locales/projectConfig"
 
   import { PAGES } from "../constants/sysPages"
-  import { FORM_TYPES } from "../constants/form"
+  import { FORM_TYPES } from "../constants/components/form"
   import { VITAL_SIGNS_PAGES, FOLLOW_UPS_PAGES } from "../constants/sysPages"
-  import { BUTTON_COLORS } from "../constants/buttonComponent"
+  import { BUTTON_COLORS } from "../constants/components/buttons"
 
-  import type { WarningCode } from "../types/snackbar"
+  import type { WarningCode } from "../types/components/snackbar"
   import type { FollowUpType, VitalSignType } from "../types/sysPages"
-  import type { FormRecord } from "../types/genericForm"
+  import type { FormRecord } from "../types/components/genericForm"
 
   import { useRoute } from "vue-router"
-  import { useI18n } from "vue-i18n"
   import { useNavigation } from "../composables/useNavigation"
-  import { useSnackbar } from "../composables/useSnackbar"
-  import { useForm } from "../composables/useForm"
+  import { useSnackbar } from "../composables/components/useSnackbar"
+  import { useForm } from "../composables/components/useForm"
   import { useUtils } from "../composables/useUtils"
-
-  import AppHeader from "../components/layout/AppHeader.vue"
-  import AppFooter from "../components/layout/AppFooter.vue"
-  import Snackbar from "../components/feedback/Snackbar.vue"
-  import ActionButton from "../components/buttons/ActionButton.vue"
-  import Icon from "../components/icons/Icon.vue"
 
   import MedicinesController from "../controllers/MedicineController"
   import HealthPlanController from "../controllers/HealthPlanController"
@@ -108,6 +102,12 @@
 
   import type { Caregiver } from "../interfaces/Caregiver"
   import type { FormRegularTemplate } from "../interfaces/Form"
+
+  import AppHeader from "../components/layout/AppHeader.vue"
+  import AppFooter from "../components/layout/AppFooter.vue"
+  import Snackbar from "../components/feedback/Snackbar.vue"
+  import ActionButton from "../components/buttons/ActionButton.vue"
+  import Icon from "../components/icons/Icon.vue"
 
   // TYPES & INTERFACES
   type RegisterResult =
@@ -126,7 +126,6 @@
   const route = useRoute()
   const form = useForm()
   const utils = useUtils()
-  const { t } = useI18n()
 
   // CONTROLLERS
   const medicineController = new MedicinesController()
@@ -148,14 +147,8 @@
 
   // Search for dynamic data to mount on the screen
   onMounted(async() => {
-    try {
-      const response = await caregiverController.getAll()
-      if (response) {
-        caregiversList.value = response.data || []
-      }
-    } catch (error) {
-      console.error("DB Error:", error)
-    }
+    const result = await caregiverController.getAll()
+    caregiversList.value = result.data || []
   })
 
   // Grouping dynamic data
@@ -166,8 +159,9 @@
   // Page's current category within route params
   const currentCategory = computed<string | null>(() => {
     const category = route.params.category
-
-    return typeof category === "string" ? category : null
+    return typeof category === "string"
+        ? category
+        : null
   })
 
   // Returns the current form template based on the current category
@@ -197,28 +191,28 @@
     // Cast payload to any / target input type per controller mapping
     const payload = formData as any
 
-    if (category === PAGES.CAREGIVERS) {
+    if(category === PAGES.CAREGIVERS) {
       return caregiverController.create(payload)
     }
-    if (category === PAGES.HEALTH_PLANS) {
+    if(category === PAGES.HEALTH_PLANS) {
       return healthPlanController.create(payload)
     }
-    if (category === PAGES.ALLERGIES) {
+    if(category === PAGES.ALLERGIES) {
       return allergyController.create(payload)
     }
-    if (category === PAGES.DOCTORS) {
+    if(category === PAGES.DOCTORS) {
       return doctorController.create(payload)
     }
-    if (category === PAGES.EMERGENCY_CONTACTS) {
+    if(category === PAGES.EMERGENCY_CONTACTS) {
       return emergencyContactController.create(payload)
     }
-    if (category === PAGES.MEDICINES) {
+    if(category === PAGES.MEDICINES) {
       return medicineController.create(payload)
     }
-    if (VITAL_SIGNS_PAGES.includes(category as VitalSignType)) {
+    if(VITAL_SIGNS_PAGES.includes(category as VitalSignType)) {
       return vitalSignController.create(payload, category as VitalSignType)
     }
-    if (FOLLOW_UPS_PAGES.includes(category as FollowUpType)) {
+    if(FOLLOW_UPS_PAGES.includes(category as FollowUpType)) {
       return followUpController.create(payload, category as FollowUpType)
     }
 
@@ -227,11 +221,11 @@
 
   const handleSubmit = async (event: SubmitEvent) => {
     const formElement = event.currentTarget
-    if (!(formElement instanceof HTMLFormElement)) return
+    if(!(formElement instanceof HTMLFormElement)) return
 
     const category = currentCategory.value
     const currentTemplate = template.value
-    if (!category || !currentTemplate || !formElement.checkValidity()) return
+    if(!category || !currentTemplate || !formElement.checkValidity()) return
 
     let data: FormRecord = form.extractData(event, currentTemplate)
 
@@ -241,13 +235,13 @@
 
     const result = await handleRegisterByCategory(category, data)
 
-    if (result?.success) {
+    if(result?.success) {
       formElement.reset()
       addSuccess.value = true
       successMessage.value = snackbar.getWarningTitle(result.code as WarningCode)
     }
 
-    if (result?.code) {
+    if(result?.code) {
       snackbar.open(result.code as WarningCode)
     }
   }

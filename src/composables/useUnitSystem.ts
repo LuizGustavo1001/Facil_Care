@@ -11,8 +11,8 @@ export function useUnitSystem() {
     /**
      * Initializes or updates the application's unit.
      * The unit selection follows a hierarchy:
-     * - Explicity provided unit
-     * - Saved unit at `localStorage`
+     * - Explicity provided unit.
+     * - Saved unit at `localStorage`.
      *
      * @param nextUnit - The specific unit code (ex: `metric` or `imperial`). Defaults to "".
      **/
@@ -40,7 +40,7 @@ export function useUnitSystem() {
     }
 
     /**
-     * Updates the application's unit
+     * Updates the application's unit.
      *
      * @param nextUnit - The specific unit code (ex: `metric` or `imperial`). Defaults to "".
      **/
@@ -55,7 +55,7 @@ export function useUnitSystem() {
     /**
      * Returns the measurement unit according to the current locale.
      *
-     * @param type - Measurement type (ex: "bloodPressure" and "heartRate")
+     * @param type - Measurement type (ex: "bloodPressure" and "heartRate").
      */
     const getUnit = (type: string) => {
         switch(type) {
@@ -81,10 +81,10 @@ export function useUnitSystem() {
     /**
      * Returns the current measurement unit and converted value.
      *
-     * @description If a string value contais "/" = "blood pressure"
+     * @description If a string value contais "/" = "blood pressure".
      *
-     * @param type - Measurement type (ex: "bloodPressure" and "heartRate")
-     * @param value - Measurement value (metric system)
+     * @param type - Measurement type (ex: "bloodPressure" and "heartRate").
+     * @param value - Measurement value (metric system).
      **/
     const getTranslatedUnit = (type: TranslatableUnitItem, value: string | number) => {
         const strValue: string = String(value)
@@ -98,10 +98,10 @@ export function useUnitSystem() {
     };
 
     /**
-     * Converts imperial values to metric values
+     * Converts imperial values to metric values.
      *
-     * @param type - Measurement type (ex: "bloodPressure" and "heartRate")
-     * @param value - Measurement value (imperial system)
+     * @param type - Measurement type (ex: "bloodPressure" and "heartRate").
+     * @param value - Measurement value (imperial system).
      **/
     const toMetric = (type: string, value: string | number) => {
         if(!isImperial.value || value === null || value === "") return value
@@ -123,17 +123,17 @@ export function useUnitSystem() {
     }
 
     /**
-     * Converts metric values to imperial values
+     * Converts metric values to imperial values.
      *
-     * @param type - Measurement type (ex: "bloodPressure" and "heartRate")
-     * @param value - Measurement value (metric system)
+     * @param type - Measurement type (ex: "bloodPressure" and "heartRate").
+     * @param value - Measurement value (metric system).
      **/
     const toImperial = (type: TranslatableUnitItem, value: string | number): string | number => {
         if(!isImperial.value || value === null || value === "" || !TRANSLATABLE_ITEMS.includes(type)) return value
 
         const numericValue: number = Number(value)
 
-        switch (type) {
+        switch(type) {
             case PAGES.BODY_TEMPERATURE:
                 return Number((numericValue * 9 / 5) + 32).toFixed(2)
             case PAGES.WATER_INTAKE:

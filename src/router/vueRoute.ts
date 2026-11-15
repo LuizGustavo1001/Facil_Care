@@ -30,6 +30,14 @@ const routes: RouteRecordRaw[] = [
         }
     },
     {
+      path: `/${PAGES.WEEK_SCHEDULE}`,
+      name: PAGES.WEEK_SCHEDULE,
+      component: () => import('../views/WeekSchedule.vue'),
+        meta: {
+          title: PAGES.WEEK_SCHEDULE
+        }
+    },
+    {
         path: '/monitoring/:category',
         name: 'monitoring',
         component: () => import('../views/MonitoringView.vue'),

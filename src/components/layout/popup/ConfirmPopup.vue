@@ -19,8 +19,8 @@
       <div class="popup-btns gap-1">
         <ActionButton
           :title="cancelLabelText"
-          padding="md"
-          tag="button"
+          :padding="PADDING_SIZE.MEDIUM"
+          :tag="BUTTON_TAGS.BUTTON"
           type="button"
           variant="destructive"
           :alignCenter="true"
@@ -29,8 +29,8 @@
 
         <ActionButton
           :title="confirmLabelText"
-          padding="md"
-          tag="button"
+          :padding="PADDING_SIZE.MEDIUM"
+          :tag="BUTTON_TAGS.BUTTON"
           :alignCenter="true"
           @click="handleConfirm($event)"
         />
@@ -52,13 +52,17 @@
 </style>
 
 <script setup lang="ts">
-  import { useI18n } from 'vue-i18n'
   import { computed } from "vue"
   import type { Ref } from "vue"
+  import { useUtils } from "../../../composables/useUtils"
+
+  import type { DOMReference } from "../../../types/components/formPopup"
+
+  import { PADDING_SIZE } from "../../../constants/paddindSizes"
+  import { BUTTON_TAGS } from "../../../constants/components/buttons"
 
   import AppPopup from "./AppPopup.vue"
   import ActionButton from "../../buttons/ActionButton.vue"
-  import type { DOMReference } from "../../../types/formPopup"
 
   // TYPES & INTERFACES
   interface Props {
@@ -71,7 +75,7 @@
   }
 
   // COMPOSABLES
-  const { t } = useI18n()
+  const utils = useUtils()
 
   // PROPS DEFAULT VALUES
   const props = withDefaults(defineProps<Props>(), {
@@ -98,13 +102,13 @@
 
   const confirmLabelText = computed(() => {
     return props.confirmLabel === ""
-        ? t("utils.confirm") ?? ""
+        ? utils.getTranslate("utils.confirm")
         : props.confirmLabel
   })
 
   const cancelLabelText = computed(() => {
     return props.cancelLabel === ""
-        ? t("utils.cancel") ?? ""
+        ? utils.getTranslate("utils.cancel")
         : props.cancelLabel
   })
 </script>

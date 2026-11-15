@@ -7,9 +7,9 @@
             tag="router"
             :to="btn.link"
             :leftIcon="btn.leftIcon"
-            padding="md"
+            :padding="PADDING_SIZE.MEDIUM"
             :rightIcon="btn?.rightIcon || icons['chevron-right']"
-            :title="t(`footer.${props.page}.buttons.${btn.id}.title`)"
+            :title="utils.getTranslate(`footer.${props.page}.buttons.${btn.id}.title`)"
             style="border-radius: var(--radius-2xl)"
         />
       </template>
@@ -40,9 +40,11 @@
   import { computed } from "vue"
   import { icons } from "../../assets/icons/icons.js"
   import { footers } from "../../locales/projectConfig"
-  import { PAGES } from "../../constants/sysPages"
 
-  import { useI18n } from "vue-i18n"
+  import { PAGES } from "../../constants/sysPages"
+  import { PADDING_SIZE } from "../../constants/paddindSizes"
+
+  import { useUtils } from "../../composables/useUtils"
 
   import ActionButton from "../buttons/ActionButton.vue"
 
@@ -69,7 +71,7 @@
   })
 
   // COMPOSABLES
-  const { t } = useI18n()
+  const utils = useUtils()
 
   // COMPUTED PROPERTIES
   const currentPage = computed<FooterPage | null>(() => {

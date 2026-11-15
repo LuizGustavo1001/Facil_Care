@@ -107,11 +107,10 @@ export default class NotificationController {
      * Removes old notifications *(30+ days old)*.
      **/
     async removeOlds(): Promise<void> {
-        try{
-            const result = await this.model.removeOldNotifications()
-        }catch(error) {
+        try {
+            await this.model.removeOldNotifications()
+        } catch(error) {
             console.log("DB error: ", error)
-
         }
     }
 }

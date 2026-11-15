@@ -3,9 +3,9 @@
     <!-- System Services View -->
     <AppHeader
         :title="utils.getPageTitle(PAGES['SERVICES'])"
-        :leftIcon="icons['service-fill']"
+        :leftIcon="pages[PAGES.SERVICES].iconFill"
         :hasNotifications="false"
-        type="noButton"
+        :type="HEADER_TYPES['NO_BUTTON']"
     />
 
     <main class="main regular gap-1">
@@ -26,7 +26,7 @@
             >
               <!-- Category Router Item -->
               <ActionButtonColorful
-                tag="router"
+                :tag="BUTTON_TAGS.ROUTER"
                 :to="button.href"
                 :title="getButtonTitle(button.id)"
                 :leftIcon="button.iconFill"
@@ -53,8 +53,11 @@
 
 <script setup lang="ts">
   import { PAGES } from "../constants/sysPages"
+  import { BUTTON_TAGS } from "../constants/components/buttons"
+  import { HEADER_TYPES } from "../constants/components/appHeader"
+
   import { icons } from "../assets/icons/icons.js"
-  import { mainNavigationBar, servicesView } from "../locales/projectConfig"
+  import { mainNavigationBar, pages, servicesView } from "../locales/projectConfig"
 
   import { useUtils } from "../composables/useUtils"
 

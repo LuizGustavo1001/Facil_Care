@@ -17,7 +17,6 @@ export function usePersistentStorage(){
             return isPersisted.value
         } catch(err) {
             console.error('Failed to request persistent storage:', err)
-
             return false
         }
     }
