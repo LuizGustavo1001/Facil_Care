@@ -20,12 +20,13 @@
         <p class="section-description text-muted">{{ getPageSubtitle() }}:</p>
       </div>
 
-      <ul class="flex align-center gap-03">
+      <ul class="flex align-center gap-05 overflow-scroll ">
         <li v-for="weekDay in weekScheculeView.weekDaysFormat">
           <Chips
               :label="date.getDayLabel(weekDay.value)"
               :isActive="weekDay.value === selectedDay"
               @click="selectedDay = weekDay.value"
+              class="capitalize-words"
           />
         </li>
       </ul>
@@ -91,6 +92,7 @@
     }
 
     if(!result.success) {
+      console.log(result.code)
       snackbar.open(result.code as WarningCode || "DBError")
     }
 

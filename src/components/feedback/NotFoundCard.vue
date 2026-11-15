@@ -24,9 +24,9 @@
 <script setup lang="ts">
   import { computed } from "vue"
   import { icons } from "../../assets/icons/icons.js"
+  import { useUtils } from "../../composables/useUtils"
 
   import Icon from "../icons/Icon.vue"
-  import { useUtils } from "../../composables/useUtils"
 
   // CONSTANTS
   const iconsMap: Record<string, string> = {

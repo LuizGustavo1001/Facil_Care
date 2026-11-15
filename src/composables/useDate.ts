@@ -6,7 +6,7 @@ import { DAY_PERIODS } from "../constants/dayPeriods"
 import type { DateInput, DayPeriod, DateFormatOptions } from "../types/date"
 
 export const formatedLanguage = computed<string>(() => {
-    switch (currentLanguage.value) {
+    switch(currentLanguage.value) {
         case LANGUAGES.PT_BR:
             return FORMATTED_LANGUAGES.PT_BR
 
@@ -150,7 +150,6 @@ export function useDate() {
             })
     }
 
-
     /**
      * Converts standalone times (HH:mm) into Date Object.
      * Uses the current date unless a reference date is provided.
@@ -173,7 +172,6 @@ export function useDate() {
      * Converts a Date into a standalone local time (HH:mm) without locale.
      */
     const dateToTime = (input: DateInput = new Date()): string => {
-
         const date = parseDate(input)
 
         if (!date) return ""
@@ -360,9 +358,7 @@ export function useDate() {
         const dayPeriod = date.toLocaleString("en-US", { dayPeriod: "short" })
 
         if(dayPeriod.endsWith(DAY_PERIODS.MORNING)) return DAY_PERIODS.MORNING
-
         if(dayPeriod.endsWith(DAY_PERIODS.EVENING)) return DAY_PERIODS.EVENING
-
         else return DAY_PERIODS.AFTERNOON
     }
 

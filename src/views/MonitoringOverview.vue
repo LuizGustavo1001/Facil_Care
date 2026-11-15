@@ -25,7 +25,7 @@
 
       <main class="main regular gap-2">
         <!-- Days Interval Filter -->
-        <ul class="filter-list flex align-center gap-05 overflow-auto">
+        <ul class="filter-list flex align-center gap-05 overflow-scroll">
           <li
               v-for="filter in charts.filters"
               :key="filter.id"
@@ -201,7 +201,7 @@
   const currentCategory = computed<string | null>(() => {
     const category = route.params.category
 
-    if (typeof category !== "string") return null
+    if(typeof category !== "string") return null
 
     return category !== "string" ? category : null
   })
@@ -209,7 +209,7 @@
   const currentMonitoring = computed<string | null>(() => {
     const category = route.params.monitoring
 
-    if (typeof category !== "string") return null
+    if(typeof category !== "string") return null
 
     return category !== "string" ? category : null
   })
@@ -237,7 +237,7 @@
   const getMonitoringRecords = async () => {
     const days = activeFilterDays.value as number
 
-    switch (currentCategory.value) {
+    switch(currentCategory.value) {
       case PAGES.FOLLOW_UPS:
         return days === null
             ? followUpsController.getByField(currentMonitoring.value as FollowUpType)
@@ -370,7 +370,7 @@
 
     const itemId = item.id as number
 
-    switch (currentCategory.value) {
+    switch(currentCategory.value) {
       case PAGES.VITAL_SIGNS:
         result = await vitalSignsController.delete(itemId)
         break
@@ -380,11 +380,11 @@
         break
     }
 
-    if (!result) return
+    if(!result) return
 
     snackbar.open(result.code as WarningCode)
 
-    if (result.success) {
+    if(result.success) {
       // Trigger a new query using the currently selected filter
       refreshKey.value++
     }

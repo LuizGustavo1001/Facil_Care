@@ -38,7 +38,6 @@ const peerOptions = {
     }
 }
 
-
 /**
  * Database backup message.
  */
@@ -50,10 +49,8 @@ export interface DatabaseBackupMessage {
 /**
  * Checks whether received data is a database backup message.
  */
-const isDatabaseBackupMessage = (
-    data: unknown
-): data is DatabaseBackupMessage => {
-    if (typeof data !== "object" || data === null) {
+const isDatabaseBackupMessage = (data: unknown): data is DatabaseBackupMessage => {
+    if(typeof data !== "object" || data === null) {
         return false
     }
 
@@ -79,7 +76,7 @@ export function usePeerSync(){
     /**
      * Closes active P2P connection in memory and destroys the Peer instance.
      *
-     * @param keepStatus - `TRUE` represents the state to keep the `peerStatus` (avoid problems when the P2P transferring is done). Otherwise, `FALSE`
+     * @param keepStatus - `TRUE` represents the state to keep the `peerStatus` (avoid problems when the P2P transferring is done). Otherwise, `FALSE`.
      **/
     const closeSession = (keepStatus: boolean = false): void => {
         // 1. Closes current connection
@@ -104,13 +101,12 @@ export function usePeerSync(){
     /**
      * HOST MODE: Creates a P2P lobby, expose peerId and waits for a receiver connection.
      *
-     * @returns Host PeerJS ID
+     * @returns Host PeerJS ID.
      **/
     const startHostSession = () => {
         closeSession()
         peerStatus.value = 'waiting'
         peerError.value = null
-
 
         return new Promise((resolve, reject) => {
             // iceServers setup
@@ -193,7 +189,7 @@ export function usePeerSync(){
                 peerStatus.value = "error"
                 peerError.value = error
 
-                if (cause) {
+                if(cause) {
                     console.error("[usePeerSync]:", cause)
                 }
 
@@ -214,11 +210,9 @@ export function usePeerSync(){
                 })
 
                 conn.on("data", async (data: unknown) => {
-                    if (settled) return
+                    if(settled) return
 
-                    if (!isDatabaseBackupMessage(data)) {
-                        return
-                    }
+                    if(!isDatabaseBackupMessage(data)) return
 
                     try {
                         const blob = new Blob(
@@ -235,14 +229,11 @@ export function usePeerSync(){
                         peerStatus.value = "done"
 
                         resolve()
-
-                    } catch (err: unknown) {
+                    } catch(err: unknown) {
                         rejectTransfer("P2PImportFailed", err)
 
                     } finally {
-                        if (settled) {
-                            closeSession(true)
-                        }
+                        if(settled) closeSession(true)
                     }
                 })
 

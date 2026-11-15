@@ -618,6 +618,8 @@ export const warningMessages = {
     MedicineUpdateFailed: "error",
     MedicineDeleteFailed: "error",
 
+    NoMedicineForToday: "info",
+
     InvalidDateInterval: "error",
 
     ExportFailed: "error",
@@ -1880,7 +1882,7 @@ export const aboutView = {
     social: [
         socialMedias['github']
     ],
-    version: "2.0.0"
+    version: "2.0.1"
 }
 
 export const weekScheculeView = {

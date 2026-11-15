@@ -24,7 +24,7 @@ export function useLanguage() {
 
         // 3. Language not specified -> Try get from localStorage
         const savedLanguage = localStorage.getItem("language") as SysLanguage | null
-        if (savedLanguage && Object.values(LANGUAGES).includes(savedLanguage)) {
+        if(savedLanguage && Object.values(LANGUAGES).includes(savedLanguage)) {
             setLanguage(savedLanguage)
             return
         }

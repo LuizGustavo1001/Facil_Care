@@ -90,7 +90,7 @@ export default {
         notFoundCard: {
             item: "Nenhum item encontrado...",
             notification: "Nenhuma nova notificação encontrada...",
-            noMedicinesToday: "Nenhum remédio a ser administrado hoje!"
+            noMedicinesToday: "Nenhum medicamento a ser administrado hoje!"
         },
         vitalSign: "Sinal Vital",
         followUp: "Acompanhamento",
@@ -165,7 +165,7 @@ export default {
 
     views: {
         [PAGES.HOME]: {
-            todaysMedicines: "Remédios de Hoje",
+            todaysMedicines: "Medicamentos do Dia",
             newMedicine: "Novo Medicamento",
             quickAccess: {
                 [PAGES.VITAL_SIGNS]: {
@@ -211,7 +211,7 @@ export default {
         },
 
         [PAGES.WEEK_SCHEDULE]: {
-          subtitle: "Visualize aqui os remédios que o paciente deve tomar em cada dia da semana"
+          subtitle: "Visualize aqui os Medicamentos que o paciente deve tomar em cada dia da semana"
         },
 
         [PAGES.REGISTER]: {
@@ -1552,6 +1552,10 @@ export default {
         },
         MedicineDeleteFailed: {
             title: "Erro ao tentar remover um medicamento, tente novamente mais tarde"
+        },
+
+        NoMedicineForToday: {
+            title: "Nenhum medicamento a ser administrado hoje!"
         },
 
         InvalidDateInterval: {

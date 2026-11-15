@@ -26,7 +26,7 @@ export function useQRCode() {
         isGenerating.value = true
         error.value = null
 
-        try{
+        try {
             URL.value = await QRCode.toDataURL(text, {
                 width: 320,
                 margin: 2,
@@ -37,10 +37,10 @@ export function useQRCode() {
                 ...options
             })
             return URL.value
-        }catch(err){
+        } catch(err) {
             error.value = "QRCodeGenFailed"
             console.error('[useQRCode]: ', err)
-        }finally {
+        } finally {
             isGenerating.value = false
         }
     }

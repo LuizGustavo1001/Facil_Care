@@ -1,7 +1,7 @@
 <template>
   <component
     is="button"
-    class="chips flex gap-03 align-center cursor-pointer"
+    class="chips flex gap-03 align-center cursor-pointer active-border "
     :class="[
         variantClass,
         { active: props.isActive }
@@ -9,19 +9,20 @@
     :style="[utils.getPaddingStyle(props.padding)]"
   >
     <Icon v-if="props.icon" :icon="props.icon" size="15px" />
-
     <span>{{ props.label }}</span>
   </component>
 </template>
 
 <style scoped>
   .chips {
-    min-width: fit-content;
+    text-wrap: nowrap;
 
     font-size: var(--font-body-sm);
     font-weight: var(--bold-weight);
-    border-radius: var(--radius-xs);
+    border-radius: var(--radius-full);
     border: none;
+
+    color: var(--color-text-primary-muted);
 
     transition: all 0.2s ease;
   }
@@ -30,12 +31,16 @@
   /* 1. wBorder */
   .chips.wBorder {
     background: transparent;
-    border: 2px solid var(--color-border-default-subtle);
+    border: 1px solid var(--color-border-default);
   }
   .chips.wBorder:hover,
-  .chips.wBorder.active,
   .chips.wBorder:focus {
     background: var(--color-bg-hover);
+    border-color: transparent;
+  }
+
+  .chips.wBorder.active {
+    background: var(--color-bg-blue);
     border-color: transparent;
   }
   /* 2. Transparent */
@@ -43,8 +48,11 @@
     background: transparent;
   }
   .chips.transparent:hover,
-  .chips.transparent.active,
   .chips.transparent:focus {
+    background: var(--color-bg-subtle);
+  }
+
+  .chips.transparent.active {
     background: var(--color-bg-hover);
   }
   /* 3. Subtle */
@@ -52,8 +60,10 @@
     background: var(--color-bg-subtle);
   }
   .chips.subtle:hover,
-  .chips.subtle.active,
   .chips.subtle:focus {
+    background: var(--color-bg-primary);
+  }
+  .chips.subtle.active {
     background: var(--color-bg-hover);
   }
   /* 4. Primary */
@@ -61,8 +71,10 @@
     background: var(--color-bg-primary);
   }
   .chips.primary:hover,
-  .chips.primary.active,
   .chips.primary:focus {
+    background: var(--color-bg-subtle);
+  }
+  .chips.primary.active {
     background: var(--color-bg-hover);
   }
   /* 5. Brand */
@@ -71,15 +83,17 @@
     color: var(--color-text-inverse);
   }
   .chips.brand:hover,
-  .chips.brand.active,
   .chips.brand:focus {
+    background: var(--color-bg-blue);
+  }
+
+  .chips.brand.active {
     background: var(--color-bg-brand-hover);
   }
 </style>
 
 <script setup lang="ts">
   import { computed } from "vue"
-  import Icon from "../icons/Icon.vue"
 
   import type { PaddingSize } from "../../types/paddingSizes"
   import type { ChipsVariant } from "../../types/components/buttons"
@@ -88,6 +102,8 @@
   import { CHIPS_VARIANTS } from "../../constants/components/buttons"
 
   import { useUtils } from "../../composables/useUtils"
+
+  import Icon from "../icons/Icon.vue"
 
   // COMPOSABLES
   const utils = useUtils()

@@ -237,11 +237,11 @@
           dbButtons = currentButtons.map((button) => {
             let count = 0
 
-            if (button.id === PAGES.DOCTORS) {
+            if(button.id === PAGES.DOCTORS) {
               count = doctors.value.length
-            } else if (button.id === PAGES.MEDICINES) {
+            } else if(button.id === PAGES.MEDICINES) {
               count = medicines.value.length
-            } else if (button.id === PAGES.CAREGIVERS) {
+            } else if(button.id === PAGES.CAREGIVERS) {
               count = caregivers.value.length
             }
 
@@ -399,7 +399,7 @@
 
     let result = null
     if(context.sectionId === "patient") {
-      result = await form.executeDBSubmit(() => patientController.update(cleanData))
+      result = await patientController.update(cleanData)
     }
 
     if(!result) return
@@ -436,17 +436,17 @@
       caregiverData
     ] = results
 
-    if (patientData.success && patientData.data) {
+    if(patientData.success && patientData.data) {
       patient.value = patientData.data as Patient
-    } else if (patientData.code) {
+    } else if(patientData.code) {
       snackbar.open(patientData.code as WarningCode)
     }
 
-    if (medicineData.success) medicines.value = medicineData.data as Medicine[]
-    if (allergyData.success) allergies.value = allergyData.data as Allergy[]
-    if (healthPlanData.success) healthPlans.value = healthPlanData.data as HealthPlan[]
-    if (doctorData.success) doctors.value = doctorData.data as Doctor[]
-    if (emergencyContactData.success) emergencyContacts.value = emergencyContactData.data as EmergencyContact[]
-    if (caregiverData.success) caregivers.value = caregiverData.data as Caregiver[]
+    if(medicineData.success) medicines.value = medicineData.data as Medicine[]
+    if(allergyData.success) allergies.value = allergyData.data as Allergy[]
+    if(healthPlanData.success) healthPlans.value = healthPlanData.data as HealthPlan[]
+    if(doctorData.success) doctors.value = doctorData.data as Doctor[]
+    if(emergencyContactData.success) emergencyContacts.value = emergencyContactData.data as EmergencyContact[]
+    if(caregiverData.success) caregivers.value = caregiverData.data as Caregiver[]
   })
 </script>

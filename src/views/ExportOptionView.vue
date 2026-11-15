@@ -69,7 +69,7 @@
                   :tag="BUTTON_TAGS.BUTTON"
                   :padding="PADDING_SIZE.MEDIUM"
                   :variant="ACTION_BUTTON_VARIANTS.SUBTLE"
-                  :leftIcon="icons['indeterminate-circle-fill']"
+                  :leftIcon="icons['shut-down-line']"
                   :title="getActionLabel('cancel')"
                   @click="handleCancelP2P"
               />
@@ -148,7 +148,7 @@
                 : getActionLabel('download')"
               :leftIcon="isDexieExporting
                 ? ''
-                : icons['download']"
+                : icons['save-fill']"
               :aria-disabled="isDexieExporting"
               @click="handleDownloadJSON"
           />
@@ -257,7 +257,6 @@
   // Returns selected export option title
   const getSubTypeTitle = (): string => {
     const key = `views.${PAGES.EXPORT}.categories.${currentExportType.value}.title`
-
     return utils.getTranslate(key)
   }
 
@@ -278,7 +277,6 @@
   // Returns the current translated export status
   const getActionLabel = (action: string): string => {
     const key = `views.${PAGES.EXPORT}.categories.${currentExportType.value}.badges.${action}`
-
     return utils.getTranslate(key)
   }
 
@@ -312,8 +310,8 @@
 
   // WATCHERS
   watch([qrCode.error, p2p.peerError], ([newQrCodeError, newPeerError]) => {
-    if (newQrCodeError) snackbar.open(newQrCodeError as WarningCode)
+    if(newQrCodeError) snackbar.open(newQrCodeError as WarningCode)
 
-    if (newPeerError) snackbar.open(newPeerError as WarningCode)
+    if(newPeerError) snackbar.open(newPeerError as WarningCode)
   })
 </script>

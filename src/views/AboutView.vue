@@ -69,6 +69,8 @@
 
 <script setup lang="ts">
   import { PAGES } from "../constants/sysPages"
+  import { ACTION_BUTTON_VARIANTS, BUTTON_TAGS } from "../constants/components/buttons"
+
   import { icons } from "../assets/icons/icons.js"
   import { aboutView } from "../locales/projectConfig"
 
@@ -78,7 +80,7 @@
   import Icon from "../components/icons/Icon.vue"
   import Badge from "../components/common/Badge.vue"
   import ActionButton from "../components/buttons/ActionButton.vue"
-  import { ACTION_BUTTON_VARIANTS, BUTTON_TAGS } from "../constants/components/buttons"
+
 
   // COMPOSABLES
   const utils = useUtils()

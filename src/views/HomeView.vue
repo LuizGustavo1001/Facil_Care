@@ -59,7 +59,7 @@
       </section>
 
       <!-- Today's Medicine -->
-      <section class="home-medicines flex flex-column gap-05 flex-grow-1">
+      <section class="home-medicines flex flex-column gap-1 flex-grow-1">
         <div class="section-title-container">
           <h2 class="section-title text-uppercase text-muted bolder-weight">{{ utils.getTranslate(`views.${PAGES.HOME}.todaysMedicines`) }}</h2>
         </div>
@@ -67,6 +67,21 @@
         <MedicineList :medicineList="medicines" />
       </section>
     </main>
+
+    <!-- Add New Medicine Button -->
+    <ActionButton
+        :tag="BUTTON_TAGS.ROUTER"
+        :to="pages[PAGES.MEDICINES].href"
+        :rightIcon="icons['add']"
+        :title="utils.getTranslate(`views.${PAGES.HOME}.newMedicine`)"
+        :padding="PADDING_SIZE.SMALL"
+        :align-center="true"
+        class="fixed add-new-medicine-button"
+        style="
+          align-self: flex-end;
+          width: fit-content;
+        "
+    />
 
     <NavigationBar :activeItem="mainNavigationBar[PAGES.HOME].id" />
   </div>
@@ -118,6 +133,13 @@
     box-shadow: 0 0 5px 5px var(--color-shadow-subtle);
   }
 
+  .add-new-medicine-button {
+    bottom: 5em;
+    right: 1em;
+
+    z-index: 8;
+  }
+
   /* DARK MODE */
   .dark .home-hero {
     background:
@@ -134,7 +156,7 @@
     color: inherit;
   }
   .highContrast .home-content {
-    border: 1px solid var(--color-border-default);
+    border: 2px solid var(--color-border-default);
   }
 </style>
 
@@ -154,6 +176,7 @@
   import { PAGES } from "../constants/sysPages"
   import { PADDING_SIZE } from "../constants/paddindSizes"
   import { HEADER_TYPES, HEADER_VARIANTS } from "../constants/components/appHeader"
+  import { BUTTON_TAGS } from "../constants/components/buttons"
 
   import type { Medicine } from "../interfaces/Medicine"
   import type { Patient } from "../interfaces/Patient"
@@ -166,6 +189,7 @@
   import Badge from "../components/common/Badge.vue"
   import FeaturedItem from "../components/common/FeaturedItem.vue"
   import MedicineList from "../components/layout/MedicineList.vue"
+  import ActionButton from "../components/buttons/ActionButton.vue"
 
   // COMPOSABLES
   const snackbar = useSnackbar()

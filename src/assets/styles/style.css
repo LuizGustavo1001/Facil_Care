@@ -101,47 +101,6 @@
     --bolder-weight: 650;
 
     /* -=-=-=- SEMANTIC TOKENS -=-=-=- */
-    /* Text Color */
-    --color-text-primary: var(--gray-900);
-    --color-text-primary-muted: var(--gray-500);
-    --color-text-primary-subtle: var(--gray-600);
-
-    --color-text-inverse: var(--gray-100);
-    --color-text-inverse-muted: var(--gray-300);
-    --color-text-inverse-subtle: var(--gray-200);
-
-    --color-text-brand: var(--blue-500);
-    --color-text-brand-subtle: var(--blue-400);
-
-    --color-text-red: var(--red-700);
-    --color-text-yellow: var(--yellow-700);
-    --color-text-green: var(--green-700);
-    --color-text-orange: var(--orange-700);
-    --color-text-blue: var(--blue-700);
-    --color-text-purple: var(--purple-700);
-
-    /* Background Color */
-    --color-bg-primary: var(--gray-100);
-    --color-bg-subtle: var(--white);
-    --color-bg-hover: var(--gray-300);
-
-    --color-bg-brand: var(--blue-700);
-    --color-bg-brand-hover: var(--blue-600);
-
-    --color-bg-red: var(--red-100);
-    --color-bg-red-hover: var(--red-300);
-    --color-bg-yellow: var(--yellow-100);
-    --color-bg-green: var(--green-100);
-    --color-bg-orange: var(--orange-100);
-    --color-bg-blue: var(--blue-100);
-    --color-bg-purple: var(--purple-100);
-
-    /* Border Color */
-    --color-border-default: var(--gray-400);
-    --color-border-default-subtle: var(--gray-300);
-    --color-border-brand: var(--blue-200);
-    --color-border-brand-alt: var(--blue-400);
-
     /* Font Size */
     --font-heading-1: var(--font-size-700);
     --font-heading-2: var(--font-size-600);
@@ -191,6 +150,51 @@
     --color-shadow-strong: var(--alpha-black-20);
 }
 
+/* Light Mode Settings */
+body {
+    /* Text Color */
+    --color-text-primary: var(--gray-800);
+    --color-text-primary-muted: var(--gray-500);
+    --color-text-primary-subtle: var(--gray-600);
+
+    --color-text-inverse: var(--gray-100);
+    --color-text-inverse-muted: var(--gray-300);
+    --color-text-inverse-subtle: var(--gray-200);
+
+    --color-text-brand: var(--blue-500);
+    --color-text-brand-subtle: var(--blue-400);
+
+    --color-text-red: var(--red-700);
+    --color-text-yellow: var(--yellow-700);
+    --color-text-green: var(--green-700);
+    --color-text-orange: var(--orange-700);
+    --color-text-blue: var(--blue-700);
+    --color-text-purple: var(--purple-700);
+
+    /* Background Color */
+    --color-bg-primary: var(--gray-100);
+    --color-bg-subtle: var(--white);
+    --color-bg-hover: var(--gray-300);
+
+    --color-bg-brand: var(--blue-700);
+    --color-bg-brand-hover: var(--blue-600);
+
+    --color-bg-red: var(--red-100);
+    --color-bg-red-hover: var(--red-300);
+    --color-bg-yellow: var(--yellow-100);
+    --color-bg-green: var(--green-100);
+    --color-bg-orange: var(--orange-100);
+    --color-bg-blue: var(--blue-100);
+    --color-bg-purple: var(--purple-100);
+
+    /* Border Color */
+    --color-border-default: var(--gray-400);
+    --color-border-default-subtle: var(--gray-300);
+    --color-border-brand: var(--blue-200);
+    --color-border-brand-alt: var(--blue-400);
+}
+
+
 /* Dark Mode Settings */
 body.dark {
     /* Text Color */
@@ -230,7 +234,7 @@ body.dark {
 
     /* Border Color */
     --color-border-default: var(--gray-700);
-    --color-border-default-subtle: var(--gray-800);
+    --color-border-default-subtle: var(--gray-900);
     --color-border-brand: var(--blue-500);
     --color-border-brand-alt: var(--blue-400);
 
@@ -264,6 +268,7 @@ body.highContrast {
 
     /* Border Color */
     --color-border-default: var(--yellow-500);
+    --color-border-default-subtle: var(--yellow-500);
     --color-border-brand: var(--yellow-500);
 
     /* Shadow (Removed) */
@@ -574,6 +579,39 @@ main {
     word-break: break-word;
 }
 
+/* Menu 01 */
+.lined-menu {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+
+    overflow: hidden;
+    border-radius: var(--radius-sm);
+}
+
+.lined-menu .menu-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+
+    padding: var(--spacing-md);
+
+    background: var(--color-bg-subtle);
+
+    color: inherit;
+    font-weight: var(--bold-weight);
+    font-size: var(--font-button-title);
+
+    transition: all 0.2s ease;
+}
+.lined-menu .menu-item:hover {
+    background: var(--color-bg-hover);
+}
+.lined-menu .menu-item:not(:last-child) {
+    border-bottom: 2px solid var(--color-border-default-subtle);
+}
+
 
 /* Others */
 .spinner {
@@ -606,11 +644,8 @@ main {
 
 
 /* TRANSITIONS */
-.fade-enter-active {
-    transition: all 0.15s ease-out;
-}
-
-.fade-leave-active {
+.fade-enter-active,
+.fade-leave-active{
     transition: all 0.15s ease-out;
 }
 

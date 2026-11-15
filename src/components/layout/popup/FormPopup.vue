@@ -63,9 +63,6 @@
   import { useForm } from "../../../composables/components/useForm"
   import { useUtils } from "../../../composables/useUtils"
 
-  import AppPopup from "./AppPopup.vue"
-  import ActionButton from "../../buttons/ActionButton.vue"
-
   import type { FormRegularTemplate } from "../../../interfaces/Form"
   import type { FormButton } from "../../../interfaces/Form"
 
@@ -73,6 +70,9 @@
 
   import type { DOMReference } from "../../../types/components/formPopup"
   import type { FormType } from "../../../types/components/genericForm"
+
+  import AppPopup from "./AppPopup.vue"
+  import ActionButton from "../../buttons/ActionButton.vue"
 
   // TYPES & INTERFACES
   interface Props {

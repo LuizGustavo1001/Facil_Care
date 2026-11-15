@@ -1,6 +1,6 @@
 <template>
   <component
-      :is="componentTag"
+      :is="buttonServices.getComponentTag(props.tag)"
       :type="isButton ? 'button' : undefined"
       :to="isRouterLink ? to : undefined"
       :href="!isButton ? (to || undefined) : undefined"
@@ -10,7 +10,7 @@
   >
     <Icon :icon="props.icon" :size="props.iconSize" padding="sm" />
 
-    <span class="bolder-weight text-center text">{{ label }}</span>
+    <span class="bold-weight text-center text">{{ label }}</span>
   </component>
 </template>
 
@@ -20,7 +20,8 @@
     transition: all 0.2s ease;
     color: inherit;
   }
-  .featured-item:hover {
+  .featured-item:hover,
+  .featured-item:hover .icon {
     color: var(--color-text-brand);
   }
 
@@ -28,7 +29,7 @@
     background: var(--color-bg-hover);
   }
 
-  .icon {
+  .featured-item .icon {
     background: var(--color-bg-subtle);
     border-radius: var(--radius-md);
     color: var(--color-text-primary-muted);
@@ -40,14 +41,17 @@
 </style>
 
 <script setup lang="ts">
-  import { type Component, computed } from "vue"
-  import { RouterLink } from "vue-router"
+  import { computed } from "vue"
 
-  import Icon from "../icons/Icon.vue"
   import { icons } from "../../assets/icons/icons"
-
   import { BUTTON_TAGS } from "../../constants/components/buttons"
   import type { ButtonTag } from "../../types/components/buttons"
+  import { useButtons } from "../../composables/components/useButtons"
+
+  import Icon from "../icons/Icon.vue"
+
+  // COMPOSABLES
+  const buttonServices = useButtons()
 
   // TYPES & INTERFACES
   interface Props {
@@ -72,19 +76,5 @@
   // COMPUTED PROPERTIES
   const isButton = computed<boolean>(() => props.tag === BUTTON_TAGS.BUTTON)
   const isRouterLink = computed<boolean>(() => props.tag === BUTTON_TAGS.ROUTER)
-  const componentTag = computed<ButtonTag | Component>(() => {
-    // 1. Tag == RouterLink (Internal Link)
-    if(isRouterLink.value) {
-      return RouterLink as Component
-    }
-
-    // 2. Other Tag
-    return props.tag
-  })
-
-  const parsedTarget = computed<string>(() => {
-    return props.target === "external"
-        ? "_blank"
-        : props.target
-  })
+  const parsedTarget = computed<string>(() => buttonServices.getTarget(props.target))
 </script>

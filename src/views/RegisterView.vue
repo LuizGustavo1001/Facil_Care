@@ -147,14 +147,8 @@
 
   // Search for dynamic data to mount on the screen
   onMounted(async() => {
-    try {
-      const response = await caregiverController.getAll()
-      if (response) {
-        caregiversList.value = response.data || []
-      }
-    } catch (error) {
-      console.error("DB Error:", error)
-    }
+    const result = await caregiverController.getAll()
+    caregiversList.value = result.data || []
   })
 
   // Grouping dynamic data
@@ -165,8 +159,9 @@
   // Page's current category within route params
   const currentCategory = computed<string | null>(() => {
     const category = route.params.category
-
-    return typeof category === "string" ? category : null
+    return typeof category === "string"
+        ? category
+        : null
   })
 
   // Returns the current form template based on the current category
@@ -196,28 +191,28 @@
     // Cast payload to any / target input type per controller mapping
     const payload = formData as any
 
-    if (category === PAGES.CAREGIVERS) {
+    if(category === PAGES.CAREGIVERS) {
       return caregiverController.create(payload)
     }
-    if (category === PAGES.HEALTH_PLANS) {
+    if(category === PAGES.HEALTH_PLANS) {
       return healthPlanController.create(payload)
     }
-    if (category === PAGES.ALLERGIES) {
+    if(category === PAGES.ALLERGIES) {
       return allergyController.create(payload)
     }
-    if (category === PAGES.DOCTORS) {
+    if(category === PAGES.DOCTORS) {
       return doctorController.create(payload)
     }
-    if (category === PAGES.EMERGENCY_CONTACTS) {
+    if(category === PAGES.EMERGENCY_CONTACTS) {
       return emergencyContactController.create(payload)
     }
-    if (category === PAGES.MEDICINES) {
+    if(category === PAGES.MEDICINES) {
       return medicineController.create(payload)
     }
-    if (VITAL_SIGNS_PAGES.includes(category as VitalSignType)) {
+    if(VITAL_SIGNS_PAGES.includes(category as VitalSignType)) {
       return vitalSignController.create(payload, category as VitalSignType)
     }
-    if (FOLLOW_UPS_PAGES.includes(category as FollowUpType)) {
+    if(FOLLOW_UPS_PAGES.includes(category as FollowUpType)) {
       return followUpController.create(payload, category as FollowUpType)
     }
 
@@ -226,11 +221,11 @@
 
   const handleSubmit = async (event: SubmitEvent) => {
     const formElement = event.currentTarget
-    if (!(formElement instanceof HTMLFormElement)) return
+    if(!(formElement instanceof HTMLFormElement)) return
 
     const category = currentCategory.value
     const currentTemplate = template.value
-    if (!category || !currentTemplate || !formElement.checkValidity()) return
+    if(!category || !currentTemplate || !formElement.checkValidity()) return
 
     let data: FormRecord = form.extractData(event, currentTemplate)
 
@@ -240,13 +235,13 @@
 
     const result = await handleRegisterByCategory(category, data)
 
-    if (result?.success) {
+    if(result?.success) {
       formElement.reset()
       addSuccess.value = true
       successMessage.value = snackbar.getWarningTitle(result.code as WarningCode)
     }
 
-    if (result?.code) {
+    if(result?.code) {
       snackbar.open(result.code as WarningCode)
     }
   }

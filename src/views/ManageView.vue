@@ -147,8 +147,6 @@
     description?: string
   }
 
-  type UpdatedData = Medicine | HealthPlan | Allergy | Caregiver | Doctor | EmergencyContact | Medicine[] | HealthPlan[] | Allergy[] | Caregiver[] | Doctor[] | EmergencyContact[]
-
   // COMPOSABLES
   const { t } = useI18n()
   const route = useRoute()
@@ -222,6 +220,15 @@
     }
   }
 
+  type CategoryKey = keyof typeof categoryConfig
+
+  // Returns the configuration for the selected category
+  const getCategoryConfig = (category: string | null) => {
+    if (!category || !(category in categoryConfig)) return null
+
+    return categoryConfig[category as CategoryKey]
+  }
+
   // COMPUTED PROPERTIES
   const dynamicData = computed(() => ({
     medicines: medicinesList.value
@@ -238,7 +245,7 @@
 
   // Formatting each category item data
   const formattedData = computed<FormattedItem[]>( () => {
-    switch (currentCategory.value) {
+    switch(currentCategory.value) {
       case PAGES.CAREGIVERS:
         return caregivers.value.map(caregiver => ({
           id: caregiver._id,
@@ -272,7 +279,7 @@
               + (medicine.routeAdmin ? ` (${utils.getOptionTranslate("routeAdmin", `${medicine.routeAdmin}`)})` : ""
           ),
           description: getDescription([
-              medicine.observations,
+            medicine.observations,
             joinTimes(medicine.administrationTimes)
           ])
         }))
@@ -303,37 +310,18 @@
   // FUNCTIONS
   // Loads the selected category data from database
   const loadCategoryData = async (category: string) => {
-    let result = null
+    const config = getCategoryConfig(category)
 
-    switch(category) {
-      case PAGES.MEDICINES:
-        result = await medicineController.getAll()
-        break
-      case PAGES.CAREGIVERS:
-        result = await caregiverController.getAll()
-        break
-      case PAGES.DOCTORS:
-        result = await doctorController.getAll()
-        break
-      case PAGES.EMERGENCY_CONTACTS:
-        result = await emergencyContactController.getAll()
-        break
-      case PAGES.ALLERGIES:
-        result = await allergyController.getAll()
-        break
-      case PAGES.HEALTH_PLANS:
-        result = await healthPlanController.getAll()
-        break
-      default:
-        return
-    }
+    if(!config) return
 
-    if (!result?.success) {
+    const result = await config.controller.getAll()
+
+    if(!result?.success) {
       snackbar.open((result?.code || "DBError") as WarningCode)
       return
     }
 
-    await updateData(category as string, result.data as UpdatedData)
+    config.setData(result.data as never)
   }
 
   // Returns joined description
@@ -357,7 +345,6 @@
   // Returns the translated current category title
   const getCategoryTitle = (currentCategory: string): string => {
     const key = `views.${currentCategory}.categories.registers.title`
-
     return utils.getTranslate(key)
   }
 
@@ -369,38 +356,30 @@
 
   // Executes the database query to delete an item
   const handleDeleteConfirmed = async (item: FormattedItem): Promise<void> => {
-    let result = null
+    const config = getCategoryConfig(currentCategory.value)
 
-    const itemId: number = item.id as number
+    if(!config || item.id === undefined) return
 
-    switch(currentCategory.value){
-      case PAGES.MEDICINES:
-        result = await medicineController.delete(itemId)
-        break
-      case PAGES.CAREGIVERS:
-        result = await caregiverController.delete(itemId)
-        break
-      case PAGES.DOCTORS:
-        result = await doctorController.delete(itemId)
-        break
-      case PAGES.EMERGENCY_CONTACTS:
-        result = await emergencyContactController.delete(itemId)
-        break
-      case PAGES.ALLERGIES:
-        result = await allergyController.delete(itemId)
-        break
-      case PAGES.HEALTH_PLANS:
-        result = await healthPlanController.delete(itemId)
-        break
-    }
+    const result = await config.controller.delete(item.id)
 
     if(!result) return
 
-    if(result && result.success) {
-      await updateData(currentCategory.value as string, result.data as UpdatedData)
+    if(!result.success) {
+      snackbar.open((result.code || "DBError") as WarningCode)
+      return
     }
 
-    snackbar.open((result.code || "DBError") as WarningCode)
+    const newData = await config.controller.getAll()
+
+    if(!newData?.success) {
+      snackbar.open((newData?.code || "DBError") as WarningCode)
+      return
+    }
+
+    if(result.success) {
+      config.setData(newData.data as never)
+      snackbar.open((result.code || "DBError") as WarningCode)
+    }
   }
 
   // Executes the database update query for the selected item
@@ -409,14 +388,14 @@
 
     if(!context || !context.itemId) return
 
-    const config = categoryConfig[currentCategory.value as keyof typeof categoryConfig]
+    const config = getCategoryConfig(currentCategory.value)
 
     if(!config) return
 
     const itemId = context.itemId as number
     const cleanData = JSON.parse(JSON.stringify(formData))
 
-    const result = await form.executeDBSubmit(() => config.controller.update(itemId, cleanData))
+    const result = await config.controller.update(itemId, cleanData)
 
     if(!result) return
 
@@ -440,29 +419,6 @@
     formPopup.close()
   }
 
-  const updateData = async (categoryId: string, updatedData: UpdatedData) => {
-    switch(categoryId) {
-      case PAGES.MEDICINES:
-        medicines.value = updatedData as Medicine[]
-        break
-      case PAGES.CAREGIVERS:
-        caregivers.value = updatedData as Caregiver[]
-        break
-      case PAGES.DOCTORS:
-        doctors.value = updatedData as Doctor[]
-        break
-      case PAGES.EMERGENCY_CONTACTS:
-        emergencyContacts.value = updatedData as EmergencyContact[]
-        break
-      case PAGES.ALLERGIES:
-        allergies.value = updatedData as Allergy[]
-        break
-      case PAGES.HEALTH_PLANS:
-        healthPlans.value = updatedData as HealthPlan[]
-        break
-    }
-  }
-
   /**
    * - Triggers the current event target (Prevents the popup from closing unexpectedly)
    * - Defines the database data source
@@ -471,6 +427,7 @@
    **/
   const handleButtonAction = async (button: FormattedItem, event: Event) => {
     formPopup.triggerRef.value = event.currentTarget as HTMLElement
+
     const popupTemplate = formTemplates.find(item => item.id === currentCategory.value) ?? null
 
     if(!popupTemplate) {
@@ -478,34 +435,13 @@
       return
     }
 
-    let result = null
+    const config = getCategoryConfig(currentCategory.value)
 
-    const btnId = button.id as number
+    if(!config || button.id === undefined) return
 
-    switch(currentCategory.value) {
-      case PAGES.MEDICINES:
-        result = await medicineController.getById(btnId)
-        break
-      case PAGES.CAREGIVERS:
-        result = await caregiverController.getById(btnId)
-        break
-      case PAGES.DOCTORS:
-        result = await doctorController.getById(btnId)
-        break
-      case PAGES.EMERGENCY_CONTACTS:
-        result = await emergencyContactController.getById(btnId)
-        break
-      case PAGES.ALLERGIES:
-        result = await allergyController.getById(btnId)
-        break
-      case PAGES.HEALTH_PLANS:
-        result = await healthPlanController.getById(btnId)
-        break
-      default:
-        return
-    }
+    let result = await config.controller.getById(button.id)
 
-    if (!result?.success || !result.data) {
+    if(!result?.success || !result.data) {
       snackbar.open((result?.code || "DBError") as WarningCode)
       return
     }

@@ -91,15 +91,15 @@
 
   import { useNavigation } from "../../composables/useNavigation"
 
-  import IconBtn from "../buttons/IconBtn.vue"
-  import NotificationsMenu from "./NotificationsMenu.vue"
-  import Icon from "../icons/Icon.vue"
-
   import type { AppHeaderType, AppHeaderVariant } from "../../types/components/appHeader"
 
   import { HEADER_TYPES, HEADER_VARIANTS } from "../../constants/components/appHeader"
   import { BUTTON_TAGS } from "../../constants/components/buttons"
   import { ICON_BTN_VARIANTS } from "../../constants/components/buttons"
+
+  import IconBtn from "../buttons/IconBtn.vue"
+  import NotificationsMenu from "./NotificationsMenu.vue"
+  import Icon from "../icons/Icon.vue"
 
   // TYPES & INTERFACES
   interface Props {

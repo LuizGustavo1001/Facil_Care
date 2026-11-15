@@ -257,8 +257,8 @@
 
   // WATCHERS
   watch([dexieBackup.error, p2p.peerError], ([newBackupError, newPeerError]) => {
-    if (newBackupError) snackbar.open(newBackupError as WarningCode)
+    if(newBackupError) snackbar.open(newBackupError as WarningCode)
 
-    if (newPeerError) snackbar.open(newPeerError as WarningCode)
+    if(newPeerError) snackbar.open(newPeerError as WarningCode)
   })
 </script>

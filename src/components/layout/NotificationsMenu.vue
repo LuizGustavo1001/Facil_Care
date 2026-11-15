@@ -118,7 +118,6 @@
   import VerticalLine from "../common/VerticalLine.vue"
   import IconBtn from "../buttons/IconBtn.vue"
 
-
   // TYPES & INTERFACES
   interface Props {
     isOpen: boolean

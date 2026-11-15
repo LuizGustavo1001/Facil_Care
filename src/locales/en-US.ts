@@ -1551,29 +1551,8 @@ export default {
             title: "Error trying to remove medicine, try again later"
         },
 
-        NoMedicineRegistryFound: {
-            title: "No medicine registries found"
-        },
-        MedicineRegistryNotFound: {
-            title: "Selected medicine registry not found"
-        },
-        MedicineRegistryUpdated: {
-            title: "The selected medicine registry was updated successfully"
-        },
-        MedicineRegistryDeleted: {
-            title: "The selected medicine registry was deleted successfully"
-        },
-        MedicineRegistryCreated: {
-            title: "The medicine registry was added successfully"
-        },
-        MedicineRegistryCreationFailed: {
-            title: "Error trying to add new medicine registry, try again later"
-        },
-        MedicineRegistryUpdateFailed: {
-            title: "Error trying to update medicine registry data, try again later"
-        },
-        MedicineRegistryDeleteFailed: {
-            title: "Error trying to remove medicine registry, try again later"
+        NoMedicineForToday: {
+            title: "There are no medicines to be administered today!"
         },
 
         InvalidDateInterval: {

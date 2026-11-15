@@ -17,7 +17,10 @@
 
         <ul class="flex flex-column gap-1">
           <!-- Category Item -->
-          <li v-for="item in category.items" :key="item.id" >
+          <li
+              v-for="item in category.items"
+              :key="item.id"
+          >
             <SelectInput
                 :modelValue="getCurrentEventValue(item)"
                 v-bind="getInputProps(category.id, item)"
@@ -108,7 +111,7 @@
             ? event.target.value
             : null
 
-    if (selectedValue === null) return
+    if(selectedValue === null) return
 
     switch(eventType) {
       case "toggle-theme":

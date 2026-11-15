@@ -47,7 +47,7 @@
 
 <style scoped>
   .action-btn-colorful {
-    padding: var(--spacing-sm);
+    padding: var(--spacing-xs);
 
     border: 3px solid transparent;
 
@@ -148,17 +148,9 @@
 
 <script setup lang="ts">
   import { computed } from "vue"
-  import {
-    ACTION_BUTTON_COLORFUL_VARIANTS,
-    BUTTON_COLORS,
-    BUTTON_TAGS
-  } from "../../constants/components/buttons"
+  import { ACTION_BUTTON_COLORFUL_VARIANTS, BUTTON_COLORS, BUTTON_TAGS } from "../../constants/components/buttons"
 
-  import type {
-    ActionBtnColorfulVariant,
-    ButtonColor,
-    ButtonTag
-  } from "../../types/components/buttons"
+  import type { ActionBtnColorfulVariant, ButtonColor, ButtonTag } from "../../types/components/buttons"
 
   import { useButtons } from "../../composables/components/useButtons"
 
@@ -186,7 +178,7 @@
   const props = withDefaults(defineProps<ActionButtonColorfulProps>(), {
     tag: BUTTON_TAGS.BUTTON,
     leftIcon: null,
-    leftIconSize: "20px",
+    leftIconSize: "23px",
     rightIcon: null,
     rightIconSize: "23px",
     to: "#",

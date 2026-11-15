@@ -29,13 +29,11 @@
   // FUNCTIONS
   const getFallbackMessage = (): string => {
     const key = `utils.pageFallback.title`
-
     return utils.getTranslate(key)
   }
 
   const getFallbackBtnMessage = (): string => {
     const key = `utils.pageFallback.button`
-
     return utils.getTranslate(key)
   }
 </script>

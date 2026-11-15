@@ -1,5 +1,5 @@
 <template>
-  <nav class="main-navigation-bar flex gap-15 align-center justify-center fixed">
+  <nav class="main-navigation-bar flex gap-15 align-center justify-center fixed overflow-scroll">
     <!-- Main Navigation Bar -->
     <RouterLink
         v-for="item in mainNavigationBar"
@@ -21,7 +21,7 @@
 
       <p
           v-if="item?.hasText"
-          class="label bolder-weight"
+          class="label bold-weight"
       >
         {{ getItemTitle(item.id) }}
       </p>
@@ -35,7 +35,7 @@
     padding: var(--spacing-sm);
     width: 100%;
 
-    background: var(--color-bg-primary);
+    background: var(--color-bg-subtle);
 
     box-shadow: 0 0 5px 3px var(--color-shadow-subtle);
     border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
@@ -59,7 +59,7 @@
   /* MOBILE */
   @media(max-width: 768px) {
     .main-navigation-bar {
-      padding: var(--spacing-xs) var(--spacing-xl) var(--spacing-xs) var(--spacing-xl);
+      padding: var(--spacing-xs) var(--spacing-xl);
       justify-content: space-between;
       font-size: var(--font-caption);
     }
@@ -72,13 +72,13 @@
       gap: 0.2em;
     }
     .nav-item .wrapper {
-      padding: var(--spacing-xs) var(--spacing-md) var(--spacing-xs) var(--spacing-md);
+      padding: var(--spacing-2xs) var(--spacing-lg);
       border-radius: var(--radius-full);
     }
 
     .nav-item.active .wrapper,
     .nav-item:hover .wrapper {
-      background-color: var(--color-bg-subtle);
+      background-color: var(--color-bg-primary);
     }
   }
 
@@ -89,7 +89,7 @@
     }
 
     .nav-item {
-      padding: var(--spacing-sm);
+      padding: var(--spacing-md);
       flex-direction: row;
       gap: 0.5em;
 
@@ -98,7 +98,7 @@
 
     .nav-item.active,
     .nav-item:hover {
-      background-color: var(--color-bg-subtle);
+      background-color: var(--color-bg-primary);
     }
   }
 
@@ -113,8 +113,7 @@
       gap: 0.3em;
 
       border-radius: var(--radius-full);
-      box-shadow: 0 2px 2px 1px var(--color-shadow-default);
-      border: 2px solid var(--color-border-default-subtle);
+      box-shadow: none;
     }
   }
 </style>
@@ -123,6 +122,7 @@
   import { computed } from "vue"
   import { mainNavigationBar } from "../../locales/projectConfig"
   import { useUtils } from "../../composables/useUtils"
+
   import Icon from "../icons/Icon.vue"
 
   // TYPES & INTERFACES

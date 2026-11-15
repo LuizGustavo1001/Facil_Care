@@ -99,9 +99,10 @@
   import { BUTTON_TAGS, ICON_BTN_VARIANTS } from "../../constants/components/buttons"
   import { PADDING_SIZE } from "../../constants/paddindSizes"
 
-  import Icon from "../icons/Icon.vue"
   import { useUtils } from "../../composables/useUtils"
   import { useButtons } from "../../composables/components/useButtons"
+
+  import Icon from "../icons/Icon.vue"
 
   // COMPOSABLES
   const utils = useUtils()
