@@ -36,7 +36,7 @@
   }
 
   .featured-item .text {
-    font-size: var(--font-caption);
+    font-size: var(--font-label-sm);
   }
 </style>
 
@@ -44,8 +44,8 @@
   import { computed } from "vue"
 
   import { icons } from "../../assets/icons/icons"
-  import { BUTTON_TAGS } from "../../constants/components/buttons"
-  import type { ButtonTag } from "../../types/components/buttons"
+  import { BUTTON_TAGS } from "../../constants/components/appButtons"
+  import type { ButtonTag } from "../../types/components/appButtons"
   import { useButtons } from "../../composables/components/useButtons"
 
   import Icon from "../icons/Icon.vue"

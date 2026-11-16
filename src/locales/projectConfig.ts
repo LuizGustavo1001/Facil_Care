@@ -4,11 +4,11 @@ import { THEME_PREFERENCES } from "../constants/sysThemes"
 import { LANGUAGES } from "../constants/sysLanguages"
 import { PAGES } from "../constants/sysPages"
 import { UNITS } from "../constants/sysUnits"
-import { BUTTON_COLORS } from "../constants/components/buttons"
-import { WEEK_DAYS } from "../constants/weekDays"
+import { BUTTON_COLORS } from "../constants/components/appButtons"
+import { WEEK_DAYS } from "../constants/date"
 
-import type { FormRegularTemplate } from "../interfaces/Form"
-import type { FormType } from "../types/components/genericForm"
+import type { FormRegularTemplate } from "../interfaces/IForm"
+import type { FormType } from "../types/components/appForm"
 
 export const THEME_OPTIONS = [
     { id: THEME_PREFERENCES.LIGHT },
@@ -487,7 +487,7 @@ export const exportView = {
             },
             {
                 id: "json",
-                icon: icons['file-line'],
+                icon: icons['folder-open-line'],
                 color: BUTTON_COLORS.YELLOW,
                 href: `/backup/${PAGES.EXPORT}/json`
             }
@@ -541,13 +541,13 @@ export const warningMessages = {
     PatientUpdated: "success",
     ItemNotFound: "warning",
 
-    NotificationNotFound: "error",
+    NotificationNotFound: "warning",
 
     SystemDataReset: "success",
     DatabaseError: "error",
 
-    NoVitalSignFound: "error",
-    NoVitalSignByField: "error",
+    NoVitalSignFound: "warning",
+    NoVitalSignByField: "warning",
     NoVitalSignByDate: "error",
     NoVitalSignByFieldAndDate: "error",
     VitalSignNotFound: "error",
@@ -555,8 +555,8 @@ export const warningMessages = {
     VitalSignDeleted: "success",
     VitalSignCreated: "success",
 
-    NoFollowUpFound: "error",
-    NoFollowUpByField: "error",
+    NoFollowUpFound: "warning",
+    NoFollowUpByField: "warning",
     NoFollowUpByDate: "error",
     NoFollowUpByFieldAndDate: "error",
     FollowUpNotFound: "error",
@@ -564,8 +564,8 @@ export const warningMessages = {
     FollowUpDeleted: "success",
     FollowUpCreated: "success",
 
-    NoAllergyFound: "error",
-    AllergyNotFound: "error",
+    NoAllergyFound: "warning",
+    AllergyNotFound: "warning",
     AllergyUpdated: "success",
     AllergyDeleted: "success",
     AllergyCreated: "success",
@@ -573,8 +573,8 @@ export const warningMessages = {
     AllergyUpdateFailed: "error",
     AllergyDeleteFailed: "error",
 
-    NoCaregiverFound: "error",
-    CaregiverNotFound: "error",
+    NoCaregiverFound: "warning",
+    CaregiverNotFound: "warning",
     CaregiverUpdated: "success",
     CaregiverDeleted: "success",
     CaregiverCreated: "success",
@@ -582,8 +582,8 @@ export const warningMessages = {
     CaregiverUpdateFailed: "error",
     CaregiverDeleteFailed: "error",
 
-    NoDoctorFound: "error",
-    DoctorNotFound: "error",
+    NoDoctorFound: "warning",
+    DoctorNotFound: "warning",
     DoctorUpdated: "success",
     DoctorDeleted: "success",
     DoctorCreated: "success",
@@ -591,8 +591,8 @@ export const warningMessages = {
     DoctorUpdateFailed: "error",
     DoctorDeleteFailed: "error",
 
-    NoEmergencyContactFound: "error",
-    EmergencyContactNotFound: "error",
+    NoEmergencyContactFound: "warning",
+    EmergencyContactNotFound: "warning",
     EmergencyContactUpdated: "success",
     EmergencyContactDeleted: "success",
     EmergencyContactCreated: "success",
@@ -600,8 +600,8 @@ export const warningMessages = {
     EmergencyContactUpdateFailed: "error",
     EmergencyContactDeleteFailed: "error",
 
-    NoHealthPlansFound: "error",
-    HealthPlansNotFound: "error",
+    NoHealthPlansFound: "warning",
+    HealthPlansNotFound: "warning",
     HealthPlansUpdated: "success",
     HealthPlansDeleted: "success",
     HealthPlansCreated: "success",
@@ -609,14 +609,21 @@ export const warningMessages = {
     HealthPlansUpdateFailed: "error",
     HealthPlansDeleteFailed: "error",
 
-    NoMedicineFound: "error",
-    MedicineNotFound: "error",
+    NoMedicineFound: "warning",
+    MedicineNotFound: "warning",
     MedicineUpdated: "success",
     MedicineDeleted: "success",
     MedicineCreated: "success",
     MedicineCreationFailed: "error",
     MedicineUpdateFailed: "error",
     MedicineDeleteFailed: "error",
+
+    MedicineScheduleEmpty: "warning",
+    NoMedicineScheduleBySelectedDay: "info",
+    MedicineScheduleFound: "success",
+    MedicineScheduleNotFound: "warning",
+    MedicineScheduleDeleted: "success",
+    MedicineScheduleCreated: "success",
 
     NoMedicineForToday: "info",
 
@@ -626,7 +633,7 @@ export const warningMessages = {
     ImportFailed: "error",
     P2PExportFailed: "error",
     P2PImportFailed: "error",
-    P2PConnectionInterrupted: "warning",
+    P2PConnectionInterrupted: "info",
     P2PReceiveFailed: "error",
     JSONImportSuccess: "success",
     exportJSONSuccess: "success",

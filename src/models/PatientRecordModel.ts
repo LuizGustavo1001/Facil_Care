@@ -1,7 +1,7 @@
 import type { Table, Dexie, UpdateSpec } from "dexie"
-import type { PatientRecordBase } from "../interfaces/PatientRecordBase"
+import type { IPatientRecordBase } from "../interfaces/IPatientRecordBase"
 
-export default abstract class PatientRecordModel <T extends PatientRecordBase> {
+export default abstract class PatientRecordModel <T extends IPatientRecordBase> {
     private readonly table: Table<T, number>
 
     protected constructor(db: Dexie, tableName: string) {
@@ -11,7 +11,7 @@ export default abstract class PatientRecordModel <T extends PatientRecordBase> {
     /**
      * Retrieves all records.
      **/
-    async getAll(): Promise<T[]> {
+    public async getAll(): Promise<T[]> {
         return await this.table
             .toCollection()
             .toArray()
@@ -20,7 +20,7 @@ export default abstract class PatientRecordModel <T extends PatientRecordBase> {
     /**
      * Retrieves records by its `ID`.
      **/
-    async getById(id: number): Promise<T | undefined> {
+    public async getById(id: number): Promise<T | undefined> {
         return this.table.get(id)
     }
 
@@ -28,7 +28,7 @@ export default abstract class PatientRecordModel <T extends PatientRecordBase> {
      * Retrieves records matching a specific `RECORD TYPE`,
      * ordered by `dateTime` *(descending order)*.
      **/
-    async getByField(fieldName: string): Promise<T[]> {
+    public async getByField(fieldName: string): Promise<T[]> {
         const records = await this.table
             .where("record")
             .equals(fieldName)
@@ -44,7 +44,7 @@ export default abstract class PatientRecordModel <T extends PatientRecordBase> {
      * Retrieves records within a date range,
      * including both interval edges ordered by `dateTime` *(descending order)*.
      **/
-    async getByDate(minDate: Date, maxDate: Date): Promise<T[]> {
+    public async getByDate(minDate: Date, maxDate: Date): Promise<T[]> {
         const records = await this.table
             .where("dateTime")
             .between(
@@ -64,7 +64,7 @@ export default abstract class PatientRecordModel <T extends PatientRecordBase> {
      * Retrieves records matching a specific record type and date range,
      * including both interval edges ordered by `dateTime` *(descending order)*.
      **/
-    async getByFieldAndDate(
+    public async getByFieldAndDate(
         field: string,
         minDate: Date,
         maxDate: Date = new Date()
@@ -89,9 +89,8 @@ export default abstract class PatientRecordModel <T extends PatientRecordBase> {
      *
      * @returns `TRUE` if the record was added, or `FALSE` otherwise.
      **/
-    async create(newRecord: T): Promise<boolean> {
+    public async create(newRecord: T): Promise<boolean> {
         await this.table.add(newRecord)
-
         return true
     }
 
@@ -101,7 +100,7 @@ export default abstract class PatientRecordModel <T extends PatientRecordBase> {
      *
      * @returns `TRUE` if the record was updated, `FALSE` if the record wat not found.
      **/
-    async update(
+    public async update(
         newData: UpdateSpec<T>,
         recordId: number
     ): Promise<boolean> {
@@ -118,7 +117,7 @@ export default abstract class PatientRecordModel <T extends PatientRecordBase> {
      *
      * @returns `TRUE` if deleted, `FALSE` if the record was not found.
      **/
-    async removeById(recordId: number): Promise<boolean> {
+    public async removeById(recordId: number): Promise<boolean> {
         const deleted = await this.table
             .where("_id")
             .equals(recordId)

@@ -9,15 +9,16 @@
     </p>
 
     <div class="week-days-wrapper flex gap-05">
-      <div
+      <button
           v-for="day in weekDaysFormat"
           :key="day.value"
-          class="week-day-button flex align-center justify-center"
+          class="week-day-button flex align-center justify-center bold-weight active-border"
+          type="button"
           :class="{ active: isSelected(day.value) }"
           @click="toggleDayBtn(day.value)"
       >
         {{ date.getDayLabel(day.value, "narrow") }}
-      </div>
+      </button>
     </div>
 
     <!-- Selected days for FormData -->
@@ -44,6 +45,7 @@
     width: 35px;
     height: 35px;
 
+    background: none;
     border: 2px solid var(--color-border-default);
     border-radius: var(--radius-full);
 
@@ -54,7 +56,12 @@
   .week-day-button.active,
   .week-day-button:hover {
     background: var(--color-bg-blue);
-    border-color:transparent;
+    color: var(--color-text-blue);
+    border-color: transparent;
+  }
+
+  .week-day-button:hover {
+    background: var(--color-bg-hover);
   }
 </style>
 

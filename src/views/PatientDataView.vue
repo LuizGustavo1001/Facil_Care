@@ -1,6 +1,6 @@
 <template>
   <div class="view regular">
-    <!-- Patient Data Vie -->
+    <!-- Patient Data View -->
     <!-- Here you can manage patient's data and execute some system actions -->
     <Snackbar
         :isActive="isSnackbarOpen"
@@ -117,8 +117,8 @@
   import { mainNavigationBar, pages, patientDataView } from "../locales/projectConfig"
 
   import { PAGES } from "../constants/sysPages"
-  import { ACTION_BUTTON_VARIANTS } from "../constants/components/buttons"
-  import { PADDING_SIZE } from "../constants/paddindSizes"
+  import { ACTION_BUTTON_VARIANTS } from "../constants/components/appButtons"
+  import { PADDING_SIZE } from "../constants/spacing"
   import { HEADER_TYPES } from "../constants/components/appHeader"
 
   import { useUtils } from "../composables/useUtils"
@@ -127,7 +127,7 @@
 
   import PatientController from "../controllers/PatientController"
 
-  import type { Patient } from "../interfaces/Patient"
+  import type { IPatient } from "../interfaces/IPatient"
   import type { WarningCode } from "../types/components/snackbar"
 
   import AppHeader from "../components/layout/AppHeader.vue"
@@ -143,13 +143,13 @@
 
   // CONTROLLERS
   const patientController = new PatientController()
-  const patient = ref<Patient | null>(null)
+  const patient = ref<IPatient | null>(null)
 
   // COMPUTED PROPERTIES
   const isSnackbarOpen = computed<boolean>(() => snackbar.isActive.value)
 
   const age = computed<number | null>(() => { // Patient age
-    return date.getAge(new Date((patient.value as Patient).birthDate))
+    return date.getAge(new Date((patient.value as IPatient).birthDate))
   })
 
   // FUNCTIONS
@@ -169,7 +169,7 @@
 
     // Update frontend patient data
     if(result.success) {
-      patient.value = result.data as Patient
+      patient.value = result.data as IPatient
     } else {
       snackbar.open(result.code as WarningCode)
     }

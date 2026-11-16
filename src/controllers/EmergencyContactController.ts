@@ -1,9 +1,9 @@
 import SubCategoryController from "./SubCategoryController"
-import type { EmergencyContact } from "../interfaces/EmergencyContact"
+import type { IEmergencyContact } from "../interfaces/IEmergencyContact"
 import { EmergencyContactModel } from "../models/EmergencyContactModel"
 
-export default class EmergencyContactController extends SubCategoryController<EmergencyContact> {
-    constructor() {
-        super(EmergencyContactModel, "EmergencyContact")
+export default class EmergencyContactController extends SubCategoryController<IEmergencyContact> {
+    public constructor() {
+        super(EmergencyContactModel, "IEmergencyContact")
     }
 }

@@ -56,10 +56,10 @@
   import type { Ref } from "vue"
   import { useUtils } from "../../../composables/useUtils"
 
-  import type { DOMReference } from "../../../types/components/formPopup"
+  import type { DOMReference } from "../../../types/components/appPopup"
 
-  import { PADDING_SIZE } from "../../../constants/paddindSizes"
-  import { BUTTON_TAGS } from "../../../constants/components/buttons"
+  import { PADDING_SIZE } from "../../../constants/spacing"
+  import { BUTTON_TAGS } from "../../../constants/components/appButtons"
 
   import AppPopup from "./AppPopup.vue"
   import ActionButton from "../../buttons/ActionButton.vue"

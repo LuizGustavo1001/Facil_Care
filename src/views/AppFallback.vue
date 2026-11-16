@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
   import { useUtils } from "../composables/useUtils"
-  import { BUTTON_TAGS } from "../constants/components/buttons"
+  import { BUTTON_TAGS } from "../constants/components/appButtons"
 
   import ActionButton from "../components/buttons/ActionButton.vue"
   import AppFooter from "../components/layout/AppFooter.vue"

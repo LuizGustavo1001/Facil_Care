@@ -2,7 +2,7 @@ import { PAGES } from "../constants/sysPages"
 import { THEME_PREFERENCES as THEMES } from "../constants/sysThemes"
 import { LANGUAGES } from "../constants/sysLanguages"
 import { UNITS } from "../constants/sysUnits"
-import { FORM_TYPES } from "../constants/components/form"
+import { FORM_TYPES } from "../constants/components/appForms"
 
 export default {
     pageTitle: {
@@ -822,7 +822,7 @@ export default {
             fallback: "No valid measurement to display",
 
             [PAGES.BLOOD_PRESSURE]: {
-                y_axis: "Pressão Arterial",
+                y_axis: "Blood Pressure",
                 x_axis: "Measurement Date",
                 values: {
                     systolic: "Systolic",
@@ -872,12 +872,12 @@ export default {
     formTemplates: {
         name: {
             header: {
-                title: "Patient's Name"
+                title: "Patient Name"
             },
             main: {
                 inputs: {
                     name: {
-                        label: "Patient's Name",
+                        label: "Patient Name",
                         placeholder: "ex: Joshua Canny"
                     }
                 }
@@ -1549,6 +1549,25 @@ export default {
         },
         MedicineDeleteFailed: {
             title: "Error trying to remove medicine, try again later"
+        },
+
+        MedicineScheduleEmpty: {
+            title: "No administration founded"
+        },
+        NoMedicineScheduleBySelectedDay: {
+            title: "No administration founded within the selected week day"
+        },
+        MedicineScheduleFound: {
+            title: "Administration founded"
+        },
+        MedicineScheduleNotFound: {
+            title: "The specified administration was not found."
+        },
+        MedicineScheduleDeleted: {
+            title: "The administration was removed successfully"
+        },
+        MedicineScheduleCreated: {
+            title: "The administration was added successfully"
         },
 
         NoMedicineForToday: {

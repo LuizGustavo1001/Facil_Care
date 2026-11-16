@@ -8,9 +8,7 @@
         @click="snackbar.open"
     />
 
-    <AppHeader
-        :title="getPageTitle()"
-    />
+    <AppHeader :title="getPageTitle()"/>
 
     <main class="main regular gap-1">
       <!-- Form Section -->
@@ -77,13 +75,13 @@
   import { formTemplates } from "../locales/projectConfig"
 
   import { PAGES } from "../constants/sysPages"
-  import { FORM_TYPES } from "../constants/components/form"
+  import { FORM_TYPES } from "../constants/components/appForms"
   import { VITAL_SIGNS_PAGES, FOLLOW_UPS_PAGES } from "../constants/sysPages"
-  import { BUTTON_COLORS } from "../constants/components/buttons"
+  import { BUTTON_COLORS } from "../constants/components/appButtons"
 
   import type { WarningCode } from "../types/components/snackbar"
   import type { FollowUpType, VitalSignType } from "../types/sysPages"
-  import type { FormRecord } from "../types/components/genericForm"
+  import type { FormRecord } from "../types/components/appForm"
 
   import { useRoute } from "vue-router"
   import { useNavigation } from "../composables/useNavigation"
@@ -100,8 +98,8 @@
   import FollowUpController from "../controllers/FollowUpController"
   import VitalSignController from "../controllers/VitalSignController"
 
-  import type { Caregiver } from "../interfaces/Caregiver"
-  import type { FormRegularTemplate } from "../interfaces/Form"
+  import type { ICaregiver } from "../interfaces/ICaregiver"
+  import type { FormRegularTemplate } from "../interfaces/IForm"
 
   import AppHeader from "../components/layout/AppHeader.vue"
   import AppFooter from "../components/layout/AppFooter.vue"
@@ -141,7 +139,7 @@
   const isSnakcbarOpen = computed<boolean>(() => snackbar.isActive.value)
 
   // STATES
-  const caregiversList = ref<Caregiver[]>([])
+  const caregiversList = ref<ICaregiver[]>([])
   const addSuccess = ref<boolean>(false)
   const successMessage = ref<string>("")
 

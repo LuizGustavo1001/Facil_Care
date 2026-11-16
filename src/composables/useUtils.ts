@@ -1,8 +1,8 @@
 import { useI18n } from "vue-i18n"
-import type { PaddingSize } from "../types/paddingSizes"
+import type { PaddingSize } from "../types/spacing"
 import type { DayPeriod } from "../types/date"
-import { DAY_PERIODS } from "../constants/dayPeriods"
-import { BUTTON_COLORS } from "../constants/components/buttons"
+import { DAY_PERIODS } from "../constants/date"
+import { BUTTON_COLORS } from "../constants/components/appButtons"
 import { useDate } from "./useDate"
 
 export function useUtils() {
@@ -59,10 +59,10 @@ export function useUtils() {
 
         switch (dayPeriod) {
             case DAY_PERIODS.AFTERNOON:
-                return BUTTON_COLORS.PURPLE
+                return BUTTON_COLORS.ORANGE
 
             case DAY_PERIODS.EVENING:
-                return BUTTON_COLORS.ORANGE
+                return BUTTON_COLORS.PURPLE
 
             default:
                 return BUTTON_COLORS.BLUE
@@ -74,7 +74,6 @@ export function useUtils() {
         const key = `options.routeAdmin.${route}`
         return getTranslate(key)
     }
-
 
     return { getPageTitle, pageExists, getOptionTranslate, getTranslate, getPaddingStyle, getBadgeColor, getRouteAdminLabel }
 }

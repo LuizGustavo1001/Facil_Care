@@ -1,9 +1,9 @@
 import Dexie from "dexie"
 import { PatientSubCategoryModel } from "./PatientSubCategoryModel"
-import type { Doctor } from "../interfaces/Doctor"
+import type { IDoctor } from "../interfaces/IDoctor"
 
-export class DoctorModel extends PatientSubCategoryModel<Doctor> {
-    constructor(db: Dexie) {
+export class DoctorModel extends PatientSubCategoryModel<IDoctor> {
+    public constructor(db: Dexie) {
         super(db, "doctors")
     }
 }

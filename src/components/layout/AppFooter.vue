@@ -42,7 +42,7 @@
   import { footers } from "../../locales/projectConfig"
 
   import { PAGES } from "../../constants/sysPages"
-  import { PADDING_SIZE } from "../../constants/paddindSizes"
+  import { PADDING_SIZE } from "../../constants/spacing"
 
   import { useUtils } from "../../composables/useUtils"
 

@@ -1,11 +1,11 @@
 import { usePopup } from "./usePopup"
 import { ref } from "vue"
 
-import { FORM_TYPES } from "../../constants/components/form"
-import type { FormRegularTemplate } from "../../interfaces/Form"
+import { FORM_TYPES } from "../../constants/components/appForms"
+import type { FormRegularTemplate } from "../../interfaces/IForm"
 
-import type { FormContext } from "../../types/components/formPopup"
-import type { FormType, FormValues } from "../../types/components/genericForm"
+import type { FormContext } from "../../types/components/appPopup"
+import type { FormType, FormValues } from "../../types/components/appForm"
 
 export function useFormPopup() {
     const popup = usePopup()

@@ -1,9 +1,9 @@
 import SubCategoryController from "./SubCategoryController"
-import type { Doctor } from "../interfaces/Doctor"
+import type { IDoctor } from "../interfaces/IDoctor"
 import { DoctorModel } from "../models/DoctorModel"
 
-export default class DoctorController extends SubCategoryController<Doctor> {
-    constructor() {
-        super(DoctorModel, "Doctor")
+export default class DoctorController extends SubCategoryController<IDoctor> {
+    public constructor() {
+        super(DoctorModel, "IDoctor")
     }
 }

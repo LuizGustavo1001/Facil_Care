@@ -1,7 +1,7 @@
 import { computed } from "vue"
 import { currentLanguage } from "./useLanguage"
 import { FORMATTED_LANGUAGES, LANGUAGES } from "../constants/sysLanguages"
-import { DAY_PERIODS } from "../constants/dayPeriods"
+import { DAY_PERIODS } from "../constants/date"
 
 import type { DateInput, DayPeriod, DateFormatOptions } from "../types/date"
 

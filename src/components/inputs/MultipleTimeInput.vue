@@ -24,7 +24,7 @@
           :value="time"
           v-bind="$attrs"
           :readonly="readonly"
-          class="alt-input-attr active-border flex-grow-1"
+          class="alt-input-attr active-border flex-grow-1 bold-weight"
           @input="updateTime(index, ($event.target as HTMLInputElement).value)"
         >
 
@@ -60,7 +60,7 @@
 <script setup lang="ts">
   import { computed } from "vue"
   import { icons } from "../../assets/icons/icons.js"
-  import { ICON_BTN_VARIANTS } from "../../constants/components/buttons"
+  import { ICON_BTN_VARIANTS } from "../../constants/components/appButtons"
 
   import { useI18n } from "vue-i18n"
   import { useDate } from "../../composables/useDate"

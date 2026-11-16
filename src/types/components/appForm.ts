@@ -1,5 +1,5 @@
-import { FORM_TYPES } from "../../constants/components/form"
-import type { DynamicOption } from "../../interfaces/Form"
+import { FORM_TYPES } from "../../constants/components/appForms"
+import type { DynamicOption } from "../../interfaces/IForm"
 
 export type Converter = (type: string, value: unknown) => unknown
 export type FormInputTag =

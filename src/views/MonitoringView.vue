@@ -22,7 +22,6 @@
                   :to="item.href"
                   :title="getItemTitle(item.id)"
                   :leftIcon="item.iconLine"
-                  leftIconSize="25px"
                   :rightIcon="icons['chevron-right']"
                   :color="item.color"
               />
@@ -48,7 +47,7 @@
   import { monitoringViews } from "../locales/projectConfig"
 
   import { MONITORING_PAGES } from "../constants/sysPages"
-  import { BUTTON_TAGS } from "../constants/components/buttons"
+  import { BUTTON_TAGS } from "../constants/components/appButtons"
 
   import type { MonitoringPageType } from "../types/sysPages"
 

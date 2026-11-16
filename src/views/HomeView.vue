@@ -59,7 +59,7 @@
       </section>
 
       <!-- Today's Medicine -->
-      <section class="home-medicines flex flex-column gap-1 flex-grow-1">
+      <section class="home-medicines flex flex-column gap-05 flex-grow-1">
         <div class="section-title-container">
           <h2 class="section-title text-uppercase text-muted bolder-weight">{{ utils.getTranslate(`views.${PAGES.HOME}.todaysMedicines`) }}</h2>
         </div>
@@ -171,15 +171,15 @@
   import { useDate } from "../composables/useDate"
 
   import PatientController from "../controllers/PatientController"
-  import MedicineController from "../controllers/MedicineController"
+  import WeeklyMedicineScheduleController from "../controllers/WeeklyMedicineScheduleController"
 
   import { PAGES } from "../constants/sysPages"
-  import { PADDING_SIZE } from "../constants/paddindSizes"
+  import { PADDING_SIZE } from "../constants/spacing"
   import { HEADER_TYPES, HEADER_VARIANTS } from "../constants/components/appHeader"
-  import { BUTTON_TAGS } from "../constants/components/buttons"
+  import { BUTTON_TAGS } from "../constants/components/appButtons"
 
-  import type { Medicine } from "../interfaces/Medicine"
-  import type { Patient } from "../interfaces/Patient"
+  import type { FormattedMedicine } from "../interfaces/IMedicine"
+  import type { IPatient } from "../interfaces/IPatient"
 
   import type { WarningCode } from "../types/components/snackbar"
 
@@ -201,11 +201,11 @@
 
   // CONTROLLERS
   const patientController = new PatientController()
-  const medicineController = new MedicineController()
+  const weeklyScheduleController = new WeeklyMedicineScheduleController()
 
   // STATES
-  const patient = ref<Patient | null>(null)
-  const medicines = ref<Medicine[]>([])
+  const patient = ref<IPatient | null>(null)
+  const medicines = ref<FormattedMedicine[]>([])
 
   // FUNCTIONS
   const getQuickAccessItemTitle = (itemId: string): string => {
@@ -213,24 +213,27 @@
     return utils.getTranslate(key)
   }
 
+  const loadDailyMedicines = async () => {
+    try {
+      medicines.value = await weeklyScheduleController.loadDailyMedicinesByDay(date.getDayNumber()) as FormattedMedicine[]
+    } catch(err) {
+      console.error("Error loading daily medicines:", err)
+
+      medicines.value = []
+      snackbar.open("DBError" as WarningCode)
+    }
+  }
+
   // MOUNTED || UNMOUNTED
   onMounted(async () => {
-    const results = await Promise.all([
-        patientController.getPatient(),
-        medicineController.getByWeekDay()
-    ])
+    const results = await Promise.all([patientController.getPatient()])
 
-    const [
-        patientData,
-        medicineData
-    ] = results
+    const [patientData] = results
 
-    if(medicineData.success) {
-      medicines.value = medicineData.data as Medicine[]
-    }
+    await loadDailyMedicines()
 
     patientData.success
-        ? patient.value = patientData.data as Patient
+        ? patient.value = patientData.data as IPatient
         : snackbar.open(patientData.code as WarningCode)
   })
 </script>

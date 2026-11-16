@@ -1,20 +1,20 @@
 import NotificationModel from "../models/NotificationModel"
 import db from "../database/db.js"
 
-import type { ControllerResult } from "./settings"
+import {type ControllerResult, fallbackReturn} from "./settings"
 import type { INotification } from "../interfaces/INotification"
 
 export default class NotificationController {
     private readonly model: NotificationModel
 
-    constructor() {
+    public constructor() {
         this.model = new NotificationModel(db)
     }
 
     /**
      * Returns all notifications
      **/
-    async getAll(): Promise<ControllerResult<INotification[]>> {
+    public async getAll(): Promise<ControllerResult<INotification[]>> {
         try {
             const notifications = await this.model.getAll()
 
@@ -31,20 +31,15 @@ export default class NotificationController {
                 code: null,
                 data: notifications
             }
-        } catch(err) {
-            console.log("DB error: ", err)
-            return {
-                success: false,
-                code: "DatabaseError",
-                data: []
-            }
+        } catch(err: any) {
+            return fallbackReturn(err)
         }
     }
 
     /**
      * Marks a notification as `READ`
      **/
-    async markAsRead(NotificationId: number | undefined): Promise<ControllerResult<INotification>> {
+    public async markAsRead(NotificationId: number | undefined): Promise<ControllerResult<INotification>> {
         try {
             const result = await this.model.markAsRead(<number>NotificationId)
 
@@ -61,21 +56,15 @@ export default class NotificationController {
                 code: null,
                 data: null
             }
-        } catch(err) {
-            console.log("DB error: ", err)
-
-            return {
-                success: false,
-                code: "DatabaseError",
-                data: null
-            }
+        } catch(err: any) {
+            return fallbackReturn(err, false)
         }
     }
 
     /**
     * Marks every notification as `READ`
     **/
-    async markAllAsRead(): Promise<ControllerResult<INotification>> {
+    public async markAllAsRead(): Promise<ControllerResult<INotification>> {
         try {
             const result = await this.model.markAllAsRead()
 
@@ -92,25 +81,19 @@ export default class NotificationController {
                 code: null,
                 data: null
             }
-        } catch(err) {
-            console.log("DB error: ", err)
-
-            return {
-                success: false,
-                code: "DatabaseError",
-                data: null
-            }
+        } catch(err: any) {
+            return fallbackReturn(err, false)
         }
     }
 
     /**
      * Removes old notifications *(30+ days old)*.
      **/
-    async removeOlds(): Promise<void> {
+    public async removeOlds(): Promise<void> {
         try {
             await this.model.removeOldNotifications()
-        } catch(error) {
-            console.log("DB error: ", error)
+        } catch(err: any) {
+            console.log("DB error: ", err)
         }
     }
 }

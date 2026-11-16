@@ -1,11 +1,11 @@
 export interface INotification {
-    _id?: number,
-    patientId: number,
+    _id?: number
+    patientId: number
 
-    title: string,
-    description: string,
+    title: string
+    description: string
 
-    read: boolean,
+    read: boolean
 
     dateTime: Date
 }

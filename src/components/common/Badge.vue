@@ -12,6 +12,8 @@
 <style scoped>
   .badge {
     border-radius: var(--radius-lg);
+    font-size: var(--font-body-sm);
+    font-weight: var(--bold-weight);
   }
 
   /* VARIANTS */
@@ -49,11 +51,11 @@
 
 <script setup lang="ts">
   import { computed } from "vue"
-  import { BUTTON_COLORS } from "../../constants/components/buttons"
-  import { PADDING_SIZE } from "../../constants/paddindSizes"
+  import { BUTTON_COLORS } from "../../constants/components/appButtons"
+  import { PADDING_SIZE } from "../../constants/spacing"
 
-  import type { ButtonColor } from "../../types/components/buttons"
-  import type { PaddingSize } from "../../types/paddingSizes"
+  import type { ButtonColor } from "../../types/components/appButtons"
+  import type { PaddingSize } from "../../types/spacing"
 
   import Icon from "../icons/Icon.vue"
 
@@ -82,5 +84,5 @@
     return props.color
   })
 
-  const computedPadding = computed(() => `padding: var(--spacing-${props.spacing})`)
+  const computedPadding = computed(() => `padding-block: var(--spacing-${props.spacing}); padding-inline: var(--spacing-xs)`)
 </script>

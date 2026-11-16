@@ -14,7 +14,7 @@
       :type="inputType"
       :name="name"
       v-bind="$attrs"
-      class="default-input-attr"
+      class="default-input-attr bold-weight"
     >
   </fieldset>
 
@@ -23,6 +23,7 @@
 <style scoped>
   .input-label {
     font-size: var(--font-label-md);
+    font-weight: var(--bold-weight);
     padding-inline: var(--spacing-sm);
     margin-left: var(--spacing-sm);
   }

@@ -1,11 +1,11 @@
 import SubCategoryController from "./SubCategoryController"
-import type { Medicine } from "../interfaces/Medicine"
+import type { IMedicine } from "../interfaces/IMedicine"
 import { MedicineModel } from "../models/MedicineModel"
-import type { ControllerResult } from "./settings"
+import {type ControllerResult, fallbackReturn} from "./settings"
 
-export default class MedicineController extends SubCategoryController<Medicine, MedicineModel> {
-    constructor() {
-        super(MedicineModel, "Medicine")
+export default class MedicineController extends SubCategoryController<IMedicine, MedicineModel> {
+    public constructor() {
+        super(MedicineModel, "IMedicine")
     }
 
     /**
@@ -13,13 +13,13 @@ export default class MedicineController extends SubCategoryController<Medicine, 
      *
      * @param value - Can be the raw weekday or a Date Object.
      **/
-    async getByWeekDay(value: Date | number | string = new Date()): Promise<ControllerResult<Medicine[]>> {
+    public async getByWeekDay(value: Date | number | string = new Date()): Promise<ControllerResult<IMedicine[]>> {
         try {
             const weekDay = value instanceof Date
                 ? value.getDay()
                 : Number(value)
 
-            if (Number.isNaN(weekDay)) {
+            if(Number.isNaN(weekDay)) {
                 return {
                     success: false,
                     code: "InvalidDateValue",
@@ -29,7 +29,7 @@ export default class MedicineController extends SubCategoryController<Medicine, 
 
             const result = await this.model.getByWeekDay(weekDay)
 
-            if (result.length === 0) {
+            if(result.length === 0) {
                 return {
                     success: false,
                     code: "NoMedicineForToday",
@@ -42,13 +42,8 @@ export default class MedicineController extends SubCategoryController<Medicine, 
                 code: null,
                 data: result
             }
-        } catch(err) {
-            console.error("DB Error: ", err)
-            return {
-                success: false,
-                code: "DatabaseError",
-                data: []
-            }
+        } catch(err: any) {
+            return fallbackReturn(err)
         }
     }
 }

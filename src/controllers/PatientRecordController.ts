@@ -1,6 +1,6 @@
 import type PatientRecordModel from "../models/PatientRecordModel"
-import type { PatientRecordBase } from "../interfaces/PatientRecordBase"
-import type { ControllerResult } from "./settings"
+import type { IPatientRecordBase } from "../interfaces/IPatientRecordBase"
+import {type ControllerResult, fallbackReturn} from "./settings"
 import type { Dexie, UpdateSpec } from "dexie"
 
 import db from "../database/db.js"
@@ -14,33 +14,34 @@ import type { TranslatableUnitItem } from "../types/sysUnits"
 /**
  * Defines the expected constructor contract for patient record models.
  **/
-interface PatientRecordModelConstructor<T extends PatientRecordBase> {
+interface PatientRecordModelConstructor<T extends IPatientRecordBase> {
     new (db: Dexie): PatientRecordModel<T>
 }
 
 /**
  * Defines the data required to create a patient record
  **/
-type PatientRecordInput<T extends PatientRecordBase> =
+type PatientRecordInput<T extends IPatientRecordBase> =
     Omit<T, "_id" | "record" | "patientId"> & { value?: string }
 
 /**
  * Prevents updates to the primary key and record type.
  */
-type PatientRecordUpdate<T extends PatientRecordBase> =
+type PatientRecordUpdate<T extends IPatientRecordBase> =
     UpdateSpec<T> & {
     _id?: never
     record?: never
 }
 
+// COMPOSABLES
 const unit = useUnitSystem()
 
-export default abstract class PatientRecordController <T extends PatientRecordBase> {
+export default abstract class PatientRecordController <T extends IPatientRecordBase> {
     private readonly model: PatientRecordModel<T>
     private readonly codeLabel: string
 
     protected constructor(Model: PatientRecordModelConstructor<T>, codeLabel: string) {
-        if (!Model) {
+        if(!Model) {
             throw new Error("Model class must be provided to PatientRecordController")
         }
 
@@ -52,7 +53,7 @@ export default abstract class PatientRecordController <T extends PatientRecordBa
      * Checks whether the supplied date interval is valid
      **/
     private isValidDateInterval(minDate: Date, maxDate: Date): boolean {
-        return (
+        return(
             minDate instanceof Date &&
             maxDate instanceof Date &&
             !Number.isNaN(minDate.getTime()) &&
@@ -64,7 +65,7 @@ export default abstract class PatientRecordController <T extends PatientRecordBa
     /**
      * Returns all data from the collection.
      **/
-    async getAll(): Promise<ControllerResult<T[]>> {
+    public async getAll(): Promise<ControllerResult<T[]>> {
         try {
             const records = await this.model.getAll()
 
@@ -82,21 +83,15 @@ export default abstract class PatientRecordController <T extends PatientRecordBa
                 data: records
             }
 
-        } catch (err: any) {
-            console.log("DB error:", err)
-
-            return {
-                success: false,
-                code: "DatabaseError",
-                data: []
-            }
+        } catch(err: any) {
+            return fallbackReturn(err)
         }
     }
 
     /**
      * Returns record matching the selected record type
      **/
-    async getByField(field: T["record"]): Promise<ControllerResult<T[]>> {
+    public async getByField(field: T["record"]): Promise<ControllerResult<T[]>> {
         try {
             const records = await this.model.getByField(field)
 
@@ -113,21 +108,15 @@ export default abstract class PatientRecordController <T extends PatientRecordBa
                 code: null,
                 data: records
             }
-        } catch (err: any) {
-            console.log("DB error: ", err)
-
-            return {
-                success: false,
-                code: "DatabaseError",
-                data: []
-            }
+        } catch(err: any) {
+            return fallbackReturn(err)
         }
     }
 
     /**
      * Returns records within the specified date interval
      **/
-    async getByDate(minDate: Date, maxDate: Date = new Date()): Promise<ControllerResult<T[]>> {
+    public async getByDate(minDate: Date, maxDate: Date = new Date()): Promise<ControllerResult<T[]>> {
         if(!this.isValidDateInterval(minDate, maxDate)) {
             return {
                 success: false,
@@ -152,21 +141,15 @@ export default abstract class PatientRecordController <T extends PatientRecordBa
                 code: null,
                 data: records
             }
-        } catch (err: any) {
-            console.log("DB error: ", err)
-
-            return {
-                success: false,
-                code: "DatabaseError",
-                data: []
-            }
+        } catch(err: any) {
+            return fallbackReturn(err)
         }
     }
 
     /**
      * Returns records matching the selected type and date interval
      **/
-    async getByFieldAndDate(field: string, minDate: Date, maxDate: Date = new Date()): Promise<ControllerResult<T[]>> {
+    public async getByFieldAndDate(field: string, minDate: Date, maxDate: Date = new Date()): Promise<ControllerResult<T[]>> {
         if(!this.isValidDateInterval(minDate, maxDate)) {
             return {
                 success: false,
@@ -191,21 +174,15 @@ export default abstract class PatientRecordController <T extends PatientRecordBa
                 code: null,
                 data: records
             }
-        } catch (err: any) {
-            console.log("DB error: ", err)
-
-            return {
-                success: false,
-                code: "DatabaseError",
-                data: []
-            }
+        } catch(err: any) {
+            return fallbackReturn(err)
         }
     }
 
     /**
     * Creates a new patient record.
     **/
-    async create(newItem: PatientRecordInput<T>, recordType: MonitoringType, patientId: number = 1): Promise<ControllerResult<T>> {
+    public async create(newItem: PatientRecordInput<T>, recordType: MonitoringType, patientId: number = 1): Promise<ControllerResult<T>> {
         let itemValue: string | number = newItem.value
 
         // Convert measurements back to the metric system
@@ -227,21 +204,15 @@ export default abstract class PatientRecordController <T extends PatientRecordBa
                 code: `${this.codeLabel}Created`,
                 data: null
             }
-        } catch (err: any) {
-            console.log("DB error: ", err)
-
-            return {
-                success: false,
-                code: "DatabaseError",
-                data: null
-            }
+        } catch(err: any) {
+            return fallbackReturn(err, false)
         }
     }
 
     /**
      * Updates an existing patient record
      **/
-    async update(newData: PatientRecordUpdate<T>, recordId: number): Promise<ControllerResult<T[]>> {
+    public async update(newData: PatientRecordUpdate<T>, recordId: number): Promise<ControllerResult<T[]>> {
         try {
             const updated = await this.model.update(newData, recordId)
 
@@ -258,21 +229,15 @@ export default abstract class PatientRecordController <T extends PatientRecordBa
                 code: `${this.codeLabel}Updated`,
                 data: []
             }
-        } catch (err: any) {
-            console.log("DB error: ", err)
-
-            return {
-                success: false,
-                code: "DatabaseError",
-                data: []
-            }
+        } catch(err: any) {
+            return fallbackReturn(err, false, `${this.codeLabel}UpdateFailed`)
         }
     }
 
     /**
      * Deletes an existing patient record
      **/
-    async delete(id: number): Promise<ControllerResult<T[]>> {
+    public async delete(id: number): Promise<ControllerResult<T[]>> {
         try {
             const removed = await this.model.removeById(id)
 
@@ -289,14 +254,8 @@ export default abstract class PatientRecordController <T extends PatientRecordBa
                 code: `${this.codeLabel}Deleted`,
                 data: []
             }
-        } catch (err: any) {
-            console.log("DB error: ", err)
-
-            return {
-                success: false,
-                code: "DatabaseError",
-                data: []
-            }
+        } catch(err: any) {
+            return fallbackReturn(err, false, `${this.codeLabel}DeleteFailed`)
         }
     }
 }

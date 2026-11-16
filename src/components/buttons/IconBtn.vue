@@ -92,12 +92,12 @@
 <script setup lang="ts">
   import { computed } from "vue"
 
-  import type { PaddingSize } from "../../types/paddingSizes"
-  import type { ButtonTag } from "../../types/components/buttons"
-  import type { IconBtnVariant } from "../../types/components/buttons"
+  import type { PaddingSize } from "../../types/spacing"
+  import type { ButtonTag } from "../../types/components/appButtons"
+  import type { IconBtnVariant } from "../../types/components/appButtons"
 
-  import { BUTTON_TAGS, ICON_BTN_VARIANTS } from "../../constants/components/buttons"
-  import { PADDING_SIZE } from "../../constants/paddindSizes"
+  import { BUTTON_TAGS, ICON_BTN_VARIANTS } from "../../constants/components/appButtons"
+  import { PADDING_SIZE } from "../../constants/spacing"
 
   import { useUtils } from "../../composables/useUtils"
   import { useButtons } from "../../composables/components/useButtons"

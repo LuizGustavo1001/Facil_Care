@@ -1,20 +1,20 @@
 import PatientModel from "../models/PatientModel"
 import db from "../database/db.js"
 
-import type { Patient } from "../interfaces/Patient"
-import type { ControllerResult } from "./settings"
+import type { IPatient } from "../interfaces/IPatient"
+import {type ControllerResult, fallbackReturn} from "./settings"
 
 export default class PatientController {
     private readonly model: PatientModel
 
-    constructor() {
+    public constructor() {
         this.model = new PatientModel(db)
     }
 
     /**
      * Returns the patient registered in the database.
      **/
-    async getPatient(): Promise<ControllerResult<Patient>> {
+    public async getPatient(): Promise<ControllerResult<IPatient>> {
         try {
             const patient = await this.model.getPatient()
 
@@ -31,12 +31,8 @@ export default class PatientController {
                 code: null,
                 data: patient
             }
-        } catch (err: any) {
-            return {
-                success: false,
-                code: "DatabaseError",
-                data: null
-            }
+        } catch(err: any) {
+            return fallbackReturn(err, false)
         }
     }
 
@@ -44,7 +40,7 @@ export default class PatientController {
      * Updates patient data,
      * (ex: name, birthDate, ...)
      **/
-    async update(newData: Partial<Omit<Patient, "_id">>): Promise<ControllerResult<Patient>> {
+    public async update(newData: Partial<Omit<IPatient, "_id">>): Promise<ControllerResult<IPatient>> {
         try {
             const updated: boolean = await this.model.updatePatient(newData)
 
@@ -61,12 +57,8 @@ export default class PatientController {
                 code: "PatientUpdated",
                 data: null
             }
-        } catch (err: any) {
-            return {
-                success: false,
-                code: "DatabaseError",
-                data: null
-            }
+        } catch(err: any) {
+            return fallbackReturn(err, false)
         }
     }
 }

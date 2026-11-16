@@ -103,8 +103,8 @@
     /* -=-=-=- SEMANTIC TOKENS -=-=-=- */
     /* Font Size */
     --font-heading-1: var(--font-size-700);
-    --font-heading-2: var(--font-size-600);
-    --font-heading-3: var(--font-size-500);
+    --font-heading-2: var(--font-size-500);
+    --font-heading-3: var(--font-size-400);
 
     --font-body-lg: var(--font-size-500);
     --font-body-md: var(--font-size-400);
@@ -116,7 +116,7 @@
 
     --font-caption: var(--font-size-100);
 
-    --font-button-title: var(--font-size-500);
+    --font-button-title: var(--font-size-400);
     --font-button-description: var(--font-size-300);
     --font-input: var(--font-size-400);
 
@@ -153,7 +153,7 @@
 /* Light Mode Settings */
 body {
     /* Text Color */
-    --color-text-primary: var(--gray-800);
+    --color-text-primary: var(--gray-700);
     --color-text-primary-muted: var(--gray-500);
     --color-text-primary-subtle: var(--gray-600);
 
@@ -611,7 +611,6 @@ main {
 .lined-menu .menu-item:not(:last-child) {
     border-bottom: 2px solid var(--color-border-default-subtle);
 }
-
 
 /* Others */
 .spinner {

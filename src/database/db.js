@@ -23,6 +23,13 @@ db.version(2).stores({
     medicineRegistries: null,
     medicines: '++_id, active, administrationTimes, administrationWeekDays, patientId',
 })
+db.version(3).stores({
+    weeklyMedicineSchedules: "++_id, medicineId, scheduledWeekDay, scheduledTime, administeredAt, &[medicineId+scheduledWeekDay+scheduledTime]"
+})
+
+// scheduledWeekDay: dia da semana em que o medicamento deve ser administrado
+// scheduledTime: horário em que a dose do medicamento deve ser administrada
+// administeredDate: Date e hora em que a dose foi administrada
 
 // Populate Event
 db.on("populate", async (transaction) => {
