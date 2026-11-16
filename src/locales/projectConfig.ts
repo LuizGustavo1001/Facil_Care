@@ -1889,7 +1889,7 @@ export const aboutView = {
     social: [
         socialMedias['github']
     ],
-    version: "2.0.1"
+    version: "2.0.2"
 }
 
 export const weekScheculeView = {

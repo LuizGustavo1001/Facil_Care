@@ -25,7 +25,7 @@
 
       <main class="main regular gap-2">
         <!-- Days Interval Filter -->
-        <ul class="filter-list flex align-center gap-05 overflow-scroll">
+        <ul class="filter-list flex align-center gap-05 overflow-auto">
           <li
               v-for="filter in charts.filters"
               :key="filter.id"
@@ -34,11 +34,12 @@
                 :label="utils.getTranslate(`charts.filters.${filter.id}.title`)"
                 class="capitalize-words"
                 :isActive="activeFilterDays === filter.days"
+                style="min-width: 50px; "
                 @click="activeFilterDays = filter.days"
             />
           </li>
 
-          <li>({{ filteredMonitoringData.length }} {{ utils.getTranslate(`utils.measurements`) }})</li>
+          <li class="flex-shrink">({{ filteredMonitoringData.length }} {{ utils.getTranslate(`utils.measurements`) }})</li>
         </ul>
 
         <template v-if="formattedData.length > 0">
