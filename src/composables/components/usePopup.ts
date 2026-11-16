@@ -1,5 +1,5 @@
 import type { Ref } from "vue"
-import { ref } from "vue"
+import { onMounted, onUnmounted, ref } from "vue"
 
 import { useOverlay } from "./useOverlay"
 import { useClickOutside } from "../useClickOutside"
@@ -13,11 +13,18 @@ export function usePopup() {
 
     const overlay = useOverlay()
 
+    // Handle browser/device back button
+    let hasHistoryEntry = false
+
     const open = (): void => {
         if(isOpen.value) return
 
         isOpen.value = true
         overlay.show()
+
+        // Add a history entry to intercept the back button
+        window.history.pushState({ popup: true }, "")
+        hasHistoryEntry = true
     }
 
     const close = (): void => {
@@ -25,10 +32,30 @@ export function usePopup() {
 
         isOpen.value = false
         overlay.hide()
+
+        if(hasHistoryEntry) {
+            hasHistoryEntry = false
+            window.history.back()
+        }
     }
 
     const toggle = (): void => {
         isOpen.value ? close() : open()
+    }
+
+    // Handle ESC key
+    const handleKeydown = (event: KeyboardEvent): void => {
+        if(event.key === "Escape" && isOpen.value) {
+            close()
+        }
+    }
+
+    // Handle browser/device back button
+    const handlePopstate = (): void => {
+        if(isOpen.value) {
+            hasHistoryEntry = false
+            close()
+        }
     }
 
     // Handle click outside sidebar
@@ -37,6 +64,16 @@ export function usePopup() {
             close()
         }
     }, triggerRef)
+
+    onMounted(() => {
+        window.addEventListener("keydown", handleKeydown)
+        window.addEventListener("popstate", handlePopstate)
+    })
+
+    onUnmounted(() => {
+        window.removeEventListener("keydown", handleKeydown)
+        window.removeEventListener("popstate", handlePopstate)
+    })
 
     return { isOpen, popupRef, triggerRef, toggle, open, close }
 }
