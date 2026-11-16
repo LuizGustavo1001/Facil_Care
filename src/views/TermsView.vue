@@ -1,9 +1,7 @@
 <template>
   <div class="view regular">
     <!-- System Terms View -->
-    <AppHeader
-        :title="utils.getPageTitle(PAGES['TERMS'])"
-    />
+    <AppHeader :title="utils.getPageTitle(PAGES['TERMS'])" />
 
     <main class="main regular gap-1">
       <section class="main-section regular gap-2">

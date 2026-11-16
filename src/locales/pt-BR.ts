@@ -2,7 +2,7 @@ import { PAGES } from "../constants/sysPages"
 import { THEME_PREFERENCES as THEMES } from "../constants/sysThemes"
 import { LANGUAGES } from "../constants/sysLanguages"
 import { UNITS } from "../constants/sysUnits"
-import { FORM_TYPES } from "../constants/components/form"
+import { FORM_TYPES } from "../constants/components/appForms"
 
 export default {
     pageTitle: {
@@ -1552,6 +1552,25 @@ export default {
         },
         MedicineDeleteFailed: {
             title: "Erro ao tentar remover um medicamento, tente novamente mais tarde"
+        },
+
+        MedicineScheduleEmpty: {
+            title: "Nenhuma administração encontrada"
+        },
+        NoMedicineScheduleBySelectedDay: {
+            title: "Nenhuma administração encontrada com base no dia da semana selecionado"
+        },
+        MedicineScheduleFound: {
+            title: "Administração encontrada"
+        },
+        MedicineScheduleNotFound: {
+            title: "Administração especificada não foi encontrada"
+        },
+        MedicineScheduleDeleted: {
+            title: "Adminitração removida com sucesso"
+        },
+        MedicineScheduleCreated: {
+            title: "Adminisrtação adicionada com sucesso"
         },
 
         NoMedicineForToday: {

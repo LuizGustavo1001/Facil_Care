@@ -1,10 +1,10 @@
 import Dexie from "dexie"
 import type { Table } from "dexie"
 import { PatientSubCategoryModel } from "./PatientSubCategoryModel"
-import type { Medicine } from "../interfaces/Medicine"
+import type { IMedicine } from "../interfaces/IMedicine"
 
-export class MedicineModel extends PatientSubCategoryModel<Medicine> {
-    constructor(db: Dexie) {
+export class MedicineModel extends PatientSubCategoryModel<IMedicine> {
+    public constructor(db: Dexie) {
         super(db, "medicines")
     }
 
@@ -15,8 +15,8 @@ export class MedicineModel extends PatientSubCategoryModel<Medicine> {
      *
      * @returns - The matching record, or undefined if not found.
      **/
-    async getByWeekDay(weekDay: number): Promise<Medicine[]> {
-        const table = this.getTable() as Table<Medicine, string | number>
+    public async getByWeekDay(weekDay: number): Promise<IMedicine[]> {
+        const table = this.getTable() as Table<IMedicine, string | number>
 
         return table
             .filter(medicine => medicine.administrationWeekDays?.includes(weekDay) ?? false)

@@ -63,13 +63,13 @@
   import { useForm } from "../../../composables/components/useForm"
   import { useUtils } from "../../../composables/useUtils"
 
-  import type { FormRegularTemplate } from "../../../interfaces/Form"
-  import type { FormButton } from "../../../interfaces/Form"
+  import type { FormRegularTemplate } from "../../../interfaces/IForm"
+  import type { FormButton } from "../../../interfaces/IForm"
 
-  import { FORM_TYPES } from "../../../constants/components/form"
+  import { FORM_TYPES } from "../../../constants/components/appForms"
 
-  import type { DOMReference } from "../../../types/components/formPopup"
-  import type { FormType } from "../../../types/components/genericForm"
+  import type { DOMReference } from "../../../types/components/appPopup"
+  import type { FormType } from "../../../types/components/appForm"
 
   import AppPopup from "./AppPopup.vue"
   import ActionButton from "../../buttons/ActionButton.vue"

@@ -51,11 +51,11 @@
 
 <script setup lang="ts">
   import { computed } from "vue"
-  import { BUTTON_COLORS } from "../../constants/components/buttons"
-  import { PADDING_SIZE } from "../../constants/paddindSizes"
+  import { BUTTON_COLORS } from "../../constants/components/appButtons"
+  import { PADDING_SIZE } from "../../constants/spacing"
 
-  import type { ButtonColor } from "../../types/components/buttons"
-  import type { PaddingSize } from "../../types/paddingSizes"
+  import type { ButtonColor } from "../../types/components/appButtons"
+  import type { PaddingSize } from "../../types/spacing"
 
   import Icon from "../icons/Icon.vue"
 

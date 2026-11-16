@@ -1,21 +1,28 @@
 import { WeeklyMedicineScheduleModel } from "../models/WeeklyMedicineScheduleModel"
 import db from "../database/db"
-import type { ControllerResult } from "./settings"
-import type { WeeklyMedicineSchedule } from "../interfaces/WeeklyMedicineSchedule"
-import type {WarningCode} from "../types/components/snackbar"
-import type {FormattedMedicine, Medicine} from "../interfaces/Medicine"
+import {type ControllerResult, fallbackReturn} from "./settings"
+import type { IWeeklyMedicineSchedule } from "../interfaces/IWeeklyMedicineSchedule"
+import type { FormattedMedicine, IMedicine } from "../interfaces/IMedicine"
 import MedicineController from "./MedicineController"
+import { useDate } from "../composables/useDate"
 
+// CONTROLLERS
 const medicineController = new MedicineController()
+
+// COMPOSABLES
+const date = useDate()
 
 export default class WeeklyMedicineScheduleController {
     private readonly model: WeeklyMedicineScheduleModel
 
-    constructor() {
+    public constructor() {
         this.model = new WeeklyMedicineScheduleModel(db)
     }
 
-    public async getAll(): Promise<ControllerResult<WeeklyMedicineSchedule[]>> {
+    /**
+     * Returns all checked administration schedules.
+     **/
+    public async getAll(): Promise<ControllerResult<IWeeklyMedicineSchedule[]>> {
         try {
             const result = await this.model.getAll()
 
@@ -43,9 +50,14 @@ export default class WeeklyMedicineScheduleController {
         }
     }
 
-    public async getByDay(weekDay: number): Promise<ControllerResult<WeeklyMedicineSchedule[]>> {
+    /**
+     * Returns every administration scheduled for the selected weekDay.
+     *
+     * By default, uses the current weekDay.
+     **/
+    public async getByWeekDay(weekDay: number = date.getDayNumber()): Promise<ControllerResult<IWeeklyMedicineSchedule[]>> {
         try {
-            const result = await this.model.getByDay(weekDay)
+            const result = await this.model.getByWeekDay(weekDay)
 
             if(!result) {
                 return {
@@ -60,18 +72,15 @@ export default class WeeklyMedicineScheduleController {
                 code: "MedicineScheduleFound",
                 data: result
             }
-        } catch (err: any) {
-            console.log("DB error: ", err)
-
-            return {
-                success: false,
-                code: "DatabaseError",
-                data: null
-            }
+        } catch(err: any) {
+            return fallbackReturn(err, false)
         }
     }
 
-    public async getScheduleItem(medicineId: number, scheduleWeekDay: number, scheduledTime: string): Promise<ControllerResult<WeeklyMedicineSchedule>> {
+    /**
+     * Returns an especific administration schedule.
+     **/
+    public async getScheduleItem(medicineId: number, scheduleWeekDay: number, scheduledTime: string): Promise<ControllerResult<IWeeklyMedicineSchedule>> {
         try {
             const result = await this.model.getScheduleItem(medicineId, scheduleWeekDay, scheduledTime)
 
@@ -88,49 +97,49 @@ export default class WeeklyMedicineScheduleController {
                 code: "MedicineScheduleFound",
                 data: result
             }
-        } catch (err: any) {
-            console.log("DB error: ", err)
-
-            return {
-                success: false,
-                code: "DatabaseError",
-                data: null
-            }
+        } catch(err: any) {
+            return fallbackReturn(err, false)
         }
     }
 
-    public async isAdministered(medicineId: number, scheduledWeekDay: number, scheduledTime: string): Promise<boolean> {
-        return !!(await this.model.getScheduleItem(medicineId, scheduledWeekDay, scheduledTime))
-    }
-
-    public async toggleAdministration(medicineId: number, scheduledWeekDay: number, scheduledTime: string): Promise<ControllerResult<WeeklyMedicineSchedule>> {
+    /**
+     * Deletes or Checks an administration schedule.
+     **/
+    public async toggleAdministration(medicineId: number, scheduledWeekDay: number, scheduledTime: string): Promise<ControllerResult<IWeeklyMedicineSchedule>> {
         try {
             const result = await this.model.toggleAdministration(medicineId, scheduledWeekDay, scheduledTime)
 
+            // 1. Deletes
+            if(!result) {
+                return {
+                    success: true,
+                    code: "MedicineScheduleDeleted",
+                    data: null
+                }
+            }
+
+            // 2. Creates
             return {
                 success: true,
-                code: null,
+                code: "MedicineScheduleCreated",
                 data: null
             }
-        } catch (err: any) {
-            console.log("DB error: ", err)
-
-            return {
-                success: false,
-                code: "DatabaseError",
-                data: null
-            }
+        } catch(err: any) {
+            return fallbackReturn(err, false)
         }
     }
 
-    public async create(medicineId: number, scheduledWeekDay: number, scheduledTime: string): Promise<ControllerResult<WeeklyMedicineSchedule>> {
+    /**
+     * Creates a new register that represents a checked administration schedule.
+     **/
+    public async create(medicineId: number, scheduledWeekDay: number, scheduledTime: string): Promise<ControllerResult<IWeeklyMedicineSchedule>> {
         try {
             const result = await this.model.create(medicineId, scheduledWeekDay, scheduledTime)
 
             if(!result) {
                 return {
                     success: false,
-                    code: "ScheduleNotFound",
+                    code: "MedicineScheduleNotFound",
                     data: null
                 }
             }
@@ -140,18 +149,15 @@ export default class WeeklyMedicineScheduleController {
                 code: "MedicineScheduleCreated",
                 data: null
             }
-        } catch (err: any) {
-            console.log("DB error: ", err)
-
-            return {
-                success: false,
-                code: "DatabaseError",
-                data: null
-            }
+        } catch(err: any) {
+            return fallbackReturn(err, false)
         }
     }
 
-    public async deleteBySchedule(medicineId: number, scheduledWeekDay: number, scheduledTime: string): Promise<ControllerResult<WeeklyMedicineSchedule>> {
+    /**
+     * Deletes a checked administration schedule.
+     **/
+    public async deleteBySchedule(medicineId: number, scheduledWeekDay: number, scheduledTime: string): Promise<ControllerResult<IWeeklyMedicineSchedule>> {
         try {
             const result = await this.model.deleteBySchedule(medicineId, scheduledWeekDay, scheduledTime)
 
@@ -168,17 +174,14 @@ export default class WeeklyMedicineScheduleController {
                 code: "MedicineScheduleDeleted",
                 data: null
             }
-        } catch (err: any) {
-            console.log("DB error: ", err)
-
-            return {
-                success: false,
-                code: "DatabaseError",
-                data: null
-            }
+        } catch(err: any) {
+            return fallbackReturn(err, false)
         }
     }
 
+    /**
+     * Clears the previous week administration schedules.
+     **/
     public async clearPreviousWeek(): Promise<void> {
         try {
             await this.model.clearPreviousWeek()
@@ -187,9 +190,8 @@ export default class WeeklyMedicineScheduleController {
         }
     }
 
-
     /**
-     * Returns the array that represents the merge of Medicine + MedicineSchedules.
+     * Returns the array that represents the merge of `IMedicine + MedicineSchedules`.
      *
      * By default, sorts by scheduled administration time *(ascending)*.
      **/
@@ -197,16 +199,17 @@ export default class WeeklyMedicineScheduleController {
         try {
             const [medicinesResult, schedulesResult] = await Promise.all([
                 medicineController.getByWeekDay(selectedDay),
-                this.getByDay(selectedDay)
+                this.getByWeekDay(selectedDay)
             ])
 
             if(!medicinesResult.success || !medicinesResult.data) {
                 return []
             }
 
-            const medicines = medicinesResult.data as Medicine[]
-            const schedules = schedulesResult.data as WeeklyMedicineSchedule[]
+            const medicines = medicinesResult.data as IMedicine[]
+            const schedules = schedulesResult.data as IWeeklyMedicineSchedule[]
 
+            // Merging medicines and schedules
             if(schedulesResult.success || schedulesResult.data) {
                 const result: FormattedMedicine[] = medicines
                     .flatMap((medicine): FormattedMedicine[] => {

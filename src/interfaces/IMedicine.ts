@@ -1,6 +1,6 @@
-import type { PatientSubCategoryBase } from "./PatientSubCategoryBase"
+import type { IPatientSubCategoryBase } from "./IPatientSubCategoryBase"
 
-export interface Medicine extends PatientSubCategoryBase {
+export interface IMedicine extends IPatientSubCategoryBase {
     routeAdmin: string
     observations?: string
 
@@ -10,8 +10,8 @@ export interface Medicine extends PatientSubCategoryBase {
     active: boolean
 }
 
-// Medicine + WeeklyMedicineSchedule
-export interface FormattedMedicine extends Medicine {
+// IMedicine + IWeeklyMedicineSchedule
+export interface FormattedMedicine extends IMedicine {
     medicineId: number
     scheduledWeekDay: number
     scheduledTime: string

@@ -4,7 +4,7 @@ import { ref } from "vue"
 import { useOverlay } from "./useOverlay"
 import { useClickOutside } from "../useClickOutside"
 
-import type { DOMReference } from "../../types/components/formPopup"
+import type { DOMReference } from "../../types/components/appPopup"
 
 export function usePopup() {
     const isOpen = ref<boolean>(false)

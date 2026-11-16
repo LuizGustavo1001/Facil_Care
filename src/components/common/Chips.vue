@@ -96,11 +96,11 @@
 <script setup lang="ts">
   import { computed } from "vue"
 
-  import type { PaddingSize } from "../../types/paddingSizes"
-  import type { ChipsVariant } from "../../types/components/buttons"
+  import type { PaddingSize } from "../../types/spacing"
+  import type { ChipsVariant } from "../../types/components/appButtons"
 
-  import { PADDING_SIZE } from "../../constants/paddindSizes"
-  import { CHIPS_VARIANTS } from "../../constants/components/buttons"
+  import { PADDING_SIZE } from "../../constants/spacing"
+  import { CHIPS_VARIANTS } from "../../constants/components/appButtons"
 
   import { useUtils } from "../../composables/useUtils"
 

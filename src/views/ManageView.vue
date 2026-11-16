@@ -95,15 +95,14 @@
   import { formTemplates } from "../locales/projectConfig"
 
   import { MANAGE_PAGES, PAGES } from "../constants/sysPages"
-  import { FORM_TYPES } from "../constants/components/form"
-  import { ACTION_BUTTON_VARIANTS, BUTTON_TAGS, ICON_BTN_VARIANTS } from "../constants/components/buttons"
-  import { PADDING_SIZE } from "../constants/paddindSizes"
+  import { FORM_TYPES } from "../constants/components/appForms"
+  import { ACTION_BUTTON_VARIANTS, BUTTON_TAGS, ICON_BTN_VARIANTS } from "../constants/components/appButtons"
+  import { PADDING_SIZE } from "../constants/spacing"
 
   import type { WarningCode } from "../types/components/snackbar"
-  import type { FormContext } from "../types/components/formPopup"
-  import type { FormValues } from "../types/components/genericForm"
+  import type { FormValues } from "../types/components/appForm"
   import type { ManagePageType } from "../types/sysPages"
-  import type { ConfirmPopupTitle, ConfirmPopupMessage } from "../types/components/confirmPopup"
+  import type { ConfirmPopupTitle, ConfirmPopupMessage, FormContext } from "../types/components/appPopup"
 
   import { useRoute } from "vue-router"
   import { useUtils } from "../composables/useUtils"
@@ -121,13 +120,13 @@
   import AllergyController from "../controllers/AllergyController"
   import EmergencyContactController from "../controllers/EmergencyContactController"
 
-  import type { Caregiver } from "../interfaces/Caregiver"
-  import type { HealthPlan } from "../interfaces/HealthPlan"
-  import type { Doctor } from "../interfaces/Doctor"
-  import type { Allergy } from "../interfaces/Allergy"
-  import type { EmergencyContact } from "../interfaces/EmergencyContact"
-  import type { Medicine } from "../interfaces/Medicine"
-  import type { FormPopupTemplate } from "../interfaces/Form"
+  import type { ICaregiver } from "../interfaces/ICaregiver"
+  import type { IHealthPlan } from "../interfaces/IHealthPlan"
+  import type { IDoctor } from "../interfaces/IDoctor"
+  import type { IAllergy } from "../interfaces/IAllergy"
+  import type { IEmergencyContact } from "../interfaces/IEmergencyContact"
+  import type { IMedicine } from "../interfaces/IMedicine"
+  import type { FormPopupTemplate } from "../interfaces/IForm"
 
   import AppHeader from "../components/layout/AppHeader.vue"
   import ActionButton from "../components/buttons/ActionButton.vue"
@@ -185,38 +184,38 @@
   const emergencyContactController = new EmergencyContactController()
 
   // STATES
-  const caregivers = ref<Caregiver[]>([])
-  const healthPlans = ref<HealthPlan[]>([])
-  const doctors = ref<Doctor[]>([])
-  const allergies = ref<Allergy[]>([])
-  const emergencyContacts = ref<EmergencyContact[]>([])
-  const medicines = ref<Medicine[]>([])
+  const caregivers = ref<ICaregiver[]>([])
+  const healthPlans = ref<IHealthPlan[]>([])
+  const doctors = ref<IDoctor[]>([])
+  const allergies = ref<IAllergy[]>([])
+  const emergencyContacts = ref<IEmergencyContact[]>([])
+  const medicines = ref<IMedicine[]>([])
   const medicinesList = ref([])
 
   const categoryConfig = {
     [PAGES.MEDICINES]: {
       controller: medicineController,
-      setData: (data: Medicine[]) => medicines.value = data
+      setData: (data: IMedicine[]) => medicines.value = data
     },
     [PAGES.CAREGIVERS]: {
       controller: caregiverController,
-      setData: (data: Caregiver[]) => caregivers.value = data
+      setData: (data: ICaregiver[]) => caregivers.value = data
     },
     [PAGES.DOCTORS]: {
       controller: doctorController,
-      setData: (data: Doctor[]) => doctors.value = data
+      setData: (data: IDoctor[]) => doctors.value = data
     },
     [PAGES.EMERGENCY_CONTACTS]: {
       controller: emergencyContactController,
-      setData: (data: EmergencyContact[]) => emergencyContacts.value = data
+      setData: (data: IEmergencyContact[]) => emergencyContacts.value = data
     },
     [PAGES.ALLERGIES]: {
       controller: allergyController,
-      setData: (data: Allergy[]) => allergies.value = data
+      setData: (data: IAllergy[]) => allergies.value = data
     },
     [PAGES.HEALTH_PLANS]: {
       controller: healthPlanController,
-      setData: (data: HealthPlan[]) => healthPlans.value = data
+      setData: (data: IHealthPlan[]) => healthPlans.value = data
     }
   }
 

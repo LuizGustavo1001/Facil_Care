@@ -1,9 +1,9 @@
 import SubCategoryController from "./SubCategoryController"
-import type { HealthPlan } from "../interfaces/HealthPlan"
+import type { IHealthPlan } from "../interfaces/IHealthPlan"
 import { HealthPlanModel } from "../models/HealthPlanModel"
 
-export default class HealthPlanController extends SubCategoryController<HealthPlan> {
-    constructor() {
-        super(HealthPlanModel, "HealthPlan")
+export default class HealthPlanController extends SubCategoryController<IHealthPlan> {
+    public constructor() {
+        super(HealthPlanModel, "IHealthPlan")
     }
 }

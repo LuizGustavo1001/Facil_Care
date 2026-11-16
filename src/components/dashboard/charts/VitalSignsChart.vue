@@ -36,7 +36,7 @@
   import { useUnitSystem } from "../../../composables/useUnitSystem"
   import { currentLanguage } from "../../../composables/useLanguage"
 
-  import type { MonitoringRecord } from "../../../views/MonitoringOverview.vue"
+  import type { MonitoringRecord } from "../../../types/sysPages"
 
   ChartJS.register(
       LineController,

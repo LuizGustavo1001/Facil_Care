@@ -53,10 +53,10 @@
 
 <script setup lang="ts">
   import { computed } from "vue"
-  import { BUTTON_COLORS } from "../../constants/components/buttons"
+  import { BUTTON_COLORS } from "../../constants/components/appButtons"
 
-  import type { PaddingSize } from "../../types/paddingSizes"
-  import type { ButtonColor } from "../../types/components/buttons"
+  import type { PaddingSize } from "../../types/spacing"
+  import type { ButtonColor } from "../../types/components/appButtons"
 
   // TYPES & INTERFACES
   const ICON_BG_COLORS = {

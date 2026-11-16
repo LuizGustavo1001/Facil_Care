@@ -20,6 +20,7 @@
       <Icon
           :icon="icons.close"
           class="right-icon"
+          style="align-self: flex-start;"
       />
     </div>
   </transition>
@@ -70,7 +71,7 @@
 
 <script setup lang="ts">
   import { icons } from "../../assets/icons/icons.js"
-  import { SNACKBAR_TYPES } from "../../constants/components/snackbar"
+  import { SNACKBAR_TYPES } from "../../constants/components/appSnackbar"
   import type { SnackbarType } from "../../types/components/snackbar"
 
   import Icon from "../icons/Icon.vue"

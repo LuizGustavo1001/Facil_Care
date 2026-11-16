@@ -4,7 +4,7 @@ q<template>
     <AppHeader :title="utils.getPageTitle(PAGES['USER_MANUAL'])" />
 
     <main class="main regular gap-1">
-      <section class="main-section regular gap-05"></section>
+      <section class="main-section regular gap-05">...</section>
     </main>
 
     <AppFooter :page="PAGES.USER_MANUAL" />

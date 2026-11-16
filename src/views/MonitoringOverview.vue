@@ -140,16 +140,13 @@
   import FollowUpController from "../controllers/FollowUpController"
   import CaregiverController from "../controllers/CaregiverController"
 
-  import type { FollowUp } from "../interfaces/FollowUp"
-  import type { VitalSign } from "../interfaces/VitalSign"
-
   import { PAGES, VITAL_SIGNS_PAGES, FOLLOW_UPS_PAGES } from "../constants/sysPages"
-  import { ICON_BTN_VARIANTS } from "../constants/components/buttons"
+  import { ICON_BTN_VARIANTS } from "../constants/components/appButtons"
 
   import type { WarningCode } from "../types/components/snackbar"
   import type { TranslatableUnitItem }  from "../types/sysUnits"
-  import type { FollowUpType, VitalSignType } from "../types/sysPages"
-  import type { ConfirmPopupMessage, ConfirmPopupTitle } from "../types/components/confirmPopup"
+  import type { FollowUpType, MonitoringRecord, VitalSignType } from "../types/sysPages"
+  import type { ConfirmPopupMessage, ConfirmPopupTitle } from "../types/components/appPopup"
 
   import AppHeader from "../components/layout/AppHeader.vue"
   import AppFallback from "./AppFallback.vue"
@@ -163,8 +160,6 @@
   import Chips from "../components/common/Chips.vue"
 
   // TYPES & INTERFACES
-  export type MonitoringRecord = VitalSign | FollowUp
-
   interface FormattedMonitoringItem {
     id: number | undefined
     value: string

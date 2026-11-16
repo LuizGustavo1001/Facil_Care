@@ -1,8 +1,8 @@
 import { useI18n } from "vue-i18n"
-import type { PaddingSize } from "../types/paddingSizes"
+import type { PaddingSize } from "../types/spacing"
 import type { DayPeriod } from "../types/date"
-import { DAY_PERIODS } from "../constants/dayPeriods"
-import { BUTTON_COLORS } from "../constants/components/buttons"
+import { DAY_PERIODS } from "../constants/date"
+import { BUTTON_COLORS } from "../constants/components/appButtons"
 import { useDate } from "./useDate"
 
 export function useUtils() {

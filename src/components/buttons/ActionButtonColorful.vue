@@ -148,9 +148,9 @@
 
 <script setup lang="ts">
   import { computed } from "vue"
-  import { ACTION_BUTTON_COLORFUL_VARIANTS, BUTTON_COLORS, BUTTON_TAGS } from "../../constants/components/buttons"
+  import { ACTION_BUTTON_COLORFUL_VARIANTS, BUTTON_COLORS, BUTTON_TAGS } from "../../constants/components/appButtons"
 
-  import type { ActionBtnColorfulVariant, ButtonColor, ButtonTag } from "../../types/components/buttons"
+  import type { ActionBtnColorfulVariant, ButtonColor, ButtonTag } from "../../types/components/appButtons"
 
   import { useButtons } from "../../composables/components/useButtons"
 
@@ -180,7 +180,7 @@
     leftIcon: null,
     leftIconSize: "23px",
     rightIcon: null,
-    rightIconSize: "23px",
+    rightIconSize: "20px",
     to: "#",
     target: "",
     variant: ACTION_BUTTON_COLORFUL_VARIANTS.SUBTLE,

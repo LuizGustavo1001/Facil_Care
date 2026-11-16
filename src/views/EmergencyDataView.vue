@@ -90,22 +90,22 @@
   import DoctorController from "../controllers/DoctorController"
   import CaregiverController from "../controllers/CaregiverController"
 
-  import type { Patient } from "../interfaces/Patient"
-  import type { Caregiver } from "../interfaces/Caregiver"
-  import type { HealthPlan } from "../interfaces/HealthPlan"
-  import type { Doctor } from "../interfaces/Doctor"
-  import type { Allergy } from "../interfaces/Allergy"
-  import type { EmergencyContact } from "../interfaces/EmergencyContact"
-  import type { Medicine } from "../interfaces/Medicine"
-  import type { FormPopupTemplate } from "../interfaces/Form"
+  import type { IPatient } from "../interfaces/IPatient"
+  import type { ICaregiver } from "../interfaces/ICaregiver"
+  import type { IHealthPlan } from "../interfaces/IHealthPlan"
+  import type { IDoctor } from "../interfaces/IDoctor"
+  import type { IAllergy } from "../interfaces/IAllergy"
+  import type { IEmergencyContact } from "../interfaces/IEmergencyContact"
+  import type { IMedicine } from "../interfaces/IMedicine"
+  import type { FormPopupTemplate } from "../interfaces/IForm"
 
   import type { WarningCode } from "../types/components/snackbar"
-  import type { FormValues } from "../types/components/genericForm"
-  import type { FormContext } from "../types/components/formPopup"
+  import type { FormValues } from "../types/components/appForm"
+  import type { FormContext } from "../types/components/appPopup"
 
   import { PAGES } from "../constants/sysPages"
-  import { PADDING_SIZE } from "../constants/paddindSizes"
-  import { ACTION_BUTTON_COLORFUL_VARIANTS, BUTTON_TAGS }  from "../constants/components/buttons"
+  import { PADDING_SIZE } from "../constants/spacing"
+  import { ACTION_BUTTON_COLORFUL_VARIANTS, BUTTON_TAGS }  from "../constants/components/appButtons"
 
   import AppHeader from "../components/layout/AppHeader.vue"
   import AppFooter from "../components/layout/AppFooter.vue"
@@ -160,13 +160,13 @@
   const doctorController = new DoctorController()
   const caregiverController = new CaregiverController()
 
-  const patient = ref<Patient | null>(null)
-  const caregivers = ref<Caregiver[]>([])
-  const healthPlans = ref<HealthPlan[]>([])
-  const doctors = ref<Doctor[]>([])
-  const allergies = ref<Allergy[]>([])
-  const emergencyContacts = ref<EmergencyContact[]>([])
-  const medicines = ref<Medicine[]>([])
+  const patient = ref<IPatient | null>(null)
+  const caregivers = ref<ICaregiver[]>([])
+  const healthPlans = ref<IHealthPlan[]>([])
+  const doctors = ref<IDoctor[]>([])
+  const allergies = ref<IAllergy[]>([])
+  const emergencyContacts = ref<IEmergencyContact[]>([])
+  const medicines = ref<IMedicine[]>([])
 
   // FUNCTIONS
   // Dynamic map of emergency data categories, based at database and translate data (i18n)
@@ -184,7 +184,7 @@
       switch(category.id) {
         case "patient":
           dbButtons = currentButtons.map((button) => {
-            let dbValue = currentPatient[button.id as keyof Patient]
+            let dbValue = currentPatient[button.id as keyof IPatient]
 
             if(button.id === "birthDate") {
               dbValue = date.getFormatted(currentPatient.birthDate, false)
@@ -406,7 +406,7 @@
 
     if(result && result.success) {
       const newPatient = await patientController.getPatient()
-      patient.value = newPatient.data as Patient
+      patient.value = newPatient.data as IPatient
       formPopup.close()
     }
 
@@ -437,16 +437,16 @@
     ] = results
 
     if(patientData.success && patientData.data) {
-      patient.value = patientData.data as Patient
+      patient.value = patientData.data as IPatient
     } else if(patientData.code) {
       snackbar.open(patientData.code as WarningCode)
     }
 
-    if(medicineData.success) medicines.value = medicineData.data as Medicine[]
-    if(allergyData.success) allergies.value = allergyData.data as Allergy[]
-    if(healthPlanData.success) healthPlans.value = healthPlanData.data as HealthPlan[]
-    if(doctorData.success) doctors.value = doctorData.data as Doctor[]
-    if(emergencyContactData.success) emergencyContacts.value = emergencyContactData.data as EmergencyContact[]
-    if(caregiverData.success) caregivers.value = caregiverData.data as Caregiver[]
+    if(medicineData.success) medicines.value = medicineData.data as IMedicine[]
+    if(allergyData.success) allergies.value = allergyData.data as IAllergy[]
+    if(healthPlanData.success) healthPlans.value = healthPlanData.data as IHealthPlan[]
+    if(doctorData.success) doctors.value = doctorData.data as IDoctor[]
+    if(emergencyContactData.success) emergencyContacts.value = emergencyContactData.data as IEmergencyContact[]
+    if(caregiverData.success) caregivers.value = caregiverData.data as ICaregiver[]
   })
 </script>

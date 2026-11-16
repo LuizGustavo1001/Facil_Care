@@ -1,9 +1,9 @@
 import SubCategoryController from "./SubCategoryController"
-import type { Allergy } from "../interfaces/Allergy"
+import type { IAllergy } from "../interfaces/IAllergy"
 import { AllergyModel } from "../models/AllergyModel"
 
-export default class AllergyController extends SubCategoryController<Allergy> {
-    constructor() {
-        super(AllergyModel, "Allergy")
+export default class AllergyController extends SubCategoryController<IAllergy> {
+    public constructor() {
+        super(AllergyModel, "IAllergy")
     }
 }

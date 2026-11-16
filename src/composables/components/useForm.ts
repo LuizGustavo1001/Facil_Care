@@ -18,12 +18,12 @@ import type {
     FormRegularTemplate,
     PopupSettings,
     SelectOption
-} from "../../interfaces/Form"
-import type { DynamicData, FormRecord, Converter, FormValues } from "../../types/components/genericForm"
-import type { ButtonTag } from "../../types/components/buttons"
+} from "../../interfaces/IForm"
+import type { DynamicData, FormRecord, Converter, FormValues } from "../../types/components/appForm"
+import type { ButtonTag } from "../../types/components/appButtons"
 
-import { BUTTON_TAGS } from "../../constants/components/buttons"
-import { PADDING_SIZE } from "../../constants/paddindSizes"
+import { BUTTON_TAGS } from "../../constants/components/appButtons"
+import { PADDING_SIZE } from "../../constants/spacing"
 
 export function useForm(){
     const isSubmitting = ref<boolean>(false)

@@ -1,9 +1,9 @@
 import type { Dexie } from "dexie"
-import type { VitalSign } from "../interfaces/VitalSign"
+import type { IVitalSign } from "../interfaces/IVitalSign"
 import PatientRecordModel from "./PatientRecordModel"
 
-export class VitalSignModel extends PatientRecordModel<VitalSign> {
-    constructor(db: Dexie) {
+export class VitalSignModel extends PatientRecordModel<IVitalSign> {
+    public constructor(db: Dexie) {
         super(db, "vitalSigns")
     }
 }

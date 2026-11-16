@@ -56,7 +56,7 @@
 
   import WeeklyMedicineScheduleController from "../controllers/WeeklyMedicineScheduleController"
 
-  import type { FormattedMedicine } from "../interfaces/Medicine"
+  import type { FormattedMedicine } from "../interfaces/IMedicine"
 
   import type { WarningCode } from "../types/components/snackbar"
 

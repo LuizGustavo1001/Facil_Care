@@ -53,7 +53,7 @@
 
 <script setup lang="ts">
   import type { Ref } from "vue"
-  import type { DOMReference } from "../../../types/components/formPopup"
+  import type { DOMReference } from "../../../types/components/appPopup"
 
   interface Props {
     isOpen: boolean

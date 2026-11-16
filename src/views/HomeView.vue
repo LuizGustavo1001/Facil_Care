@@ -59,7 +59,7 @@
       </section>
 
       <!-- Today's Medicine -->
-      <section class="home-medicines flex flex-column gap-1 flex-grow-1">
+      <section class="home-medicines flex flex-column gap-05 flex-grow-1">
         <div class="section-title-container">
           <h2 class="section-title text-uppercase text-muted bolder-weight">{{ utils.getTranslate(`views.${PAGES.HOME}.todaysMedicines`) }}</h2>
         </div>
@@ -174,12 +174,12 @@
   import WeeklyMedicineScheduleController from "../controllers/WeeklyMedicineScheduleController"
 
   import { PAGES } from "../constants/sysPages"
-  import { PADDING_SIZE } from "../constants/paddindSizes"
+  import { PADDING_SIZE } from "../constants/spacing"
   import { HEADER_TYPES, HEADER_VARIANTS } from "../constants/components/appHeader"
-  import { BUTTON_TAGS } from "../constants/components/buttons"
+  import { BUTTON_TAGS } from "../constants/components/appButtons"
 
-  import type { FormattedMedicine } from "../interfaces/Medicine"
-  import type { Patient } from "../interfaces/Patient"
+  import type { FormattedMedicine } from "../interfaces/IMedicine"
+  import type { IPatient } from "../interfaces/IPatient"
 
   import type { WarningCode } from "../types/components/snackbar"
 
@@ -204,7 +204,7 @@
   const weeklyScheduleController = new WeeklyMedicineScheduleController()
 
   // STATES
-  const patient = ref<Patient | null>(null)
+  const patient = ref<IPatient | null>(null)
   const medicines = ref<FormattedMedicine[]>([])
 
   // FUNCTIONS
@@ -233,7 +233,7 @@
     await loadDailyMedicines()
 
     patientData.success
-        ? patient.value = patientData.data as Patient
+        ? patient.value = patientData.data as IPatient
         : snackbar.open(patientData.code as WarningCode)
   })
 </script>

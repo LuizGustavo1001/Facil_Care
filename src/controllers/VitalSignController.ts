@@ -1,18 +1,18 @@
 import PatientRecordController from "./PatientRecordController"
-import type { VitalSign } from "../interfaces/VitalSign"
+import type { IVitalSign } from "../interfaces/IVitalSign"
 import { VitalSignModel } from "../models/VitalSignModel"
-import type { ControllerResult } from "./settings"
+import {type ControllerResult, fallbackReturn} from "./settings"
 import { VITAL_SIGNS_PAGES } from "../constants/sysPages"
 import type { VitalSignType } from "../types/sysPages"
 
-const codeLabel: string = "VitalSign"
+const codeLabel: string = "IVitalSign"
 
-export default class VitalSignController extends PatientRecordController<VitalSign> {
-    constructor() {
+export default class VitalSignController extends PatientRecordController<IVitalSign> {
+    public constructor() {
         super(VitalSignModel, codeLabel);
     }
 
-    async create(newItem: VitalSign, recordType: VitalSignType, patientId: number = 1): Promise<ControllerResult<VitalSign>> {
+    public async create(newItem: IVitalSign, recordType: VitalSignType, patientId: number = 1): Promise<ControllerResult<IVitalSign>> {
         try {
             if(VITAL_SIGNS_PAGES.includes(recordType)) {
                 return await super.create(newItem, recordType, patientId)
@@ -24,13 +24,7 @@ export default class VitalSignController extends PatientRecordController<VitalSi
                 data: null
             }
         } catch(err) {
-            console.log("Database Error: ", err)
-
-            return {
-                success: false,
-                code: `${codeLabel}CreationFailed`,
-                data: null
-            }
+            return fallbackReturn(err, false, `${codeLabel}CreationFailed`)
         }
     }
 }

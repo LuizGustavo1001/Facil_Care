@@ -4,14 +4,14 @@ import type { INotification } from "../interfaces/INotification"
 export default class NotificationModel {
     private readonly table: Table<INotification, number>
 
-    constructor(db: { table: (name: string) => Table<INotification, number> }) {
+    public constructor(db: { table: (name: string) => Table<INotification, number> }) {
         this.table = db.table("notifications")
     }
 
     /**
      * Returns all notifications.
      **/
-    async getAll(): Promise<INotification[] | undefined> {
+    public async getAll(): Promise<INotification[] | undefined> {
         return await this.table
             .toCollection()
             .reverse()
@@ -23,7 +23,7 @@ export default class NotificationModel {
      *
      * @returns `TRUE` if the notification has been marked as read. `FALSE` if not found.
      **/
-    async markAsRead(id: number, status: boolean = true): Promise<boolean> {
+    public async markAsRead(id: number, status: boolean = true): Promise<boolean> {
         const notification = await this.table.get(id)
 
         if(!notification) {
@@ -41,7 +41,7 @@ export default class NotificationModel {
     /**
      * Mark all notifications as `READ`.
      **/
-    async markAllAsRead(): Promise<boolean> {
+    public async markAllAsRead(): Promise<boolean> {
         const notifications = await this.getAll()
 
         if(!notifications) {
@@ -61,7 +61,7 @@ export default class NotificationModel {
     /**
      * Deletes notifications within 30+ days old interval.
      **/
-    async removeOldNotifications(): Promise<boolean> {
+    public async removeOldNotifications(): Promise<boolean> {
         const thirtyDaysAgo = new Date()
 
         // Calculate 30 days ago date

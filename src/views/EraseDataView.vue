@@ -104,9 +104,9 @@
   import DatabaseController from "../controllers/DatabaseController"
 
   import type { WarningCode } from "../types/components/snackbar"
-  import { ACTION_BUTTON_VARIANTS, BUTTON_COLORS, BUTTON_TAGS } from "../constants/components/buttons"
+  import { ACTION_BUTTON_VARIANTS, BUTTON_COLORS, BUTTON_TAGS } from "../constants/components/appButtons"
   import { PAGES } from "../constants/sysPages"
-  import { PADDING_SIZE } from "../constants/paddindSizes"
+  import { PADDING_SIZE } from "../constants/spacing"
 
   import AppHeader from "../components/layout/AppHeader.vue"
   import AppFooter from "../components/layout/AppFooter.vue"

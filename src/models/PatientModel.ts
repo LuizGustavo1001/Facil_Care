@@ -1,19 +1,17 @@
 import type { Table } from "dexie"
-import type { Patient } from "../interfaces/Patient"
+import type { IPatient } from "../interfaces/IPatient"
 
 export default class PatientModel {
-    // type: Patient
-    // id: number type
-    private readonly table: Table<Patient, number>;
+    private readonly table: Table<IPatient, number>;
 
-    constructor(db: { table: (name: string) => Table<Patient, number> }) {
+    public constructor(db: { table: (name: string) => Table<IPatient, number> }) {
         this.table = db.table("patient")
     }
 
     /**
      * Returns patient data from the database.
      */
-    async getPatient(): Promise<Patient | undefined> {
+    public async getPatient(): Promise<IPatient | undefined> {
         return this.table
             .toCollection()
             .first()
@@ -24,7 +22,7 @@ export default class PatientModel {
      *
      * @return `TRUE` if the record was updates, `FALSE` if not found.
      **/
-    async updatePatient(newData: Partial<Patient>) :Promise<boolean> {
+    public async updatePatient(newData: Partial<IPatient>) :Promise<boolean> {
         const dbPatient = await this.getPatient()
 
         if(!dbPatient) {

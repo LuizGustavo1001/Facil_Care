@@ -112,7 +112,7 @@
 
   import type { INotification } from "../../interfaces/INotification"
 
-  import { ICON_BTN_VARIANTS } from "../../constants/components/buttons"
+  import { ICON_BTN_VARIANTS } from "../../constants/components/appButtons"
 
   import NotFoundCard from "../feedback/NotFoundCard.vue"
   import VerticalLine from "../common/VerticalLine.vue"

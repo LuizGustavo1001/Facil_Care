@@ -1,6 +1,6 @@
 import type PatientRecordModel from "../models/PatientRecordModel"
-import type { PatientRecordBase } from "../interfaces/PatientRecordBase"
-import type { ControllerResult } from "./settings"
+import type { IPatientRecordBase } from "../interfaces/IPatientRecordBase"
+import {type ControllerResult, fallbackReturn} from "./settings"
 import type { Dexie, UpdateSpec } from "dexie"
 
 import db from "../database/db.js"
@@ -14,33 +14,34 @@ import type { TranslatableUnitItem } from "../types/sysUnits"
 /**
  * Defines the expected constructor contract for patient record models.
  **/
-interface PatientRecordModelConstructor<T extends PatientRecordBase> {
+interface PatientRecordModelConstructor<T extends IPatientRecordBase> {
     new (db: Dexie): PatientRecordModel<T>
 }
 
 /**
  * Defines the data required to create a patient record
  **/
-type PatientRecordInput<T extends PatientRecordBase> =
+type PatientRecordInput<T extends IPatientRecordBase> =
     Omit<T, "_id" | "record" | "patientId"> & { value?: string }
 
 /**
  * Prevents updates to the primary key and record type.
  */
-type PatientRecordUpdate<T extends PatientRecordBase> =
+type PatientRecordUpdate<T extends IPatientRecordBase> =
     UpdateSpec<T> & {
     _id?: never
     record?: never
 }
 
+// COMPOSABLES
 const unit = useUnitSystem()
 
-export default abstract class PatientRecordController <T extends PatientRecordBase> {
+export default abstract class PatientRecordController <T extends IPatientRecordBase> {
     private readonly model: PatientRecordModel<T>
     private readonly codeLabel: string
 
     protected constructor(Model: PatientRecordModelConstructor<T>, codeLabel: string) {
-        if (!Model) {
+        if(!Model) {
             throw new Error("Model class must be provided to PatientRecordController")
         }
 
@@ -52,7 +53,7 @@ export default abstract class PatientRecordController <T extends PatientRecordBa
      * Checks whether the supplied date interval is valid
      **/
     private isValidDateInterval(minDate: Date, maxDate: Date): boolean {
-        return (
+        return(
             minDate instanceof Date &&
             maxDate instanceof Date &&
             !Number.isNaN(minDate.getTime()) &&
@@ -82,14 +83,8 @@ export default abstract class PatientRecordController <T extends PatientRecordBa
                 data: records
             }
 
-        } catch (err: any) {
-            console.log("DB error:", err)
-
-            return {
-                success: false,
-                code: "DatabaseError",
-                data: []
-            }
+        } catch(err: any) {
+            return fallbackReturn(err)
         }
     }
 
@@ -113,14 +108,8 @@ export default abstract class PatientRecordController <T extends PatientRecordBa
                 code: null,
                 data: records
             }
-        } catch (err: any) {
-            console.log("DB error: ", err)
-
-            return {
-                success: false,
-                code: "DatabaseError",
-                data: []
-            }
+        } catch(err: any) {
+            return fallbackReturn(err)
         }
     }
 
@@ -152,14 +141,8 @@ export default abstract class PatientRecordController <T extends PatientRecordBa
                 code: null,
                 data: records
             }
-        } catch (err: any) {
-            console.log("DB error: ", err)
-
-            return {
-                success: false,
-                code: "DatabaseError",
-                data: []
-            }
+        } catch(err: any) {
+            return fallbackReturn(err)
         }
     }
 
@@ -191,14 +174,8 @@ export default abstract class PatientRecordController <T extends PatientRecordBa
                 code: null,
                 data: records
             }
-        } catch (err: any) {
-            console.log("DB error: ", err)
-
-            return {
-                success: false,
-                code: "DatabaseError",
-                data: []
-            }
+        } catch(err: any) {
+            return fallbackReturn(err)
         }
     }
 
@@ -227,14 +204,8 @@ export default abstract class PatientRecordController <T extends PatientRecordBa
                 code: `${this.codeLabel}Created`,
                 data: null
             }
-        } catch (err: any) {
-            console.log("DB error: ", err)
-
-            return {
-                success: false,
-                code: "DatabaseError",
-                data: null
-            }
+        } catch(err: any) {
+            return fallbackReturn(err, false)
         }
     }
 
@@ -258,14 +229,8 @@ export default abstract class PatientRecordController <T extends PatientRecordBa
                 code: `${this.codeLabel}Updated`,
                 data: []
             }
-        } catch (err: any) {
-            console.log("DB error: ", err)
-
-            return {
-                success: false,
-                code: "DatabaseError",
-                data: []
-            }
+        } catch(err: any) {
+            return fallbackReturn(err, false, `${this.codeLabel}UpdateFailed`)
         }
     }
 
@@ -289,14 +254,8 @@ export default abstract class PatientRecordController <T extends PatientRecordBa
                 code: `${this.codeLabel}Deleted`,
                 data: []
             }
-        } catch (err: any) {
-            console.log("DB error: ", err)
-
-            return {
-                success: false,
-                code: "DatabaseError",
-                data: []
-            }
+        } catch(err: any) {
+            return fallbackReturn(err, false, `${this.codeLabel}DeleteFailed`)
         }
     }
 }

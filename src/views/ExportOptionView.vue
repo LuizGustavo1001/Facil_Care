@@ -111,7 +111,7 @@
         <!-- Backup File Export Explanation -->
         <div class="section-title-container flex flex-column gap-05 align-center">
           <Icon
-              :icon="icons['file-fill']"
+              :icon="icons['folder-open-line']"
               size="40px"
               :padding="PADDING_SIZE.SMALL"
               :bgColor="BUTTON_COLORS.YELLOW"
@@ -206,9 +206,9 @@
   import { useNavigation } from "../composables/useNavigation"
 
   import { PAGES } from "../constants/sysPages"
-  import { BUTTON_COLORS } from "../constants/components/buttons"
-  import { ACTION_BUTTON_VARIANTS, BUTTON_TAGS } from "../constants/components/buttons"
-  import { PADDING_SIZE } from "../constants/paddindSizes"
+  import { BUTTON_COLORS } from "../constants/components/appButtons"
+  import { ACTION_BUTTON_VARIANTS, BUTTON_TAGS } from "../constants/components/appButtons"
+  import { PADDING_SIZE } from "../constants/spacing"
 
   import type { WarningCode } from "../types/components/snackbar"
   import type { QRCodeError, QRCodeURL } from "../types/qrCode"

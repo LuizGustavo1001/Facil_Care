@@ -37,13 +37,12 @@
   </div>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>
 
 <script setup lang="ts">
   import { icons } from "../assets/icons/icons.js"
   import { PAGES } from "../constants/sysPages"
-  import { BUTTON_TAGS } from "../constants/components/buttons"
+  import { BUTTON_TAGS } from "../constants/components/appButtons"
   import { exportView } from "../locales/projectConfig"
 
   import { useUtils } from "../composables/useUtils"

@@ -1,4 +1,4 @@
-import type { FormInputTag } from "../types/components/genericForm"
+import type { FormInputTag } from "../types/components/appForm"
 
 export interface FormPopupTemplate {
     id: string

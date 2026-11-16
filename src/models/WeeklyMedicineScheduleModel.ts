@@ -1,21 +1,28 @@
 import type { Table } from "dexie"
-import type { WeeklyMedicineSchedule } from "../interfaces/WeeklyMedicineSchedule"
-import {useDate} from "../composables/useDate";
+import type { IWeeklyMedicineSchedule } from "../interfaces/IWeeklyMedicineSchedule"
+import { useDate } from "../composables/useDate"
 
+// COMPOSABLES
 const date = useDate()
 
 export class WeeklyMedicineScheduleModel {
-    private readonly table: Table<WeeklyMedicineSchedule, number>
+    private readonly table: Table<IWeeklyMedicineSchedule, number>
 
-    constructor(db: { table: (name: string) => Table<WeeklyMedicineSchedule, number> }) {
+    public constructor(db: { table: (name: string) => Table<IWeeklyMedicineSchedule, number> }) {
         this.table = db.table("weeklyMedicineSchedules")
     }
 
-    public async getAll(): Promise<WeeklyMedicineSchedule[] | []> {
+    /**
+     * Returns all checked administration schedules.
+     **/
+    public async getAll(): Promise<IWeeklyMedicineSchedule[] | []> {
         return await this.table.toCollection().toArray()
     }
 
-    public async getByDay(weekDay: number = date.getDayNumber()): Promise<WeeklyMedicineSchedule[] | undefined> {
+    /**
+     * Returns every administration scheduled for the selected weekDay.
+     **/
+    public async getByWeekDay(weekDay: number = date.getDayNumber()): Promise<IWeeklyMedicineSchedule[] | undefined> {
         return await this.table
             .where("scheduledWeekDay")
             .equals(weekDay)
@@ -28,7 +35,7 @@ export class WeeklyMedicineScheduleModel {
      * - ScheduledTime
      * - ScheduledWeekDay
      **/
-    async getScheduleItem(medicineId: number, scheduledWeekDay: number, scheduledTime: string): Promise<WeeklyMedicineSchedule | null> {
+    public async getScheduleItem(medicineId: number, scheduledWeekDay: number, scheduledTime: string): Promise<IWeeklyMedicineSchedule | null> {
         const registry = await this.table
             .where("[medicineId+scheduledWeekDay+scheduledTime]")
             .equals([medicineId, scheduledWeekDay, scheduledTime])
@@ -37,7 +44,12 @@ export class WeeklyMedicineScheduleModel {
         return registry ?? null
     }
 
-    async toggleAdministration(medicineId: number, scheduledWeekDay: number, scheduledTime: string): Promise<boolean> {
+    /**
+     * Deletes or Checks an administration schedule.
+     * - If the schedule registry exists: deletes the registry *(unchecking the checkbox)*
+     * - Otherwise: Creates a new registry *(checking the checkbox)*
+     **/
+    public async toggleAdministration(medicineId: number, scheduledWeekDay: number, scheduledTime: string): Promise<boolean> {
         return this.table.db.transaction("rw", this.table, async() => {
             const registry = await this.getScheduleItem(medicineId, scheduledWeekDay, scheduledTime)
 
@@ -53,7 +65,12 @@ export class WeeklyMedicineScheduleModel {
         })
     }
 
-    async deleteBySchedule(medicineId: number, scheduledWeekDay: number, scheduledTime: string): Promise<boolean> {
+    /**
+     * Deletes a checked administration schedule.
+     *
+     * @returns `TRUE` if deleted, `FALSE` if not deleted.
+     **/
+    public async deleteBySchedule(medicineId: number, scheduledWeekDay: number, scheduledTime: string): Promise<boolean> {
         const deleted = await this.table
             .where("[medicineId+scheduledWeekDay+scheduledTime]")
             .equals([medicineId, scheduledWeekDay, scheduledTime])
@@ -62,7 +79,12 @@ export class WeeklyMedicineScheduleModel {
         return deleted > 0
     }
 
-    async create(medicineId: number, scheduledWeekDay: number, scheduledTime: string): Promise<boolean> {
+    /**
+     * Creates a checked administration schedule.
+     *
+     * @returns `TRUE` if created
+     **/
+    public async create(medicineId: number, scheduledWeekDay: number, scheduledTime: string): Promise<boolean> {
         await this.table.add({
             medicineId,
             scheduledWeekDay,
@@ -74,14 +96,18 @@ export class WeeklyMedicineScheduleModel {
     }
 
     /**
-     * Verifies if the string that represents the Monday of the current week is not equal to the Monday of the current week
+     * Verifies if the string that represents the Monday of the current week is not equal to the Monday of the current week.
+     * - If equals: nothing happens
+     * - If not equals: clears the administration schedule registries.
      **/
-    async clearPreviousWeek(): Promise<void> {
+    public async clearPreviousWeek(): Promise<void> {
         const today = new Date()
         const lastUpdate = localStorage.getItem("lastUpdateAdminRegistries")
 
         const day = today.getDate()
-        const difference = day === 0 ? 6 : day -1
+        const difference = day === 0
+            ? 6
+            : day -1
 
         const monday = new Date(today)
         monday.setDate(today.getDate() - difference)

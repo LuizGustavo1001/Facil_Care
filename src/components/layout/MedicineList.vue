@@ -49,11 +49,12 @@
   .medicine-list .medicine {
     padding: var(--spacing-md);
     background: var(--color-bg-subtle);
+    font-size: var(--font-button-description);
   }
 </style>
 
 <script setup lang="ts">
-  import type { FormattedMedicine } from "../../interfaces/Medicine"
+  import type { FormattedMedicine } from "../../interfaces/IMedicine"
   import { useUtils } from "../../composables/useUtils"
 
   import WeeklyMedicineScheduleController from "../../controllers/WeeklyMedicineScheduleController"

@@ -1,5 +1,5 @@
-import { BUTTON_COLORS, BUTTON_TAGS } from "../../constants/components/buttons"
-import type { ButtonColor, ButtonTag } from "../../types/components/buttons"
+import { BUTTON_COLORS, BUTTON_TAGS } from "../../constants/components/appButtons"
+import type { ButtonColor, ButtonTag } from "../../types/components/appButtons"
 import type { Component } from "vue"
 import { RouterLink } from "vue-router"
 

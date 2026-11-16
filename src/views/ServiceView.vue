@@ -30,7 +30,6 @@
                 :to="button.href"
                 :title="getButtonTitle(button.id)"
                 :leftIcon="button.iconFill"
-                leftIconSize="25px"
                 :rightIcon="icons['chevron-right']"
                 :color="button?.color ?? null"
               />
@@ -53,7 +52,7 @@
 
 <script setup lang="ts">
   import { PAGES } from "../constants/sysPages"
-  import { BUTTON_TAGS } from "../constants/components/buttons"
+  import { BUTTON_TAGS } from "../constants/components/appButtons"
   import { HEADER_TYPES } from "../constants/components/appHeader"
 
   import { icons } from "../assets/icons/icons.js"
