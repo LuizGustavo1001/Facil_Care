@@ -1,28 +1,40 @@
 <template>
     <!-- Medicine List -->
-    <ul v-if="props.medicineList.length > 0" class="medicine-list buttons-wrapper overflow-auto" key="medicine-list">
-      <template
+    <ul
+        v-if="props.medicineList.length > 0"
+        class="medicine-list buttons-wrapper overflow-auto"
+        key="medicine-list"
+    >
+      <!-- Medicine Item -->
+      <li
           v-for="medicine in props.medicineList"
-          :key="medicine._id"
+          :key="`${medicine.medicineId}-${medicine.scheduledWeekDay}-${medicine.scheduledTime}`"
+          class="flex gap-05 align-center medicine"
       >
-        <!-- Medicine Item -->
-        <li
-            v-for="medicineSchedule in medicine.administrationTimes"
-            :key="medicine._id + medicineSchedule"
-            class="flex gap-05 align-center medicine"
-        >
-          <div class="flex-grow-1">
+        <div class="flex-grow-1 flex align-center gap-05">
+          <CheckBox
+              :modelValue="!!medicine.administeredAt"
+              @change="handleCheckEvent(medicine.medicineId, medicine.scheduledWeekDay, medicine.scheduledTime)"
+          />
+
+          <div class="flex flex-column">
             <p class="truncate-single">
               <span class="bold-weight">{{ medicine.name }}</span>
-              <span class="capitalize-words medium-weight"> ({{ utils.getRouteAdminLabel(medicine.routeAdmin) }})</span>
+              <span class="capitalize-words medium-weight">
+                ({{ utils.getRouteAdminLabel(medicine.routeAdmin) }})
+              </span>
             </p>
 
             <p class="text-muted truncate-single">{{ medicine.observations }}</p>
           </div>
+        </div>
 
-          <Badge :text="medicineSchedule" class="flex-shrink" :color="utils.getBadgeColor(medicineSchedule)" />
-        </li>
-      </template>
+        <Badge
+            :text="medicine.scheduledTime"
+            class="flex-shrink"
+            :color="utils.getBadgeColor(medicine.scheduledTime)"
+        />
+      </li>
     </ul>
 
     <!-- Fallback -->
@@ -41,20 +53,30 @@
 </style>
 
 <script setup lang="ts">
-  import type { Medicine } from "../../interfaces/Medicine"
+  import type { FormattedMedicine } from "../../interfaces/Medicine"
   import { useUtils } from "../../composables/useUtils"
+
+  import WeeklyMedicineScheduleController from "../../controllers/WeeklyMedicineScheduleController"
 
   import Badge from "../common/Badge.vue"
   import NotFoundCard from "../feedback/NotFoundCard.vue"
+  import CheckBox from "../inputs/CheckBox.vue"
 
   // COMPOSABLES
   const utils = useUtils()
 
+  // CONTROLLERS
+  const weeklyScheduleController = new WeeklyMedicineScheduleController()
+
   // TYPES & INTERFACES
   interface Props {
-    medicineList: Medicine[]
+    medicineList: FormattedMedicine[]
   }
 
   // PROPS
   const props = defineProps<Props>()
+
+  const handleCheckEvent = async (medicineId: number, scheduledWeekDay: number, scheduledTime: string): Promise<void> => {
+    await weeklyScheduleController.toggleAdministration(medicineId, scheduledWeekDay, scheduledTime)
+  }
 </script>

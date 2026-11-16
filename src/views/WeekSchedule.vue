@@ -54,9 +54,10 @@
 
   import { mainNavigationBar, pages, weekScheculeView } from "../locales/projectConfig"
 
-  import MedicineController from "../controllers/MedicineController"
+  import WeeklyMedicineScheduleController from "../controllers/WeeklyMedicineScheduleController"
 
-  import type { Medicine } from "../interfaces/Medicine"
+  import type { FormattedMedicine } from "../interfaces/Medicine"
+
   import type { WarningCode } from "../types/components/snackbar"
 
   import NavigationBar from "../components/layout/NavigationBar.vue"
@@ -77,26 +78,21 @@
   const isSnackbarOpen = computed<boolean>(() => snackbar.isActive.value)
 
   // CONTROLLERS
-  const medicineController = new MedicineController()
+  const weeklyScheduleController = new WeeklyMedicineScheduleController()
 
   // OBJECTS
-  const dailyMedicines = ref<Medicine[]>([])
+  const dailyMedicines = ref<FormattedMedicine[]>([])
 
   // FUNCTIONS
   const loadDailyMedicines = async () => {
-    const result = await medicineController.getByWeekDay(selectedDay.value)
+    try {
+      dailyMedicines.value = await weeklyScheduleController.loadDailyMedicinesByDay(selectedDay.value) as FormattedMedicine[]
+    } catch(err) {
+      console.error("Error loading daily medicines:", err)
 
-    if(!result) {
+      dailyMedicines.value = []
       snackbar.open("DBError" as WarningCode)
-      return []
     }
-
-    if(!result.success) {
-      console.log(result.code)
-      snackbar.open(result.code as WarningCode || "DBError")
-    }
-
-    dailyMedicines.value = result.data as Medicine[]
   }
 
   const getPageSubtitle = (): string => {

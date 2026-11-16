@@ -64,7 +64,7 @@ export default abstract class PatientRecordController <T extends PatientRecordBa
     /**
      * Returns all data from the collection.
      **/
-    async getAll(): Promise<ControllerResult<T[]>> {
+    public async getAll(): Promise<ControllerResult<T[]>> {
         try {
             const records = await this.model.getAll()
 
@@ -96,7 +96,7 @@ export default abstract class PatientRecordController <T extends PatientRecordBa
     /**
      * Returns record matching the selected record type
      **/
-    async getByField(field: T["record"]): Promise<ControllerResult<T[]>> {
+    public async getByField(field: T["record"]): Promise<ControllerResult<T[]>> {
         try {
             const records = await this.model.getByField(field)
 
@@ -127,7 +127,7 @@ export default abstract class PatientRecordController <T extends PatientRecordBa
     /**
      * Returns records within the specified date interval
      **/
-    async getByDate(minDate: Date, maxDate: Date = new Date()): Promise<ControllerResult<T[]>> {
+    public async getByDate(minDate: Date, maxDate: Date = new Date()): Promise<ControllerResult<T[]>> {
         if(!this.isValidDateInterval(minDate, maxDate)) {
             return {
                 success: false,
@@ -166,7 +166,7 @@ export default abstract class PatientRecordController <T extends PatientRecordBa
     /**
      * Returns records matching the selected type and date interval
      **/
-    async getByFieldAndDate(field: string, minDate: Date, maxDate: Date = new Date()): Promise<ControllerResult<T[]>> {
+    public async getByFieldAndDate(field: string, minDate: Date, maxDate: Date = new Date()): Promise<ControllerResult<T[]>> {
         if(!this.isValidDateInterval(minDate, maxDate)) {
             return {
                 success: false,
@@ -205,7 +205,7 @@ export default abstract class PatientRecordController <T extends PatientRecordBa
     /**
     * Creates a new patient record.
     **/
-    async create(newItem: PatientRecordInput<T>, recordType: MonitoringType, patientId: number = 1): Promise<ControllerResult<T>> {
+    public async create(newItem: PatientRecordInput<T>, recordType: MonitoringType, patientId: number = 1): Promise<ControllerResult<T>> {
         let itemValue: string | number = newItem.value
 
         // Convert measurements back to the metric system
@@ -241,7 +241,7 @@ export default abstract class PatientRecordController <T extends PatientRecordBa
     /**
      * Updates an existing patient record
      **/
-    async update(newData: PatientRecordUpdate<T>, recordId: number): Promise<ControllerResult<T[]>> {
+    public async update(newData: PatientRecordUpdate<T>, recordId: number): Promise<ControllerResult<T[]>> {
         try {
             const updated = await this.model.update(newData, recordId)
 
@@ -272,7 +272,7 @@ export default abstract class PatientRecordController <T extends PatientRecordBa
     /**
      * Deletes an existing patient record
      **/
-    async delete(id: number): Promise<ControllerResult<T[]>> {
+    public async delete(id: number): Promise<ControllerResult<T[]>> {
         try {
             const removed = await this.model.removeById(id)
 

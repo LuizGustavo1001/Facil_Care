@@ -26,7 +26,7 @@ Para isso, utiliza-se o banco de dados interno aos navegadores (`IndexedDB` + wr
 Imagens do Sistema
 ---
 <table>
-  <tr  style="display: grid; grid-template-columns: repeat(5, 1fr)">
+  <tr style="display: grid; grid-template-columns: repeat(5, 1fr)">
     <td>
       <img src="/docs/preview/home-page.jpeg" alt="Página Inicial">
     </td>
@@ -51,45 +51,43 @@ Imagens do Sistema
 Sistema com foco em **facilitar a rotina de cuidadores**, permitindo: 
 
 ### Gestão de Perfil e Emergência `**`
-- **Ficha médica básica:**
-    - Dados pessoais (nome, endereço, data de nascimento e peso)
+- **Ficha Médica Básica:**
+    - Dados pessoais *(nome, endereço, data de nascimento)*
     - Tipo sanguíneo
-    - Alergias (principalmente à remédios)
+    - Alergias
     - Planos de Saúde
-    - Médicos conhecidos pelo paciente ou que acompanham ele
-    - Dados dos cuidadores
 - **Outros:**
     - Familiares Próximos
+    - Médicos *(conhecidos pelo paciente ou que acompanham ele)*
+    - Cuidadores do paciente
 
 ### Diário de Cuidados e Rotina Diária
 - Possibilita visualizar cada registro de forma unitária, apresentando:
   - Estatísticas (filtradas por data)
   - Últimas medições/registros
 - **Registro de sinais vitais**:
-    - Medições diárias *(glicemia, pressão arterial, temperatura, saturação de oxigênio, frequência cardíaca)*
+    - glicemia, pressão arterial, temperatura, saturação de oxigênio, frequência cardíaca etc.
 - **Acompanhamento Fisiológico e Comportamental**:
-    - Humor
-    - Nível de dor
-    - Qualidade do sono
-    - Aceitação de refeições + Ingestão de água
-    - Controle de evacuação e diurese
-    - Peso
+    - Humor, nível de dor, qualidade do sono, aceitação de refeições, ingestão de àgua, peso e controle de evacuação e diurese
 
 ### Controle de Medicamentos `***`
 - **Cadastro de Aprazamento**:
     - Registro de medicamentos *(dosagens, via de administração, horários e observações)*
-- **Alerta (Notificações)**:
-    - Alertas visuais e sonoros no momento que algum remédio deve ser tomado
 - **Checklist de Aprazamentos**
-    - Registrar os dados de medicamentos administrados (data/hora da administração, cuidador e observações)
+    - Visualizar os medicamentos que o paciente precisa tomar no dia (ou na semana)
+    - Marcando como administrado ou não administrado
 
 ### Análise de Dados (Relatórios)
 - **Dashboard Interativo**:
-    - Gráficos representando, por exemplo, sinais vitais do paciente ou comportamento em um determinado período (período selecionável)
+    - Gráficos representando, por exemplo, sinais vitais do paciente (período selecionável)
+      - Maior valor
+      - Menor valor
+      - Média
+      - etc.
 
 ### Troca de Dados
-- **Backup JSON**: Exportação e importação manual do arquivo de backup para migração de dispositivos e prevenção de perdas sem uso de nuvem
-- **Sincronização P2P (WebRTC/PeerJS)**: Envio de dados diretamente entre dispositivos por meio da geração de QR Code com link de pareamento (`site/import?peerId=<hostPeerId>`)
+- **Backup JSON**: Exportação e importação manual do **arquivo de backup** para migração de dispositivos e prevenção de perdas sem uso de nuvem
+- **Sincronização P2P (WebRTC/PeerJS)**: Envio de dados diretamente entre dispositivos por meio da geração de **QR Code com link de pareamento** (`site/import?peerId=<hostPeerId>`)
 
 ### Acessibilidade
 - **Interface Adaptada**: Modo claro, escuro e alto contraste
@@ -104,11 +102,14 @@ Sistema com foco em **facilitar a rotina de cuidadores**, permitindo:
      |- assets         # Estilos globais, fontes e ícones
      |- components     # Componentes de UI em Vue
      |- composables    # Regras de Negócio
+     |- constants
      |- controllers    # Controladores da aplicação
      |- database       # Inicialização do Dexie.js / IndexedDB
+     |- interfaces
      |- locales        # Lógica de tradução (idioma) (i18n)
      |- models         # Modelos de acesso aos dados
      |- router         # Rotas de navegação do Vue Router
+     |- types
      |- views          # Páginas do sistema
 ```
 
@@ -119,11 +120,8 @@ Sistema com foco em **facilitar a rotina de cuidadores**, permitindo:
 2. **Controle Automático de Estoque**: Baixa automática de quantidade disponível de remédios ao confirmar a dose, com alertas visuais para reposição
 3. **Síntese de Voz (Web Speech API)**: Leitura dos lembretes e horários de remédios em voz alta para apoiar pessoas com limitações visuais
 4. **Relatórios em PDF**: Geração local de relatórios médicos formatados com gráficos usando a biblioteca `jsPDF`
-5. **Adicionar Múltiplos Horários (Medicamentos)**: Gerenciar os horários dos medicamentos, enviando notificações quando estiver próximo do tempo de consumi-lo
-Afins
-6. **Converter escalas para outros sistemas**: Como exemplo, converter de graus Celsius para Fahrenheit
-7. **Verificar Validade do arquivo de backup**
-8. **Adaptar o formulário de Pressão Sanguínea**
+5**Verificar Validade do arquivo de backup**
+6**Adaptar o formulário de Pressão Sanguínea**
 
 ---
 - `*` Para gerar o QR Code de Backup do paciente será necessário **conexão com a internet**`*`, tendo em vista a limitação de caracteres que o código pode apresentar

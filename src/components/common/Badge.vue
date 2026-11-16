@@ -12,6 +12,8 @@
 <style scoped>
   .badge {
     border-radius: var(--radius-lg);
+    font-size: var(--font-body-sm);
+    font-weight: var(--bold-weight);
   }
 
   /* VARIANTS */
@@ -82,5 +84,5 @@
     return props.color
   })
 
-  const computedPadding = computed(() => `padding: var(--spacing-${props.spacing})`)
+  const computedPadding = computed(() => `padding-block: var(--spacing-${props.spacing}); padding-inline: var(--spacing-xs)`)
 </script>

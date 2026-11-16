@@ -41,6 +41,7 @@
 
   .chips.wBorder.active {
     background: var(--color-bg-blue);
+    color: var(--color-text-blue);
     border-color: transparent;
   }
   /* 2. Transparent */

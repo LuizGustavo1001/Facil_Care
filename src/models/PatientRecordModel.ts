@@ -91,7 +91,6 @@ export default abstract class PatientRecordModel <T extends PatientRecordBase> {
      **/
     async create(newRecord: T): Promise<boolean> {
         await this.table.add(newRecord)
-
         return true
     }
 

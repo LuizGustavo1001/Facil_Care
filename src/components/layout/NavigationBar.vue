@@ -89,7 +89,7 @@
     }
 
     .nav-item {
-      padding: var(--spacing-md);
+      padding: var(--spacing-sm);
       flex-direction: row;
       gap: 0.5em;
 
