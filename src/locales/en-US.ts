@@ -822,7 +822,7 @@ export default {
             fallback: "No valid measurement to display",
 
             [PAGES.BLOOD_PRESSURE]: {
-                y_axis: "Pressão Arterial",
+                y_axis: "Blood Pressure",
                 x_axis: "Measurement Date",
                 values: {
                     systolic: "Systolic",
