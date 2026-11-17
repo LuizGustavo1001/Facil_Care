@@ -57,7 +57,7 @@
   import type { FormattedMedicine } from "../../interfaces/IMedicine"
   import { useUtils } from "../../composables/useUtils"
 
-  import WeeklyMedicineScheduleController from "../../controllers/WeeklyMedicineScheduleController"
+  import WeeklyMedicineAdministrationController from "../../controllers/WeeklyMedicineAdministrationController"
 
   import Badge from "../common/Badge.vue"
   import NotFoundCard from "../feedback/NotFoundCard.vue"
@@ -67,7 +67,7 @@
   const utils = useUtils()
 
   // CONTROLLERS
-  const weeklyScheduleController = new WeeklyMedicineScheduleController()
+  const weeklyScheduleController = new WeeklyMedicineAdministrationController()
 
   // TYPES & INTERFACES
   interface Props {
@@ -78,6 +78,6 @@
   const props = defineProps<Props>()
 
   const handleCheckEvent = async (medicineId: number, scheduledWeekDay: number, scheduledTime: string): Promise<void> => {
-    await weeklyScheduleController.toggleAdministration(medicineId, scheduledWeekDay, scheduledTime)
+    await weeklyScheduleController.toggleStatus(medicineId, scheduledWeekDay, scheduledTime)
   }
 </script>

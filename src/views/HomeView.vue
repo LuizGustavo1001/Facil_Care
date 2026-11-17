@@ -171,7 +171,7 @@
   import { useDate } from "../composables/useDate"
 
   import PatientController from "../controllers/PatientController"
-  import WeeklyMedicineScheduleController from "../controllers/WeeklyMedicineScheduleController"
+  import WeeklyMedicineAdministrationController from "../controllers/WeeklyMedicineAdministrationController"
 
   import { PAGES } from "../constants/sysPages"
   import { PADDING_SIZE } from "../constants/spacing"
@@ -201,7 +201,7 @@
 
   // CONTROLLERS
   const patientController = new PatientController()
-  const weeklyScheduleController = new WeeklyMedicineScheduleController()
+  const weeklyAdministrationController = new WeeklyMedicineAdministrationController()
 
   // STATES
   const patient = ref<IPatient | null>(null)
@@ -215,7 +215,7 @@
 
   const loadDailyMedicines = async () => {
     try {
-      medicines.value = await weeklyScheduleController.loadDailyMedicinesByDay(date.getDayNumber()) as FormattedMedicine[]
+      medicines.value = await weeklyAdministrationController.loadDailyMedicinesByDay(date.getDayNumber()) as FormattedMedicine[]
     } catch(err) {
       console.error("Error loading daily medicines:", err)
 

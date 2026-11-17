@@ -54,7 +54,7 @@
 
   import { mainNavigationBar, pages, weekScheculeView } from "../locales/projectConfig"
 
-  import WeeklyMedicineScheduleController from "../controllers/WeeklyMedicineScheduleController"
+  import WeeklyMedicineAdministrationController from "../controllers/WeeklyMedicineAdministrationController"
 
   import type { FormattedMedicine } from "../interfaces/IMedicine"
 
@@ -78,7 +78,7 @@
   const isSnackbarOpen = computed<boolean>(() => snackbar.isActive.value)
 
   // CONTROLLERS
-  const weeklyScheduleController = new WeeklyMedicineScheduleController()
+  const weeklyAdministrationController = new WeeklyMedicineAdministrationController()
 
   // OBJECTS
   const dailyMedicines = ref<FormattedMedicine[]>([])
@@ -86,7 +86,7 @@
   // FUNCTIONS
   const loadDailyMedicines = async () => {
     try {
-      dailyMedicines.value = await weeklyScheduleController.loadDailyMedicinesByDay(selectedDay.value) as FormattedMedicine[]
+      dailyMedicines.value = await weeklyAdministrationController.loadDailyMedicinesByDay(selectedDay.value) as FormattedMedicine[]
     } catch(err) {
       console.error("Error loading daily medicines:", err)
 

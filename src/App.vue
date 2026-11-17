@@ -16,7 +16,7 @@
   import { useUnitSystem } from "./composables/useUnitSystem"
 
   import NotificationController from "./controllers/NotificationController"
-  import WeeklyMedicineScheduleController from "./controllers/WeeklyMedicineScheduleController.ts"
+  import WeeklyMedicineAdministrationController from "./controllers/WeeklyMedicineAdministrationController.ts"
 
   // CONTROLLERS
   const notificationsController = new NotificationController()
@@ -26,7 +26,7 @@
   const { initLanguage } = useLanguage()
   const { initUnitSystem } = useUnitSystem()
   const { requestPersistence } = usePersistentStorage()
-  const weeklyMedicineScheduleController = new WeeklyMedicineScheduleController()
+  const medicineAdministrationController = new WeeklyMedicineAdministrationController()
 
   // MOUNTED || UNMOUNTED
   onMounted(async () => {
@@ -36,6 +36,6 @@
 
     await requestPersistence()
     await notificationsController.removeOlds()
-    await weeklyMedicineScheduleController.clearPreviousWeek()
+    await medicineAdministrationController.clearPreviousWeek()
   })
 </script>
