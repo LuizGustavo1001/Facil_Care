@@ -9,7 +9,7 @@
     :style="[utils.getPaddingStyle(props.padding)]"
   >
     <Icon v-if="props.icon" :icon="props.icon" size="15px" />
-    <span>{{ props.label }}</span>
+    <span class="flex-grow-1">{{ props.label }}</span>
   </component>
 </template>
 

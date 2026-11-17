@@ -10,7 +10,7 @@ export interface IMedicine extends IPatientSubCategoryBase {
     active: boolean
 }
 
-// IMedicine + IWeeklyMedicineSchedule
+// IMedicine + IWeeklyMedicineAdministration
 export interface FormattedMedicine extends IMedicine {
     medicineId: number
     scheduledWeekDay: number

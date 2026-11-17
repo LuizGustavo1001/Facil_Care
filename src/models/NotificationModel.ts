@@ -21,7 +21,9 @@ export default class NotificationModel {
     /**
      * Marks an notification as `READ` bu the notification `ID`.
      *
-     * @returns `TRUE` if the notification has been marked as read. `FALSE` if not found.
+     * @returns
+     * `TRUE` if the notification has been marked as read.
+     * `FALSE` if not found.
      **/
     public async markAsRead(id: number, status: boolean = true): Promise<boolean> {
         const notification = await this.table.get(id)
