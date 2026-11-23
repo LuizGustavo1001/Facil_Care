@@ -115,15 +115,6 @@ Sistema com foco em **facilitar a rotina de cuidadores**, permitindo:
 
 ---
 
-<<<<<<< Updated upstream
-## Recursos Futuros
-1. **Acompanhamento Visual de Lesões**: Uso da câmera do dispositivo para registro fotográfico de alterações na corporais em geral
-2. **Controle Automático de Estoque**: Baixa automática de quantidade disponível de remédios ao confirmar a dose, com alertas visuais para reposição
-3. **Síntese de Voz (Web Speech API)**: Leitura dos lembretes e horários de remédios em voz alta para apoiar pessoas com limitações visuais
-4. **Relatórios em PDF**: Geração local de relatórios médicos formatados com gráficos usando a biblioteca `jsPDF`
-5**Verificar Validade do arquivo de backup**
-6**Adaptar o formulário de Pressão Sanguínea**
-=======
 ## Future Features
 1. **Visual Monitoring of Lesions**: Use of the device's camera to create a photographic record of physical changes or bodily conditions
 2. **Automated Inventory Management**: Automatic deduction of available medication stock upon confirmation of a dose, with visual alerts for replenishment
