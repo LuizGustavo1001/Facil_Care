@@ -1,116 +1,112 @@
 <div align="center">
   <img src="/docs/logo/facilCare-fill.webp" alt="" width="100" />
   <h1>FacilCare</h1>
-  <p>PWA <em>Offline-First</em> para <strong>Monitoramento de Saúde</strong></p>
+  <p><strong>Health Monitoring</strong> PWA Offline-First</p>
 </div>
  
 <div align="center">
   <a href="https://www.figma.com/design/Hz5x5uWg9bis53saHyB4vJ/Cuidados-Di%C3%A1rios?node-id=0-1&p=f&t=72omA2iRuWiTJfML-0" rel="external" target="_blank">
-    <img src="https://img.shields.io/badge/Projeto no Figma-696969?style=for-the-badge&logo=figma&logoColor=figma" alt="Figma Project">
+    <img src="https://img.shields.io/badge/Figma Project-696969?style=for-the-badge&logo=figma&logoColor=figma" alt="Figma Project">
   </a>
 
   <a href="https://facilcare.vercel.app" rel="external" target="_blank">
-    <img src="https://img.shields.io/badge/Acessar%20Sistema-2E7D32?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Acessar Sistema">
+    <img src="https://img.shields.io/badge/WebPage-2E7D32?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Acessar Sistema">
   </a>
 </div>
 
-> Com o **envelhecimento acelerado** da população no Brasil e no mundo, famílias precisam **monitorar** a rotina de saúde dos idosos em **tempo real**.
+> [!note]
+> With the **accelerated aging** of the population in Brazil and worldwide, families need to **monitor** the health routines of the elderly in **real time**.
 
-O *Progressive Web App* (PWA) será **100% offline** (salvo as exceções`*`), ou seja, é possível:
-- Acessá-lo mesmo **sem conexão** com internet
-- Manter os **dados** de um paciente com **privacidade total** (são armazenados apenas localmente)
-- **Sem custos** para armazenamento na **nuvem**
+A **Offline-First Progressive Web App** _(PWA)_ designed to **streamline the daily tasks of caregivers**, enabling the management of a patient's medical data while 
+ensuring **privacy** directly on the **user's device** eliminating.
+**Data** can be **backed up** via a **JSON** file or through **P2P** synchronization (WebRTC) by scanning a QR code.
 
-Para isso, utiliza-se o banco de dados interno aos navegadores (`IndexedDB` + wrapper `Dexie.js`)
-
-Imagens do Sistema
+System Pictures
 ---
 <table>
   <tr style="display: grid; grid-template-columns: repeat(5, 1fr)">
     <td>
-      <img src="/docs/preview/home-page.jpeg" alt="Página Inicial">
+      <img src="/docs/preview/home-page.jpeg" alt="Home Page">
     </td>
     <td>
-      <img src="/docs/preview/manage-page.jpeg" alt="Página Exemplo de Gerenciamento">
+      <img src="/docs/preview/manage-page.jpeg" alt="Manage Example Page">
     </td>
     <td>
-      <img src="/docs/preview/register-page.jpeg" alt="Página Exemplo de Registros">
+      <img src="/docs/preview/register-page.jpeg" alt="Register Example Page">
     </td>
     <td>
-      <img src="/docs/preview/statistics.jpeg" alt="Página Exemplo de Estatísticas">
+      <img src="/docs/preview/statistics.jpeg" alt="Statistics Example Page">
     </td>
     <td>
-      <img src="/docs/preview/vital-signs.jpeg" alt="Página de Sinais Vitais">
+      <img src="/docs/preview/vital-signs.jpeg" alt="Vital Signs Page">
     </td>
   </tr>
 </table>
 
 ---
 
-## Funcionalidades
-Sistema com foco em **facilitar a rotina de cuidadores**, permitindo: 
+## Features
+### Management of Profile and Emergency Data `**`
+- **Basic Medical Record:**
+    - Personal Data *(name, address, and birthdate)*
+    - Blood type
+    - Allergies
+    - Health ensure plans
+- **Others:**
+    - Close family members
+    - Doctors
+    - Patient caregivers
 
-### Gestão de Perfil e Emergência `**`
-- **Ficha Médica Básica:**
-    - Dados pessoais *(nome, endereço, data de nascimento)*
-    - Tipo sanguíneo
-    - Alergias
-    - Planos de Saúde
-- **Outros:**
-    - Familiares Próximos
-    - Médicos *(conhecidos pelo paciente ou que acompanham ele)*
-    - Cuidadores do paciente
+### Care Routine
+- Allows for viewing each record individually, presenting:
+  - Statistics _(sorted / filtered by date)_
+  - Most recent record / measurements
+- **Vital Signs Registries**:
+    - Blood glucose, blood pressure, body temperature, oxygen saturation, heart rate etc.
+- **Physiological and Behavioral Monitoring**:
+    - Mood, pain level, sleep quality, meal acceptance, water ingestion, weigth etc.
 
-### Diário de Cuidados e Rotina Diária
-- Possibilita visualizar cada registro de forma unitária, apresentando:
-  - Estatísticas (filtradas por data)
-  - Últimas medições/registros
-- **Registro de sinais vitais**:
-    - glicemia, pressão arterial, temperatura, saturação de oxigênio, frequência cardíaca etc.
-- **Acompanhamento Fisiológico e Comportamental**:
-    - Humor, nível de dor, qualidade do sono, aceitação de refeições, ingestão de àgua, peso e controle de evacuação e diurese
+### Medicines Management `***`
+- **Scheduling Registration**:
+    - Medicines registries _(dosages, administration route,daily times, and observations)_
+- **Scheduling Checklist**
+    - View the medications the patient needs to take for the day _(or the week)_
+    - Marking as administered or not
 
-### Controle de Medicamentos `***`
-- **Cadastro de Aprazamento**:
-    - Registro de medicamentos *(dosagens, via de administração, horários e observações)*
-- **Checklist de Aprazamentos**
-    - Visualizar os medicamentos que o paciente precisa tomar no dia (ou na semana)
-    - Marcando como administrado ou não administrado
+### Data Analytics _(Resume)_
+- **Interactive Dashboard**:
+    - Graphs representing, for example, a patient's vital signs (selectable time period)
+      - Highest value
+      - Lowest value
+      - Average
+      - others
 
-### Análise de Dados (Relatórios)
-- **Dashboard Interativo**:
-    - Gráficos representando, por exemplo, sinais vitais do paciente (período selecionável)
-      - Maior valor
-      - Menor valor
-      - Média
-      - etc.
+### Data Exchange
+- **JSON Backup**: Manual export and import of the **backup file** for device migration and loss prevention, without using the cloud
+- **P2P Sync (WebRTC/PeerJS)**: Direct data transfer between devices via the generation of a **QR code containing a pairing link** (`site/import?peerId=<hostPeerId>`)
 
-### Troca de Dados
-- **Backup JSON**: Exportação e importação manual do **arquivo de backup** para migração de dispositivos e prevenção de perdas sem uso de nuvem
-- **Sincronização P2P (WebRTC/PeerJS)**: Envio de dados diretamente entre dispositivos por meio da geração de **QR Code com link de pareamento** (`site/import?peerId=<hostPeerId>`)
-
-### Acessibilidade
-- **Interface Adaptada**: Modo claro, escuro e alto contraste
+### Accessibility
+- **Adapted Interface**: Light, dark, and high-contrast modes
 
 ---
 
-## Esquema de Pastas
+## Directory Scheme
 ```
   |
-  |- public            # Imagens do PWA
+  |- public            # PWA images
   |- src              
-     |- assets         # Estilos globais, fontes e ícones
-     |- components     # Componentes de UI em Vue
-     |- composables    # Regras de Negócio
+     |- assets         # Global styles, icons, and system images
+     |- components     # UI Vue components
+     |- composables    # Business Rules
      |- constants
-     |- controllers    # Controladores da aplicação
-     |- database       # Inicialização do Dexie.js / IndexedDB
+     |- controllers    # API Controllers
+     |- database       # Dexie.js / IndexedDB init
      |- interfaces
-     |- locales        # Lógica de tradução (idioma) (i18n)
-     |- models         # Modelos de acesso aos dados
-     |- router         # Rotas de navegação do Vue Router
+     |- locales        # Languagee translate logic (i18n)
+     |- models         # Models for data access
+     |- router         # Navigation routes (Vue Router)
      |- types
-     |- views          # Páginas do sistema
+     |- views          # System Pages
 ```
 
 ---
@@ -122,10 +118,7 @@ Sistema com foco em **facilitar a rotina de cuidadores**, permitindo:
 4. **PDF Reports**: Local generation of formatted medical reports, including charts, using the `jsPDF` library
 5. **Verify the validity of the backup file**
 6. **Adapt the blood pressure form**
->>>>>>> Stashed changes
-
 ---
-- `*` Para gerar o QR Code de Backup do paciente será necessário **conexão com a internet**`*`, tendo em vista a limitação de caracteres que o código pode apresentar
-- `**` Dados pessoais ficam armazenados apensa dentro do aplicativo, nenhum desenvolvedor deve ter acesso a eles de forma deliberada.
-- `***` O sistema atua como uma ferramenta de apoio à rotina; a exatidão das informações de aprazamento e dosagem cadastradas é de responsabilidade exclusiva do usuário ou cuidador.
-
+- `*` Generating a patient backup QR code requires an **internet connection**, due to the character limit constraints of the code format.
+- `**` Personal data is stored exclusively within the application; no developer should have intentional access to this information.
+- `***` The system serves as a tool to support daily routines; the accuracy of the scheduled times and dosage information entered is the sole responsibility of the user or caregiver.
