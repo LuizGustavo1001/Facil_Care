@@ -28,13 +28,13 @@ export const UNITS_OPTIONS = [
 ]
 
 export const weekDaysFormat = {
-    [WEEK_DAYS.SUNDAY]: {value: 0, label: WEEK_DAYS.SUNDAY},
-    [WEEK_DAYS.MONDAY]: {value: 1, label: WEEK_DAYS.MONDAY},
-    [WEEK_DAYS.TUESDAY]: {value: 2, label: WEEK_DAYS.TUESDAY},
-    [WEEK_DAYS.WEDNESDAY]: {value: 3, label: WEEK_DAYS.WEDNESDAY},
-    [WEEK_DAYS.THURSDAY]: {value: 4, label: WEEK_DAYS.THURSDAY},
-    [WEEK_DAYS.FRIDAY]: {value: 5, label: WEEK_DAYS.FRIDAY},
-    [WEEK_DAYS.SATURDAY]: {value: 6, label: WEEK_DAYS.SATURDAY},
+    [WEEK_DAYS.SUNDAY]: { value: 0, label: WEEK_DAYS.SUNDAY },
+    [WEEK_DAYS.MONDAY]: { value: 1, label: WEEK_DAYS.MONDAY },
+    [WEEK_DAYS.TUESDAY]: { value: 2, label: WEEK_DAYS.TUESDAY },
+    [WEEK_DAYS.WEDNESDAY]: { value: 3, label: WEEK_DAYS.WEDNESDAY },
+    [WEEK_DAYS.THURSDAY]: { value: 4, label: WEEK_DAYS.THURSDAY },
+    [WEEK_DAYS.FRIDAY]: { value: 5, label: WEEK_DAYS.FRIDAY },
+    [WEEK_DAYS.SATURDAY]: { value: 6, label: WEEK_DAYS.SATURDAY },
 }
 
 export const pages = {

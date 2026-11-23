@@ -4,6 +4,6 @@ import { AllergyModel } from "../models/AllergyModel"
 
 export default class AllergyController extends SubCategoryController<IAllergy> {
     public constructor() {
-        super(AllergyModel, "IAllergy")
+        super(AllergyModel, "Allergy")
     }
 }

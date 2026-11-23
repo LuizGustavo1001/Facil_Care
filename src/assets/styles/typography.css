@@ -1,0 +1,90 @@
+@font-face {
+    font-family: 'Figtree';
+    src: url('../fonts/Figtree-VariableFont_wght.ttf') format('woff2-variations');
+    font-weight: 300 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+:root {
+    /* =-=-=-=- PRIMAL TOKENS -=-=-=-= */
+
+    /* Font Families */
+    --font-default: 'Figtree', system-ui;
+
+    /* Font Scale */
+    --font-size-100: 0.75rem;    /* 12px */
+    --font-size-200: 0.8125rem;  /* 13px */
+    --font-size-300: 0.875rem;   /* 14px */
+    --font-size-400: 0.9375rem;  /* 15px */
+    --font-size-500: 1rem;       /* 16px */
+    --font-size-600: 1.125rem;   /* 18px */
+    --font-size-700: 1.25rem;    /* 20px */
+    --font-size-800: 1.5rem;     /* 24px */
+    --font-size-900: 1.75rem;    /* 28px */
+
+    /* Font Weight */
+    --normal-weight: 300;
+    --medium-weight: 450;
+    --bold-weight: 550;
+    --bolder-weight: 650;
+
+
+    /* =-=-=-=- SEMANTIC TOKENS -=-=-=-= */
+
+    /* Font Size */
+    --font-heading-1: var(--font-size-700);
+    --font-heading-2: var(--font-size-500);
+    --font-heading-3: var(--font-size-400);
+
+    --font-body-lg: var(--font-size-500);
+    --font-body-md: var(--font-size-400);
+    --font-body-sm: var(--font-size-300);
+
+    --font-label-lg: var(--font-size-400);
+    --font-label-md: var(--font-size-300);
+    --font-label-sm: var(--font-size-200);
+
+    --font-caption: var(--font-size-100);
+
+    --font-button-title: var(--font-size-400);
+    --font-button-description: var(--font-size-300);
+    --font-input: var(--font-size-400);
+
+    --font-error: var(--font-size-300);
+
+    @media(min-width: 768px) {
+        --font-heading-1: var(--font-size-800);
+        --font-heading-2: var(--font-size-700);
+        --font-heading-3: var(--font-size-600);
+
+        --font-body-lg: var(--font-size-600);
+        --font-body-md: var(--font-size-500);
+        --font-body-sm: var(--font-size-400);
+
+        --font-label-lg: var(--font-size-500);
+        --font-label-md: var(--font-size-400);
+        --font-label-sm: var(--font-size-300);
+
+        --font-caption: var(--font-size-200);
+
+        --font-button-title: var(--font-size-600);
+        --font-button-description: var(--font-size-400);
+        --font-input: var(--font-size-500);
+
+        --font-error: var(--font-size-400);
+    }
+}
+
+.normal-weight {
+    font-weight: var(--normal-weight);
+}
+.medium-weight {
+    font-weight: var(--medium-weight);
+}
+.bold-weight {
+    font-weight: var(--bold-weight);
+}
+.bolder-weight {
+    font-weight: var(--bolder-weight);
+}

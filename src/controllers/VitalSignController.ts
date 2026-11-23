@@ -1,11 +1,11 @@
 import PatientRecordController from "./PatientRecordController"
 import type { IVitalSign } from "../interfaces/IVitalSign"
 import { VitalSignModel } from "../models/VitalSignModel"
-import {type ControllerResult, fallbackReturn} from "./settings"
+import { type ControllerResult, fallbackReturn } from "./settings"
 import { VITAL_SIGNS_PAGES } from "../constants/sysPages"
 import type { VitalSignType } from "../types/sysPages"
 
-const codeLabel: string = "IVitalSign"
+const codeLabel: string = "VitalSign"
 
 export default class VitalSignController extends PatientRecordController<IVitalSign> {
     public constructor() {

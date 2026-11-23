@@ -5,7 +5,7 @@ import {type ControllerResult, fallbackReturn} from "./settings"
 
 export default class MedicineController extends SubCategoryController<IMedicine, MedicineModel> {
     public constructor() {
-        super(MedicineModel, "IMedicine")
+        super(MedicineModel, "Medicine")
     }
 
     /**

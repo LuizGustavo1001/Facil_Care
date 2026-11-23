@@ -4,6 +4,6 @@ import { EmergencyContactModel } from "../models/EmergencyContactModel"
 
 export default class EmergencyContactController extends SubCategoryController<IEmergencyContact> {
     public constructor() {
-        super(EmergencyContactModel, "IEmergencyContact")
+        super(EmergencyContactModel, "EmergencyContact")
     }
 }
