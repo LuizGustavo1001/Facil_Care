@@ -4,6 +4,6 @@ import { CaregiverModel } from "../models/CaregiverModel"
 
 export default class CaregiverController extends SubCategoryController<ICaregiver> {
     public constructor() {
-        super(CaregiverModel, "ICaregiver")
+        super(CaregiverModel, "Caregiver")
     }
 }

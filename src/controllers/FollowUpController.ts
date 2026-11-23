@@ -5,7 +5,7 @@ import type { IFollowUp } from "../interfaces/IFollowUp"
 import { FollowUpModel } from "../models/FollowUpModel"
 import type { FollowUpType } from "../types/sysPages"
 
-const codeLabel: string = "IFollowUp"
+const codeLabel: string = "FollowUp"
 
 export default class FollowUpController extends PatientRecordController<IFollowUp> {
     public constructor() {

@@ -4,6 +4,6 @@ import { DoctorModel } from "../models/DoctorModel"
 
 export default class DoctorController extends SubCategoryController<IDoctor> {
     public constructor() {
-        super(DoctorModel, "IDoctor")
+        super(DoctorModel, "Doctor")
     }
 }

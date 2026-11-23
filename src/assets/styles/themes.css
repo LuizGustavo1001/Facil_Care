@@ -1,0 +1,132 @@
+/* 1. LIGHT MODE */
+body {
+    color-scheme: light;
+
+    /* Text Color */
+    --color-text-primary: var(--gray-700);
+    --color-text-primary-muted: var(--gray-500);
+    --color-text-primary-subtle: var(--gray-600);
+
+    --color-text-inverse: var(--gray-100);
+    --color-text-inverse-muted: var(--gray-300);
+    --color-text-inverse-subtle: var(--gray-200);
+
+    --color-text-brand: var(--blue-500);
+    --color-text-brand-subtle: var(--blue-400);
+
+    --color-text-red: var(--red-700);
+    --color-text-yellow: var(--yellow-700);
+    --color-text-green: var(--green-700);
+    --color-text-orange: var(--orange-700);
+    --color-text-blue: var(--blue-700);
+    --color-text-purple: var(--purple-700);
+
+    /* Background Color */
+    --color-bg-primary: var(--gray-100);
+    --color-bg-subtle: var(--white);
+    --color-bg-hover: var(--gray-300);
+
+    --color-bg-brand: var(--blue-700);
+    --color-bg-brand-hover: var(--blue-600);
+
+    --color-bg-red: var(--red-100);
+    --color-bg-red-hover: var(--red-300);
+    --color-bg-yellow: var(--yellow-100);
+    --color-bg-green: var(--green-100);
+    --color-bg-orange: var(--orange-100);
+    --color-bg-blue: var(--blue-100);
+    --color-bg-purple: var(--purple-100);
+
+    /* Border Color */
+    --color-border-default: var(--gray-400);
+    --color-border-default-subtle: var(--gray-300);
+    --color-border-brand: var(--blue-200);
+    --color-border-brand-alt: var(--blue-400);
+}
+
+
+/* 2. DARK MODE */
+body.dark {
+    color-scheme: dark;
+
+    /* Text Color */
+    --color-text-primary: var(--gray-100);
+    --color-text-primary-muted: var(--gray-400);
+    --color-text-primary-subtle: var(--gray-200);
+
+    --color-text-inverse: var(--gray-900);
+    --color-text-inverse-muted: var(--gray-700);
+    --color-text-inverse-subtle: var(--gray-800);
+
+    --color-text-brand: var(--blue-100);
+    --color-text-brand-subtle: var(--blue-200);
+
+    --color-text-red: var(--red-100);
+    --color-text-yellow: var(--yellow-100);
+    --color-text-green: var(--green-100);
+    --color-text-orange: var(--orange-100);
+    --color-text-blue: var(--blue-100);
+    --color-text-purple: var(--purple-100);
+
+    /* Background Color */
+    --color-bg-primary: var(--gray-900);
+    --color-bg-subtle: var(--gray-800);
+    --color-bg-hover: var(--gray-600);
+
+    --color-bg-brand: var(--blue-400);
+    --color-bg-brand-hover: var(--blue-100);
+
+    --color-bg-red: var(--red-500);
+    --color-bg-red-hover: var(--red-700);
+    --color-bg-yellow: var(--yellow-500);
+    --color-bg-green: var(--green-500);
+    --color-bg-orange: var(--orange-500);
+    --color-bg-blue: var(--blue-500);
+    --color-bg-purple: var(--purple-500);
+
+    /* Border Color */
+    --color-border-default: var(--gray-700);
+    --color-border-default-subtle: var(--gray-900);
+    --color-border-brand: var(--blue-500);
+    --color-border-brand-alt: var(--blue-400);
+
+    /* Shadow */
+    --color-shadow-subtle: var(--alpha-black-10);
+    --color-shadow-default: var(--alpha-black-20);
+    --color-shadow-strong: var(--alpha-black-30);
+}
+
+/* 3. HIGH CONTRAST */
+body.highContrast {
+    color-scheme: only;
+
+    /* Text Color */
+    --color-text-primary: var(--white);
+    --color-text-primary-muted: var(--white);
+    --color-text-primary-subtle: var(--gray-100);
+
+    --color-text-inverse: var(--black);
+    --color-text-inverse-muted: var(--black);
+    --color-text-inverse-subtle: var(--black);
+
+    --color-text-brand: var(--yellow-500-alt);
+    --color-text-brand-subtle: var(--yellow-500-alt);
+
+    /* Background Color */
+    --color-bg-primary: var(--black);
+    --color-bg-subtle: #1c1c1c;
+    --color-bg-hover: var(--black);
+
+    --color-bg-brand: var(--yellow-500-alt);
+    --color-bg-brand-hover: var(--yellow-500-alt);
+
+    /* Border Color */
+    --color-border-default: var(--yellow-500);
+    --color-border-default-subtle: var(--yellow-500);
+    --color-border-brand: var(--yellow-500);
+
+    /* Shadow (Removed) */
+    --color-shadow-subtle: none;
+    --color-shadow-default: none;
+    --color-shadow-strong: none;
+}
