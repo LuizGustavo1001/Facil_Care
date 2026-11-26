@@ -43,16 +43,15 @@
       </section>
 
       <!-- Item Registred Successfully Section -->
-      <section v-else class=" main-section center text-center align-center gap-15" >
-        <Icon :icon="icons['user-smile-fill']" size="50px" padding="sm" :bgColor="BUTTON_COLORS.GREEN" style="border-radius: var(--radius-lg)" />
-
+      <section v-else class="main-section center text-center align-center gap-15" >
+        <ShapedBgIcon :icon="icons['user-smile-line']" size="50px" :color="BUTTON_COLORS.GREEN" />
         <p>{{ successMessage }}!</p>
 
         <ActionButton
-            tag="button"
+            :tag="BUTTON_TAGS.BUTTON"
             @click="navigation.handleReturn"
+            :padding="BUTTON_PADDING.LARGE"
             :title="utils.getTranslate(`utils.back`)"
-            padding="lg"
         />
       </section>
 
@@ -71,13 +70,13 @@
 
 <script setup lang="ts">
   import { computed, onMounted, ref } from "vue"
-  import { icons } from "../assets/icons/icons.js"
+  import { icons } from "../assets/icons/icons"
   import { formTemplates } from "../locales/projectConfig"
 
   import { PAGES } from "../constants/sysPages"
   import { FORM_TYPES } from "../constants/components/appForms"
   import { VITAL_SIGNS_PAGES, FOLLOW_UPS_PAGES } from "../constants/sysPages"
-  import { BUTTON_COLORS } from "../constants/components/appButtons"
+  import { BUTTON_COLORS, BUTTON_PADDING, BUTTON_TAGS } from "../constants/components/appButtons"
 
   import type { WarningCode } from "../types/components/snackbar"
   import type { FollowUpType, VitalSignType } from "../types/sysPages"
@@ -105,7 +104,7 @@
   import AppFooter from "../components/layout/AppFooter.vue"
   import Snackbar from "../components/feedback/Snackbar.vue"
   import ActionButton from "../components/buttons/ActionButton.vue"
-  import Icon from "../components/icons/Icon.vue"
+  import ShapedBgIcon from "../components/icons/ShapedBgIcon.vue"
 
   // TYPES & INTERFACES
   type RegisterResult =

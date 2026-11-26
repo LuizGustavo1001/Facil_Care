@@ -56,7 +56,7 @@
 
   import WeeklyMedicineAdministrationController from "../controllers/WeeklyMedicineAdministrationController"
 
-  import type { FormattedMedicine } from "../interfaces/IMedicine"
+  import type { IFormattedMedicine } from "../interfaces/IMedicine"
 
   import type { WarningCode } from "../types/components/snackbar"
 
@@ -81,12 +81,12 @@
   const weeklyAdministrationController = new WeeklyMedicineAdministrationController()
 
   // OBJECTS
-  const dailyMedicines = ref<FormattedMedicine[]>([])
+  const dailyMedicines = ref<IFormattedMedicine[]>([])
 
   // FUNCTIONS
   const loadDailyMedicines = async () => {
     try {
-      dailyMedicines.value = await weeklyAdministrationController.loadDailyMedicinesByDay(selectedDay.value) as FormattedMedicine[]
+      dailyMedicines.value = await weeklyAdministrationController.loadDailyMedicinesByDay(selectedDay.value) as IFormattedMedicine[]
     } catch(err) {
       console.error("Error loading daily medicines:", err)
 

@@ -18,8 +18,6 @@
   .icon-btn {
     display: inline-flex;
 
-    height: fit-content;
-
     border-radius: var(--radius-md);
     border: none;
 
@@ -111,22 +109,26 @@
   // TYPES & INTERFACES
   interface IconButtonProps {
     tag?: ButtonTag
+    variant?: IconBtnVariant
     icon: string
+
     to?: string
     target?: string
+
     size?: string
     padding?: PaddingSize
-    variant?: IconBtnVariant
   }
 
   // PROPS DEFAULT VALUES
   const props = withDefaults(defineProps<IconButtonProps>(), {
     tag: BUTTON_TAGS.BUTTON,
+    variant: ICON_BTN_VARIANTS.BRAND,
+
     to: "#",
     target: "",
+
     size: "30px",
-    padding: PADDING_SIZE.EXTRA_SMALL_1,
-    variant: ICON_BTN_VARIANTS.BRAND
+    padding: PADDING_SIZE.EXTRA_SMALL_1
   })
 
   // COMPUTED PROPERTIES

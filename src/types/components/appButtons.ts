@@ -1,6 +1,7 @@
 import {
     ACTION_BUTTON_COLORFUL_VARIANTS,
     ACTION_BUTTON_VARIANTS,
+    BUTTON_PADDING,
     CHIPS_VARIANTS,
     ICON_BTN_VARIANTS
 } from "../../constants/components/appButtons"
@@ -13,3 +14,4 @@ export type ChipsVariant = typeof CHIPS_VARIANTS[keyof typeof CHIPS_VARIANTS]
 
 export type ButtonColor = typeof BUTTON_COLORS[keyof typeof BUTTON_COLORS]
 export type ButtonTag = typeof BUTTON_TAGS[keyof typeof BUTTON_TAGS]
+export type ButtonPadding = typeof BUTTON_PADDING[keyof typeof BUTTON_PADDING]

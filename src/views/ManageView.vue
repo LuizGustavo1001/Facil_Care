@@ -58,11 +58,9 @@
                   :title="item.title"
                   :description="item.description"
                   :variant="ACTION_BUTTON_VARIANTS.SUBTLE"
-                  :padding="PADDING_SIZE.MEDIUM"
+                  :borderRadius="BORDER_RADIUS.MEDIUM"
                   class="width-full"
                   @click.stop="handleButtonAction(item, $event)"
-                  :hasBorderRadius="false"
-                  style="border-radius: var(--radius-xs)"
               />
 
               <!-- Delete Registry Icon -->
@@ -91,13 +89,17 @@
 
 <script setup lang="ts">
   import { computed, ref, watch } from "vue"
-  import { icons } from "../assets/icons/icons.js"
+  import { icons } from "../assets/icons/icons"
   import { formTemplates } from "../locales/projectConfig"
 
   import { MANAGE_PAGES, PAGES } from "../constants/sysPages"
   import { FORM_TYPES } from "../constants/components/appForms"
-  import { ACTION_BUTTON_VARIANTS, BUTTON_TAGS, ICON_BTN_VARIANTS } from "../constants/components/appButtons"
-  import { PADDING_SIZE } from "../constants/spacing"
+  import {
+    ACTION_BUTTON_VARIANTS,
+    BUTTON_TAGS,
+    ICON_BTN_VARIANTS
+  } from "../constants/components/appButtons"
+  import { BORDER_RADIUS } from "../constants/spacing"
 
   import type { WarningCode } from "../types/components/snackbar"
   import type { FormValues } from "../types/components/appForm"
@@ -347,7 +349,7 @@
     return utils.getTranslate(key)
   }
 
-  // Opens the confirm popup to delete an item
+  // Opens the confirmation popup to delete an item
   const handleDelete = (item: FormattedItem): void => {
     const title = t(`confirmPopupTemplates.deleteConfirm.title`, { item: item.title }) + "?"
     confirmPopup.open(title, null, () => handleDeleteConfirmed(item))

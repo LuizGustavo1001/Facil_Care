@@ -45,10 +45,11 @@
           tag="button"
           variant="subtle"
           :description="t(`utils.addSchedule`)"
-          padding="xs"
+          :padding="BUTTON_PADDING.MEDIUM"
+          :borderRadius="BORDER_RADIUS.FULL"
           type="button"
-          class="add-time-btn"
-          style="width: fit-content; align-self: flex-end"
+          class="add-time-btn width-fit"
+          style="align-self: flex-end"
           @click.stop="addTime"
       />
     </div>
@@ -60,7 +61,9 @@
 <script setup lang="ts">
   import { computed } from "vue"
   import { icons } from "../../assets/icons/icons.js"
-  import { ICON_BTN_VARIANTS } from "../../constants/components/appButtons"
+
+  import { BUTTON_PADDING, ICON_BTN_VARIANTS } from "../../constants/components/appButtons"
+  import { BORDER_RADIUS } from "../../constants/spacing"
 
   import { useI18n } from "vue-i18n"
   import { useDate } from "../../composables/useDate"

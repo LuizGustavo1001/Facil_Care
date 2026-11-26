@@ -42,6 +42,10 @@
   }
 
   .week-day-button {
+    display: inline-flex;
+    align-content: center;
+    justify-content: center;
+
     width: 35px;
     height: 35px;
 

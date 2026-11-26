@@ -6,7 +6,7 @@
       :size="currentSize"
     />
 
-    <p class="text-center">{{ currentText }}</p>
+    <h3 class="text-center">{{ currentText }}</h3>
   </div>
 </template>
 
@@ -14,16 +14,11 @@
   .icon, p {
     color: var(--color-text-primary-muted);
   }
-
-  p {
-    font-size: var(--font-heading-3);
-    font-weight: var(--bolder-weight);
-  }
 </style>
 
 <script setup lang="ts">
   import { computed } from "vue"
-  import { icons } from "../../assets/icons/icons.js"
+  import { icons } from "../../assets/icons/icons"
   import { useUtils } from "../../composables/useUtils"
 
   import Icon from "../icons/Icon.vue"

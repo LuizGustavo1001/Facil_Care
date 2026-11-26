@@ -1,12 +1,12 @@
 <template>
   <component
     is="button"
-    class="chips flex gap-03 align-center cursor-pointer active-border "
+    class="chips flex gap-03 align-center cursor-pointer active-border bold-weight"
     :class="[
         variantClass,
         { active: props.isActive }
     ]"
-    :style="[utils.getPaddingStyle(props.padding)]"
+    :style="[props.padding]"
   >
     <Icon v-if="props.icon" :icon="props.icon" size="15px" />
     <span class="flex-grow-1">{{ props.label }}</span>
@@ -18,7 +18,6 @@
     text-wrap: nowrap;
 
     font-size: var(--font-body-sm);
-    font-weight: var(--bold-weight);
     border-radius: var(--radius-full);
     border: none;
 
@@ -31,19 +30,19 @@
   /* 1. wBorder */
   .chips.wBorder {
     background: transparent;
-    border: 1px solid var(--color-border-default);
+    border: 2px solid var(--color-border-default);
   }
   .chips.wBorder:hover,
   .chips.wBorder:focus {
     background: var(--color-bg-hover);
     border-color: transparent;
   }
-
   .chips.wBorder.active {
     background: var(--color-bg-blue);
     color: var(--color-text-blue);
     border-color: transparent;
   }
+
   /* 2. Transparent */
   .chips.transparent {
     background: transparent;
@@ -52,10 +51,10 @@
   .chips.transparent:focus {
     background: var(--color-bg-subtle);
   }
-
   .chips.transparent.active {
     background: var(--color-bg-hover);
   }
+
   /* 3. Subtle */
   .chips.subtle {
     background: var(--color-bg-subtle);
@@ -67,6 +66,7 @@
   .chips.subtle.active {
     background: var(--color-bg-hover);
   }
+
   /* 4. Primary */
   .chips.primary {
     background: var(--color-bg-primary);
@@ -78,6 +78,7 @@
   .chips.primary.active {
     background: var(--color-bg-hover);
   }
+
   /* 5. Brand */
   .chips.brand {
     background: var(--color-bg-brand);
@@ -87,7 +88,6 @@
   .chips.brand:focus {
     background: var(--color-bg-blue);
   }
-
   .chips.brand.active {
     background: var(--color-bg-brand-hover);
   }
@@ -95,32 +95,24 @@
 
 <script setup lang="ts">
   import { computed } from "vue"
-
-  import type { PaddingSize } from "../../types/spacing"
-  import type { ChipsVariant } from "../../types/components/appButtons"
-
-  import { PADDING_SIZE } from "../../constants/spacing"
-  import { CHIPS_VARIANTS } from "../../constants/components/appButtons"
-
-  import { useUtils } from "../../composables/useUtils"
-
+  import type { ButtonPadding, ChipsVariant } from "../../types/components/appButtons"
+  import { BUTTON_PADDING, CHIPS_VARIANTS } from "../../constants/components/appButtons"
   import Icon from "../icons/Icon.vue"
-
-  // COMPOSABLES
-  const utils = useUtils()
 
   // TYPES & INTERFACES
   interface Props {
     icon?: string
     label: string
+
     variant?: ChipsVariant
-    padding?: PaddingSize
+    padding?: ButtonPadding
+
     isActive: boolean
   }
 
   // PROPS DEFAULT VALUES
   const props = withDefaults(defineProps<Props>(), {
-    padding: PADDING_SIZE.EXTRA_SMALL_1,
+    padding: () => BUTTON_PADDING.SMALL,
     variant: CHIPS_VARIANTS.W_BORDER,
     isActive: false
   })

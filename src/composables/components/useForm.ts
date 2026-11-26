@@ -22,8 +22,8 @@ import type {
 import type { DynamicData, FormRecord, Converter, FormValues } from "../../types/components/appForm"
 import type { ButtonTag } from "../../types/components/appButtons"
 
-import { BUTTON_TAGS } from "../../constants/components/appButtons"
-import { PADDING_SIZE } from "../../constants/spacing"
+import { BUTTON_PADDING, BUTTON_TAGS } from "../../constants/components/appButtons"
+import { BORDER_RADIUS } from "../../constants/spacing"
 
 export function useForm(){
     const isSubmitting = ref<boolean>(false)
@@ -360,7 +360,8 @@ export function useForm(){
 
         return {
             title: title,
-            padding: PADDING_SIZE.MEDIUM,
+            padding: BUTTON_PADDING.MEDIUM,
+            borderRadius: BORDER_RADIUS.FULL,
             alignCenter: true,
             tag: btn.tag as ButtonTag ?? BUTTON_TAGS.BUTTON,
         }

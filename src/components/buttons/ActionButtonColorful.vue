@@ -5,12 +5,16 @@
       :to="isRouterLink ? to : undefined"
       :href="!isButton ? (to || undefined) : undefined"
       :target="!isButton ? parsedTarget : undefined"
-      :rel="!isButton && parsedTarget === '_blank' ? 'noopener noreferrer' : undefined"
+      :rel="
+        !isButton && parsedTarget === '_blank'
+            ? 'noopener noreferrer'
+            : undefined
+      "
       :class="[
           buttonServices.getColorVariant(props.color),
           variantClass
       ]"
-      class="action-btn-colorful flex justify-between gap-1 active-border"
+      class="action-btn-colorful flex justify-between gap-1 active-border cursor-pointer"
   >
     <span class="flex gap-05 align-center">
         <span v-if="leftIcon" class="left-icon-wrapper">
@@ -52,7 +56,6 @@
     border: 3px solid transparent;
 
     text-align: start;
-    cursor: pointer;
     transition: 0.2s ease-out;
   }
 
@@ -141,7 +144,7 @@
     background-color: var(--color-bg-purple);
     color: var(--color-text-purple);
   }
-  .action-btn-colorful.purple:hover{
+  .action-btn-colorful.purple:hover {
     border-color: var(--color-bg-purple);
   }
 </style>
@@ -162,14 +165,18 @@
   // TYPES & INTERFACES
   interface ActionButtonColorfulProps {
     tag?: ButtonTag
-    leftIcon?: string | null
-    leftIconSize?: string
-    rightIcon?: string | null
-    rightIconSize?: string
-    to?: string
-    target?: string
     variant?: ActionBtnColorfulVariant
     color?: ButtonColor
+
+    leftIcon?: string | null
+    leftIconSize?: string
+
+    rightIcon?: string | null
+    rightIconSize?: string
+
+    to?: string
+    target?: string
+
     title?: string | null
     description?: string | null
   }
@@ -177,14 +184,18 @@
   // PROPS DEFAULT VALUES
   const props = withDefaults(defineProps<ActionButtonColorfulProps>(), {
     tag: BUTTON_TAGS.BUTTON,
-    leftIcon: null,
-    leftIconSize: "23px",
-    rightIcon: null,
-    rightIconSize: "20px",
-    to: "#",
-    target: "",
     variant: ACTION_BUTTON_COLORFUL_VARIANTS.SUBTLE,
     color: BUTTON_COLORS.BLUE,
+
+    leftIcon: null,
+    leftIconSize: "23px",
+
+    rightIcon: null,
+    rightIconSize: "20px",
+
+    to: "#",
+    target: "",
+
     title: null,
     description: null
   })

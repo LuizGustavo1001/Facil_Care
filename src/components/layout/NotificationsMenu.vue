@@ -3,7 +3,7 @@
     <!-- Notifications Menu -->
     <div v-if="isOpen" class="notifications-menu absolute overflow-auto flex flex-column gap-1">
       <div class="notifications-header flex align-center justify-between">
-        <h1>{{ utils.getTranslate("notifications.title") }}</h1>
+        <h3>{{ utils.getTranslate("notifications.title") }}</h3>
 
         <!-- Mark Every INotification as Read Button -->
         <IconBtn
@@ -29,7 +29,7 @@
             <VerticalLine v-if="!notification.read" />
 
           <span class="notification-text flex flex-column">
-            <span class="title truncate-single">{{ notification.title }}</span>
+            <span class="title truncate-single bold-weight">{{ notification.title }}</span>
             <span class="description text-muted">{{ notification.description }}</span>
           </span>
           </button>
@@ -65,9 +65,6 @@
     border-bottom: 1px solid var(--color-border-default);
     padding-bottom: var(--spacing-2xs);
   }
-  .notifications-header h1 {
-    font-size: var(--font-heading-2);
-  }
 
   .notifications-list {
     max-height: 300px;
@@ -93,7 +90,6 @@
 
   .notification-text .title {
     font-size: var(--font-body-md);
-    font-weight: var(--bolder-weight);
     text-align: start;
   }
   .notification-text .description {
@@ -105,7 +101,7 @@
 
 <script setup lang="ts">
   import { computed, onMounted, ref } from "vue"
-  import { icons } from "../../assets/icons/icons.js"
+  import { icons } from "../../assets/icons/icons"
   import { useUtils } from "../../composables/useUtils"
 
   import NotificationController from "../../controllers/NotificationController"

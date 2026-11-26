@@ -1,8 +1,12 @@
 import { useI18n } from "vue-i18n"
-import type { PaddingSize } from "../types/spacing"
+import type {BorderType, PaddingSize} from "../types/spacing"
 import type { DayPeriod } from "../types/date"
+import type { ButtonColor } from "../types/components/appButtons"
+
 import { DAY_PERIODS } from "../constants/date"
 import { BUTTON_COLORS } from "../constants/components/appButtons"
+import { BORDER_RADIUS } from "../constants/spacing"
+
 import { useDate } from "./useDate"
 
 export function useUtils() {
@@ -18,7 +22,7 @@ export function useUtils() {
     }
 
     /**
-     * Returns if the page exists based in the translate options.
+     * Returns if the page exists based in the translation options.
      *
      * @param page - Desired page identifier.
      **/
@@ -39,7 +43,7 @@ export function useUtils() {
 
     /**
      * Returns the string that represents the `translationKey` localed by the current language.
-     * Returns an `empty string`, if the translationKey doesn't represents a key
+     * Returns an `empty string`, if the translationKey doesn't represent a key
      **/
     const getTranslate = (translationKey: string) => {
         return te(translationKey)
@@ -47,12 +51,8 @@ export function useUtils() {
             : ""
     }
 
-    const getPaddingStyle = (padding: PaddingSize): string => {
-        return `padding: var(--spacing-${padding})`
-    }
-
     // Returns the time badge color based at the current day period
-    const getBadgeColor = (schedule: string): string => {
+    const getBadgeColor = (schedule: string): ButtonColor => {
         const formattedTime = date.timeToDate(schedule) as Date
 
         const dayPeriod: DayPeriod = date.getDayPeriod(formattedTime)
@@ -75,5 +75,16 @@ export function useUtils() {
         return getTranslate(key)
     }
 
-    return { getPageTitle, pageExists, getOptionTranslate, getTranslate, getPaddingStyle, getBadgeColor, getRouteAdminLabel }
+    // Returns the CSS styles that represents the selected radius key
+    const getBorderRadius = (radiusKey: BorderType)=> {
+        return Object.values(BORDER_RADIUS).includes(radiusKey)
+            ? { borderRadius: `var(--radius-${radiusKey})` }
+            : {}
+    }
+
+    const getPaddingStyle = (padding: PaddingSize): string => {
+        return `padding: var(--spacing-${padding})`
+    }
+
+    return { getPageTitle, pageExists, getOptionTranslate, getTranslate, getBadgeColor, getRouteAdminLabel, getBorderRadius, getPaddingStyle }
 }

@@ -1,9 +1,9 @@
 <template>
-  <transition name="fade-bounce" mode="out-in">
+  <transition name="snackbar-transition" mode="out-in">
     <!-- Snackbar -->
     <div
         v-if="isActive"
-        class="snackbar flex gap-1 align-center justify-between cursor-pointer active-border fixed"
+        class="snackbar flex gap-1 align-center justify-between cursor-pointer active-border fixed tap-highlight"
         :class="props.type"
     >
     <span class="flex gap-05 align-center flex-grow-1">
@@ -43,6 +43,17 @@
     z-index: 12;
   }
 
+  .snackbar-transition-enter-active,
+  .snackbar-transition-leave-active {
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .snackbar-transition-enter-from,
+  .snackbar-transition-leave-to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(80%);
+  }
+
   /* VARIANTS */
   /* 1. Success */
   .snackbar.success {
@@ -70,7 +81,7 @@
 </style>
 
 <script setup lang="ts">
-  import { icons } from "../../assets/icons/icons.js"
+  import { icons } from "../../assets/icons/icons"
   import { SNACKBAR_TYPES } from "../../constants/components/appSnackbar"
   import type { SnackbarType } from "../../types/components/snackbar"
 

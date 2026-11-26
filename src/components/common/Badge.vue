@@ -1,8 +1,8 @@
 <template>
   <div
-      class="badge flex gap-05 align-center"
+      class="badge flex gap-05 align-center bold-weight"
       :class="[computedColor]"
-      :style="computedPadding"
+      :style="props.spacing"
   >
     <Icon v-if="props.icon" :icon="props.icon" class="flex-shrink" size="20px" />
     <p class="flex-grow-1">{{ props.text }}</p>
@@ -13,10 +13,10 @@
   .badge {
     border-radius: var(--radius-lg);
     font-size: var(--font-body-sm);
-    font-weight: var(--bold-weight);
   }
 
   /* VARIANTS */
+
   /* 1. Blue */
   .badge.blue {
     background: var(--color-bg-blue);
@@ -51,19 +51,15 @@
 
 <script setup lang="ts">
   import { computed } from "vue"
-  import { BUTTON_COLORS } from "../../constants/components/appButtons"
-  import { PADDING_SIZE } from "../../constants/spacing"
-
-  import type { ButtonColor } from "../../types/components/appButtons"
-  import type { PaddingSize } from "../../types/spacing"
-
+  import { BUTTON_COLORS, BUTTON_PADDING } from "../../constants/components/appButtons"
+  import type { ButtonColor, ButtonPadding } from "../../types/components/appButtons"
   import Icon from "../icons/Icon.vue"
 
   // TYPES & INTERFACES
   interface Props {
     text: string
-    color?: ButtonColor | string
-    spacing?: PaddingSize | string
+    color?: ButtonColor
+    spacing?: ButtonPadding
     icon?: string | null
   }
 
@@ -71,18 +67,16 @@
   const props = withDefaults(defineProps<Props>(), {
     text: "",
     color: BUTTON_COLORS.BLUE,
-    spacing: PADDING_SIZE.EXTRA_SMALL_2,
+    spacing: () => BUTTON_PADDING.EXTRA_SMALL,
     icon: null
   })
 
   // COMPUTED PROPERTIES
   const computedColor = computed(() => {
-    if(!Object.values(BUTTON_COLORS).includes(props.color as ButtonColor)) {
+    if(!Object.values(BUTTON_COLORS).includes(props.color)) {
       return BUTTON_COLORS.BLUE
     }
 
     return props.color
   })
-
-  const computedPadding = computed(() => `padding-block: var(--spacing-${props.spacing}); padding-inline: var(--spacing-xs)`)
 </script>

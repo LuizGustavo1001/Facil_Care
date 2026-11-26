@@ -17,7 +17,7 @@
           class="flex flex-column gap-05"
         >
           <!-- Category -->
-          <h2 class="category-title text-uppercase"> {{ getCategoryTitle(category.id) }} </h2>
+          <h3 class="category-title text-uppercase text-muted"> {{ getCategoryTitle(category.id) }} </h3>
 
           <div class="buttons-wrapper">
             <template
@@ -43,19 +43,14 @@
   </div>
 </template>
 
-<style scoped>
-  .category-title {
-    font-size: var(--font-body-md);
-    color: var(--color-text-primary-muted);
-  }
-</style>
+<style scoped></style>
 
 <script setup lang="ts">
   import { PAGES } from "../constants/sysPages"
   import { BUTTON_TAGS } from "../constants/components/appButtons"
   import { HEADER_TYPES } from "../constants/components/appHeader"
 
-  import { icons } from "../assets/icons/icons.js"
+  import { icons } from "../assets/icons/icons"
   import { mainNavigationBar, pages, servicesView } from "../locales/projectConfig"
 
   import { useUtils } from "../composables/useUtils"

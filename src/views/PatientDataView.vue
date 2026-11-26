@@ -26,7 +26,7 @@
           <Icon :icon="icons['emphatize-fill']" size="30px" />
 
           <div class="flex flex-column">
-            <h1>{{ patient.name }}</h1>
+            <h3>{{ patient.name }}</h3>
             <p>{{ age }} {{ utils.getTranslate("utils.years") }} • {{ utils.getOptionTranslate("bloodType", `${patient.bloodType}`) }}</p>
           </div>
         </div>
@@ -39,7 +39,7 @@
             :key="category.id"
             class="flex flex-column gap-05"
         >
-          <h2 class="category-title text-uppercase"> {{ getCategoryTitle(category.id) }} </h2>
+          <h3 class="category-title text-uppercase text-muted"> {{ getCategoryTitle(category.id) }} </h3>
 
           <menu class="lined-menu">
             <router-link
@@ -63,16 +63,14 @@
       <section class="main-section regular gap-1">
         <ActionButton
             v-if="patientDataView.delete"
-            tag="router"
+            :tag="BUTTON_TAGS.ROUTER"
             :to="`${patientDataView.delete.href}`"
             :leftIcon="patientDataView.delete.iconFill"
             :variant="ACTION_BUTTON_VARIANTS.DESTRUCTIVE"
             :title="utils.getTranslate(`utils.deleteAccount`)"
-            :padding="PADDING_SIZE.SMALL"
-            style="
-              width: fit-content;
-              align-self: flex-end;
-            "
+            :padding="BUTTON_PADDING.MEDIUM"
+            class="width-fit"
+            style=" align-self: flex-end;"
         />
       </section>
     </main>
@@ -82,11 +80,6 @@
 </template>
 
 <style scoped>
-  .category-title {
-    font-size: var(--font-heading-3);
-    color: var(--color-text-primary-muted);
-  }
-
   .patient-info {
     padding: var(--spacing-md);
     border-radius: var(--radius-sm);
@@ -95,9 +88,6 @@
     color: var(--color-text-inverse);
   }
 
-  .patient-info h1 {
-    font-size: var(--font-body-md);
-  }
   .patient-info p {
     font-size: var(--font-body-sm);
     font-weight: var(--bold-weight);
@@ -113,12 +103,11 @@
 
 <script setup lang="ts">
   import { computed, onMounted, ref } from "vue"
-  import { icons } from "../assets/icons/icons.js"
+  import { icons } from "../assets/icons/icons"
   import { mainNavigationBar, pages, patientDataView } from "../locales/projectConfig"
 
   import { PAGES } from "../constants/sysPages"
-  import { ACTION_BUTTON_VARIANTS } from "../constants/components/appButtons"
-  import { PADDING_SIZE } from "../constants/spacing"
+  import { ACTION_BUTTON_VARIANTS, BUTTON_PADDING, BUTTON_TAGS } from "../constants/components/appButtons"
   import { HEADER_TYPES } from "../constants/components/appHeader"
 
   import { useUtils } from "../composables/useUtils"

@@ -1,4 +1,4 @@
-import { icons } from "../assets/icons/icons.js"
+import { icons } from "../assets/icons/icons"
 
 import { THEME_PREFERENCES } from "../constants/sysThemes"
 import { LANGUAGES } from "../constants/sysLanguages"
@@ -64,8 +64,8 @@ export const pages = {
     },
     [PAGES.VITAL_SIGNS]: {
         id: PAGES.VITAL_SIGNS,
-        iconFill: icons['health-metric-fill'],
-        iconLine: icons['health-metric-line'],
+        iconFill: icons['vital-sign'],
+        iconLine: icons['vital-sign'],
         href: `/${PAGES.MONITORING}/${PAGES.VITAL_SIGNS}`,
         color: BUTTON_COLORS.RED
     },
@@ -204,8 +204,8 @@ export const pages = {
     },
     [PAGES.EMERGENCY_DATA]: {
         id: PAGES['EMERGENCY_DATA'],
-        iconFill: icons["first-aid-fill"],
-        iconLine: icons["first-aid-line"],
+        iconFill: icons["emergency-fill"],
+        iconLine: icons["emergency-line"],
         href: `/${PAGES['EMERGENCY_DATA']}`,
         color: BUTTON_COLORS.RED
     },
@@ -232,8 +232,8 @@ export const pages = {
     },
     [PAGES.USER_MANUAL]: {
         id: PAGES['USER_MANUAL'],
-        iconFill: icons['book-read-fill'],
-        iconLine: icons["book-read-line"],
+        iconFill: icons['health-book-fill'],
+        iconLine: icons["health-book-line"],
         href: `/${PAGES.USER_MANUAL}`,
         color: BUTTON_COLORS.BLUE
     },
@@ -434,7 +434,6 @@ export const emergencyDataView = {
 
         {
             id: "others",
-            icon: icons['health-metric-fill'],
             component: "alt",
             action: "internalLink",
 
@@ -1642,7 +1641,7 @@ export const footers = [
         buttons: [
             {
                 id: "primary",
-                leftIcon: icons["thermometer-fill"],
+                leftIcon: pages[PAGES.BODY_TEMPERATURE].iconFill,
                 link: `/register/${PAGES['BODY_TEMPERATURE']}`
             }
         ]
@@ -1652,7 +1651,7 @@ export const footers = [
         buttons: [
             {
                 id: "primary",
-                leftIcon: icons["blood-pressure-line"],
+                leftIcon: pages[PAGES.BLOOD_PRESSURE].iconFill,
                 link: `/register/${PAGES['BLOOD_PRESSURE']}`
             }
         ]
@@ -1662,7 +1661,7 @@ export const footers = [
         buttons: [
             {
                 id: "primary",
-                leftIcon: icons["oxygen-line"],
+                leftIcon: pages[PAGES.OXYGEN_SATURATION].iconFill,
                 link: `/register/${PAGES['OXYGEN_SATURATION']}`
             }
         ]
@@ -1672,7 +1671,7 @@ export const footers = [
         buttons: [
             {
                 id: "primary",
-                leftIcon: icons["glucose-line"],
+                leftIcon: pages[PAGES.BLOOD_GLUCOSE].iconFill,
                 link: `/register/${PAGES['BLOOD_GLUCOSE']}`
             }
         ]
@@ -1682,7 +1681,7 @@ export const footers = [
         buttons: [
             {
                 id: "primary",
-                leftIcon: icons["heart-pulse-fill"],
+                leftIcon: pages[PAGES.HEART_RATE].iconFill,
                 link: `/register/${PAGES['HEART_RATE']}`
             }
         ]
@@ -1693,7 +1692,7 @@ export const footers = [
         buttons: [
             {
                 id: "primary",
-                leftIcon: icons["user-smile-fill"],
+                leftIcon: pages[PAGES.MOOD].iconFill,
                 link: `/register/${PAGES['MOOD']}`
             }
         ]
@@ -1703,7 +1702,7 @@ export const footers = [
         buttons: [
             {
                 id: "primary",
-                leftIcon: icons["emotion-unhappy-fill"],
+                leftIcon: pages[PAGES.PAIN_LEVEL].iconFill,
                 link: `/register/${PAGES['PAIN_LEVEL']}`
             }
         ]
@@ -1713,7 +1712,7 @@ export const footers = [
         buttons: [
             {
                 id: "primary",
-                leftIcon: icons["rest-time-fill"],
+                leftIcon: pages[PAGES.SLEEP].iconFill,
                 link: `/register/${PAGES['SLEEP']}`
             }
         ]
@@ -1723,7 +1722,7 @@ export const footers = [
         buttons: [
             {
                 id: "primary",
-                leftIcon: icons["drop-fill"],
+                leftIcon: pages[PAGES.WATER_INTAKE].iconFill,
                 link: `/register/${PAGES['WATER_INTAKE']}`
             }
         ]
@@ -1733,7 +1732,7 @@ export const footers = [
         buttons: [
             {
                 id: "primary",
-                leftIcon: icons["restaurant"],
+                leftIcon: pages[PAGES.MEAL_ACCEPTANCE].iconFill,
                 link: `/register/${PAGES['MEAL_ACCEPTANCE']}`
             }
         ]
@@ -1743,7 +1742,7 @@ export const footers = [
         buttons: [
             {
                 id: "primary",
-                leftIcon: icons["weight-fill"],
+                leftIcon: pages[PAGES.WEIGHT].iconFill,
                 link: `/register/${PAGES['WEIGHT']}`
             }
         ]
@@ -1753,7 +1752,7 @@ export const footers = [
         buttons: [
             {
                 id: "primary",
-                leftIcon: icons["drop-fill"],
+                leftIcon: pages[PAGES.NECESSITIES].iconFill,
                 link: `/register/${PAGES['NECESSITIES']}`
             }
         ]
@@ -1764,7 +1763,7 @@ export const footers = [
         buttons: [
             {
                 id: "primary",
-                leftIcon: icons["medicine-bottle-fill"],
+                leftIcon: pages[PAGES.MEDICINES].iconFill,
                 link: `/register/${PAGES['MEDICINES']}`
             }
         ]
@@ -1774,7 +1773,7 @@ export const footers = [
         buttons: [
             {
                 id: "primary",
-                leftIcon: icons["virus-fill"],
+                leftIcon: pages[PAGES.ALLERGIES].iconFill,
                 link: `/register/${PAGES['ALLERGIES']}`
             }
         ]
@@ -1784,7 +1783,7 @@ export const footers = [
         buttons: [
             {
                 id: "primary",
-                leftIcon: icons["stethoscope-line"],
+                leftIcon: pages[PAGES.DOCTORS].iconFill,
                 link: `/register/${PAGES['DOCTORS']}`,
             }
         ]
@@ -1794,7 +1793,7 @@ export const footers = [
         buttons: [
             {
                 id: "primary",
-                leftIcon: icons["user-fill"],
+                leftIcon: pages[PAGES.CAREGIVERS].iconFill,
                 link: `/register/${PAGES['CAREGIVERS']}`
             }
         ]
@@ -1804,7 +1803,7 @@ export const footers = [
         buttons: [
             {
                 id: "primary",
-                leftIcon: icons['first-aid-fill'],
+                leftIcon: pages[PAGES.HEALTH_PLANS].iconFill,
                 link: `/register/${PAGES['HEALTH_PLANS']}`
             }
         ]
@@ -1814,7 +1813,7 @@ export const footers = [
         buttons: [
             {
                 id: "primary",
-                leftIcon: icons['contacts-fill'],
+                leftIcon: pages[PAGES.EMERGENCY_CONTACTS].iconFill,
                 link: `/register/${PAGES['EMERGENCY_CONTACTS']}`
             }
         ]
@@ -1845,34 +1844,10 @@ export const popupTypes = {
 >
 
 export const mainNavigationBar = {
-    [PAGES.HOME]: {
-        id: PAGES.HOME,
-        icon: icons["hospital-line"],
-        iconActive: icons["hospital-fill"],
-        href: "/",
-        hasText: true
-    },
-    [PAGES.SERVICES]: {
-        id: PAGES.SERVICES,
-        icon: icons["service-line"],
-        iconActive: icons["service-fill"],
-        href: "/services",
-        hasText: true
-    },
-    [PAGES.WEEK_SCHEDULE]: {
-        id: "weekSchedule",
-        icon: icons['calendar-schedule-line'],
-        iconActive: icons["calendar-schedule-fill"],
-        href: "/weekSchedule",
-        hasText: true
-    },
-    [PAGES.PATIENT_DATA]: {
-        id: PAGES.PATIENT_DATA,
-        icon: icons["user-line"],
-        iconActive: icons["user-fill"],
-        href: "/patientData",
-        hasText: true
-    }
+    [PAGES.HOME]: { ...pages[PAGES.HOME] },
+    [PAGES.SERVICES]: { ...pages[PAGES.SERVICES] },
+    [PAGES.WEEK_SCHEDULE]: { ...pages[PAGES.WEEK_SCHEDULE] },
+    [PAGES.PATIENT_DATA]: { ...pages[PAGES.PATIENT_DATA] }
 }
 
 export const socialMedias = {
@@ -1889,7 +1864,7 @@ export const aboutView = {
     social: [
         socialMedias['github']
     ],
-    version: "2.0.2"
+    version: "2.0.3"
 }
 
 export const weekScheculeView = {

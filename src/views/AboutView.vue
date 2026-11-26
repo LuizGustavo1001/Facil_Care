@@ -32,11 +32,11 @@
                   :to="item.href"
                   target="_blank"
                   :variant="ACTION_BUTTON_VARIANTS.PRIMARY"
+                  :borderRadius="BORDER_RADIUS.SMALL"
                   :title="item.name ?? ''"
                   :leftIcon="item.iconFill"
                   :rightIcon="icons['external-link']"
                   rightIconSize="20px"
-                  style="border-radius: var(--radius-sm)"
               />
             </li>
           </ul>
@@ -58,10 +58,6 @@
     padding: var(--spacing-md);
   }
 
-  .brand-text h1{
-    font-size: var(--font-heading-1);
-  }
-
   .credits p {
     font-size: var(--font-body-sm);
   }
@@ -70,8 +66,9 @@
 <script setup lang="ts">
   import { PAGES } from "../constants/sysPages"
   import { ACTION_BUTTON_VARIANTS, BUTTON_TAGS } from "../constants/components/appButtons"
+  import { BORDER_RADIUS } from "../constants/spacing"
 
-  import { icons } from "../assets/icons/icons.js"
+  import { icons } from "../assets/icons/icons"
   import { aboutView } from "../locales/projectConfig"
 
   import { useUtils } from "../composables/useUtils"

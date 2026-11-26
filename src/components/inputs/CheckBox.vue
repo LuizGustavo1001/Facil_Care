@@ -1,6 +1,6 @@
 <template>
   <input
-      class="check-box flex-shrink active-border"
+      class="check-box flex-shrink active-border tap-highlight"
       type="checkbox"
       :checked="props.modelValue"
       @change="handleChange"
@@ -21,7 +21,7 @@
     width: 23px;
     height: 23px;
 
-    border: 3px solid var(--color-border-default);
+    border: 2px solid var(--color-border-default);
     border-radius: var(--radius-xs);
 
     cursor: pointer;

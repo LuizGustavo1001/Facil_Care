@@ -21,18 +21,18 @@
 
       <!-- Patient Information -->
       <section class="home-patient-card flex flex-column gap-05">
-        <p class="home-patient-name">
+        <h1 class="home-patient-name">
           {{ utils.getTranslate(`utils.hello`) }},
           <span class="bolder-weight">{{ patient?.name ?? "" }}</span>!
-        </p>
+        </h1>
 
         <!-- Current Date -->
         <div class="home-patient-date">
           <Badge
-              class="bold-weight capitalize-words"
+              class="bold-weight capitalize-words width-fit"
               :text="date.getFullDate()"
               :icon="icons['time-fill']"
-              :spacing="PADDING_SIZE.EXTRA_SMALL_1"
+              :spacing="BUTTON_PADDING.SMALL"
           />
         </div>
       </section>
@@ -43,7 +43,7 @@
       <!-- Quick Access -->
       <section class="quick-access flex flex-column gap-05">
         <div class="section-title-container">
-          <h2 class="section-title text-uppercase text-muted bolder-weight">Acesso Rápido</h2>
+          <h2 class="section-title text-uppercase text-muted">Acesso Rápido</h2>
         </div>
 
         <div class="quick-access-list flex gap-15 overflow-scroll">
@@ -61,7 +61,7 @@
       <!-- Today's Medicine -->
       <section class="home-medicines flex flex-column gap-05 flex-grow-1">
         <div class="section-title-container">
-          <h2 class="section-title text-uppercase text-muted bolder-weight">{{ utils.getTranslate(`views.${PAGES.HOME}.todaysMedicines`) }}</h2>
+          <h2 class="section-title text-uppercase text-muted">{{ utils.getTranslate(`views.${PAGES.HOME}.todaysMedicines`) }}</h2>
         </div>
 
         <MedicineList :medicineList="medicines" />
@@ -74,13 +74,9 @@
         :to="pages[PAGES.MEDICINES].href"
         :rightIcon="icons['add']"
         :title="utils.getTranslate(`views.${PAGES.HOME}.newMedicine`)"
-        :padding="PADDING_SIZE.SMALL"
-        :align-center="true"
-        class="fixed add-new-medicine-button"
-        style="
-          align-self: flex-end;
-          width: fit-content;
-        "
+        :padding="BUTTON_PADDING.MEDIUM"
+        class="fixed add-new-medicine-button width-fit"
+        style="align-self: flex-end"
     />
 
     <NavigationBar :activeItem="mainNavigationBar[PAGES.HOME].id" />
@@ -107,18 +103,10 @@
         var(--spacing-md)
         64px;
   }
-  .home-patient-name {
-    font-size: var(--font-heading-1);
-    font-weight: var(--medium-weight);
-  }
-
-  .home-patient-date .badge {
-    width: fit-content;
-  }
 
   .home-content {
     z-index: 1;
-    gap: 32px;
+    gap: 16px;
     margin-top: -24px;
 
     width: 100%;
@@ -162,9 +150,8 @@
 
 <script setup lang="ts">
   import { computed, onMounted, ref } from "vue"
-  import { mainNavigationBar, pages } from "../locales/projectConfig"
-  import { homeView } from "../locales/projectConfig"
-  import { icons } from "../assets/icons/icons.js"
+  import { mainNavigationBar, pages, homeView } from "../locales/projectConfig"
+  import { icons } from "../assets/icons/icons"
 
   import { useSnackbar } from "../composables/components/useSnackbar"
   import { useUtils } from "../composables/useUtils"
@@ -174,11 +161,10 @@
   import WeeklyMedicineAdministrationController from "../controllers/WeeklyMedicineAdministrationController"
 
   import { PAGES } from "../constants/sysPages"
-  import { PADDING_SIZE } from "../constants/spacing"
   import { HEADER_TYPES, HEADER_VARIANTS } from "../constants/components/appHeader"
-  import { BUTTON_TAGS } from "../constants/components/appButtons"
+  import { BUTTON_PADDING, BUTTON_TAGS } from "../constants/components/appButtons"
 
-  import type { FormattedMedicine } from "../interfaces/IMedicine"
+  import type { IFormattedMedicine } from "../interfaces/IMedicine"
   import type { IPatient } from "../interfaces/IPatient"
 
   import type { WarningCode } from "../types/components/snackbar"
@@ -205,7 +191,7 @@
 
   // STATES
   const patient = ref<IPatient | null>(null)
-  const medicines = ref<FormattedMedicine[]>([])
+  const medicines = ref<IFormattedMedicine[]>([])
 
   // FUNCTIONS
   const getQuickAccessItemTitle = (itemId: string): string => {
@@ -215,7 +201,7 @@
 
   const loadDailyMedicines = async () => {
     try {
-      medicines.value = await weeklyAdministrationController.loadDailyMedicinesByDay(date.getDayNumber()) as FormattedMedicine[]
+      medicines.value = await weeklyAdministrationController.loadDailyMedicinesByDay(date.getDayNumber()) as IFormattedMedicine[]
     } catch(err) {
       console.error("Error loading daily medicines:", err)
 

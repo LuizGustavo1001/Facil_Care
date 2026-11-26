@@ -19,6 +19,15 @@ a {
     text-decoration: none;
 }
 
+button, a, .tap-highlight {
+    -webkit-tap-highlight-color: transparent;
+}
+button:active, a:active, .tap-highlight:active {
+    transform: scale(0.97);
+    background: var(--alpha-black-10);
+    transition: transform 0.1s ease, background-color 0.1s ease;
+}
+
 main {
     max-width: 1250px;
     margin-inline: auto;
@@ -29,9 +38,27 @@ ul {
     list-style: none;
 }
 
+h1, h2, h3, h4, h5, h6 {
+    font-weight: var(--bold-weight);
+}
+
+h1 {
+    font-size: var(--font-heading-1);
+}
+h2 {
+    font-size: var(--font-heading-2);
+}
+h3 {
+    font-size: var(--font-heading-3);
+}
+h4 {
+    font-size: var(--font-heading-4);
+}
+
 button, input, select, textarea {
     font-family: inherit;
 }
+
 
 /* MEDIA QUERIES */
 @media(max-width: 768px) {
@@ -40,40 +67,6 @@ button, input, select, textarea {
     }
 }
 
-/* TRANSITIONS */
-.fade-enter-active,
-.fade-leave-active{
-    transition: all 0.15s ease-out;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-    opacity: 0;
-}
-
-.fade-bounce-enter-active {
-    transition:
-            opacity 0.2s ease-out,
-            transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.fade-bounce-leave-active {
-    transition:
-            opacity 0.15s ease-in,
-            transform 0.2s ease-in;
-}
-
-.fade-bounce-enter-from,
-.fade-bounce-leave-to {
-    opacity: 0;
-    transform: scale(0.96);
-}
-
-.fade-bounce-enter-to,
-.fade-bounce-leave-from {
-    opacity: 1;
-    transform: scale(1);
-}
 
 /* ANIMATIONS */
 @keyframes spin {

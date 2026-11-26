@@ -42,3 +42,10 @@ export const BUTTON_TAGS = {
     BUTTON: "button",
     LINK: "a",
 } as const
+
+export const BUTTON_PADDING = {
+    EXTRA_SMALL: { paddingInline: `var(--spacing-xs)`, paddingBlock: `var(--spacing-2xs)` },
+    SMALL: { paddingInline: `var(--spacing-sm)`, paddingBlock: `var(--spacing-xs)` },
+    MEDIUM: { paddingInline: `var(--spacing-md)`, paddingBlock: `var(--spacing-sm)` },
+    LARGE: { paddingInline: `var(--spacing-lg)`, paddingBlock: `var(--spacing-md)` },
+} as const

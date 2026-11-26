@@ -8,7 +8,7 @@
           :tag="BUTTON_TAGS.ROUTER"
           to="/"
           :title="getFallbackBtnMessage()"
-          padding="lg"
+          :padding="BUTTON_PADDING.MEDIUM"
       />
     </div>
 
@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
   import { useUtils } from "../composables/useUtils"
-  import { BUTTON_TAGS } from "../constants/components/appButtons"
+  import { BUTTON_PADDING, BUTTON_TAGS } from "../constants/components/appButtons"
 
   import ActionButton from "../components/buttons/ActionButton.vue"
   import AppFooter from "../components/layout/AppFooter.vue"

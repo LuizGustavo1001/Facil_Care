@@ -3,7 +3,7 @@
     <!-- Regular Input -->
     <legend
         v-if="label"
-        class="input-label text-muted"
+        class="input-label text-muted bold-weight"
     >
       {{ label }}
     </legend>
@@ -23,7 +23,6 @@
 <style scoped>
   .input-label {
     font-size: var(--font-label-md);
-    font-weight: var(--bold-weight);
     padding-inline: var(--spacing-sm);
     margin-left: var(--spacing-sm);
   }

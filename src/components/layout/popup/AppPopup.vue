@@ -1,12 +1,10 @@
 <template>
-  <transition name="fade-bounce" mode="out-in">
+  <transition name="popup-fade" mode="out-in">
     <!-- App Popup Template -->
     <div
       v-if="isOpen"
       :ref="popupRef"
       class="popup fixed flex flex-column gap-1 overflow-auto"
-      role="dialog"
-      aria-modal="true"
     >
       <!-- Header -->
       <header
@@ -48,6 +46,17 @@
     background: var(--color-bg-primary);
 
     box-shadow: 0 0 10px 2px var(--color-shadow-subtle);
+  }
+
+  .popup-fade-enter-active,
+  .popup-fade-leave-active {
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .popup-fade-enter-from,
+  .popup-fade-leave-to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(80%);
   }
 </style>
 

@@ -6,21 +6,21 @@
         :key="item.id"
         :to="item.href"
         :class="[{ active: isItemActive(item.id) }]"
-        class="nav-item flex align-center"
+        class="nav-item flex align-center active-border tap-highlight"
     >
       <div class="wrapper flex align-center justify-center">
         <Icon
           :icon="
             isItemActive(item.id)
-                ? item.iconActive
-                : item.icon
+                ? item.iconFill
+                : item.iconLine
           "
           size="20px"
         />
       </div>
 
       <p
-          v-if="item?.hasText"
+          v-if="getItemTitle(item.id)"
           class="label bold-weight"
       >
         {{ getItemTitle(item.id) }}
@@ -52,7 +52,9 @@
   }
 
   .nav-item.active,
-  .nav-item:hover {
+  .nav-item:hover,
+  .nav-item:focus,
+  .nav-item:active {
     color: var(--color-text-brand);
   }
 
@@ -77,7 +79,9 @@
     }
 
     .nav-item.active .wrapper,
-    .nav-item:hover .wrapper {
+    .nav-item:hover .wrapper,
+    .nav-item:focus .wrapper,
+    .nav-item:active .wrapper {
       background-color: var(--color-bg-primary);
     }
   }
@@ -89,7 +93,7 @@
     }
 
     .nav-item {
-      padding: var(--spacing-sm);
+      padding: var(--spacing-sm) var(--spacing-md);
       flex-direction: row;
       gap: 0.5em;
 
@@ -97,7 +101,9 @@
     }
 
     .nav-item.active,
-    .nav-item:hover {
+    .nav-item:hover,
+    .nav-item:focus .wrapper,
+    .nav-item:active .wrapper  {
       background-color: var(--color-bg-primary);
     }
   }
@@ -105,10 +111,10 @@
   @media(min-width: 1024px) {
     .main-navigation-bar {
       left: 50%;
-      bottom: 1em;
+      bottom: 1.5em;
       transform: translateX(-50%);
 
-      padding: 0.4em;
+      padding: var(--spacing-xs);
       width: fit-content;
       gap: 0.3em;
 
@@ -124,6 +130,7 @@
   import { useUtils } from "../../composables/useUtils"
 
   import Icon from "../icons/Icon.vue"
+  import ActionButton from "../buttons/ActionButton.vue";
 
   // TYPES & INTERFACES
   interface Props { activeItem?: string | null }
