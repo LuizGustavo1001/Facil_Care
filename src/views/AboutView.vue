@@ -58,10 +58,6 @@
     padding: var(--spacing-md);
   }
 
-  .brand-text h1{
-    font-size: var(--font-heading-1);
-  }
-
   .credits p {
     font-size: var(--font-body-sm);
   }
@@ -71,7 +67,7 @@
   import { PAGES } from "../constants/sysPages"
   import { ACTION_BUTTON_VARIANTS, BUTTON_TAGS } from "../constants/components/appButtons"
 
-  import { icons } from "../assets/icons/icons.js"
+  import { icons } from "../assets/icons/icons"
   import { aboutView } from "../locales/projectConfig"
 
   import { useUtils } from "../composables/useUtils"

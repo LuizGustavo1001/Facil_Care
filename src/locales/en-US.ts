@@ -164,7 +164,7 @@ export default {
 
     views: {
         [PAGES.HOME]: {
-            todaysMedicines: "Today's Medicines",
+            todaysMedicines: "Daily Medicines",
             newMedicine: "New Medicine",
             quickAccess: {
                 [PAGES.VITAL_SIGNS]: {

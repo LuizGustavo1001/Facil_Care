@@ -19,6 +19,15 @@ a {
     text-decoration: none;
 }
 
+button, a {
+    -webkit-tap-highlight-color: transparent;
+}
+button:active, a:active {
+    transform: scale(0.97);
+    background: var(--alpha-black-10);
+    transition: transform 0.1s ease, background-color 0.1s ease;
+}
+
 main {
     max-width: 1250px;
     margin-inline: auto;
@@ -27,6 +36,23 @@ main {
 
 ul {
     list-style: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: var(--bold-weight);
+}
+
+h1 {
+    font-size: var(--font-heading-1);
+}
+h2 {
+    font-size: var(--font-heading-2);
+}
+h3 {
+    font-size: var(--font-heading-3);
+}
+h4 {
+    font-size: var(--font-heading-4);
 }
 
 button, input, select, textarea {

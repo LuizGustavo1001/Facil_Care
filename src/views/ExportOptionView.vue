@@ -21,7 +21,7 @@
           <div class="flex gap-03">
             <Icon :icon="icons['qr-code-fill']" size="25px" />
 
-            <h1 class="section-title">{{ getSubTypeTitle() }}</h1>
+            <h2 class="section-title">{{ getSubTypeTitle() }}</h2>
           </div>
 
           <p
@@ -168,7 +168,6 @@
     font-size: var(--font-caption);
     padding: var(--spacing-sm);
     border-radius: var(--radius-2xl);
-    font-weight: var(--bolder-weight);
   }
 
   .status-badge.waiting {

@@ -38,7 +38,7 @@
 
 <script setup lang="ts">
   import { computed } from "vue"
-  import { icons } from "../../assets/icons/icons.js"
+  import { icons } from "../../assets/icons/icons"
   import { footers } from "../../locales/projectConfig"
 
   import { PAGES } from "../../constants/sysPages"

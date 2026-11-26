@@ -73,7 +73,7 @@
   import type { Component } from "vue"
   import { computed, onMounted, ref } from "vue"
 
-  import { icons } from "../assets/icons/icons.js"
+  import { icons } from "../assets/icons/icons"
   import { emergencyDataView , formTemplates } from "../locales/projectConfig"
 
   import { useUtils } from "../composables/useUtils"

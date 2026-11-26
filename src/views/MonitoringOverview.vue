@@ -25,7 +25,7 @@
 
       <main class="main regular gap-2">
         <!-- Days Interval Filter -->
-        <ul class="filter-list flex align-center gap-05 overflow-auto">
+        <ul class="filter-list flex align-center gap-05 overflow-scroll">
           <li
               v-for="filter in charts.filters"
               :key="filter.id"
@@ -56,7 +56,7 @@
             <ul class="buttons-wrapper overflow-hidden">
               <li v-for="item in formattedData" :key="item.id" class="flex align-center gap-05">
                 <div class="item-info flex flex-column gap-03 flex-grow-1">
-                  <h2>{{ item.value }}</h2>
+                  <h3>{{ item.value }}</h3>
 
                   <template v-for="(text, index) in item.description" :key="index">
                     <p v-if="text" class="text-muted">{{ text }}</p>
@@ -94,39 +94,14 @@
     border-radius: var(--radius-xs);
   }
 
-  .item-info h2 {
-    font-size: var(--font-body-md);
-    font-weight: var(--bold-weight);
-  }
   .item-info p {
     font-size: var(--font-body-sm);
-    font-weight: var(--medium-weight);
-  }
-
-  .filter-list .filter-item {
-    padding: var(--spacing-xs);
-    min-width: fit-content;
-
-    border: 2px solid var(--color-border-default);
-
-    font-size: var(--font-body-sm);
-    font-weight: var(--medium-weight);
-    border-radius: var(--radius-xs);
-
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-  .filter-list .filter-item:hover,
-  .filter-list .filter-item:focus,
-  .filter-list .filter-item.active {
-    background: var(--color-bg-hover);
-    border-color: transparent;
   }
 </style>
 
 <script setup lang="ts">
   import { computed, ref, watch } from "vue"
-  import { icons } from "../assets/icons/icons.js"
+  import { icons } from "../assets/icons/icons"
   import { charts } from "../locales/projectConfig"
 
   import { useRoute } from "vue-router"

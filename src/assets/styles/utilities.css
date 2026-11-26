@@ -125,6 +125,12 @@
 }
 .overflow-scroll {
     overflow: scroll;
+
+    padding-block: 6px;
+    padding-inline: 4px;
+
+    margin-block: -6px;
+    margin-inline: -4px;
 }
 
 /* Buttons Wrapper */
@@ -151,7 +157,7 @@
 /* Inputs */
 .default-input-wrapper {
     border-radius: var(--radius-sm);
-    border: 3px solid var(--color-border-default);
+    border: 2px solid var(--color-border-default);
     outline: none;
 
     transition: all 0.2s ease;
@@ -202,7 +208,7 @@
 
 .active-border {
     outline-offset: 3px;
-    outline: transparent solid 3px;
+    outline: transparent solid 2px;
 }
 .active-border:active, .active-border:focus-within {
     outline-color: var(--color-border-brand-alt);

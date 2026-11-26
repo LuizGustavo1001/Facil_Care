@@ -151,9 +151,6 @@
     gap: 0.5em;
   }
 
-  .success-import p {
-    font-weight: var(--bold-weight);
-  }
   .success-import .icon-wrapper {
     background: var(--green-400);
     border-radius: var(--radius-xl);
@@ -162,7 +159,7 @@
 
 <script setup lang="ts">
   import { computed, onMounted, ref, watch } from "vue"
-  import { icons } from "../assets/icons/icons.js"
+  import { icons } from "../assets/icons/icons"
 
   import { PAGES } from "../constants/sysPages"
   import { BUTTON_COLORS, BUTTON_TAGS } from "../constants/components/appButtons"

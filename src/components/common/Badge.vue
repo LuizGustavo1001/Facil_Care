@@ -84,5 +84,5 @@
     return props.color
   })
 
-  const computedPadding = computed(() => `padding-block: var(--spacing-${props.spacing}); padding-inline: var(--spacing-xs)`)
+  const computedPadding = computed(() => `padding-block: var(--spacing-${props.spacing}); padding-inline: var(--spacing-sm)`)
 </script>

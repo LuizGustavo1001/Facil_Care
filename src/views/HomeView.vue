@@ -21,10 +21,10 @@
 
       <!-- Patient Information -->
       <section class="home-patient-card flex flex-column gap-05">
-        <p class="home-patient-name">
+        <h1 class="home-patient-name">
           {{ utils.getTranslate(`utils.hello`) }},
           <span class="bolder-weight">{{ patient?.name ?? "" }}</span>!
-        </p>
+        </h1>
 
         <!-- Current Date -->
         <div class="home-patient-date">
@@ -43,7 +43,7 @@
       <!-- Quick Access -->
       <section class="quick-access flex flex-column gap-05">
         <div class="section-title-container">
-          <h2 class="section-title text-uppercase text-muted bolder-weight">Acesso Rápido</h2>
+          <h2 class="section-title text-uppercase text-muted">Acesso Rápido</h2>
         </div>
 
         <div class="quick-access-list flex gap-15 overflow-scroll">
@@ -61,7 +61,7 @@
       <!-- Today's Medicine -->
       <section class="home-medicines flex flex-column gap-05 flex-grow-1">
         <div class="section-title-container">
-          <h2 class="section-title text-uppercase text-muted bolder-weight">{{ utils.getTranslate(`views.${PAGES.HOME}.todaysMedicines`) }}</h2>
+          <h2 class="section-title text-uppercase text-muted">{{ utils.getTranslate(`views.${PAGES.HOME}.todaysMedicines`) }}</h2>
         </div>
 
         <MedicineList :medicineList="medicines" />
@@ -74,7 +74,7 @@
         :to="pages[PAGES.MEDICINES].href"
         :rightIcon="icons['add']"
         :title="utils.getTranslate(`views.${PAGES.HOME}.newMedicine`)"
-        :padding="PADDING_SIZE.SMALL"
+        :padding="PADDING_SIZE.MEDIUM"
         :align-center="true"
         class="fixed add-new-medicine-button"
         style="
@@ -107,10 +107,7 @@
         var(--spacing-md)
         64px;
   }
-  .home-patient-name {
-    font-size: var(--font-heading-1);
-    font-weight: var(--medium-weight);
-  }
+
 
   .home-patient-date .badge {
     width: fit-content;
@@ -162,9 +159,8 @@
 
 <script setup lang="ts">
   import { computed, onMounted, ref } from "vue"
-  import { mainNavigationBar, pages } from "../locales/projectConfig"
-  import { homeView } from "../locales/projectConfig"
-  import { icons } from "../assets/icons/icons.js"
+  import { mainNavigationBar, pages, homeView } from "../locales/projectConfig"
+  import { icons } from "../assets/icons/icons"
 
   import { useSnackbar } from "../composables/components/useSnackbar"
   import { useUtils } from "../composables/useUtils"

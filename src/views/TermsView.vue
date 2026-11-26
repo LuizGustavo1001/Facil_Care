@@ -12,12 +12,12 @@
         >
           <div class="title flex align-center gap-03">
             <Icon v-if="category.icon" :icon="category.icon" size="25px" />
-            <h1>{{ utils.getTranslate(`views.${PAGES.TERMS}.categories.${category.id}.title`) }}</h1>
+            <h2>{{ utils.getTranslate(`views.${PAGES.TERMS}.categories.${category.id}.title`) }}</h2>
           </div>
 
           <ul class="content flex flex-column gap-03 overflow-hidden">
             <li v-for="(item, index) in tm(`views.${PAGES.TERMS}.categories.${category.id}.contents`)" :key="index" class="flex flex-column gap-03">
-              <h2>{{ item.title }}</h2>
+              <h3>{{ item.title }}</h3>
 
               <div class="flex flex-column gap-03">
                 <p
@@ -49,16 +49,6 @@
 </template>
 
 <style scoped>
-  .item h1 {
-    font-size: var(--font-heading-2);
-    font-weight: var(--bold-weight);
-  }
-
-  .item h2 {
-    font-size: var(--font-heading-3);
-    font-weight: var(--bold-weight);
-  }
-
   .item .description {
     font-size: var(--font-body-sm);
   }

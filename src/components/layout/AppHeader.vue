@@ -28,11 +28,11 @@
       </template>
 
       <!-- Page Title -->
-      <p class="title flex-grow-1 truncate-single">
+      <h3 class="title flex-grow-1 truncate-single">
         <slot>
           <strong>{{ props.title }}</strong>
         </slot>
-      </p>
+      </h3>
     </div>
 
     <!-- Notifications Menu -->
@@ -67,10 +67,6 @@
     z-index: 1;
   }
 
-  .app-header p {
-    font-size: var(--font-heading-3);
-  }
-
   /* VARIANTS */
   /* 1. Transparent */
   .app-header.transparent {
@@ -87,7 +83,7 @@
 
 <script setup lang="ts">
   import { computed, ref } from "vue"
-  import { icons } from "../../assets/icons/icons.js"
+  import { icons } from "../../assets/icons/icons"
 
   import { useNavigation } from "../../composables/useNavigation"
 

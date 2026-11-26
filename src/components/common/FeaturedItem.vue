@@ -6,7 +6,7 @@
       :href="!isButton ? (to || undefined) : undefined"
       :target="!isButton ? parsedTarget : undefined"
       :rel="!isButton && parsedTarget === '_blank' ? 'noopener noreferrer' : undefined"
-      class="featured-item flex flex-column gap-05 align-center cursor-pointer"
+      class="featured-item flex flex-column gap-03 align-center cursor-pointer active-border"
   >
     <Icon :icon="props.icon" :size="props.iconSize" padding="sm" />
 
@@ -19,6 +19,8 @@
     width: fit-content;
     transition: all 0.2s ease;
     color: inherit;
+
+    border-radius: var(--radius-sm);
   }
   .featured-item:hover,
   .featured-item:hover .icon {

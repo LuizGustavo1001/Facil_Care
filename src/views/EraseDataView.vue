@@ -33,7 +33,7 @@
         />
 
         <div class="section-title-container flex flex-column gap-05">
-          <h2 class="section-title">{{ utils.getTranslate(`views.eraseData.categories.erase.title`) }}</h2>
+          <h1 class="section-title">{{ utils.getTranslate(`views.eraseData.categories.erase.title`) }}</h1>
           <div class="section-description flex flex-column gap-03">
             <p v-for="(desc, index) in tm('views.eraseData.categories.erase.regularSubtitles')" :key="index" class="text-muted">
               {{ desc }}.
@@ -80,19 +80,11 @@
   </div>
 </template>
 
-<style scoped>
-  .success-reset p {
-    font-weight: var(--bold-weight);
-  }
-
-  .section-title-container .section-title {
-    font-size: var(--font-heading-1);
-  }
-</style>
+<style scoped></style>
 
 <script setup lang="ts">
   import { computed, ref } from "vue"
-  import { icons } from "../assets/icons/icons.js"
+  import { icons } from "../assets/icons/icons"
   import { pages } from "../locales/projectConfig"
 
   import { useI18n } from "vue-i18n"

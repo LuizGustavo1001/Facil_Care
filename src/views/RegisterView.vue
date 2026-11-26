@@ -71,7 +71,7 @@
 
 <script setup lang="ts">
   import { computed, onMounted, ref } from "vue"
-  import { icons } from "../assets/icons/icons.js"
+  import { icons } from "../assets/icons/icons"
   import { formTemplates } from "../locales/projectConfig"
 
   import { PAGES } from "../constants/sysPages"

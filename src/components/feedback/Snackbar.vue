@@ -70,7 +70,7 @@
 </style>
 
 <script setup lang="ts">
-  import { icons } from "../../assets/icons/icons.js"
+  import { icons } from "../../assets/icons/icons"
   import { SNACKBAR_TYPES } from "../../constants/components/appSnackbar"
   import type { SnackbarType } from "../../types/components/snackbar"
 
