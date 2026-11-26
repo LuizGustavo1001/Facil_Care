@@ -16,7 +16,11 @@
           </div>
 
           <ul class="content flex flex-column gap-03 overflow-hidden">
-            <li v-for="(item, index) in tm(`views.${PAGES.TERMS}.categories.${category.id}.contents`)" :key="index" class="flex flex-column gap-03">
+            <li
+                v-for="(item, index) in tm(`views.${PAGES.TERMS}.categories.${category.id}.contents`)"
+                :key="index"
+                class="flex flex-column"
+            >
               <h3>{{ item.title }}</h3>
 
               <div class="flex flex-column gap-03">
@@ -49,20 +53,15 @@
 </template>
 
 <style scoped>
-  .item .description {
-    font-size: var(--font-body-sm);
-  }
+  .item .description { font-size: var(--font-body-sm); }
 
-  .content {
-    border-radius: var(--radius-md);
-  }
+  .content { border-radius: var(--radius-md); }
 
   .content li {
     background: var(--color-bg-subtle);
     padding: var(--spacing-md);
     text-align: justify;
   }
-
 </style>
 
 <script setup lang="ts">

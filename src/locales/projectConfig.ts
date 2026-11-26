@@ -64,8 +64,8 @@ export const pages = {
     },
     [PAGES.VITAL_SIGNS]: {
         id: PAGES.VITAL_SIGNS,
-        iconFill: icons['health-metric-fill'],
-        iconLine: icons['health-metric-line'],
+        iconFill: icons['vital-sign'],
+        iconLine: icons['vital-sign'],
         href: `/${PAGES.MONITORING}/${PAGES.VITAL_SIGNS}`,
         color: BUTTON_COLORS.RED
     },
@@ -204,8 +204,8 @@ export const pages = {
     },
     [PAGES.EMERGENCY_DATA]: {
         id: PAGES['EMERGENCY_DATA'],
-        iconFill: icons["first-aid-fill"],
-        iconLine: icons["first-aid-line"],
+        iconFill: icons["emergency-fill"],
+        iconLine: icons["emergency-line"],
         href: `/${PAGES['EMERGENCY_DATA']}`,
         color: BUTTON_COLORS.RED
     },
@@ -434,7 +434,6 @@ export const emergencyDataView = {
 
         {
             id: "others",
-            icon: icons['health-metric-fill'],
             component: "alt",
             action: "internalLink",
 

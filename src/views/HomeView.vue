@@ -29,10 +29,10 @@
         <!-- Current Date -->
         <div class="home-patient-date">
           <Badge
-              class="bold-weight capitalize-words"
+              class="bold-weight capitalize-words width-fit"
               :text="date.getFullDate()"
               :icon="icons['time-fill']"
-              :spacing="PADDING_SIZE.EXTRA_SMALL_1"
+              :spacing="BUTTON_PADDING.SMALL"
           />
         </div>
       </section>
@@ -74,13 +74,9 @@
         :to="pages[PAGES.MEDICINES].href"
         :rightIcon="icons['add']"
         :title="utils.getTranslate(`views.${PAGES.HOME}.newMedicine`)"
-        :padding="PADDING_SIZE.MEDIUM"
-        :align-center="true"
-        class="fixed add-new-medicine-button"
-        style="
-          align-self: flex-end;
-          width: fit-content;
-        "
+        :padding="BUTTON_PADDING.MEDIUM"
+        class="fixed add-new-medicine-button width-fit"
+        style="align-self: flex-end"
     />
 
     <NavigationBar :activeItem="mainNavigationBar[PAGES.HOME].id" />
@@ -108,14 +104,9 @@
         64px;
   }
 
-
-  .home-patient-date .badge {
-    width: fit-content;
-  }
-
   .home-content {
     z-index: 1;
-    gap: 32px;
+    gap: 16px;
     margin-top: -24px;
 
     width: 100%;
@@ -170,11 +161,10 @@
   import WeeklyMedicineAdministrationController from "../controllers/WeeklyMedicineAdministrationController"
 
   import { PAGES } from "../constants/sysPages"
-  import { PADDING_SIZE } from "../constants/spacing"
   import { HEADER_TYPES, HEADER_VARIANTS } from "../constants/components/appHeader"
-  import { BUTTON_TAGS } from "../constants/components/appButtons"
+  import { BUTTON_PADDING, BUTTON_TAGS } from "../constants/components/appButtons"
 
-  import type { FormattedMedicine } from "../interfaces/IMedicine"
+  import type { IFormattedMedicine } from "../interfaces/IMedicine"
   import type { IPatient } from "../interfaces/IPatient"
 
   import type { WarningCode } from "../types/components/snackbar"
@@ -201,7 +191,7 @@
 
   // STATES
   const patient = ref<IPatient | null>(null)
-  const medicines = ref<FormattedMedicine[]>([])
+  const medicines = ref<IFormattedMedicine[]>([])
 
   // FUNCTIONS
   const getQuickAccessItemTitle = (itemId: string): string => {
@@ -211,7 +201,7 @@
 
   const loadDailyMedicines = async () => {
     try {
-      medicines.value = await weeklyAdministrationController.loadDailyMedicinesByDay(date.getDayNumber()) as FormattedMedicine[]
+      medicines.value = await weeklyAdministrationController.loadDailyMedicinesByDay(date.getDayNumber()) as IFormattedMedicine[]
     } catch(err) {
       console.error("Error loading daily medicines:", err)
 

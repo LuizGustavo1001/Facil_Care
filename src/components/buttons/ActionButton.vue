@@ -7,8 +7,11 @@
     :target="!isButton ? parsedTarget : undefined"
     :rel="!isButton && parsedTarget === '_blank' ? 'noopener noreferrer' : undefined"
     :class="[variantClass]"
-    :style="[utils.getPaddingStyle(props.padding), computedBorderRadius]"
-    class="action-btn flex justify-between align-center gap-03 active-border"
+    :style="[
+        props.padding,
+        utils.getBorderRadius(props.borderRadius)
+    ]"
+    class="action-btn flex justify-between align-center gap-03 active-border cursor-pointer"
   >
     <span class="flex align-center gap-05 width-full">
       <Icon
@@ -49,8 +52,6 @@
     text-align: v-bind(textAlign);
 
     border: none;
-
-    cursor: pointer;
     transition: 0.2s ease-out;
   }
 
@@ -122,16 +123,17 @@
 <script setup lang="ts">
   import { computed } from "vue"
 
-  import type { ActionBtnVariant, ButtonTag } from "../../types/components/appButtons"
-  import type { PaddingSize } from "../../types/spacing"
+  import type { ActionBtnVariant, ButtonPadding, ButtonTag } from "../../types/components/appButtons"
+  import type { BorderType } from "../../types/spacing"
 
-  import { ACTION_BUTTON_VARIANTS, BUTTON_TAGS } from "../../constants/components/appButtons"
-  import { PADDING_SIZE } from "../../constants/spacing"
+  import { ACTION_BUTTON_VARIANTS, BUTTON_PADDING, BUTTON_TAGS } from "../../constants/components/appButtons"
+  import { BORDER_RADIUS } from "../../constants/spacing"
 
-  import { useUtils } from "../../composables/useUtils"
   import { useButtons } from "../../composables/components/useButtons"
+  import { useUtils } from "../../composables/useUtils"
 
   import Icon from "../icons/Icon.vue"
+
 
   // COMPOSABLES
   const utils = useUtils()
@@ -140,16 +142,21 @@
   // TYPES & INTERFACES
   export interface ActionButtonProps {
     tag?: ButtonTag
+    variant?: ActionBtnVariant
+
     leftIcon?: string | null
     leftIconSize?: string
+
     rightIcon?: string | null
     rightIconSize?: string
+
     to?: string
     target?: string
-    padding?: PaddingSize
-    variant?: ActionBtnVariant
+
+    padding?: ButtonPadding
+    borderRadius?: BorderType
     alignCenter?: boolean
-    hasBorderRadius?: boolean
+
     title?: string | null
     description?: string | null
   }
@@ -157,16 +164,21 @@
   // PROPS DEFAULT VALUES
   const props = withDefaults(defineProps<ActionButtonProps>(), {
     tag: BUTTON_TAGS.LINK,
+    variant: ACTION_BUTTON_VARIANTS.BRAND,
+
     leftIcon: null,
     leftIconSize: '25px',
+
     rightIcon: null,
     rightIconSize: '25px',
+
     to: '#',
     target: "_self",
-    padding: PADDING_SIZE.EXTRA_SMALL_1,
-    variant: ACTION_BUTTON_VARIANTS.BRAND,
+
+    padding: () => BUTTON_PADDING.MEDIUM,
+    borderRadius: BORDER_RADIUS.FULL,
     alignCenter: false,
-    hasBorderRadius: true,
+
     title: null,
     description: null
   })
@@ -187,11 +199,5 @@
     return props.alignCenter
         ? 'center'
         : 'start'
-  })
-
-  const computedBorderRadius = computed<string>(() =>{
-    return props.hasBorderRadius
-        ? "border-radius: var(--radius-2xl)"
-        : ""
   })
 </script>

@@ -63,16 +63,14 @@
       <section class="main-section regular gap-1">
         <ActionButton
             v-if="patientDataView.delete"
-            tag="router"
+            :tag="BUTTON_TAGS.ROUTER"
             :to="`${patientDataView.delete.href}`"
             :leftIcon="patientDataView.delete.iconFill"
             :variant="ACTION_BUTTON_VARIANTS.DESTRUCTIVE"
             :title="utils.getTranslate(`utils.deleteAccount`)"
-            :padding="PADDING_SIZE.SMALL"
-            style="
-              width: fit-content;
-              align-self: flex-end;
-            "
+            :padding="BUTTON_PADDING.MEDIUM"
+            class="width-fit"
+            style=" align-self: flex-end;"
         />
       </section>
     </main>
@@ -89,7 +87,6 @@
 
     color: var(--color-text-inverse);
   }
-
 
   .patient-info p {
     font-size: var(--font-body-sm);
@@ -110,8 +107,7 @@
   import { mainNavigationBar, pages, patientDataView } from "../locales/projectConfig"
 
   import { PAGES } from "../constants/sysPages"
-  import { ACTION_BUTTON_VARIANTS } from "../constants/components/appButtons"
-  import { PADDING_SIZE } from "../constants/spacing"
+  import { ACTION_BUTTON_VARIANTS, BUTTON_PADDING, BUTTON_TAGS } from "../constants/components/appButtons"
   import { HEADER_TYPES } from "../constants/components/appHeader"
 
   import { useUtils } from "../composables/useUtils"

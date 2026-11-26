@@ -1,11 +1,23 @@
 <template>
   <!-- Rendering Views -->
     <routerView v-slot="{ Component }">
-      <transition name="fade" mode="out-in">
+      <transition name="page-transition" mode="out-in">
         <component :is="Component" />
       </transition>
     </routerView>
 </template>
+
+<style scoped>
+  .page-transition-enter-active,
+  .page-transition-leave-active {
+    transition: all 0.2s ease-out;
+  }
+
+  .page-transition-enter-from,
+  .page-transition-leave-to {
+    opacity: 0;
+  }
+</style>
 
 <script setup>
   import { RouterView } from 'vue-router'

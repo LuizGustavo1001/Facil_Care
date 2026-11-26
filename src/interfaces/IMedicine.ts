@@ -11,7 +11,7 @@ export interface IMedicine extends IPatientSubCategoryBase {
 }
 
 // IMedicine + IWeeklyMedicineAdministration
-export interface FormattedMedicine extends IMedicine {
+export interface IFormattedMedicine extends IMedicine {
     medicineId: number
     scheduledWeekDay: number
     scheduledTime: string

@@ -324,7 +324,7 @@
   }
 
   // DELETE
-  // Opens the confirm popup to delete an item
+  // Opens the confirmation popup to delete an item
   const handleDelete = (item: FormattedMonitoringItem): void => {
     const itemCategory = currentCategory.value === PAGES.VITAL_SIGNS
         ? utils.getTranslate("utils.vitalSign")

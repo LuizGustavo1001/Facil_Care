@@ -21,7 +21,6 @@
           <Badge
               :text="`${getActionLabel('importing', 'finding')}...`"
               :color="BUTTON_COLORS.YELLOW"
-              :spacing="PADDING_SIZE.EXTRA_SMALL_1"
           />
         </div>
 
@@ -31,18 +30,17 @@
           <Badge
               :text="`${getActionLabel('importing', 'receiving')}...`"
               :color="BUTTON_COLORS.BLUE"
-              :spacing="PADDING_SIZE.EXTRA_SMALL_1"
           />
         </div>
 
         <!-- Status: Done -->
         <div v-if="peerStatus === 'done'" class="status-box">
-          <Icon :icon="icons['user-smile-fill']" size="50px" :bgColor="BUTTON_COLORS.GREEN" padding="sm" style="border-radius: var(--radius-md)"  />
+          <ShapedBgIcon :icon="icons['user-smile-fill']" size="50px" :color="BUTTON_COLORS.GREEN" />
           <p>{{ getActionLabel('importing', 'done') }}!</p>
 
           <ActionButton
               :tag="BUTTON_TAGS.BUTTON"
-              :padding="PADDING_SIZE.LARGE"
+              :padding="BUTTON_PADDING.LARGE"
               :title="utils.getTranslate(`utils.back`)"
               @click="navigation.handleReturn"
           />
@@ -54,7 +52,7 @@
 
           <ActionButton
               :tag="BUTTON_TAGS.BUTTON"
-              :padding="PADDING_SIZE.LARGE"
+              :padding="BUTTON_PADDING.LARGE"
               :title="utils.getTranslate(`utils.back`)"
               @click="navigation.handleReturn"
           />
@@ -66,18 +64,13 @@
         <!-- Import Completed -->
         <template v-if="importDone">
           <div class="flex flex-column align-center gap-1">
-            <Icon
-                :icon="icons['user-smile-fill']"
-                size="50px"
-                :padding="PADDING_SIZE.SMALL"
-                :bgColor="BUTTON_COLORS.GREEN"
-                style="border-radius: var(--radius-md)"
-            />
+            <ShapedBgIcon :icon="icons['user-smile-fill']" size="50px" :color="BUTTON_COLORS.GREEN" />
+
             <p>{{ getActionLabel('importing', 'done')}}!</p>
 
             <ActionButton
                 :tag="BUTTON_TAGS.BUTTON"
-                :padding="PADDING_SIZE.LARGE"
+                :padding="BUTTON_PADDING.LARGE"
                 :title="utils.getTranslate(`utils.back`)"
                 @click="navigation.handleReturn"
             />
@@ -86,16 +79,10 @@
 
         <!-- Select Backup File Section -->
         <template v-else>
-          <Icon
-              :icon="icons['qr-scan-fill']"
-              size="40px"
-              :padding="PADDING_SIZE.SMALL"
-              :bgColor="BUTTON_COLORS.YELLOW"
-              style="border-radius: var(--radius-md)"
-          />
+          <ShapedBgIcon :icon="pages[PAGES.IMPORT].iconLine" size="50px" :color="BUTTON_COLORS.YELLOW" />
 
           <div class="section-title-container flex flex-column gap-05">
-            <h2 class="section-title">{{ getCategoryTitle('localFile').title }}</h2>
+            <h1>{{ getCategoryTitle('localFile').title }}</h1>
             <p class="section-description text-muted">{{ getCategoryTitle('localFile').subtitle }}.</p>
           </div>
 
@@ -111,7 +98,7 @@
           <!-- Trigger to File Input -->
           <ActionButton
               :tag="BUTTON_TAGS.BUTTON"
-              :padding="PADDING_SIZE.MEDIUM"
+              :padding="BUTTON_PADDING.LARGE"
               :title="isDexieImporting
                 ? getActionLabel('localFile', 'restoring')
                 : getActionLabel('localFile', 'selectFile')"
@@ -150,20 +137,15 @@
     align-items: center;
     gap: 0.5em;
   }
-
-  .success-import .icon-wrapper {
-    background: var(--green-400);
-    border-radius: var(--radius-xl);
-  }
 </style>
 
 <script setup lang="ts">
   import { computed, onMounted, ref, watch } from "vue"
   import { icons } from "../assets/icons/icons"
+  import { pages } from "../locales/projectConfig"
 
   import { PAGES } from "../constants/sysPages"
-  import { BUTTON_COLORS, BUTTON_TAGS } from "../constants/components/appButtons"
-  import { PADDING_SIZE } from "../constants/spacing"
+  import { BUTTON_COLORS, BUTTON_PADDING, BUTTON_TAGS } from "../constants/components/appButtons"
 
   import { useRoute } from "vue-router"
   import { useUtils } from "../composables/useUtils"
@@ -182,6 +164,7 @@
   import Icon from "../components/icons/Icon.vue"
   import ActionButton from "../components/buttons/ActionButton.vue"
   import Badge from "../components/common/Badge.vue"
+  import ShapedBgIcon from "../components/icons/ShapedBgIcon.vue"
 
   // COMPOSABLES
   const route = useRoute()

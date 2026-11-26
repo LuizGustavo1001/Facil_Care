@@ -14,7 +14,7 @@
         <IconBtn
             :icon="icons['chevron-left']"
             size="25px"
-            variant="subtle"
+            :variant="ICON_BTN_VARIANTS.SUBTLE"
             @click="navigation.handleReturn"
         />
       </template>

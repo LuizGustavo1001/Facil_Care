@@ -7,10 +7,10 @@
             tag="router"
             :to="btn.link"
             :leftIcon="btn.leftIcon"
-            :padding="PADDING_SIZE.MEDIUM"
+            :padding="BUTTON_PADDING.MEDIUM"
+            :borderRadius="BORDER_RADIUS.FULL"
             :rightIcon="btn?.rightIcon || icons['chevron-right']"
             :title="utils.getTranslate(`footer.${props.page}.buttons.${btn.id}.title`)"
-            style="border-radius: var(--radius-2xl)"
         />
       </template>
     </div>
@@ -42,7 +42,8 @@
   import { footers } from "../../locales/projectConfig"
 
   import { PAGES } from "../../constants/sysPages"
-  import { PADDING_SIZE } from "../../constants/spacing"
+  import { BORDER_RADIUS } from "../../constants/spacing"
+  import { BUTTON_PADDING } from "../../constants/components/appButtons"
 
   import { useUtils } from "../../composables/useUtils"
 

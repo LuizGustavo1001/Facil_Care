@@ -1,7 +1,7 @@
 <template>
   <i
       class="icon-wrapper icon"
-      :style="[props.padding !== 'none' ? `padding: var(--spacing-${props.padding})` : '']"
+      :style="[utils.getPaddingStyle(props.padding as PaddingSize)]"
       v-html="props.icon"
       :class="[computedBgColor]"
   />
@@ -57,6 +57,10 @@
 
   import type { PaddingSize } from "../../types/spacing"
   import type { ButtonColor } from "../../types/components/appButtons"
+  import { useUtils } from "../../composables/useUtils"
+
+  // COMPOSABLES
+  const utils = useUtils()
 
   // TYPES & INTERFACES
   const ICON_BG_COLORS = {

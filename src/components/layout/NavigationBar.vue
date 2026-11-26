@@ -6,7 +6,7 @@
         :key="item.id"
         :to="item.href"
         :class="[{ active: isItemActive(item.id) }]"
-        class="nav-item flex align-center active-border"
+        class="nav-item flex align-center active-border tap-highlight"
     >
       <div class="wrapper flex align-center justify-center">
         <Icon
@@ -130,6 +130,7 @@
   import { useUtils } from "../../composables/useUtils"
 
   import Icon from "../icons/Icon.vue"
+  import ActionButton from "../buttons/ActionButton.vue";
 
   // TYPES & INTERFACES
   interface Props { activeItem?: string | null }

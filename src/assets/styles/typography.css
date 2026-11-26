@@ -1,6 +1,6 @@
 @font-face {
-    font-family: 'Xmind';
-    src: url('../fonts/Xmind-VariableFont_wght.ttf') format('woff2-variations');
+    font-family: 'Instrument Sans';
+    src: url('../fonts/InstrumentSans-VariableFont_wdth,wght.ttf') format('woff2-variations');
     font-weight: 300 900;
     font-style: normal;
     font-display: swap;
@@ -10,7 +10,7 @@
     /* =-=-=-=- PRIMAL TOKENS -=-=-=-= */
 
     /* Font Families */
-    --font-default: 'Xmind', system-ui;
+    --font-default: 'Instrument Sans', system-ui;
 
     /* Font Scale */
     --font-size-100: 0.75rem;    /* 12px */
@@ -25,10 +25,9 @@
 
     /* Font Weight */
     --normal-weight: 300;
-    --medium-weight: 400;
-    --bold-weight: 450;
+    --medium-weight: 450;
+    --bold-weight: 500;
     --bolder-weight: 550;
-
 
     /* =-=-=-=- SEMANTIC TOKENS -=-=-=-= */
 

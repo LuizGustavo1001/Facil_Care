@@ -54,7 +54,7 @@
 </style>
 
 <script setup lang="ts">
-  import type { FormattedMedicine } from "../../interfaces/IMedicine"
+  import type { IFormattedMedicine } from "../../interfaces/IMedicine"
   import { useUtils } from "../../composables/useUtils"
 
   import WeeklyMedicineAdministrationController from "../../controllers/WeeklyMedicineAdministrationController"
@@ -71,7 +71,7 @@
 
   // TYPES & INTERFACES
   interface Props {
-    medicineList: FormattedMedicine[]
+    medicineList: IFormattedMedicine[]
   }
 
   // PROPS

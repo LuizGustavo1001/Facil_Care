@@ -19,17 +19,15 @@
       <div class="popup-btns gap-1">
         <ActionButton
           :title="cancelLabelText"
-          :padding="PADDING_SIZE.MEDIUM"
           :tag="BUTTON_TAGS.BUTTON"
-          type="button"
-          variant="destructive"
+          :type="BUTTON_TAGS.BUTTON"
+          :variant="ACTION_BUTTON_VARIANTS.DESTRUCTIVE"
           :alignCenter="true"
           @click="handleCancel"
         />
 
         <ActionButton
           :title="confirmLabelText"
-          :padding="PADDING_SIZE.MEDIUM"
           :tag="BUTTON_TAGS.BUTTON"
           :alignCenter="true"
           @click="handleConfirm($event)"
@@ -58,8 +56,7 @@
 
   import type { DOMReference } from "../../../types/components/appPopup"
 
-  import { PADDING_SIZE } from "../../../constants/spacing"
-  import { BUTTON_TAGS } from "../../../constants/components/appButtons"
+  import { ACTION_BUTTON_VARIANTS, BUTTON_TAGS } from "../../../constants/components/appButtons"
 
   import AppPopup from "./AppPopup.vue"
   import ActionButton from "../../buttons/ActionButton.vue"

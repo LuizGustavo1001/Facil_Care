@@ -6,9 +6,9 @@
       :href="!isButton ? (to || undefined) : undefined"
       :target="!isButton ? parsedTarget : undefined"
       :rel="!isButton && parsedTarget === '_blank' ? 'noopener noreferrer' : undefined"
-      class="featured-item flex flex-column gap-03 align-center cursor-pointer active-border"
+      class="featured-item flex flex-column gap-03 align-center cursor-pointer active-border width-fit"
   >
-    <Icon :icon="props.icon" :size="props.iconSize" padding="sm" />
+    <ShapedBgIcon :icon="props.icon" :size="props.iconSize" />
 
     <span class="bold-weight text-center text">{{ label }}</span>
   </component>
@@ -16,25 +16,10 @@
 
 <style scoped>
   .featured-item {
-    width: fit-content;
     transition: all 0.2s ease;
     color: inherit;
 
     border-radius: var(--radius-sm);
-  }
-  .featured-item:hover,
-  .featured-item:hover .icon {
-    color: var(--color-text-brand);
-  }
-
-  .featured-item:hover .icon {
-    background: var(--color-bg-hover);
-  }
-
-  .featured-item .icon {
-    background: var(--color-bg-subtle);
-    border-radius: var(--radius-md);
-    color: var(--color-text-primary-muted);
   }
 
   .featured-item .text {
@@ -47,10 +32,13 @@
 
   import { icons } from "../../assets/icons/icons"
   import { BUTTON_TAGS } from "../../constants/components/appButtons"
+
   import type { ButtonTag } from "../../types/components/appButtons"
+  import type { ComponentSize } from "../../types/spacing"
+
   import { useButtons } from "../../composables/components/useButtons"
 
-  import Icon from "../icons/Icon.vue"
+  import ShapedBgIcon from "../icons/ShapedBgIcon.vue"
 
   // COMPOSABLES
   const buttonServices = useButtons()
@@ -62,7 +50,7 @@
     label: string
     target?: string
     to?: string
-    iconSize?: string
+    iconSize?: ComponentSize
   }
 
   // PROPS DEFAULT VALUES

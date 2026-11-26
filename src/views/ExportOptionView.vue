@@ -18,9 +18,8 @@
       >
         <!-- QR Code Export Explanation -->
         <div v-if="peerStatus !== 'done'" class="section-title-container flex flex-column gap-03">
-          <div class="flex gap-03">
+          <div class="flex align-center gap-03">
             <Icon :icon="icons['qr-code-fill']" size="25px" />
-
             <h2 class="section-title">{{ getSubTypeTitle() }}</h2>
           </div>
 
@@ -48,7 +47,7 @@
             <ActionButton
                 :tag="BUTTON_TAGS.BUTTON"
                 :variant="ACTION_BUTTON_VARIANTS.BRAND"
-                :padding="PADDING_SIZE.MEDIUM"
+                :padding="BUTTON_PADDING.LARGE"
                 :leftIcon="icons['qr-code-fill']"
                 :title="getActionLabel('generate')"
                 @click="handleStartP2PSession"
@@ -62,12 +61,12 @@
 
               <template v-else-if="qrCodeURL">
                 <img :src="qrCodeURL" alt="QR Code" class="qr-image">
-                <p class="status-badge waiting">{{ getActionLabel('awaiting') }}...</p>
+                <Badge :text="getActionLabel('awaiting')" :color="BUTTON_COLORS.YELLOW" :spacing="BUTTON_PADDING.SMALL" />
               </template>
 
               <ActionButton
                   :tag="BUTTON_TAGS.BUTTON"
-                  :padding="PADDING_SIZE.MEDIUM"
+                  :padding="BUTTON_PADDING.LARGE"
                   :variant="ACTION_BUTTON_VARIANTS.SUBTLE"
                   :leftIcon="icons['shut-down-line']"
                   :title="getActionLabel('cancel')"
@@ -78,18 +77,19 @@
             <!-- Status: Transferring -->
             <div v-if="peerStatus === 'transferring'" class="status-wrapper">
               <div class="spinner" />
-              <p class="status-badge transferring">{{ getActionLabel('connectionEstablished') }}...</p>
+              <Badge :text="getActionLabel('connectionEstablished')" :color="BUTTON_COLORS.BLUE" :spacing="BUTTON_PADDING.SMALL" />
             </div>
 
             <!-- Status: Done -->
             <div v-if="peerStatus === 'done'" class="status-wrapper">
-              <Icon :icon="icons['user-smile-fill']" size="50px" :bgColor="BUTTON_COLORS.GREEN" padding="sm" style="border-radius: var(--radius-md)" />
+              <ShapedBgIcon :icon="icons['user-smile-fill']" size="50px" :color="BUTTON_COLORS.GREEN" />
+
               <p>{{ getActionLabel('done') }}!</p>
 
               <ActionButton
                   :tag="BUTTON_TAGS.BUTTON"
                   :variant="ACTION_BUTTON_VARIANTS.SUBTLE"
-                  :padding="PADDING_SIZE.LARGE"
+                  :padding="BUTTON_PADDING.LARGE"
                   :title="utils.getTranslate('utils.back')"
                   @click="navigation.handleReturn"
               />
@@ -110,15 +110,9 @@
       >
         <!-- Backup File Export Explanation -->
         <div class="section-title-container flex flex-column gap-05 align-center">
-          <Icon
-              :icon="icons['folder-open-line']"
-              size="40px"
-              :padding="PADDING_SIZE.SMALL"
-              :bgColor="BUTTON_COLORS.YELLOW"
-              style="border-radius: var(--radius-md)"
-          />
+          <ShapedBgIcon :icon="icons['folder-open-line']" size="50px" :color="BUTTON_COLORS.YELLOW" />
 
-          <h1 class="section-title">{{ getSubTypeTitle() }}</h1>
+          <h1>{{ getSubTypeTitle() }}</h1>
 
           <div class="flex flex-column gap-03">
             <p
@@ -142,7 +136,7 @@
         <div class="section-hero">
           <ActionButton
               :tag="BUTTON_TAGS.BUTTON"
-              :padding="PADDING_SIZE.MEDIUM"
+              :padding="BUTTON_PADDING.LARGE"
               :title="isDexieExporting
                 ? getActionLabel('exporting')
                 : getActionLabel('download')"
@@ -164,25 +158,6 @@
 </template>
 
 <style scoped>
-  .status-badge {
-    font-size: var(--font-caption);
-    padding: var(--spacing-sm);
-    border-radius: var(--radius-2xl);
-  }
-
-  .status-badge.waiting {
-    background: var(--color-bg-yellow);
-    color: var(--color-text-yellow);
-  }
-  .status-badge.transferring {
-    background: var(--color-bg-blue);
-    color: var(--color-text-blue);
-  }
-  .status-badge.success {
-    background: var(--color-bg-green);
-    color: var(--color-text-green);
-  }
-
   .status-wrapper {
     display: flex;
     flex-direction: column;
@@ -205,7 +180,7 @@
   import { useNavigation } from "../composables/useNavigation"
 
   import { PAGES } from "../constants/sysPages"
-  import { BUTTON_COLORS } from "../constants/components/appButtons"
+  import { BUTTON_COLORS, BUTTON_PADDING } from "../constants/components/appButtons"
   import { ACTION_BUTTON_VARIANTS, BUTTON_TAGS } from "../constants/components/appButtons"
   import { PADDING_SIZE } from "../constants/spacing"
 
@@ -219,6 +194,8 @@
   import AppFooter from "../components/layout/AppFooter.vue"
   import Icon from "../components/icons/Icon.vue"
   import ActionButton from "../components/buttons/ActionButton.vue"
+  import Badge from "../components/common/Badge.vue"
+  import ShapedBgIcon from "../components/icons/ShapedBgIcon.vue"
 
   // COMPOSABLES
   const { tm } = useI18n()

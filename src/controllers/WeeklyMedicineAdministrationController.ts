@@ -2,7 +2,7 @@ import { WeeklyMedicineAdministrationModel } from "../models/WeeklyMedicineAdmin
 import db from "../database/db"
 import {type ControllerResult, fallbackReturn} from "./settings"
 import type { IWeeklyMedicineAdministration } from "../interfaces/IWeeklyMedicineAdministration"
-import type { FormattedMedicine, IMedicine } from "../interfaces/IMedicine"
+import type { IFormattedMedicine, IMedicine } from "../interfaces/IMedicine"
 import MedicineController from "./MedicineController"
 import { useDate } from "../composables/useDate"
 
@@ -221,7 +221,7 @@ export default class WeeklyMedicineAdministrationController {
      * Results are sorted by scheduled administration time in ascending order
      * by default.
      */
-    public async loadDailyMedicinesByDay(selectedDay: number, sortByTime: boolean = true): Promise<FormattedMedicine[]> {
+    public async loadDailyMedicinesByDay(selectedDay: number, sortByTime: boolean = true): Promise<IFormattedMedicine[]> {
         try {
             const [medicinesResult, administrationsResult] = await Promise.all([
                 medicineController.getByWeekDay(selectedDay),
@@ -235,7 +235,7 @@ export default class WeeklyMedicineAdministrationController {
             const medicines = medicinesResult.data as IMedicine[]
             const administrations = administrationsResult.data ?? []
 
-            const result: FormattedMedicine[] = medicines.flatMap((medicine) => {
+            const result: IFormattedMedicine[] = medicines.flatMap((medicine) => {
                 return medicine.administrationTimes.map((scheduledTime) => {
                     const administration = administrations.find(item =>
                         item.medicineId === medicine._id &&

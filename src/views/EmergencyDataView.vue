@@ -104,8 +104,8 @@
   import type { FormContext } from "../types/components/appPopup"
 
   import { PAGES } from "../constants/sysPages"
-  import { PADDING_SIZE } from "../constants/spacing"
-  import { ACTION_BUTTON_COLORFUL_VARIANTS, BUTTON_TAGS }  from "../constants/components/appButtons"
+  import { ACTION_BUTTON_COLORFUL_VARIANTS, BUTTON_PADDING, BUTTON_TAGS } from "../constants/components/appButtons"
+  import { BORDER_RADIUS } from "../constants/spacing"
 
   import AppHeader from "../components/layout/AppHeader.vue"
   import AppFooter from "../components/layout/AppFooter.vue"
@@ -115,6 +115,7 @@
   import AppOverlay from "../components/layout/AppOverlay.vue"
   import FormPopup from "../components/layout/popup/FormPopup.vue"
   import Icon from "../components/icons/Icon.vue"
+
 
   // TYPES & INTERFACES
   // Emegergency data button template
@@ -325,9 +326,9 @@
     return {
       title: getButtonTitle(category, button),
       description: getButtonSubtitle(category, button),
-      padding: PADDING_SIZE.MEDIUM,
+      padding: BUTTON_PADDING.MEDIUM,
       variant: ACTION_BUTTON_COLORFUL_VARIANTS.SUBTLE,
-      hasBorderRadius: false,
+      borderRadius: BORDER_RADIUS.SMALL
     }
   }
 
