@@ -182,7 +182,6 @@
   import { PAGES } from "../constants/sysPages"
   import { BUTTON_COLORS, BUTTON_PADDING } from "../constants/components/appButtons"
   import { ACTION_BUTTON_VARIANTS, BUTTON_TAGS } from "../constants/components/appButtons"
-  import { PADDING_SIZE } from "../constants/spacing"
 
   import type { WarningCode } from "../types/components/snackbar"
   import type { QRCodeError, QRCodeURL } from "../types/qrCode"
