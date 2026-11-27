@@ -69,31 +69,41 @@ export default defineConfig({
         shortcuts: [
           {
             name: "Add new Medicine",
-            short_name: "ADd new Medicine",
-            url: "/register/medicines"
+            short_name: "Add new Medicine",
+            url: "/register/medicines",
+            icons: [
+              {
+                src: "/shortcuts/medicine.svg",
+                sizes: "any",
+                type: "image/svg+xml"
+              }
+            ]
           },
           {
             name: "Emergency Data",
             short_name: "Emergency Data",
             url: "/emergencyData",
+            icons: [
+              {
+                src: "/shortcuts/emergency.svg",
+                sizes: "any",
+                type: "image/svg+xml"
+              }
+            ]
           },
           {
             name: "Weekly Schedule Medicines",
             short_name: "Weekly Schedule Medicines",
-            url: "/weekSchedule"
+            url: "/weekSchedule",
+            icons: [
+              {
+                src: "/shortcuts/schedule.svg",
+                sizes: "any",
+                type: "image/svg+xml"
+              }
+            ]
           }
         ],
-
-        screenshots: [
-          {
-            src: '/home-page.jpeg',
-            sizes: '720x1267',
-            type: 'image/jpeg',
-            form_factor: 'narrow',
-            label: 'FacilCare Home Page'
-          }
-        ]
-
       },
       devOptions: {
         enabled: true

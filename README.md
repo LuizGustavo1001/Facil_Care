@@ -26,19 +26,19 @@ System Pictures
 <table>
   <tr style="display: grid; grid-template-columns: repeat(5, 1fr)">
     <td>
-      <img src="/docs/preview/home-page.jpeg" alt="Home Page">
+      <img src="/docs/preview/home.jpeg" alt="Home Page">
     </td>
     <td>
-      <img src="/docs/preview/manage-page.jpeg" alt="Manage Example Page">
+      <img src="/docs/preview/manage.jpeg" alt="Manage Example Page">
     </td>
     <td>
-      <img src="/docs/preview/register-page.jpeg" alt="Register Example Page">
+      <img src="/docs/preview/register.jpeg" alt="Register Example Page">
     </td>
     <td>
       <img src="/docs/preview/statistics.jpeg" alt="Statistics Example Page">
     </td>
     <td>
-      <img src="/docs/preview/vital-signs.jpeg" alt="Vital Signs Page">
+      <img src="/docs/preview/emergency.jpeg" alt="Emergency Data Page">
     </td>
   </tr>
 </table>

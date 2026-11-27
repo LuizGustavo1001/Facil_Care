@@ -86,6 +86,7 @@ export default {
         edit: "Edit",
         understood: "Understood",
         later: "Later",
+        quickAccess: "Quick Access",
         updateNow: "Update Now",
         developedBy: "Developed by",
         addSchedule: "Add Schedule",

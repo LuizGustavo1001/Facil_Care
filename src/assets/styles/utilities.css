@@ -241,7 +241,7 @@
 }
 
 .edit-link {
-    color: var(--color-text-brand);
+    color: var(--color-text-blue);
     display: flex;
     align-items: center;
     gap: 0.3em;

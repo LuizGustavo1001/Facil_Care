@@ -44,7 +44,7 @@
       <!-- Quick Access -->
       <section class="quick-access flex flex-column gap-05">
         <div class="section-title-container">
-          <h2 class="section-title text-uppercase text-muted">Acesso Rápido</h2>
+          <h2 class="section-title text-uppercase text-muted">{{ utils.getTranslate(`utils.quickAccess`) }}</h2>
         </div>
 
         <div class="quick-access-list flex gap-15 overflow-scroll">

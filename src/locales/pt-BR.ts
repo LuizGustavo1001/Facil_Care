@@ -84,6 +84,7 @@ export default {
         hello: "Olá",
         edit: "Editar",
         understood: "Entendi",
+        quickAccess: "Acesso Rápido",
         later: "Depois",
         updateNow: "Atualizar Agora",
         developedBy: "Desenvolvido por",
