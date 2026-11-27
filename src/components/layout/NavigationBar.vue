@@ -21,7 +21,7 @@
 
       <p
           v-if="getItemTitle(item.id)"
-          class="label bold-weight"
+          class="label medium-weight"
       >
         {{ getItemTitle(item.id) }}
       </p>
@@ -31,8 +31,10 @@
 
 <style scoped>
   .main-navigation-bar {
-    bottom: 0;
-    padding: var(--spacing-sm);
+    bottom: 0.5em;
+    left: 0.25em;
+
+    padding: var(--spacing-md);
     width: 100%;
 
     background: var(--color-bg-subtle);
@@ -55,7 +57,14 @@
   .nav-item:hover,
   .nav-item:focus,
   .nav-item:active {
-    color: var(--color-text-brand);
+    color: var(--color-text-blue);
+  }
+
+  .highContrast .nav-item.active,
+  .highContrast .nav-item:hover,
+  .highContrast .nav-item:focus,
+  .highContrast .nav-item:active {
+    color: var(--white);
   }
 
   /* MOBILE */
@@ -74,15 +83,18 @@
       gap: 0.2em;
     }
     .nav-item .wrapper {
-      padding: var(--spacing-2xs) var(--spacing-lg);
+      padding: var(--spacing-xs) var(--spacing-lg);
       border-radius: var(--radius-full);
     }
 
     .nav-item.active .wrapper,
-    .nav-item:hover .wrapper,
-    .nav-item:focus .wrapper,
     .nav-item:active .wrapper {
-      background-color: var(--color-bg-primary);
+      background: var(--color-bg-primary);
+    }
+
+    .nav-item:hover .wrapper,
+    .nav-item:focus .wrapper {
+      background: var(--color-bg-hover);
     }
   }
 
@@ -101,10 +113,13 @@
     }
 
     .nav-item.active,
+    .nav-item:active  {
+      background: var(--color-bg-primary);
+    }
+
     .nav-item:hover,
-    .nav-item:focus .wrapper,
-    .nav-item:active .wrapper  {
-      background-color: var(--color-bg-primary);
+    .nav-item:focus {
+      background: var(--color-bg-hover);
     }
   }
 
@@ -130,10 +145,11 @@
   import { useUtils } from "../../composables/useUtils"
 
   import Icon from "../icons/Icon.vue"
-  import ActionButton from "../buttons/ActionButton.vue";
 
   // TYPES & INTERFACES
-  interface Props { activeItem?: string | null }
+  interface Props {
+    activeItem?: string | null | undefined
+  }
 
   // PROPS DEFAULT VALUES
   const props = withDefaults(defineProps<Props>(), { activeItem: null })
@@ -144,7 +160,7 @@
   // COMPUTED PROPERTIES
   const computedActiveItem = computed<string | null>(() => {
     return props.activeItem
-        ?? mainNavigationBar.home.id
+        ?? mainNavigationBar[0].id
         ?? null
   })
 

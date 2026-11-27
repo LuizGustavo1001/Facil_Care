@@ -70,12 +70,12 @@
             :title="utils.getTranslate(`utils.deleteAccount`)"
             :padding="BUTTON_PADDING.MEDIUM"
             class="width-fit"
-            style=" align-self: flex-end;"
+            style="align-self: flex-end;"
         />
       </section>
     </main>
 
-    <NavigationBar :activeItem="mainNavigationBar[PAGES.PATIENT_DATA].id" />
+    <NavigationBar :activeItem="mainNavigationBar.find(page => page.id === PAGES.PATIENT_DATA)?.id" />
   </div>
 </template>
 
@@ -85,13 +85,13 @@
     border-radius: var(--radius-sm);
     background: var(--color-bg-brand);
 
-    color: var(--color-text-inverse);
+    color: var(--color-text-brand);
   }
 
   .patient-info p {
     font-size: var(--font-body-sm);
-    font-weight: var(--bold-weight);
-    color: var(--color-text-inverse-muted);
+    font-weight: var(--medium-weight);
+    color: var(--color-text-brand);
   }
 
   /* HIGH CONTRAST */

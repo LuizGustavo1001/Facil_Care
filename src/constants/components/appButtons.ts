@@ -37,6 +37,13 @@ export const BUTTON_COLORS = {
     BLUE: "blue"
 } as const
 
+export const SHAPED_BG_ICON_VARIANTS = {
+    ...BUTTON_COLORS,
+    PRIMARY: "primary",
+    SUBTLE: "subtle"
+} as const
+
+
 export const BUTTON_TAGS = {
     ROUTER: "router",
     BUTTON: "button",

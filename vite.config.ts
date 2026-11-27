@@ -4,28 +4,34 @@ import { VitePWA } from 'vite-plugin-pwa'
 import path from 'node:path'
 
 export default defineConfig({
-  server: {
-    watch: {
-      usePolling: true
-    }
-  },
   plugins: [
     vue(),
     VitePWA({
-      registerType: 'autoUpdate',
+      registerType: 'prompt',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png'],
+
       manifest: {
-        name: 'FacilCare',
+        id: "/",
+
+        name: 'FacilCare - Health Management',
         short_name: 'FacilCare',
         description: "Manage patient's health data",
 
         display: 'standalone',
 
-        theme_color: '#4267B2',
+        theme_color: '#50719a',
         background_color: '#F5F6FA',
 
         start_url: '/',
         scope: "/",
+
+        orientation: "any",
+
+        categories: [
+          'medical',
+          'health',
+          'productivity'
+        ],
 
         icons: [
           {
@@ -54,11 +60,40 @@ export default defineConfig({
           },
           {
             src: '/icon-monochrome.png',
-            sizes: '432x432',
+            sizes: '512x512',
             type: 'image/png',
             purpose: 'monochrome'
           }
+        ],
+
+        shortcuts: [
+          {
+            name: "Add new Medicine",
+            short_name: "ADd new Medicine",
+            url: "/register/medicines"
+          },
+          {
+            name: "Emergency Data",
+            short_name: "Emergency Data",
+            url: "/emergencyData",
+          },
+          {
+            name: "Weekly Schedule Medicines",
+            short_name: "Weekly Schedule Medicines",
+            url: "/weekSchedule"
+          }
+        ],
+
+        screenshots: [
+          {
+            src: '/home-page.jpeg',
+            sizes: '720x1267',
+            type: 'image/jpeg',
+            form_factor: 'narrow',
+            label: 'FacilCare Home Page'
+          }
         ]
+
       },
       devOptions: {
         enabled: true

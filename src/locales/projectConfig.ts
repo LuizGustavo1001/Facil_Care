@@ -218,18 +218,48 @@ export const pages = {
     },
     [PAGES.EXPORT]: {
         id: PAGES['EXPORT'],
-        iconFill: icons["qr-code-fill"],
-        iconLine: icons["qr-code-line"],
+        iconFill: icons["upload"],
+        iconLine: icons["upload"],
         href: `/backup/${PAGES.EXPORT}`,
         color: BUTTON_COLORS.GREEN
     },
+    [PAGES.EXPORT_QR_CODE]: {
+        id: PAGES.EXPORT_QR_CODE,
+        iconFill: icons["qr-code-fill"],
+        iconLine: icons["qr-code-line"],
+        color: BUTTON_COLORS.GREEN,
+        href: `/backup/${PAGES.EXPORT}/${PAGES.EXPORT_QR_CODE}`,
+    },
+    [PAGES.EXPORT_JSON]: {
+        id: PAGES.EXPORT_JSON,
+        iconFill: icons["folder-open-fill"],
+        iconLine: icons["folder-open-line"],
+        color: BUTTON_COLORS.YELLOW,
+        href: `/backup/${PAGES.EXPORT}/${PAGES.EXPORT_JSON}`,
+    },
+
     [PAGES.IMPORT]: {
         id: PAGES['IMPORT'],
-        iconFill: icons["qr-scan-fill"],
-        iconLine: icons["qr-scan-line"],
+        iconFill: icons["import-fill"],
+        iconLine: icons["import-line"],
         href: `/backup/${PAGES.IMPORT}`,
         color: BUTTON_COLORS.YELLOW
     },
+    [PAGES.IMPORT_QR_CODE]: {
+        id: PAGES.IMPORT_QR_CODE,
+        iconFill: icons["qr-code-fill"],
+        iconLine: icons["qr-code-line"],
+        color: BUTTON_COLORS.YELLOW,
+        href: `/backup/${PAGES.IMPORT}/${PAGES.IMPORT_QR_CODE}`,
+    },
+    [PAGES.IMPORT_FILE]: {
+        id: PAGES.IMPORT_FILE,
+        iconFill: icons["folder-open-fill"],
+        iconLine: icons["folder-open-line"],
+        color: BUTTON_COLORS.BLUE,
+        href: `/backup/${PAGES.IMPORT}/${PAGES.IMPORT_FILE}`,
+    },
+
     [PAGES.USER_MANUAL]: {
         id: PAGES['USER_MANUAL'],
         iconFill: icons['health-book-fill'],
@@ -475,25 +505,23 @@ export const termsView = {
     ]
 }
 
-export const exportView = {
+export const dataManagementView = {
     categories: {
-        buttons: [
-            {
-                id: "qrCode",
-                icon: icons['qr-code-line'],
-                color: BUTTON_COLORS.BLUE,
-                href: `/backup/${PAGES.EXPORT}/qrCode`
-            },
-            {
-                id: "json",
-                icon: icons['folder-open-line'],
-                color: BUTTON_COLORS.YELLOW,
-                href: `/backup/${PAGES.EXPORT}/json`
-            }
-        ],
-
+        [PAGES.EXPORT]: {
+            buttons: [
+                { ...pages[PAGES.EXPORT_QR_CODE] },
+                { ...pages[PAGES.EXPORT_JSON] }
+            ]
+        },
+        [PAGES.IMPORT]: {
+            buttons: [
+                { ...pages[PAGES.IMPORT_QR_CODE] },
+                { ...pages[PAGES.IMPORT_FILE] }
+            ]
+        }
     }
 }
+
 
 export const charts = {
     colors: [
@@ -542,13 +570,13 @@ export const warningMessages = {
 
     NotificationNotFound: "warning",
 
-    SystemDataReset: "success",
+    SystemDataReset: "info",
     DatabaseError: "error",
 
     NoVitalSignFound: "warning",
     NoVitalSignByField: "warning",
-    NoVitalSignByDate: "error",
-    NoVitalSignByFieldAndDate: "error",
+    NoVitalSignByDate: "warning",
+    NoVitalSignByFieldAndDate: "warning",
     VitalSignNotFound: "error",
     VitalSignUpdated: "success",
     VitalSignDeleted: "success",
@@ -556,8 +584,8 @@ export const warningMessages = {
 
     NoFollowUpFound: "warning",
     NoFollowUpByField: "warning",
-    NoFollowUpByDate: "error",
-    NoFollowUpByFieldAndDate: "error",
+    NoFollowUpByDate: "warning",
+    NoFollowUpByFieldAndDate: "warning",
     FollowUpNotFound: "error",
     FollowUpUpdated: "success",
     FollowUpDeleted: "success",
@@ -618,7 +646,7 @@ export const warningMessages = {
     MedicineDeleteFailed: "error",
 
     MedicineScheduleEmpty: "warning",
-    NoMedicineScheduleBySelectedDay: "info",
+    NoMedicineScheduleBySelectedDay: "warning",
     MedicineScheduleFound: "success",
     MedicineScheduleNotFound: "warning",
     MedicineScheduleDeleted: "success",
@@ -632,7 +660,7 @@ export const warningMessages = {
     ImportFailed: "error",
     P2PExportFailed: "error",
     P2PImportFailed: "error",
-    P2PConnectionInterrupted: "info",
+    P2PConnectionInterrupted: "warning",
     P2PReceiveFailed: "error",
     JSONImportSuccess: "success",
     exportJSONSuccess: "success",
@@ -1843,12 +1871,12 @@ export const popupTypes = {
     }
 >
 
-export const mainNavigationBar = {
-    [PAGES.HOME]: { ...pages[PAGES.HOME] },
-    [PAGES.SERVICES]: { ...pages[PAGES.SERVICES] },
-    [PAGES.WEEK_SCHEDULE]: { ...pages[PAGES.WEEK_SCHEDULE] },
-    [PAGES.PATIENT_DATA]: { ...pages[PAGES.PATIENT_DATA] }
-}
+export const mainNavigationBar = [
+    pages[PAGES.HOME],
+    pages[PAGES.SERVICES],
+    pages[PAGES.WEEK_SCHEDULE],
+    pages[PAGES.PATIENT_DATA]
+]
 
 export const socialMedias = {
     github: {

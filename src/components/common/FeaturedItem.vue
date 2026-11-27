@@ -10,7 +10,7 @@
   >
     <ShapedBgIcon :icon="props.icon" :size="props.iconSize" />
 
-    <span class="bold-weight text-center text">{{ label }}</span>
+    <span class="semi-bold-weight text-center text">{{ label }}</span>
   </component>
 </template>
 

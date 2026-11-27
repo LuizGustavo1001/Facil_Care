@@ -57,7 +57,7 @@
 
   .btn-content .btn-content-title {
     font-size: var(--font-button-title);
-    font-weight: var(--bold-weight);
+    font-weight: var(--semi-bold-weight);
   }
 
   .btn-content .btn-content-description {
@@ -69,20 +69,28 @@
   /* 1. Transparent */
   .action-btn.transparent {
     background: transparent;
-    color: inherit;
+    color: var(--color-text-btn-primary);
   }
   .action-btn.transparent:hover {
     background: var(--color-bg-hover);
+  }
+
+  .action-btn.transparent .left-icon {
+    color: var(--color-text-btn-primary-subtle);
   }
 
   /* 2. Subtle */
   .action-btn.subtle {
     border: 1px solid transparent;
     background: var(--color-bg-subtle);
-    color: inherit;
+    color: var(--color-text-btn-primary);
   }
   .action-btn.subtle:hover {
     background: var(--color-bg-hover);
+  }
+
+  .action-btn.subtle .left-icon {
+    color: var(--color-text-btn-primary-subtle);
   }
 
   /* 3. Destructive */
@@ -100,7 +108,7 @@
   /* 4. Brand */
   .action-btn.brand {
     background: var(--color-bg-brand);
-    color: var(--color-text-inverse);
+    color: var(--color-text-btn-brand);
   }
   .action-btn.brand:hover {
     background: var(--color-bg-brand-hover);
@@ -113,10 +121,14 @@
   /* 5. Primary */
   .action-btn.primary {
     background: var(--color-bg-primary);
-    color: inherit;
+    color: var(--color-text-btn-primary);
   }
   .action-btn.primary:hover {
     background: var(--color-bg-hover);
+  }
+
+  .action-btn.primary .left-icon {
+    color: var(--color-text-btn-primary-subtle);
   }
 </style>
 
@@ -133,7 +145,6 @@
   import { useUtils } from "../../composables/useUtils"
 
   import Icon from "../icons/Icon.vue"
-
 
   // COMPOSABLES
   const utils = useUtils()

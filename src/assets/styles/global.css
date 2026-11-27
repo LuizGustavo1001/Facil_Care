@@ -11,6 +11,7 @@ body {
     min-height: 100vh;
     color: var(--color-text-primary);
     background: var(--color-bg-primary);
+
     font-family: var(--font-default), system-ui;
     font-weight: var(--medium-weight);
 }
@@ -65,11 +66,4 @@ button, input, select, textarea {
     main {
         padding: var(--spacing-lg) var(--spacing-xs);
     }
-}
-
-
-/* ANIMATIONS */
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
 }

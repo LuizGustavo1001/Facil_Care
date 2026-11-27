@@ -12,7 +12,7 @@
         v-model="model"
         :name="name"
         v-bind="$attrs"
-        class="cursor-pointer default-input-attr bold-weight"
+        class="cursor-pointer default-input-attr medium-weight"
     >
       <!-- 1. Default Option -->
       <option value="" disabled hidden>
@@ -40,7 +40,7 @@
 <style scoped>
   .input-label {
     font-size: var(--font-label-md);
-    font-weight: var(--bold-weight);
+    font-weight: var(--medium-weight);
     padding-inline: var(--spacing-sm);
     margin-left: var(--spacing-sm);
   }

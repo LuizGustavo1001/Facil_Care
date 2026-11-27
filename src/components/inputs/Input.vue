@@ -3,7 +3,7 @@
     <!-- Regular Input -->
     <legend
         v-if="label"
-        class="input-label text-muted bold-weight"
+        class="input-label text-muted medium-weight"
     >
       {{ label }}
     </legend>
@@ -14,7 +14,7 @@
       :type="inputType"
       :name="name"
       v-bind="$attrs"
-      class="default-input-attr bold-weight"
+      class="default-input-attr medium-weight"
     >
   </fieldset>
 

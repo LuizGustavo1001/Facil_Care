@@ -4,7 +4,7 @@
 
     <!-- Header -->
     <template #header>
-      <h2> {{ title }} </h2>
+      <h2 class="semi-bold-weight"> {{ title }} </h2>
     </template>
 
     <!-- Main Message -->
@@ -23,6 +23,7 @@
           :type="BUTTON_TAGS.BUTTON"
           :variant="ACTION_BUTTON_VARIANTS.DESTRUCTIVE"
           :alignCenter="true"
+          :padding="BUTTON_PADDING.LARGE"
           @click="handleCancel"
         />
 
@@ -30,6 +31,7 @@
           :title="confirmLabelText"
           :tag="BUTTON_TAGS.BUTTON"
           :alignCenter="true"
+          :padding="BUTTON_PADDING.LARGE"
           @click="handleConfirm($event)"
         />
       </div>
@@ -42,21 +44,15 @@
     display: grid;
     grid-template-columns: auto 65%;
   }
-
-  .confirm-popup h2 {
-    font-size: var(--font-heading-2);
-    font-weight: var(--bold-weight);
-  }
 </style>
 
 <script setup lang="ts">
   import { computed } from "vue"
   import type { Ref } from "vue"
+
   import { useUtils } from "../../../composables/useUtils"
-
   import type { DOMReference } from "../../../types/components/appPopup"
-
-  import { ACTION_BUTTON_VARIANTS, BUTTON_TAGS } from "../../../constants/components/appButtons"
+  import { ACTION_BUTTON_VARIANTS, BUTTON_PADDING, BUTTON_TAGS } from "../../../constants/components/appButtons"
 
   import AppPopup from "./AppPopup.vue"
   import ActionButton from "../../buttons/ActionButton.vue"

@@ -360,7 +360,7 @@ export function useForm(){
 
         return {
             title: title,
-            padding: BUTTON_PADDING.MEDIUM,
+            padding: BUTTON_PADDING.LARGE,
             borderRadius: BORDER_RADIUS.FULL,
             alignCenter: true,
             tag: btn.tag as ButtonTag ?? BUTTON_TAGS.BUTTON,

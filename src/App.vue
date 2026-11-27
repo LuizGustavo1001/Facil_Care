@@ -5,6 +5,8 @@
         <component :is="Component" />
       </transition>
     </routerView>
+
+    <PwaUpdatePrompt />
 </template>
 
 <style scoped>
@@ -21,6 +23,7 @@
 
 <script setup>
   import { RouterView } from 'vue-router'
+
   import { onMounted } from "vue"
   import { useTheme } from "./composables/useTheme"
   import { useLanguage } from "./composables/useLanguage"
@@ -29,6 +32,7 @@
 
   import NotificationController from "./controllers/NotificationController"
   import WeeklyMedicineAdministrationController from "./controllers/WeeklyMedicineAdministrationController.ts"
+  import PwaUpdatePrompt from "./components/feedback/PwaUpdatePrompt.vue"
 
   // CONTROLLERS
   const notificationsController = new NotificationController()

@@ -34,7 +34,7 @@
       <MedicineList :medicineList="dailyMedicines" />
     </main>
 
-    <NavigationBar :activeItem="mainNavigationBar[PAGES.WEEK_SCHEDULE].id" />
+    <NavigationBar :activeItem="mainNavigationBar.find(page => page.id === PAGES.WEEK_SCHEDULE)?.id" />
   </div>
 </template>
 

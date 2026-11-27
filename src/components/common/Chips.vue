@@ -1,7 +1,7 @@
 <template>
   <component
     is="button"
-    class="chips flex gap-03 align-center cursor-pointer active-border bold-weight"
+    class="chips flex gap-03 align-center cursor-pointer active-border semi-bold-weight"
     :class="[
         variantClass,
         { active: props.isActive }

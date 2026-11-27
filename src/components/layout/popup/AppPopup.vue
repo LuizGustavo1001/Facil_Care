@@ -41,7 +41,7 @@
     max-width: 90dvw;
     max-height: 90dvh;
 
-    padding: var(--spacing-md);
+    padding: var(--spacing-lg);
     border-radius: var(--radius-xl);
     background: var(--color-bg-primary);
 

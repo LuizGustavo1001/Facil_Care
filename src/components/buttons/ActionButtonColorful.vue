@@ -74,8 +74,8 @@
 
   .btn-content .btn-content-title {
     font-size: var(--font-button-title);
-    font-weight: var(--bold-weight);
-    color: var(--color-text-primary);
+    font-weight: var(--semi-bold-weight);
+    color: var(--color-text-btn-primary);
   }
 
   .btn-content .btn-content-description {

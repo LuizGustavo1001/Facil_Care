@@ -15,7 +15,7 @@
       </template>
     </div>
 
-    <p class="brand text-muted">Facil Care - 2026</p>
+    <p class="brand text-muted text-center">2026 - Facil Care</p>
   </footer>
 </template>
 
@@ -30,9 +30,8 @@
     border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
   }
   .footer .brand {
-    text-align: center;
     font-size: var(--font-caption);
-    font-weight: var(--bolder-weight);
+    font-weight: var(--bold-weight);
   }
 </style>
 

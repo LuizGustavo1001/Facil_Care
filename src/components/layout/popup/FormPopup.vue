@@ -48,10 +48,7 @@
 </template>
 
 <style scoped>
-  .form-popup h2 {
-    font-size: var(--font-heading-2);
-    font-weight: var(--bold-weight);
-  }
+
 </style>
 
 <script setup lang="ts">

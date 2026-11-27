@@ -39,7 +39,7 @@
       </section>
     </main>
 
-    <NavigationBar :activeItem="mainNavigationBar[PAGES.SERVICES].id" />
+    <NavigationBar :activeItem="mainNavigationBar.find(page => page.id === PAGES.SERVICES)?.id" />
   </div>
 </template>
 

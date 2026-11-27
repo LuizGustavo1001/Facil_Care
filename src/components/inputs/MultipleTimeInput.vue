@@ -24,7 +24,7 @@
           :value="time"
           v-bind="$attrs"
           :readonly="readonly"
-          class="alt-input-attr active-border flex-grow-1 bold-weight"
+          class="alt-input-attr active-border flex-grow-1 medium-weight"
           @input="updateTime(index, ($event.target as HTMLInputElement).value)"
         >
 

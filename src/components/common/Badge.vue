@@ -1,6 +1,6 @@
 <template>
   <div
-      class="badge flex gap-05 align-center bold-weight"
+      class="badge flex gap-05 align-center semi-bold-weight"
       :class="[computedColor]"
       :style="props.spacing"
   >
