@@ -12,7 +12,7 @@
       <button
           v-for="day in weekDaysFormat"
           :key="day.value"
-          class="week-day-button flex align-center justify-center bold-weight active-border"
+          class="week-day-button flex align-center justify-center semi-bold-weight active-border"
           type="button"
           :class="{ active: isSelected(day.value) }"
           @click="toggleDayBtn(day.value)"
@@ -48,6 +48,8 @@
 
     width: 35px;
     height: 35px;
+
+    color: var(--color-text-primary-muted);
 
     background: none;
     border: 2px solid var(--color-border-default);

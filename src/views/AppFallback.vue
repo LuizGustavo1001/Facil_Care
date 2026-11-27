@@ -2,7 +2,7 @@
   <div class="view regular">
     <!-- FallBack View -->
     <div class="flex align-center justify-center flex-column gap-1" style="height: 100dvh">
-      <p>{{ getFallbackMessage() }}...</p>
+      <p class="medium-weight">{{ getFallbackMessage() }}...</p>
 
       <ActionButton
           :tag="BUTTON_TAGS.ROUTER"

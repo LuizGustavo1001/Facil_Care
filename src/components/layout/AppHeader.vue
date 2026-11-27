@@ -28,7 +28,7 @@
       </template>
 
       <!-- Page Title -->
-      <h3 class="title flex-grow-1 truncate-single">
+      <h3 class="title flex-grow-1 truncate-single medium-weight">
         <slot>
           <strong>{{ props.title }}</strong>
         </slot>
@@ -60,7 +60,8 @@
 <style scoped>
   .app-header {
     top: 0;
-    padding: var(--spacing-md);
+    padding-inline: var(--spacing-md);
+    padding-block: var(--spacing-sm);
 
     border-radius: 0 0 var(--radius-lg) var(--radius-lg);
 
@@ -71,7 +72,7 @@
   /* 1. Transparent */
   .app-header.transparent {
     background: transparent;
-    color: var(--color-text-inverse);
+    color: var(--color-text-primary);
   }
 
   /* 2. Subtle */

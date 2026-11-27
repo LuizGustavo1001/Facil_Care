@@ -86,7 +86,15 @@ const routes: RouteRecordRaw[] = [
       }
     },
     {
-        path: "/backup/import",
+        path: "/backup/:category",
+        name: "data-management",
+        component: () => import("../views/DataManagement.vue"),
+        meta: {
+            title: PAGES.DATA_MANAGEMENT
+        }
+    },
+    {
+        path: "/backup/import/:type",
         name: 'import-data',
         component: () => import('../views/ImportView.vue'),
         meta: {
@@ -94,17 +102,9 @@ const routes: RouteRecordRaw[] = [
         }
     },
     {
-        path: "/backup/export",
-        name: 'export-data',
-        component: () => import('../views/ExportView.vue'),
-        meta: {
-            title: PAGES.EXPORT
-        }
-    },
-    {
       path: "/backup/export/:type",
-      name: "export-data-type",
-      component: () => import('../views/ExportOptionView.vue'),
+      name: "export-data",
+      component: () => import('../views/ExportView.vue'),
       meta: {
           title: PAGES.EXPORT
       }

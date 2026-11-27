@@ -19,7 +19,7 @@
 
           <div class="flex flex-column">
             <p class="truncate-single">
-              <span class="bold-weight">{{ medicine.name }}</span>
+              <span class="semi-bold-weight">{{ medicine.name }}</span>
               <span class="capitalize-words medium-weight">
                 ({{ utils.getRouteAdminLabel(medicine.routeAdmin) }})
               </span>

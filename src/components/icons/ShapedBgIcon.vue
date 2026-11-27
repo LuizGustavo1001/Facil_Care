@@ -28,10 +28,6 @@
     z-index: -1;
   }
 
-  .featured-icon {
-    z-index: 1;
-  }
-
   /* VARIANTS */
   /* 1. YELLOW */
   .shaped-bg-icon.yellow .icon-bg {
@@ -80,27 +76,41 @@
   .shaped-bg-icon.purple .featured-icon {
     color: var(--color-text-purple);
   }
+
+  /* 6. SUBTLE */
+  .shaped-bg-icon.subtle .icon-bg {
+    color: var(--color-bg-subtle);
+  }
+  .shaped-bg-icon.subtle:hover .icon-bg {
+    color: var(--color-bg-hover);
+  }
+  .shaped-bg-icon.subtle .featured-icon {
+    color: var(--color-text-btn-primary-subtle);
+  }
 </style>
 
 <script setup lang="ts">
   import { computed } from "vue"
-  import Icon from "./Icon.vue"
+
   import { icons } from "../../assets/icons/icons"
+  import { SHAPED_BG_ICON_VARIANTS } from "../../constants/components/appButtons"
+
   import type { ComponentSize } from "../../types/spacing"
-  import type { ButtonColor } from "../../types/components/appButtons"
-  import { BUTTON_COLORS } from "../../constants/components/appButtons"
+  import type { ShapedBgIconVariant } from "../../types/components/appButtons"
+
+  import Icon from "./Icon.vue"
 
   // TYPES & INTERFACES
   interface Props {
     icon: string,
     size?: ComponentSize
-    color?: ButtonColor
+    color?: ShapedBgIconVariant
   }
 
   // PROPS DEFAULT VALUES
   const props = withDefaults(defineProps<Props>(), {
     size: "45px",
-    color: BUTTON_COLORS.BLUE
+    color: SHAPED_BG_ICON_VARIANTS.SUBTLE
   })
 
   // COMPUTED
@@ -122,9 +132,9 @@
     return Number(Number(formattedSize.value) + 24) + sizeUnit.value
   })
 
-  const computedColor = computed<ButtonColor>(() => {
-    return Object.values(BUTTON_COLORS).includes(props.color)
+  const computedColor = computed<ShapedBgIconVariant>(() => {
+    return Object.values(SHAPED_BG_ICON_VARIANTS).includes(props.color)
         ? props.color
-        : BUTTON_COLORS.BLUE
+        : SHAPED_BG_ICON_VARIANTS.SUBTLE
   })
 </script>

@@ -24,8 +24,16 @@ export default {
         [PAGES.HEALTH_PLANS]: "Health Plans",
         [PAGES.EMERGENCY_CONTACTS]: "Emergency Contacts",
 
+        [PAGES.DATA_MANAGEMENT]: "Data Management",
+
         [PAGES.IMPORT]: "Import Data",
+        [PAGES.IMPORT_P2P]: "Import Via P2P",
+        [PAGES.IMPORT_QR_CODE]: "Import Via QR Code",
+        [PAGES.IMPORT_FILE]: "Import Backup File",
+
         [PAGES.EXPORT]: "Export Data",
+        [PAGES.EXPORT_JSON]: "Export Backup File",
+        [PAGES.EXPORT_QR_CODE]: "Export Via QR Code",
 
         [PAGES.USER_MANUAL]: "User's Manual",
         [PAGES.TERMS]: "Terms",
@@ -44,11 +52,12 @@ export default {
         [PAGES.WEIGHT]: "Weight",
         [PAGES.NECESSITIES]: "Monitoring of Bowel and Urine",
 
-        [PAGES.NOTIFICATIONS]: "Notifications",
         [PAGES.ERASE]: "Erase Data",
-        registries: "Registries",
         [PAGES.PREFERENCES]: "Preferences",
-        [PAGES.ABOUT]: "About FacilCare"
+        [PAGES.ABOUT]: "About FacilCare",
+
+        [PAGES.NOTIFICATIONS]: "Notifications",
+        registries: "Registries",
     },
 
     meta: {
@@ -66,6 +75,7 @@ export default {
         [PAGES.TERMS]: "Terms",
         notFound: 'Page not Found',
         [PAGES.ERASE]: "Erase Data",
+        [PAGES.DATA_MANAGEMENT]: "Data Management",
         [PAGES.IMPORT]: "Import Data",
         [PAGES.EXPORT]: "Export Data",
         [PAGES.ABOUT]: "About"
@@ -74,6 +84,10 @@ export default {
     utils: {
         hello: "Hello",
         edit: "Edit",
+        understood: "Understood",
+        later: "Later",
+        quickAccess: "Quick Access",
+        updateNow: "Update Now",
         developedBy: "Developed by",
         addSchedule: "Add Schedule",
         confirm: "Confirm",
@@ -446,9 +460,38 @@ export default {
             }
         },
 
+        [PAGES.DATA_MANAGEMENT]: {
+            categories: {
+                [PAGES.EXPORT]: {
+                    buttons: {
+                        [PAGES.EXPORT_QR_CODE]: {
+                            title: "Via QR Code",
+                            description: "QR code scanning for P2P connection between 2 devices"
+                        },
+                        [PAGES.EXPORT_JSON]: {
+                            title: "Generate Backup File",
+                            description: "Download a file in JSON format to perform a manual backup in the future"
+                        }
+                    }
+                },
+                [PAGES.IMPORT]: {
+                    buttons: {
+                        [PAGES.IMPORT_QR_CODE]: {
+                            title: "QR Code Scanning",
+                            description: "Scan the QR Code with your device câmera to retrieve the patient data",
+                        },
+                        [PAGES.IMPORT_FILE]: {
+                            title: "Backup File",
+                            description: "Select a valid backup file to import the patient data"
+                        }
+                    }
+                }
+            }
+        },
+
         [PAGES.IMPORT]: {
             categories: {
-                importing: {
+                [PAGES.IMPORT_P2P]: {
                     title: "Connecting to Emitter",
                     badges: {
                         finding: "Locating emitter device",
@@ -457,7 +500,17 @@ export default {
                     },
                 },
 
-                localFile: {
+                [PAGES.IMPORT_QR_CODE]: {
+                    title: "Scan QR Code",
+                    subtitle: "Position the QR Code within the reading area",
+                    badges: {
+                        UnavailableDevideCamera: "Unavailable Device Camera",
+                        InvalidQrCode: "Invalid QR Code",
+                        readQRCode: "Read QR Code"
+                    }
+                },
+
+                [PAGES.IMPORT_FILE]: {
                     title: "Import Data via Local File",
                     subtitle: "Select a previously exported backup file to restore patient information",
                     badges: {
@@ -471,7 +524,7 @@ export default {
         [PAGES.EXPORT]: {
             subtitle: "Select one of the options down bellow to export patient data",
             categories: {
-                qrCode: {
+                [PAGES.EXPORT_QR_CODE]: {
                     title: "Via QR Code",
                     description: "QR code scanning for P2P connection between 2 devices",
                     regularSubtitles: [
@@ -490,7 +543,7 @@ export default {
                         done: "Transferring concluded succesfully"
                     },
                 },
-                json: {
+                [PAGES.EXPORT_JSON]: {
                     title: "Via Backup File",
                     description: "Download a file in JSON format to perform a manual backup",
                     regularSubtitles: [
@@ -1629,6 +1682,17 @@ export default {
         },
         [PAGES.WEEK_SCHEDULE]: {
             title: "Week"
+        }
+    },
+
+    pwaUpdate: {
+        newVersion: {
+            title: "New Version Available",
+            description: "A new FacilCare version is available now. Update and enjoy the improvements"
+        },
+        upToDate: {
+            title: "FacilCare ready to be used offline",
+            description: "System updated successfully"
         }
     }
 }

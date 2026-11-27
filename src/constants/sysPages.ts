@@ -23,8 +23,17 @@ export const PAGES = {
     EMERGENCY_CONTACTS: "emergencyContacts",
 
     PREFERENCES: "preferences",
+    DATA_MANAGEMENT: "dataManagement",
+
     IMPORT: "import",
+    IMPORT_QR_CODE: "importQRCode",
+    IMPORT_FILE: 'importFile',
+    IMPORT_P2P: "importP2P",
+
     EXPORT: "export",
+    EXPORT_QR_CODE: "exportQRCode",
+    EXPORT_JSON: 'exportJSON',
+
     USER_MANUAL: "userManual",
     TERMS: "terms",
 

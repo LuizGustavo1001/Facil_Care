@@ -20,6 +20,11 @@
 
     display: flex;
     flex-direction: column;
+
+    min-height: 100dvh;
+
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
 }
 
 .view.regular {
@@ -39,7 +44,7 @@
 
 .section-title-container .section-title {
     font-size: var(--font-heading-3);
-    font-weight: var(--bolder-weight);
+    font-weight: var(--bold-weight);
 }
 .section-title-container .section-description {
     font-size: var(--font-body-sm);
@@ -236,7 +241,7 @@
 }
 
 .edit-link {
-    color: var(--color-text-brand);
+    color: var(--color-text-blue);
     display: flex;
     align-items: center;
     gap: 0.3em;
@@ -269,6 +274,10 @@
     border-radius: var(--radius-sm);
 }
 
+.lined-menu .menu-item .left-icon {
+    color: var(--color-text-btn-primary-subtle);
+}
+
 .lined-menu .menu-item {
     display: flex;
     align-items: center;
@@ -279,7 +288,7 @@
     background: var(--color-bg-subtle);
 
     color: inherit;
-    font-weight: var(--bold-weight);
+    font-weight: var(--semi-bold-weight);
     font-size: var(--font-button-title);
 
     transition: all 0.2s ease;
@@ -306,4 +315,10 @@
     height: 2px;
 
     background: var(--color-border-default);
+}
+
+/* ANIMATIONS */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

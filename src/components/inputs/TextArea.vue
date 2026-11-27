@@ -13,7 +13,7 @@
         v-model="model"
         :name="name"
         :rows="rows"
-        class="custom-textarea width-full default-input-attr active-border bold-weight"
+        class="custom-textarea width-full default-input-attr active-border medium-weight"
         v-bind="$attrs"
     />
   </fieldset>
@@ -27,7 +27,7 @@
 
   .input-label {
     font-size: var(--font-label-md);
-    font-weight: var(--bold-weight);
+    font-weight: var(--medium-weight);
     padding-inline: var(--spacing-sm);
     margin-left: var(--spacing-sm);
   }

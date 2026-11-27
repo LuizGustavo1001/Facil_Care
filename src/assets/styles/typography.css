@@ -1,6 +1,6 @@
 @font-face {
-    font-family: 'Instrument Sans';
-    src: url('../fonts/InstrumentSans-VariableFont_wdth,wght.ttf') format('woff2-variations');
+    font-family: 'Albert Sans';
+    src: url('../fonts/AlbertSans-VariableFont_wght.woff2') format('woff2');
     font-weight: 300 900;
     font-style: normal;
     font-display: swap;
@@ -10,7 +10,7 @@
     /* =-=-=-=- PRIMAL TOKENS -=-=-=-= */
 
     /* Font Families */
-    --font-default: 'Instrument Sans', system-ui;
+    --font-default: 'Albert Sans', system-ui;
 
     /* Font Scale */
     --font-size-100: 0.75rem;    /* 12px */
@@ -24,16 +24,16 @@
     --font-size-900: 1.75rem;    /* 28px */
 
     /* Font Weight */
-    --normal-weight: 300;
-    --medium-weight: 450;
-    --bold-weight: 500;
-    --bolder-weight: 550;
+    --normal-weight: 400;
+    --medium-weight: 500;
+    --semi-bold-weight: 600;
+    --bold-weight: 700;
 
     /* =-=-=-=- SEMANTIC TOKENS -=-=-=-= */
 
     /* Font Size */
     --font-heading-1: var(--font-size-700);
-    --font-heading-2: var(--font-size-500);
+    --font-heading-2: var(--font-size-600);
     --font-heading-3: var(--font-size-400);
     --font-heading-4: var(--font-size-300);
 
@@ -68,7 +68,7 @@
 
         --font-caption: var(--font-size-200);
 
-        --font-button-title: var(--font-size-600);
+        --font-button-title: var(--font-size-500);
         --font-button-description: var(--font-size-400);
         --font-input: var(--font-size-500);
 
@@ -82,9 +82,9 @@
 .medium-weight {
     font-weight: var(--medium-weight);
 }
+.semi-bold-weight {
+    font-weight: var(--semi-bold-weight);
+}
 .bold-weight {
     font-weight: var(--bold-weight);
-}
-.bolder-weight {
-    font-weight: var(--bolder-weight);
 }

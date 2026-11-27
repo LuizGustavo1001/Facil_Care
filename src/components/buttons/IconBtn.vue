@@ -32,7 +32,7 @@
   /* 1. Brand */
   .icon-btn.brand {
     background: var(--color-bg-brand);
-    color: var(--color-text-inverse-subtle);
+    color: var(--color-text-btn-brand);
   }
   .icon-btn.brand:hover {
     background: var(--color-bg-brand-hover);

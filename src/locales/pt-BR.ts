@@ -24,8 +24,16 @@ export default {
         [PAGES.HEALTH_PLANS]: "Planos de Saúde",
         [PAGES.EMERGENCY_CONTACTS]: "Contatos de Emergência",
 
+        [PAGES.DATA_MANAGEMENT]: "Gerenciamento de Dados",
+
         [PAGES.IMPORT]: "Importar Dados",
+        [PAGES.IMPORT_P2P]: "Importar Via P2P",
+        [PAGES.IMPORT_QR_CODE]: "Importar Via Código QR",
+        [PAGES.IMPORT_FILE]: "Importar Arquivo de Recuperação",
+
         [PAGES.EXPORT]: "Exportar Dados",
+        [PAGES.EXPORT_JSON]: "Exportar Arquivo de Recuperação",
+        [PAGES.EXPORT_QR_CODE]: "Exportar Via Código QR",
 
         [PAGES.USER_MANUAL]: "Manual do Usuário",
         [PAGES.TERMS]: "Termos",
@@ -68,12 +76,17 @@ export default {
         [PAGES.ERASE]: "Apagar Dados",
         [PAGES.IMPORT]: "Importar Dados",
         [PAGES.EXPORT]: "Exportar Dados",
+        [PAGES.DATA_MANAGEMENT]: "Gerenciamento de Dados",
         [PAGES.ABOUT]: "Sobre"
     },
 
     utils: {
         hello: "Olá",
         edit: "Editar",
+        understood: "Entendi",
+        quickAccess: "Acesso Rápido",
+        later: "Depois",
+        updateNow: "Atualizar Agora",
         developedBy: "Desenvolvido por",
         addSchedule: "Adicionar Horário",
         confirm: "Confirmar",
@@ -447,9 +460,38 @@ export default {
             }
         },
 
+        [PAGES.DATA_MANAGEMENT]: {
+          categories: {
+              [PAGES.EXPORT]: {
+                  buttons: {
+                      [PAGES.EXPORT_QR_CODE]: {
+                          title: "Via QR Code",
+                          description: "Leitura de QR Code para conexão P2P entre 2 dispositivos"
+                      },
+                      [PAGES.EXPORT_JSON]: {
+                          title: "Gerar Arquivo de Recuperação",
+                          description: "Faça o download de um arquivo no formato JSON para realizar o backup de forma manual posteriormente"
+                      }
+                  }
+              },
+              [PAGES.IMPORT]: {
+                  buttons: {
+                      [PAGES.IMPORT_QR_CODE]: {
+                          title: "Leitura do Código QR",
+                          description: "Leia o código QR com a câmera do seu dipositivo para obter os dados",
+                      },
+                      [PAGES.IMPORT_FILE]: {
+                          title: "Via Arquivo de Recuperaçao",
+                          description: "Selecione um arquivo de recuperação válido para importar os dados de um paciente"
+                      }
+                  }
+              }
+          }
+        },
+
         [PAGES.IMPORT]: {
             categories: {
-                importing: {
+                [PAGES.IMPORT_P2P]: {
                     title: "Conectando ao Emissor",
                     badges: {
                         finding: "Localizando dipositivo emissor",
@@ -458,7 +500,17 @@ export default {
                     },
                 },
 
-                localFile: {
+                [PAGES.IMPORT_QR_CODE]: {
+                    title: "Escanear código QR",
+                    subtitle: "Posicione o código QR dentro da área de leitura",
+                    badges: {
+                        UnavailableDevideCamera: "Câmera indisponível",
+                        InvalidQrCode: "Código QR inválido",
+                        readQRCode: "Ler Código QR"
+                    }
+                },
+
+                [PAGES.IMPORT_FILE]: {
                     title: "Importar Dados via Arquivo Local",
                     subtitle: "Selecione um arquivo de backup previamente exportado para restaurar as informações do paciente",
                     badges: {
@@ -472,7 +524,7 @@ export default {
         [PAGES.EXPORT]: {
             subtitle: "Selecione um dos métodos abaixo para exportar os dados do paciente",
             categories: {
-                qrCode: {
+                [PAGES.EXPORT_QR_CODE]: {
                     title: "Via QR Code",
                     description: "Leitura de QR Code para conexão P2P entre 2 dispositivos",
                     regularSubtitles: [
@@ -491,7 +543,7 @@ export default {
                         done: "Transferência concluída com sucesso"
                     },
                 },
-                json: {
+                [PAGES.EXPORT_JSON]: {
                     title: "Via Arquivo de Backup",
                     description: "Faça download de um arquivo no formato JSON para fazer backup de forma manual",
                     regularSubtitles: [
@@ -1632,6 +1684,17 @@ export default {
         },
         [PAGES.WEEK_SCHEDULE]: {
             title: "Semana"
+        }
+    },
+
+    pwaUpdate: {
+        newVersion: {
+            title: "Nova versão disponível",
+            description: "Uma nova versão do FacilCare está disponível. Atualize para aproveitar as melhorias"
+        },
+        upToDate: {
+            title: "FacilCare pronto para uso offline",
+            description: "Sistema atualizado com sucesso"
         }
     }
 }

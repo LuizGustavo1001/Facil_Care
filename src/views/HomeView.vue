@@ -21,18 +21,19 @@
 
       <!-- Patient Information -->
       <section class="home-patient-card flex flex-column gap-05">
-        <h1 class="home-patient-name">
+        <h1 class="home-patient-name medium-weight">
           {{ utils.getTranslate(`utils.hello`) }},
-          <span class="bolder-weight">{{ patient?.name ?? "" }}</span>!
+          <span class="bold-weight">{{ patient?.name ?? "" }}</span>!
         </h1>
 
         <!-- Current Date -->
         <div class="home-patient-date">
           <Badge
-              class="bold-weight capitalize-words width-fit"
+              class="capitalize-words width-fit"
               :text="date.getFullDate()"
               :icon="icons['time-fill']"
               :spacing="BUTTON_PADDING.SMALL"
+              style="box-shadow: 0 0 4px 0px var(--color-shadow-default)"
           />
         </div>
       </section>
@@ -43,7 +44,7 @@
       <!-- Quick Access -->
       <section class="quick-access flex flex-column gap-05">
         <div class="section-title-container">
-          <h2 class="section-title text-uppercase text-muted">Acesso Rápido</h2>
+          <h2 class="section-title text-uppercase text-muted">{{ utils.getTranslate(`utils.quickAccess`) }}</h2>
         </div>
 
         <div class="quick-access-list flex gap-15 overflow-scroll">
@@ -79,7 +80,7 @@
         style="align-self: flex-end"
     />
 
-    <NavigationBar :activeItem="mainNavigationBar[PAGES.HOME].id" />
+    <NavigationBar :activeItem="mainNavigationBar.find(page => page.id === PAGES.HOME)?.id" />
   </div>
 </template>
 
@@ -90,10 +91,8 @@
   }
 
   .home-hero {
-    color: var(--color-text-inverse);
-
     background:
-        var(--color-bg-brand)
+        var(--blue-100)
         url("../assets/images/lm-doodles.svg") center / cover;
   }
 
@@ -118,7 +117,7 @@
 
     background: var(--color-bg-primary);
     border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
-    box-shadow: 0 0 5px 5px var(--color-shadow-subtle);
+    box-shadow: 0 0 10px 2px var(--color-shadow-subtle);
   }
 
   .add-new-medicine-button {
@@ -131,7 +130,7 @@
   /* DARK MODE */
   .dark .home-hero {
     background:
-        var(--color-bg-brand)
+        var(--blue-700)
         url("../assets/images/dm-doodles.svg") center / cover;
   }
 

@@ -11,7 +11,7 @@ body {
     --color-text-inverse-muted: var(--gray-300);
     --color-text-inverse-subtle: var(--gray-200);
 
-    --color-text-brand: var(--blue-500);
+    --color-text-brand: var(--blue-100);
     --color-text-brand-subtle: var(--blue-400);
 
     --color-text-red: var(--red-700);
@@ -20,6 +20,12 @@ body {
     --color-text-orange: var(--orange-700);
     --color-text-blue: var(--blue-700);
     --color-text-purple: var(--purple-700);
+
+    --color-text-btn-primary: var(--gray-700);
+    --color-text-btn-primary-subtle: var(--gray-500);
+
+    --color-text-btn-brand: var(--gray-100);
+    --color-text-btn-brand-subtle: var(--gray-400);
 
     /* Background Color */
     --color-bg-primary: var(--gray-100);
@@ -68,13 +74,19 @@ body.dark {
     --color-text-blue: var(--blue-100);
     --color-text-purple: var(--purple-100);
 
+    --color-text-btn-primary: var(--gray-100);
+    --color-text-btn-primary-subtle: var(--gray-400);
+
+    --color-text-btn-brand: var(--gray-100);
+    --color-text-btn-brand-subtle: var(--gray-400);
+
     /* Background Color */
     --color-bg-primary: var(--gray-900);
     --color-bg-subtle: var(--gray-800);
     --color-bg-hover: var(--gray-600);
 
-    --color-bg-brand: var(--blue-400);
-    --color-bg-brand-hover: var(--blue-100);
+    --color-bg-brand: var(--blue-500);
+    --color-bg-brand-hover: var(--blue-600);
 
     --color-bg-red: var(--red-500);
     --color-bg-red-hover: var(--red-700);
@@ -98,7 +110,7 @@ body.dark {
 
 /* 3. HIGH CONTRAST */
 body.highContrast {
-    color-scheme: only;
+    color-scheme: dark;
 
     /* Text Color */
     --color-text-primary: var(--white);
@@ -111,6 +123,12 @@ body.highContrast {
 
     --color-text-brand: var(--yellow-500-alt);
     --color-text-brand-subtle: var(--yellow-500-alt);
+
+    --color-text-btn-primary: var(--white);
+    --color-text-btn-primary-subtle: var(--white);
+
+    --color-text-btn-brand: var(--black);
+    --color-text-btn-brand-subtle: var(--black);
 
     /* Background Color */
     --color-bg-primary: var(--black);
